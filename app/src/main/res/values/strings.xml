@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MobileClient</string>
+    <string name="register">Register</string>
+    <string name="service_agreement">I agree to the terms of service</string>
 </resources>

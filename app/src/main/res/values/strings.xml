@@ -2,7 +2,7 @@
     <string name="app_name">Garry prototype</string>
     <string name="register">Register</string>
     <string name="service_agreement">I agree to the terms of service</string>
-    <string name="sign_in">Sign in</string>
+    <string name="sign_in">Sign up</string>
     <string name="first_name_hint">First Name</string>
     <string name="last_name_hint">Last Name</string>
     <string name="email_hint">E-mail</string>

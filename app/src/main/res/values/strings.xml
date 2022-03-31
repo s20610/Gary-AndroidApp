@@ -1,5 +1,15 @@
 <resources>
-    <string name="app_name">MobileClient</string>
+    <string name="app_name">Garry prototype</string>
     <string name="register">Register</string>
     <string name="service_agreement">I agree to the terms of service</string>
+    <string name="sign_in">Sign up</string>
+    <string name="first_name_hint">First Name</string>
+    <string name="last_name_hint">Last Name</string>
+    <string name="email_hint">E-mail</string>
+    <string name="password_hint">Password</string>
+    <string name="birthday_hint">Your birth date</string>
+    <string name="register_hint">I agree to the terms and conditions of service</string>
+    <string name="register_button_text">Create account</string>
+    <string name="log_in">Log in</string>
+    <string name="login_button_text">Log in</string>
 </resources>

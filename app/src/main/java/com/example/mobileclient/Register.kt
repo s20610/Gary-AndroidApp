@@ -36,6 +36,8 @@ class Register : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //TODO: Przycisk cofania do poprzedniego ekranu
+        //TODO: Zrobić wstepną walidacje pól (required, length, email, password)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -73,6 +75,7 @@ class Register : Fragment() {
 //            }
 //        }
         agreeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            //TODO: Dopiero gdy wszystkie wymagane pola będą wypełnione przycisk enabled
             registerButton.isEnabled = isChecked
         }
         return view

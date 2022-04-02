@@ -37,6 +37,7 @@
             app:layout_constraintTop_toBottomOf="@+id/sign_in_title">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/first_name_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName" />
@@ -56,6 +57,7 @@
             app:layout_constraintTop_toBottomOf="@+id/first_name_field">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/last_name_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName" />
@@ -73,6 +75,7 @@
             app:layout_constraintTop_toBottomOf="@+id/last_name_field">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress" />
@@ -90,6 +93,7 @@
             app:layout_constraintTop_toBottomOf="@+id/email_field">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />

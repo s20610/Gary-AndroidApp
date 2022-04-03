@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_login_to_splashScreen"
             app:destination="@id/splashScreen" />
+        <action
+            android:id="@+id/action_login_to_forgotPassword"
+            app:destination="@id/forgotPassword" />
     </fragment>
     <fragment
         android:id="@+id/register"
@@ -34,4 +37,9 @@
             android:id="@+id/action_register_to_splashScreen"
             app:destination="@id/splashScreen" />
     </fragment>
+    <fragment
+        android:id="@+id/forgotPassword"
+        android:name="com.example.mobileclient.ForgotPassword"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password" />
 </navigation>

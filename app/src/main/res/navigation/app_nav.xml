@@ -10,11 +10,14 @@
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen" >
         <action
-            android:id="@+id/action_splashScreen_to_login"
+            android:id="@+id/splashscreen_to_login"
             app:destination="@id/login" />
         <action
-            android:id="@+id/action_splashScreen_to_register"
+            android:id="@+id/splashscreen_to_register"
             app:destination="@id/register" />
+        <action
+            android:id="@+id/splashscreen_to_guestscreen"
+            app:destination="@id/guestScreen" />
     </fragment>
     <fragment
         android:id="@+id/login"
@@ -22,11 +25,14 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_login_to_splashScreen"
+            android:id="@+id/login_to_splashscreen"
             app:destination="@id/splashScreen" />
         <action
-            android:id="@+id/action_login_to_forgotPassword"
+            android:id="@+id/login_to_forgotpassword"
             app:destination="@id/forgotPassword" />
+        <action
+            android:id="@+id/login_to_loggedin"
+            app:destination="@id/loggedInScreen" />
     </fragment>
     <fragment
         android:id="@+id/register"
@@ -34,7 +40,7 @@
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
-            android:id="@+id/action_register_to_splashScreen"
+            android:id="@+id/register_to_splashscreen"
             app:destination="@id/splashScreen" />
     </fragment>
     <fragment
@@ -42,4 +48,21 @@
         android:name="com.example.mobileclient.ForgotPassword"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" />
+    <fragment
+        android:id="@+id/loggedInScreen"
+        android:name="com.example.mobileclient.LoggedInScreen"
+        android:label="fragment_logged_in_screen"
+        tools:layout="@layout/fragment_logged_in_screen" />
+    <fragment
+        android:id="@+id/guestScreen"
+        android:name="com.example.mobileclient.GuestScreen"
+        android:label="fragment_guest_screen"
+        tools:layout="@layout/fragment_guest_screen" >
+        <action
+            android:id="@+id/action_guestScreen_to_login"
+            app:destination="@id/login" />
+        <action
+            android:id="@+id/action_guestScreen_to_register"
+            app:destination="@id/register" />
+    </fragment>
 </navigation>

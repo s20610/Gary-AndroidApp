@@ -6,7 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
-import com.example.mobileclient.databinding.FragmentSplashScreenBinding
+import com.example.mobileclient.databinding.FragmentGuestScreenBinding
+import com.example.mobileclient.databinding.FragmentLoginBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -15,14 +16,14 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [SplashScreen.newInstance] factory method to
+ * Use the [GuestScreen.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SplashScreen : Fragment() {
+class GuestScreen : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var _binding: FragmentSplashScreenBinding? = null
+    private var _binding: FragmentGuestScreenBinding? = null
     // This property is only valid between onCreateView and
 // onDestroyView.
     private val binding get() = _binding!!
@@ -40,16 +41,20 @@ class SplashScreen : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentSplashScreenBinding.inflate(inflater, container, false)
+        _binding = FragmentGuestScreenBinding.inflate(inflater, container, false)
         val view = binding.root
-        binding.splashScreenLogin.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.splashscreen_to_login)
+        binding.topAppBar.setNavigationOnClickListener {
+            binding.drawerLayout.open()
         }
-        binding.splashScreenSignin.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.splashscreen_to_register)
-        }
-        binding.guestButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.splashscreen_to_guestscreen)
+        binding.navigationView.setNavigationItemSelectedListener {
+            it.isChecked = true
+            if (it.toString() == getString(R.string.sign_up)){
+                Navigation.findNavController(view).navigate(R.id.action_guestScreen_to_register)
+            }else if(it.toString() == getString(R.string.log_in)){
+                Navigation.findNavController(view).navigate(R.id.action_guestScreen_to_login)
+            }
+            binding.drawerLayout.close()
+            true
         }
         return view
     }
@@ -61,20 +66,16 @@ class SplashScreen : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment SplashScreen.
+         * @return A new instance of fragment GuestScreen.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            SplashScreen().apply {
+            GuestScreen().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

@@ -17,8 +17,8 @@
             android:layout_marginTop="120dp"
             android:text="@string/log_in"
             android:textAllCaps="true"
-            android:textColor="@color/design_default_color_primary"
-            android:textSize="24sp"
+            android:textColor="@color/purple_700"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

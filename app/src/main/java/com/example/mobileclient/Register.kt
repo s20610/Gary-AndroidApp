@@ -79,11 +79,6 @@ class Register : Fragment() {
         birthdayInput.setOnClickListener {
             datePicker.show(parentFragmentManager, "birthdate_picker")
         }
-//        agreeSwitch.setOnClickListener {
-//            if (agreeSwitch.isActivated){
-//                registerButton.isEnabled = true
-//            }
-//        }
         firstNameInput.doAfterTextChanged {
             buttonEnable()
         }
@@ -96,24 +91,24 @@ class Register : Fragment() {
         passwordInput.doAfterTextChanged {
             buttonEnable()
         }
-        agreeSwitch.setOnCheckedChangeListener { _, isChecked ->
+        agreeSwitch.setOnCheckedChangeListener { _, _ ->
             buttonEnable()
         }
         return view
     }
 
 
-    fun nameValidate(nameInput : TextInputEditText) : Boolean {
+    private fun nameValidate(nameInput : TextInputEditText) : Boolean {
         return nameInput.text?.isNotEmpty() == true
     }
 
-    fun emailValidate (emailInput : TextInputEditText) : Boolean {
+    private fun emailValidate (emailInput : TextInputEditText) : Boolean {
         return if (emailInput.text?.isEmpty() == true){
             false
         } else android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text.toString()).matches()
     }
 
-    fun passwordValidate(passwordInput : TextInputEditText) : Boolean {
+    private fun passwordValidate(passwordInput : TextInputEditText) : Boolean {
         return passwordInput.text?.isNotEmpty() == true
     }
 

@@ -2,6 +2,7 @@ package com.example.mobileclient
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 
 class MainActivity : AppCompatActivity() {
     //TODO: Obsługa zapomniałem hasła

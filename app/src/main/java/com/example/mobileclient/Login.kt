@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.example.mobileclient.databinding.FragmentLoginBinding
-import com.example.mobileclient.databinding.FragmentRegisterBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,12 +39,11 @@ class Login : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
         //SPACE TO ADD ONCLICK LISTENERS ETC.
         binding.forgotPassword.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_login_to_forgotPassword)
+            Navigation.findNavController(view).navigate(R.id.login_to_forgotpassword)
         }
         return view
     }

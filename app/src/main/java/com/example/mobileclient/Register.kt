@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Switch
+import androidx.core.widget.doAfterTextChanged
 import com.example.mobileclient.databinding.FragmentRegisterBinding
 import com.example.mobileclient.databinding.FragmentSplashScreenBinding
 import com.google.android.material.datepicker.CalendarConstraints
@@ -14,6 +15,8 @@ import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import org.w3c.dom.Text
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +39,7 @@ class Register : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //TODO: Zrobić wstepną walidacje pól (required, length, email, password)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -50,6 +54,10 @@ class Register : Fragment() {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        val firstNameInput : TextInputEditText = binding.firstNameInput
+        val lastNameInput : TextInputEditText = binding.lastNameInput
+        val emailInput : TextInputEditText = binding.emailInput
+        val passwordInput : TextInputEditText = binding.passwordInput
         val birthdayInput: TextInputEditText = binding.birthdayInput
         val agreeSwitch: SwitchMaterial = binding.switchMaterial
         val registerButton: Button = binding.registerButton
@@ -58,6 +66,10 @@ class Register : Fragment() {
             CalendarConstraints.Builder().setValidator(DateValidatorPointBackward.now())
         val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("Your birth date")
             .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT).setCalendarConstraints(constraintBuilder.build()).build()
+
+        fun buttonEnable() {
+            registerButton.isEnabled = agreeSwitch.isChecked && nameValidate(firstNameInput) && nameValidate(lastNameInput)  && passwordValidate(passwordInput) && emailValidate(emailInput)
+        }
         datePicker.addOnPositiveButtonClickListener {
             birthdayInput.setText(datePicker.headerText)
         }
@@ -72,10 +84,37 @@ class Register : Fragment() {
 //                registerButton.isEnabled = true
 //            }
 //        }
+        firstNameInput.doAfterTextChanged {
+            buttonEnable()
+        }
+        lastNameInput.doAfterTextChanged {
+            buttonEnable()
+        }
+        emailInput.doAfterTextChanged {
+            buttonEnable()
+        }
+        passwordInput.doAfterTextChanged {
+            buttonEnable()
+        }
         agreeSwitch.setOnCheckedChangeListener { _, isChecked ->
-            registerButton.isEnabled = isChecked
+            buttonEnable()
         }
         return view
+    }
+
+
+    fun nameValidate(nameInput : TextInputEditText) : Boolean {
+        return nameInput.text?.isNotEmpty() == true
+    }
+
+    fun emailValidate (emailInput : TextInputEditText) : Boolean {
+        return if (emailInput.text?.isEmpty() == true){
+            false
+        } else android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text.toString()).matches()
+    }
+
+    fun passwordValidate(passwordInput : TextInputEditText) : Boolean {
+        return passwordInput.text?.isNotEmpty() == true
     }
 
     companion object {

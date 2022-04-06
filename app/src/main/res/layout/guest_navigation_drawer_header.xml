@@ -5,7 +5,8 @@
     android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
+    android:background="@color/purple_500"
     android:layout_height="wrap_content">
 
     <TextView
@@ -14,6 +15,7 @@
         android:layout_height="wrap_content"
         android:text="Placeholder"
         android:padding="5dp"
+        android:textColor="@color/white"
         android:textAppearance="?attr/textAppearanceHeadline6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,8 +26,9 @@
         android:text="Placeholder"
         android:paddingLeft="5dp"
         android:paddingTop="0dp"
+        android:paddingBottom="10dp"
         android:textAppearance="?attr/textAppearanceBody2"
-        android:textColor="@color/material_on_surface_emphasis_medium"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="@+id/Title"
         app:layout_constraintTop_toBottomOf="@+id/Title" />
 

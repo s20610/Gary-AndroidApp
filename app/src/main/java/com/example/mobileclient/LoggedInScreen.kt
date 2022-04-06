@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
+import com.example.mobileclient.databinding.FragmentGuestScreenBinding
+import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +23,10 @@ class LoggedInScreen : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var _binding: FragmentLoggedInScreenBinding? = null
+    // This property is only valid between onCreateView and
+// onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +41,12 @@ class LoggedInScreen : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_logged_in_screen, container, false)
+        _binding = FragmentLoggedInScreenBinding.inflate(inflater, container, false)
+        val view = binding.root
+        binding.topAppBar.setNavigationOnClickListener {
+            binding.drawerLayout.open()
+        }
+        return view
     }
 
     companion object {

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import com.example.mobileclient.databinding.FragmentGuestScreenBinding
 import com.example.mobileclient.databinding.FragmentLoginBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -15,14 +16,14 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Login.newInstance] factory method to
+ * Use the [GuestScreen.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Login : Fragment() {
+class GuestScreen : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var _binding: FragmentLoginBinding? = null
+    private var _binding: FragmentGuestScreenBinding? = null
     // This property is only valid between onCreateView and
 // onDestroyView.
     private val binding get() = _binding!!
@@ -39,14 +40,21 @@ class Login : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        // Inflate the layout for this fragment
+        _binding = FragmentGuestScreenBinding.inflate(inflater, container, false)
         val view = binding.root
-        //SPACE TO ADD ONCLICK LISTENERS ETC.
-        binding.forgotPassword.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.login_to_forgotpassword)
+        binding.topAppBar.setNavigationOnClickListener {
+            binding.drawerLayout.open()
         }
-        binding.loginButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.login_to_loggedin)
+        binding.navigationView.setNavigationItemSelectedListener {
+            it.isChecked = true
+            if (it.toString() == getString(R.string.sign_up)){
+                Navigation.findNavController(view).navigate(R.id.action_guestScreen_to_register)
+            }else if(it.toString() == getString(R.string.log_in)){
+                Navigation.findNavController(view).navigate(R.id.action_guestScreen_to_login)
+            }
+            binding.drawerLayout.close()
+            true
         }
         return view
     }
@@ -58,12 +66,12 @@ class Login : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Login.
+         * @return A new instance of fragment GuestScreen.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Login().apply {
+            GuestScreen().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

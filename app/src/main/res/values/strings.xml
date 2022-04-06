@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Garry prototype</string>
+    <string name="app_name">Garry</string>
     <string name="register">Register</string>
     <string name="service_agreement">I agree to the terms of service</string>
-    <string name="sign_in">Sign up</string>
+    <string name="sign_up">Sign up</string>
     <string name="first_name_hint">First Name</string>
     <string name="last_name_hint">Last Name</string>
     <string name="email_hint">E-mail</string>
@@ -12,9 +12,11 @@
     <string name="register_button_text">Create account</string>
     <string name="log_in">Log in</string>
     <string name="login_button_text">Log in</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="send">SEND</string>
     <string name="forgot_password">Forgot password</string>
     <string name="forgot_passwordq">Forgot password?</string>
+    <string name="guest_text">Don\'t want to create an account?</string>
+    <string name="guest_button">Click here</string>
+    <string name="guest_appbar_text">Guest View</string>
+    <string name="user_appbar_text">User View</string>
 </resources>

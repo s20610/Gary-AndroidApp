@@ -6,7 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
-import com.example.mobileclient.databinding.FragmentLoginBinding
+import com.example.mobileclient.databinding.FragmentGuestScreenBinding
+import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -15,14 +16,14 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Login.newInstance] factory method to
+ * Use the [LoggedInScreen.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Login : Fragment() {
+class LoggedInScreen : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var _binding: FragmentLoginBinding? = null
+    private var _binding: FragmentLoggedInScreenBinding? = null
     // This property is only valid between onCreateView and
 // onDestroyView.
     private val binding get() = _binding!!
@@ -39,14 +40,11 @@ class Login : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        // Inflate the layout for this fragment
+        _binding = FragmentLoggedInScreenBinding.inflate(inflater, container, false)
         val view = binding.root
-        //SPACE TO ADD ONCLICK LISTENERS ETC.
-        binding.forgotPassword.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.login_to_forgotpassword)
-        }
-        binding.loginButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.login_to_loggedin)
+        binding.topAppBar.setNavigationOnClickListener {
+            binding.drawerLayout.open()
         }
         return view
     }
@@ -58,12 +56,12 @@ class Login : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Login.
+         * @return A new instance of fragment LoggedInScreen.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Login().apply {
+            LoggedInScreen().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

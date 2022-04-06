@@ -5,10 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.navigation.Navigation
 import com.example.mobileclient.databinding.FragmentSplashScreenBinding
-import com.google.android.material.textfield.TextInputEditText
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,10 +43,13 @@ class SplashScreen : Fragment() {
         _binding = FragmentSplashScreenBinding.inflate(inflater, container, false)
         val view = binding.root
         binding.splashScreenLogin.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_splashScreen_to_login)
+            Navigation.findNavController(view).navigate(R.id.splashscreen_to_login)
         }
         binding.splashScreenSignin.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_splashScreen_to_register)
+            Navigation.findNavController(view).navigate(R.id.splashscreen_to_register)
+        }
+        binding.guestButton.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.splashscreen_to_guestscreen)
         }
         return view
     }

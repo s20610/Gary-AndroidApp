@@ -1,6 +1,7 @@
 package com.example.mobileclient
 
 import android.os.Bundle
+import android.service.autofill.CharSequenceTransformation
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -99,17 +100,37 @@ class Register : Fragment() {
 
 
     private fun nameValidate(nameInput : TextInputEditText) : Boolean {
-        return nameInput.text?.isNotEmpty() == true
+        return if (nameInput.text?.isNotEmpty() == true){
+            true
+        }else{
+            nameInput.error = "This field is required"
+            false
+        }
     }
 
     private fun emailValidate (emailInput : TextInputEditText) : Boolean {
-        return if (emailInput.text?.isEmpty() == true){
-            false
-        } else android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text.toString()).matches()
+        return when {
+            emailInput.text?.isEmpty() == true -> {
+                emailInput.error = "This field is required"
+                false
+            }
+            android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text.toString()).matches() -> {
+                true
+            }
+            else -> {
+                emailInput.error = "Enter valid e-mail"
+                false
+            }
+        }
     }
 
     private fun passwordValidate(passwordInput : TextInputEditText) : Boolean {
-        return passwordInput.text?.isNotEmpty() == true
+        return if (passwordInput.text?.isNotEmpty() == true){
+            true
+        }else{
+            passwordInput.error = "This field is required"
+            false
+        }
     }
 
     companion object {

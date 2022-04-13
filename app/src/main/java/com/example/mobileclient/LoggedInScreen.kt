@@ -46,6 +46,14 @@ class LoggedInScreen : Fragment() {
         binding.topAppBar.setNavigationOnClickListener {
             binding.drawerLayout.open()
         }
+        binding.navigationView.setNavigationItemSelectedListener {
+            it.isChecked = true
+            if (it.toString() == "Log out"){
+                Navigation.findNavController(view).navigate(R.id.action_loggedInScreen_to_splashScreen)
+            }
+            binding.drawerLayout.close()
+            true
+        }
         return view
     }
 

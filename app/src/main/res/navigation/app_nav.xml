@@ -52,7 +52,11 @@
         android:id="@+id/loggedInScreen"
         android:name="com.example.mobileclient.LoggedInScreen"
         android:label="fragment_logged_in_screen"
-        tools:layout="@layout/fragment_logged_in_screen" />
+        tools:layout="@layout/fragment_logged_in_screen" >
+        <action
+            android:id="@+id/action_loggedInScreen_to_splashScreen"
+            app:destination="@id/splashScreen" />
+    </fragment>
     <fragment
         android:id="@+id/guestScreen"
         android:name="com.example.mobileclient.GuestScreen"

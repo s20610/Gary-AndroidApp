@@ -5,8 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.Navigation
 import com.example.mobileclient.databinding.FragmentLoginBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,9 +50,34 @@ class Login : Fragment() {
             Navigation.findNavController(view).navigate(R.id.login_to_forgotpassword)
         }
         binding.loginButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.login_to_loggedin)
+            getAccessToken()
         }
         return view
+    }
+
+    fun getAccessToken(){
+        var service: GetDataService =
+            RetrofitClientInstance.getRetrofitInstance()!!.create(GetDataService::class.java)
+
+        var email: String = binding.emailFieldText.text.toString()
+        var password: String = binding.passwordFieldText.text.toString()
+
+        var call: Call<AccessToken> = service.getAccessToken("backend", "password", "SpQPBHILk6ag8lf37SBnZNpCbDt50UBG", "openid", email, password)
+        call.enqueue(object: Callback<AccessToken>{
+            override fun onResponse(call: Call<AccessToken>, response: Response<AccessToken>) {
+                var accessToken: AccessToken? = response.body()
+                if(response.isSuccessful){
+                    Navigation.findNavController(view!!).navigate(R.id.login_to_loggedin)
+                }else{
+                    Toast.makeText(context, accessToken.toString(), Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<AccessToken>, t: Throwable) {
+                Toast.makeText(context, "Error with login", Toast.LENGTH_LONG).show()
+            }
+
+        })
     }
 
     companion object {

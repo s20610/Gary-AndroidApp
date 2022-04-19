@@ -1,13 +1,11 @@
-package com.example.mobileclient
+package com.example.mobileclient.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
-import com.example.mobileclient.databinding.FragmentGuestScreenBinding
-import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
+import com.example.mobileclient.R
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,17 +14,13 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [LoggedInScreen.newInstance] factory method to
+ * Use the [ForgotPassword.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LoggedInScreen : Fragment() {
+class ForgotPassword : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var _binding: FragmentLoggedInScreenBinding? = null
-    // This property is only valid between onCreateView and
-// onDestroyView.
-    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,20 +35,7 @@ class LoggedInScreen : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentLoggedInScreenBinding.inflate(inflater, container, false)
-        val view = binding.root
-        binding.topAppBar.setNavigationOnClickListener {
-            binding.drawerLayout.open()
-        }
-        binding.navigationView.setNavigationItemSelectedListener {
-            it.isChecked = true
-            if (it.toString() == "Log out"){
-                Navigation.findNavController(view).navigate(R.id.action_loggedInScreen_to_splashScreen)
-            }
-            binding.drawerLayout.close()
-            true
-        }
-        return view
+        return inflater.inflate(R.layout.fragment_forgot_password, container, false)
     }
 
     companion object {
@@ -64,12 +45,12 @@ class LoggedInScreen : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment LoggedInScreen.
+         * @return A new instance of fragment ForgotPassword.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            LoggedInScreen().apply {
+            ForgotPassword().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

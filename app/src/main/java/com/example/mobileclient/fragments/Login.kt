@@ -1,16 +1,21 @@
-package com.example.mobileclient
+package com.example.mobileclient.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
+import androidx.core.view.get
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentLoginBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.mobileclient.model.Credentials
+import com.example.mobileclient.model.UserViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +32,8 @@ class Login : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var _binding: FragmentLoginBinding? = null
+    private val sharedViewModel: UserViewModel by activityViewModels()
+
     // This property is only valid between onCreateView and
 // onDestroyView.
     private val binding get() = _binding!!
@@ -42,7 +49,7 @@ class Login : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
         //SPACE TO ADD ONCLICK LISTENERS ETC.
@@ -50,34 +57,33 @@ class Login : Fragment() {
             Navigation.findNavController(view).navigate(R.id.login_to_forgotpassword)
         }
         binding.loginButton.setOnClickListener {
-            getAccessToken()
+            Log.d("Email", binding.emailFieldText.text.toString())
+            Log.d("Password", binding.passwordFieldText.text.toString())
+            val credentials = Credentials(binding.emailFieldText.text.toString().trim(),binding.passwordFieldText.text.toString().trim())
+            Log.d("Credentials", credentials.toString())
+            sharedViewModel.getLoginResponse(credentials)
+            sharedViewModel.loginResponse.observe(viewLifecycleOwner) { response ->
+                if (response.isSuccessful) {
+                    Log.d("Login Response", response.body().toString())
+                    Log.d("Response Code", response.code().toString())
+                    Toast.makeText(context, "Login successful", LENGTH_LONG).show()
+                    Navigation.findNavController(view).navigate(R.id.login_to_loggedin)
+                } else {
+                    Toast.makeText(context, "Login error"+response.code(), LENGTH_LONG).show()
+                    Log.d("Login Response", response.body().toString())
+                    Log.d("Response Code: ", response.code().toString())
+                }
+            }
+
         }
         return view
     }
 
-    fun getAccessToken(){
-        var service: GetDataService =
-            RetrofitClientInstance.getRetrofitInstance()!!.create(GetDataService::class.java)
-
-        var email: String = binding.emailFieldText.text.toString()
-        var password: String = binding.passwordFieldText.text.toString()
-
-        var call: Call<AccessToken> = service.getAccessToken("backend", "password", "SpQPBHILk6ag8lf37SBnZNpCbDt50UBG", "openid", email, password)
-        call.enqueue(object: Callback<AccessToken>{
-            override fun onResponse(call: Call<AccessToken>, response: Response<AccessToken>) {
-                var accessToken: AccessToken? = response.body()
-                if(response.isSuccessful){
-                    Navigation.findNavController(view!!).navigate(R.id.login_to_loggedin)
-                }else{
-                    Toast.makeText(context, accessToken.toString(), Toast.LENGTH_LONG).show()
-                }
-            }
-
-            override fun onFailure(call: Call<AccessToken>, t: Throwable) {
-                Toast.makeText(context, "Error with login", Toast.LENGTH_LONG).show()
-            }
-
-        })
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.apply {
+            viewModel = sharedViewModel
+        }
+        super.onViewCreated(view, savedInstanceState)
     }
 
     companion object {

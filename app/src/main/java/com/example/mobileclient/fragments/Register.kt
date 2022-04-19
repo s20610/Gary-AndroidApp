@@ -1,4 +1,4 @@
-package com.example.mobileclient
+package com.example.mobileclient.fragments
 
 import android.os.Bundle
 import android.service.autofill.CharSequenceTransformation

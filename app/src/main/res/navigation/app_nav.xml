@@ -6,9 +6,8 @@
     app:startDestination="@id/splashScreen">
     <fragment
         android:id="@+id/splashScreen"
-        android:name="com.example.mobileclient.SplashScreen"
-        android:label="fragment_splash_screen"
-        tools:layout="@layout/fragment_splash_screen" >
+        android:name="com.example.mobileclient.fragments.SplashScreen"
+        android:label="fragment_splash_screen">
         <action
             android:id="@+id/splashscreen_to_login"
             app:destination="@id/login" />
@@ -21,9 +20,8 @@
     </fragment>
     <fragment
         android:id="@+id/login"
-        android:name="com.example.mobileclient.Login"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        android:name="com.example.mobileclient.fragments.Login"
+        android:label="fragment_login">
         <action
             android:id="@+id/login_to_splashscreen"
             app:destination="@id/splashScreen" />
@@ -36,32 +34,28 @@
     </fragment>
     <fragment
         android:id="@+id/register"
-        android:name="com.example.mobileclient.Register"
-        android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
+        android:name="com.example.mobileclient.fragments.Register"
+        android:label="fragment_register">
         <action
             android:id="@+id/register_to_splashscreen"
             app:destination="@id/splashScreen" />
     </fragment>
     <fragment
         android:id="@+id/forgotPassword"
-        android:name="com.example.mobileclient.ForgotPassword"
-        android:label="fragment_forgot_password"
-        tools:layout="@layout/fragment_forgot_password" />
+        android:name="com.example.mobileclient.fragments.ForgotPassword"
+        android:label="fragment_forgot_password" />
     <fragment
         android:id="@+id/loggedInScreen"
-        android:name="com.example.mobileclient.LoggedInScreen"
-        android:label="fragment_logged_in_screen"
-        tools:layout="@layout/fragment_logged_in_screen" >
+        android:name="com.example.mobileclient.fragments.LoggedInScreen"
+        android:label="fragment_logged_in_screen">
         <action
             android:id="@+id/action_loggedInScreen_to_splashScreen"
             app:destination="@id/splashScreen" />
     </fragment>
     <fragment
         android:id="@+id/guestScreen"
-        android:name="com.example.mobileclient.GuestScreen"
-        android:label="fragment_guest_screen"
-        tools:layout="@layout/fragment_guest_screen" >
+        android:name="com.example.mobileclient.fragments.GuestScreen"
+        android:label="fragment_guest_screen">
         <action
             android:id="@+id/action_guestScreen_to_login"
             app:destination="@id/login" />

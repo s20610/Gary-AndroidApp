@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_loggedInScreen_to_splashScreen"
             app:destination="@id/splashScreen" />
+        <action
+            android:id="@+id/action_loggedInScreen_to_userInfo"
+            app:destination="@id/userInfo" />
     </fragment>
     <fragment
         android:id="@+id/guestScreen"
@@ -63,4 +66,8 @@
             android:id="@+id/action_guestScreen_to_register"
             app:destination="@id/register" />
     </fragment>
+    <fragment
+        android:id="@+id/userInfo"
+        android:name="com.example.mobileclient.fragments.UserInfo"
+        android:label="fragment_user_info" />
 </navigation>

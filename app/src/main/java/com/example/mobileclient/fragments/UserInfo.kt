@@ -1,14 +1,14 @@
 package com.example.mobileclient.fragments
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
+import com.example.mobileclient.databinding.FragmentUserInfoBinding
 import com.example.mobileclient.model.UserViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -18,14 +18,14 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [LoggedInScreen.newInstance] factory method to
+ * Use the [UserInfo.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LoggedInScreen : Fragment() {
+class UserInfo : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var _binding: FragmentLoggedInScreenBinding? = null
+    private var _binding: FragmentUserInfoBinding? = null
     private val sharedViewModel: UserViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and
@@ -45,34 +45,12 @@ class LoggedInScreen : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentLoggedInScreenBinding.inflate(inflater, container, false)
+        _binding = FragmentUserInfoBinding.inflate(inflater, container, false)
         val view = binding.root
-        binding.topAppBar.setNavigationOnClickListener {
-            binding.drawerLayout.open()
-        }
-        binding.navigationView.getHeaderView(0).setOnClickListener {
-            Navigation.findNavController(view)
-                .navigate(R.id.action_loggedInScreen_to_userInfo)
 
-        }
-        binding.navigationView.setNavigationItemSelectedListener {
-            it.isChecked = true
-            if (it.toString() == "Log out") {
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_loggedInScreen_to_splashScreen)
-            }
-            binding.drawerLayout.close()
-            true
-        }
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.apply {
-            viewModel = sharedViewModel
-        }
-        super.onViewCreated(view, savedInstanceState)
-    }
 
     companion object {
         /**

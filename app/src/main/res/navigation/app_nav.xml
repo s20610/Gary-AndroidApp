@@ -54,6 +54,9 @@
         <action
             android:id="@+id/action_loggedInScreen_to_userInfo"
             app:destination="@id/userInfo" />
+        <action
+            android:id="@+id/action_loggedInScreen_to_medicalInfoMain"
+            app:destination="@id/medicalInfoMain" />
     </fragment>
     <fragment
         android:id="@+id/guestScreen"
@@ -70,4 +73,15 @@
         android:id="@+id/userInfo"
         android:name="com.example.mobileclient.fragments.UserInfo"
         android:label="fragment_user_info" />
+    <fragment
+        android:id="@+id/medicalInfoMain"
+        android:name="com.example.mobileclient.fragments.MedicalInfoMain"
+        android:label="fragment_medical_info_main" >
+        <action
+            android:id="@+id/action_medicalInfoMain_to_loggedInScreen"
+            app:destination="@id/loggedInScreen" />
+        <action
+            android:id="@+id/action_medicalInfoMain_to_userInfo"
+            app:destination="@id/userInfo" />
+    </fragment>
 </navigation>

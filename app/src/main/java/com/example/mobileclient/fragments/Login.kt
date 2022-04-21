@@ -57,12 +57,13 @@ class Login : Fragment() {
             Navigation.findNavController(view).navigate(R.id.login_to_forgotpassword)
         }
         binding.loginButton.setOnClickListener {
-            Log.d("Email", binding.emailFieldText.text.toString())
-            Log.d("Password", binding.passwordFieldText.text.toString())
-            val credentials = Credentials(binding.emailFieldText.text.toString().trim(),binding.passwordFieldText.text.toString().trim())
-            Log.d("Credentials", credentials.toString())
-            sharedViewModel.getLoginResponse(credentials)
-            sharedViewModel.loginResponse.observe(viewLifecycleOwner) { response ->
+            //Log.d("Email", binding.emailFieldText.text.toString())
+            //Log.d("Password", binding.passwordFieldText.text.toString())
+            //val credentials = Credentials(binding.emailFieldText.text.toString().trim(),binding.passwordFieldText.text.toString().trim())
+            //Log.d("Credentials", credentials.toString())
+            //sharedViewModel.getLoginResponse(credentials)
+            Navigation.findNavController(view).navigate(R.id.login_to_loggedin)
+            /*sharedViewModel.loginResponse.observe(viewLifecycleOwner) { response ->
                 if (response.isSuccessful) {
                     Log.d("Login Response", response.body().toString())
                     Log.d("Response Code", response.code().toString())
@@ -74,6 +75,8 @@ class Login : Fragment() {
                     Log.d("Response Code: ", response.code().toString())
                 }
             }
+
+             */
 
         }
         return view

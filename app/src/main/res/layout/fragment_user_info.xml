@@ -114,17 +114,6 @@
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchMaterial"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:checked="false"
-                android:text="@string/register_hint"
-                app:layout_constraintEnd_toEndOf="@+id/birthday_field"
-                app:layout_constraintStart_toStartOf="@+id/birthday_field"
-                app:layout_constraintTop_toBottomOf="@+id/birthday_field" />
-
             <Button
                 android:id="@+id/register_button"
                 style="@style/Widget.Material3.Button"
@@ -133,9 +122,9 @@
                 android:layout_marginTop="5dp"
                 android:text="Save"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                app:layout_constraintEnd_toEndOf="@+id/switchMaterial"
-                app:layout_constraintStart_toStartOf="@+id/switchMaterial"
-                app:layout_constraintTop_toBottomOf="@+id/switchMaterial" />
+                app:layout_constraintEnd_toEndOf="@+id/birthday_field"
+                app:layout_constraintStart_toStartOf="@+id/birthday_field"
+                app:layout_constraintTop_toBottomOf="@+id/birthday_field" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

@@ -83,5 +83,12 @@
         <action
             android:id="@+id/action_medicalInfoMain_to_userInfo"
             app:destination="@id/userInfo" />
+        <action
+            android:id="@+id/action_medicalInfoMain_to_bloodTypeForm"
+            app:destination="@id/bloodTypeForm" />
     </fragment>
+    <fragment
+        android:id="@+id/bloodTypeForm"
+        android:name="com.example.mobileclient.fragments.BloodTypeForm"
+        android:label="fragment_blood_type_form" />
 </navigation>

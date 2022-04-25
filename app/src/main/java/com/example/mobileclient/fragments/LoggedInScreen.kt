@@ -1,15 +1,21 @@
 package com.example.mobileclient.fragments
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
+import androidx.test.core.app.ApplicationProvider
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
 import com.example.mobileclient.model.UserViewModel
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,7 +52,17 @@ class LoggedInScreen : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentLoggedInScreenBinding.inflate(inflater, container, false)
+
+
+        //val view1 = inflater.inflate(R.layout.user_navigation_drawer_header, null) as View
+        //view1.findViewById<TextView>(R.id.email_field_text).text = email
+
         val view = binding.root
+
+        val intent = Intent()
+        val email = intent.getStringExtra("E-mail")
+        Toast.makeText(context, "Email zalogowano: "+email, Toast.LENGTH_LONG)
+        binding.guestScreenText.text = email
         binding.topAppBar.setNavigationOnClickListener {
             binding.drawerLayout.open()
             binding.navigationView.setCheckedItem(R.id.nav_tutorials)

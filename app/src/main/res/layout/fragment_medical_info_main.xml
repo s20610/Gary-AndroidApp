@@ -45,7 +45,7 @@
                     android:layout_width="140dp"
                     android:layout_height="140dp"
                     android:layout_margin="1dp"
-                    android:src="@drawable/blood_type_add"
+                    android:src="@drawable/blood_type_a_plus"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

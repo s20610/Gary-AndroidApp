@@ -3,7 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/navLayout">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:background="@color/green_light"
@@ -35,9 +37,9 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/email_field_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Placeholder"
             android:paddingLeft="5dp"
             android:paddingTop="0dp"
             android:paddingBottom="10dp"

@@ -72,7 +72,7 @@
     <fragment
         android:id="@+id/userInfo"
         android:name="com.example.mobileclient.fragments.UserInfo"
-        android:label="fragment_user_info" />
+        android:label="UserInfo" />
     <fragment
         android:id="@+id/medicalInfoMain"
         android:name="com.example.mobileclient.fragments.MedicalInfoMain"

@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:hint="New_password"
+                android:hint="New password"
                 app:endIconMode="password_toggle"
                 app:helperText="Required*"
                 app:helperTextEnabled="true"

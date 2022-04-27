@@ -44,7 +44,7 @@
                 android:id="@+id/splash_screen_signin"
                 style="@style/Widget.Material3.Button"
                 android:layout_width="130dp"
-                android:layout_height="50"
+                android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:elevation="8dp"
                 android:text="@string/sign_up"

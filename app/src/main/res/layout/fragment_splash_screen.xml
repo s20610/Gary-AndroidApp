@@ -30,8 +30,8 @@
             <Button
                 android:id="@+id/splash_screen_login"
                 style="@style/Widget.Material3.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="130dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:elevation="8dp"
                 android:text="@string/login_button_text"
@@ -43,8 +43,8 @@
             <Button
                 android:id="@+id/splash_screen_signin"
                 style="@style/Widget.Material3.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="130dp"
+                android:layout_height="50"
                 android:layout_marginTop="10dp"
                 android:elevation="8dp"
                 android:text="@string/sign_up"

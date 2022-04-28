@@ -76,12 +76,7 @@ class Login : Fragment() {
                     Log.d("Login Response", response.body().toString())
                     Log.d("Response Code", response.code().toString())
                     Toast.makeText(context, "Login successful", LENGTH_LONG).show()
-                    val intent = Intent(
-                        ApplicationProvider.getApplicationContext<Context>(),
-                        LoggedInScreen::class.java
-                    )
-                    intent.putExtra("Credentials", credentials.username)
-                    startActivity(intent)
+
                     Navigation.findNavController(view).navigate(R.id.login_to_loggedin)
                 } else {
                     Toast.makeText(context, "Login error" + response.code(), LENGTH_LONG).show()

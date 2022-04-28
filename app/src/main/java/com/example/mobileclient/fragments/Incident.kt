@@ -5,12 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation
 import com.example.mobileclient.R
+import com.example.mobileclient.databinding.FragmentIncidentBinding
+import com.example.mobileclient.databinding.FragmentLoginBinding
+import com.example.mobileclient.model.UserViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+
+private var _binding: FragmentIncidentBinding? = null
+private val binding get() = _binding!!
 
 /**
  * A simple [Fragment] subclass.
@@ -35,7 +43,16 @@ class Incident : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_incident, container, false)
+        _binding = FragmentIncidentBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+        binding.button2.setOnClickListener{
+            Navigation.findNavController(view)
+                .navigate(R.id.action_incident_to_loggedInScreen)
+        }
+
+        return view
+
     }
 
     companion object {

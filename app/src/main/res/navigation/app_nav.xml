@@ -57,6 +57,9 @@
         <action
             android:id="@+id/action_loggedInScreen_to_medicalInfoMain"
             app:destination="@id/medicalInfoMain" />
+        <action
+            android:id="@+id/action_loggedInScreen_to_incident"
+            app:destination="@id/incident" />
     </fragment>
     <fragment
         android:id="@+id/guestScreen"
@@ -91,4 +94,12 @@
         android:id="@+id/bloodTypeForm"
         android:name="com.example.mobileclient.fragments.BloodTypeForm"
         android:label="fragment_blood_type_form" />
+    <fragment
+        android:id="@+id/incident"
+        android:name="com.example.mobileclient.fragments.Incident"
+        android:label="Incident" >
+        <action
+            android:id="@+id/action_incident_to_loggedInScreen"
+            app:destination="@id/loggedInScreen" />
+    </fragment>
 </navigation>

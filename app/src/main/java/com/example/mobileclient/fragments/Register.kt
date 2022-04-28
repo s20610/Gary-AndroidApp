@@ -1,23 +1,31 @@
 package com.example.mobileclient.fragments
 
+import android.os.Build
 import android.os.Bundle
-import android.service.autofill.CharSequenceTransformation
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Switch
+import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
+import androidx.annotation.RequiresApi
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation
+import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentRegisterBinding
-import com.example.mobileclient.databinding.FragmentSplashScreenBinding
+import com.example.mobileclient.model.NewUser
+import com.example.mobileclient.model.UserViewModel
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
-import org.w3c.dom.Text
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,6 +42,8 @@ class Register : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var _binding: FragmentRegisterBinding? = null
+    private val sharedViewModel: UserViewModel by activityViewModels()
+
     // This property is only valid between onCreateView and
 // onDestroyView.
     private val binding get() = _binding!!
@@ -47,6 +57,7 @@ class Register : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,10 +66,11 @@ class Register : Fragment() {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val firstNameInput : TextInputEditText = binding.firstNameInput
-        val lastNameInput : TextInputEditText = binding.lastNameInput
-        val emailInput : TextInputEditText = binding.emailInput
-        val passwordInput : TextInputEditText = binding.passwordInput
+        val firstNameInput: TextInputEditText = binding.firstNameInput
+        val lastNameInput: TextInputEditText = binding.lastNameInput
+        val emailInput: TextInputEditText = binding.emailInput
+        val phoneNumber: TextInputEditText = binding.phonenumberInput
+        val passwordInput: TextInputEditText = binding.passwordInput
         val birthdayInput: TextInputEditText = binding.birthdayInput
         val agreeSwitch: SwitchMaterial = binding.switchMaterial
         val registerButton: Button = binding.registerButton
@@ -66,10 +78,14 @@ class Register : Fragment() {
         val constraintBuilder =
             CalendarConstraints.Builder().setValidator(DateValidatorPointBackward.now())
         val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("Your birth date")
-            .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT).setCalendarConstraints(constraintBuilder.build()).build()
+            .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT)
+            .setCalendarConstraints(constraintBuilder.build()).build()
 
         fun buttonEnable() {
-            registerButton.isEnabled = agreeSwitch.isChecked && nameValidate(firstNameInput) && nameValidate(lastNameInput)  && passwordValidate(passwordInput) && emailValidate(emailInput)
+            registerButton.isEnabled =
+                agreeSwitch.isChecked && nameValidate(firstNameInput) && nameValidate(lastNameInput) && passwordValidate(
+                    passwordInput
+                ) && emailValidate(emailInput)
         }
         datePicker.addOnPositiveButtonClickListener {
             birthdayInput.setText(datePicker.headerText)
@@ -95,20 +111,60 @@ class Register : Fragment() {
         agreeSwitch.setOnCheckedChangeListener { _, _ ->
             buttonEnable()
         }
+
+
+        //New user creation on register button click
+        binding.registerButton.setOnClickListener {
+            val utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+            utc.timeInMillis = datePicker.selection!!
+            val format = SimpleDateFormat("yyyy-MM-dd", Locale.GERMAN)
+            val birthdate = format.format(utc.time)
+
+            Log.d("Birthdate", birthdate.toString())
+            val newUser = NewUser(
+                firstNameInput.text.toString(),
+                lastNameInput.text.toString(),
+                emailInput.text.toString(),
+                passwordInput.text.toString(),
+                birthdate,
+                phoneNumber.text.toString(),
+                emailInput.text.toString()
+            )
+            sharedViewModel.registerNewUser(newUser)
+            sharedViewModel.registerResponse.observe(viewLifecycleOwner){
+                response ->
+                if (response.isSuccessful){
+                    Log.d("Register response", response.body().toString())
+                    Log.d("Response Code", response.code().toString())
+                    Toast.makeText(context,"Registration successful", LENGTH_LONG).show()
+                    Navigation.findNavController(view).navigate(R.id.register_to_splashscreen)
+                }else{
+                    Toast.makeText(context, "Register error "+response.code(), LENGTH_LONG).show()
+                    Log.d("Register Response", response.body().toString())
+                    Log.d("Response Code: ", response.code().toString())
+                }
+            }
+
+        }
+
+
+
+
+
+
         return view
     }
 
-
-    private fun nameValidate(nameInput : TextInputEditText) : Boolean {
-        return if (nameInput.text?.isNotEmpty() == true){
+    private fun nameValidate(nameInput: TextInputEditText): Boolean {
+        return if (nameInput.text?.isNotEmpty() == true) {
             true
-        }else{
+        } else {
             nameInput.error = "This field is required"
             false
         }
     }
 
-    private fun emailValidate (emailInput : TextInputEditText) : Boolean {
+    private fun emailValidate(emailInput: TextInputEditText): Boolean {
         return when {
             emailInput.text?.isEmpty() == true -> {
                 emailInput.error = "This field is required"
@@ -124,10 +180,10 @@ class Register : Fragment() {
         }
     }
 
-    private fun passwordValidate(passwordInput : TextInputEditText) : Boolean {
-        return if (passwordInput.text?.isNotEmpty() == true){
+    private fun passwordValidate(passwordInput: TextInputEditText): Boolean {
+        return if (passwordInput.text?.isNotEmpty() == true) {
             true
-        }else{
+        } else {
             passwordInput.error = "This field is required"
             false
         }

@@ -1,5 +1,7 @@
 package com.example.mobileclient.fragments
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,15 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
-import androidx.core.view.get
+import android.widget.Toast.LENGTH_SHORT
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.test.core.app.ApplicationProvider
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentLoginBinding
 import com.example.mobileclient.model.Credentials
 import com.example.mobileclient.model.UserViewModel
+import java.lang.Exception
+import java.net.ConnectException
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,22 +64,34 @@ class Login : Fragment() {
         binding.loginButton.setOnClickListener {
             Log.d("Email", binding.emailFieldText.text.toString())
             Log.d("Password", binding.passwordFieldText.text.toString())
-            val credentials = Credentials(binding.emailFieldText.text.toString().trim(),binding.passwordFieldText.text.toString().trim())
+            val credentials = Credentials(
+                binding.emailFieldText.text.toString().trim(),
+                binding.passwordFieldText.text.toString().trim()
+            )
             Log.d("Credentials", credentials.toString())
+            if (credentials.username.isNotEmpty()) {
             sharedViewModel.getLoginResponse(credentials)
             sharedViewModel.loginResponse.observe(viewLifecycleOwner) { response ->
                 if (response.isSuccessful) {
                     Log.d("Login Response", response.body().toString())
                     Log.d("Response Code", response.code().toString())
                     Toast.makeText(context, "Login successful", LENGTH_LONG).show()
+                    val intent = Intent(
+                        ApplicationProvider.getApplicationContext<Context>(),
+                        LoggedInScreen::class.java
+                    )
+                    intent.putExtra("Credentials", credentials.username)
+                    startActivity(intent)
                     Navigation.findNavController(view).navigate(R.id.login_to_loggedin)
                 } else {
-                    Toast.makeText(context, "Login error"+response.code(), LENGTH_LONG).show()
+                    Toast.makeText(context, "Login error" + response.code(), LENGTH_LONG).show()
                     Log.d("Login Response", response.body().toString())
                     Log.d("Response Code: ", response.code().toString())
                 }
             }
-
+        }else{
+                Toast.makeText(context, "No connection", LENGTH_SHORT).show()
+            }
         }
         return view
     }

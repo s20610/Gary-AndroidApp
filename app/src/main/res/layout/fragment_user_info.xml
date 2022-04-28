@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/editAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit Account"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editAccount"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_gravity="center"
+                app:cardCornerRadius="60dp"
+                app:cardUseCompatPadding="true"
+                app:cardElevation="0dp"
+                android:layout_margin="5dp"
+                >
+                <ImageView
+                    android:id="@+id/User_Image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/img_avatar2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="User Avatar" />
+            </androidx.cardview.widget.CardView>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/old_password_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="Old password"
+                app:endIconMode="password_toggle"
+                app:helperText="Required*"
+                app:helperTextEnabled="true"
+                app:layout_constraintTop_toBottomOf="@id/card_view">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/old_password_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/new_password_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="New password"
+                app:endIconMode="password_toggle"
+                app:helperText="Required*"
+                app:helperTextEnabled="true"
+                app:layout_constraintTop_toBottomOf="@+id/old_password_field">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/new_password_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/birthday_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="@string/birthday_hint"
+                app:endIconMode="clear_text"
+                app:helperText="Required*"
+                app:helperTextEnabled="true"
+                app:layout_constraintTop_toBottomOf="@+id/new_password_field">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/birthday_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/register_button"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Save"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                app:layout_constraintEnd_toEndOf="@+id/birthday_field"
+                app:layout_constraintStart_toStartOf="@+id/birthday_field"
+                app:layout_constraintTop_toBottomOf="@+id/birthday_field" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</LinearLayout>

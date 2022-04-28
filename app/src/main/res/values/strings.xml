@@ -19,5 +19,4 @@
     <string name="guest_button">Click here</string>
     <string name="guest_appbar_text">Guest View</string>
     <string name="user_appbar_text">User View</string>
-    <string name="phonenumber_hint">Your phone number</string>
 </resources>

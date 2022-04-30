@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
+import com.example.mobileclient.adapter.AllergyAdapter
 import com.example.mobileclient.databinding.FragmentGuestScreenBinding
 import com.example.mobileclient.databinding.FragmentMedicalInfoMainBinding
+import com.example.mobileclient.model.Allergy
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,6 +46,10 @@ class MedicalInfoMain : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentMedicalInfoMainBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        val allergies : List<Allergy> = mutableListOf(Allergy("Czekolada", "Jedzenie"), Allergy("Pyłki traw", "Wziewna"), Allergy("Truskawki", "Jedzenie"), Allergy("Jad pszczoły", "Jad"), Allergy("Nauka", "Inne"))
+        binding.allergyView.adapter = AllergyAdapter(allergies )
+        binding.allergyView.setHasFixedSize(true)
         binding.topAppBar.setNavigationOnClickListener {
             binding.drawerLayout.open()
             binding.navigationView.setCheckedItem(R.id.nav_user_details)

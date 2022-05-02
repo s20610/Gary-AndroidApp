@@ -15,6 +15,7 @@ import androidx.test.core.app.ApplicationProvider
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
 import com.example.mobileclient.model.UserViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -73,7 +74,15 @@ class LoggedInScreen : Fragment() {
 
         }
         binding.addIncidentButton.setOnClickListener{
-            Navigation.findNavController(view).navigate(R.id.action_loggedInScreen_to_incident)
+            context?.let { it1 -> MaterialAlertDialogBuilder(it1).setTitle("Create Incident?")
+                .setMessage("Unjustified ambulance call may result in a fine. Are you sure?")
+                .setNegativeButton("Cancel"){
+                    dialog, which -> dialog.cancel()
+                }
+                .setPositiveButton("Accept"){
+                    dialog, which -> Navigation.findNavController(view).navigate(R.id.action_loggedInScreen_to_incident)
+                }
+                .show()}
         }
         binding.navigationView.setNavigationItemSelectedListener {
             it.isChecked = true

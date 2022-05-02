@@ -31,6 +31,9 @@
         <action
             android:id="@+id/login_to_loggedin"
             app:destination="@id/loggedInScreen" />
+        <action
+            android:id="@+id/action_login_to_paramedicScreen"
+            app:destination="@id/paramedicScreen" />
     </fragment>
     <fragment
         android:id="@+id/register"
@@ -102,4 +105,8 @@
             android:id="@+id/action_incident_to_loggedInScreen"
             app:destination="@id/loggedInScreen" />
     </fragment>
+    <fragment
+        android:id="@+id/paramedicScreen"
+        android:name="com.example.mobileclient.fragments.ParamedicScreen"
+        android:label="fragment_paramedic_screen" />
 </navigation>

@@ -80,12 +80,13 @@
 
             <Button
                 android:id="@+id/browseButton"
-                android:layout_width="wrap_content"
+                android:layout_width="114dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="84dp"
-                android:text="Browse"
+                android:layout_marginStart="180dp"
+                android:layout_marginBottom="32dp"
+                android:text="List"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/movies_grid"
+                app:layout_constraintEnd_toStartOf="@+id/add_incident_button"
                 app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

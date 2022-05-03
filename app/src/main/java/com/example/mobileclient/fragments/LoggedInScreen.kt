@@ -84,6 +84,11 @@ class LoggedInScreen : Fragment() {
                 }
                 .show()}
         }
+
+        binding.browseButton.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_loggedInScreen_to_incidentsBrowse2)
+        }
+
         binding.navigationView.setNavigationItemSelectedListener {
             it.isChecked = true
             if (it.toString() == "Log out") {

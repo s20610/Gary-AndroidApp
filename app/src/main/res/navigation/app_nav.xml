@@ -60,6 +60,9 @@
         <action
             android:id="@+id/action_loggedInScreen_to_incident"
             app:destination="@id/incident" />
+        <action
+            android:id="@+id/action_loggedInScreen_to_incidentsBrowse2"
+            app:destination="@id/incidentsBrowse2" />
     </fragment>
     <fragment
         android:id="@+id/guestScreen"
@@ -102,4 +105,18 @@
             android:id="@+id/action_incident_to_loggedInScreen"
             app:destination="@id/loggedInScreen" />
     </fragment>
+    <fragment
+        android:id="@+id/incidentsBrowse2"
+        android:name="com.example.mobileclient.fragments.IncidentsBrowse"
+        android:label="fragment_incidents_browse"
+        tools:layout="@layout/fragment_incidents_browse" >
+        <action
+            android:id="@+id/action_incidentsBrowse2_to_showIncident"
+            app:destination="@id/showIncident" />
+    </fragment>
+    <fragment
+        android:id="@+id/showIncident"
+        android:name="com.example.mobileclient.fragments.ShowIncident"
+        android:label="fragment_show_incident"
+        tools:layout="@layout/fragment_show_incident" />
 </navigation>

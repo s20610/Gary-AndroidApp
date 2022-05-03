@@ -62,6 +62,10 @@ class Login : Fragment() {
             Navigation.findNavController(view).navigate(R.id.login_to_forgotpassword)
         }
         binding.loginButton.setOnClickListener {
+
+            Navigation.findNavController(view).navigate(R.id.login_to_loggedin)
+
+            /*
             Log.d("Email", binding.emailFieldText.text.toString())
             Log.d("Password", binding.passwordFieldText.text.toString())
             val credentials = Credentials(
@@ -78,15 +82,20 @@ class Login : Fragment() {
                     Toast.makeText(context, "Login successful", LENGTH_LONG).show()
 
                     Navigation.findNavController(view).navigate(R.id.login_to_loggedin)
-                } else {
+
+            } else {
                     Toast.makeText(context, "Login error" + response.code(), LENGTH_LONG).show()
                     Log.d("Login Response", response.body().toString())
                     Log.d("Response Code: ", response.code().toString())
                 }
+
+
             }
         }else{
                 Toast.makeText(context, "No connection", LENGTH_SHORT).show()
             }
+
+             */
         }
         binding.paramedicButton.setOnClickListener{
             Log.d("Email", binding.emailFieldText.text.toString())

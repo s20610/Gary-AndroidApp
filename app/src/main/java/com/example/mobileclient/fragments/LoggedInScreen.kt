@@ -86,7 +86,7 @@ class LoggedInScreen : Fragment() {
         }
 
         binding.browseButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_loggedInScreen_to_incidentsBrowse2)
+            Navigation.findNavController(view).navigate(R.id.action_loggedInScreen_to_incidentsBrowse)
         }
 
         binding.navigationView.setNavigationItemSelectedListener {

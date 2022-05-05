@@ -1,16 +1,24 @@
 package com.example.mobileclient.fragments
 
+import android.annotation.SuppressLint
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
 import com.example.mobileclient.databinding.FragmentMedicalInfoMainBinding
 import com.example.mobileclient.databinding.FragmentParamedicScreenBinding
 import com.example.mobileclient.model.UserViewModel
+import com.google.android.material.color.MaterialColors
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,14 +46,35 @@ class ParamedicScreen : Fragment() {
         }
     }
 
+    @SuppressLint("ResourceAsColor")
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentParamedicScreenBinding.inflate(inflater, container, false)
         val view = binding.root
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val formatted = current.format(formatter)
+        binding.dayField.text = formatted
+        binding.checkinButton.setOnClickListener{
+            if(binding.checkinButton.text == "Check In"){
+                binding.checkinButton.text = "Finish Shift"
+            }else {
+                binding.checkinButton.text = "Check In"
+            }
+        }
         binding.topAppBar.setNavigationOnClickListener {
             binding.drawerLayout.open()
+        }
+        binding.navigationView.setNavigationItemSelectedListener {
+            it.isChecked = true
+            if (it.toString() == "Log out") {
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_paramedicScreen_to_login)
+            }
+            true
         }
         return view
     }

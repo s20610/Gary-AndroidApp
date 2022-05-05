@@ -31,6 +31,9 @@
         <action
             android:id="@+id/login_to_loggedin"
             app:destination="@id/loggedInScreen" />
+        <action
+            android:id="@+id/action_login_to_paramedicScreen"
+            app:destination="@id/paramedicScreen" />
     </fragment>
     <fragment
         android:id="@+id/register"
@@ -61,8 +64,8 @@
             android:id="@+id/action_loggedInScreen_to_incident"
             app:destination="@id/incident" />
         <action
-            android:id="@+id/action_loggedInScreen_to_incidentsBrowse2"
-            app:destination="@id/incidentsBrowse2" />
+            android:id="@+id/action_loggedInScreen_to_incidentsBrowse"
+            app:destination="@id/incidentsBrowse" />
     </fragment>
     <fragment
         android:id="@+id/guestScreen"
@@ -106,17 +109,27 @@
             app:destination="@id/loggedInScreen" />
     </fragment>
     <fragment
-        android:id="@+id/incidentsBrowse2"
+        android:id="@+id/paramedicScreen"
+        android:name="com.example.mobileclient.fragments.ParamedicScreen"
+        android:label="fragment_paramedic_screen" >
+        <action
+            android:id="@+id/action_paramedicScreen_to_login"
+            app:destination="@id/login" />
+    </fragment>
+        <fragment
+            android:id="@+id/incidentsBrowse"
         android:name="com.example.mobileclient.fragments.IncidentsBrowse"
         android:label="fragment_incidents_browse"
         tools:layout="@layout/fragment_incidents_browse" >
         <action
             android:id="@+id/action_incidentsBrowse2_to_showIncident"
-            app:destination="@id/showIncident" />
-    </fragment>
+            app:destination="@id/showIncident" /></fragment>
+    
+
     <fragment
         android:id="@+id/showIncident"
         android:name="com.example.mobileclient.fragments.ShowIncident"
         android:label="fragment_show_incident"
         tools:layout="@layout/fragment_show_incident" />
+
 </navigation>

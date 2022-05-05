@@ -97,8 +97,33 @@ class Login : Fragment() {
 
              */
         }
+        binding.paramedicButton.setOnClickListener{
+            Log.d("Email", binding.emailFieldText.text.toString())
+            Log.d("Password", binding.passwordFieldText.text.toString())
+            val credentials = Credentials(
+                binding.emailFieldText.text.toString().trim(),
+                binding.passwordFieldText.text.toString().trim()
+            )
+            Log.d("Credentials", credentials.toString())
+            if (credentials.username.isNotEmpty()) {
+                sharedViewModel.getLoginResponse(credentials)
+                sharedViewModel.loginResponse.observe(viewLifecycleOwner) { response ->
+                    if (response.isSuccessful) {
+                        Log.d("Login Response", response.body().toString())
+                        Log.d("Response Code", response.code().toString())
+                        Toast.makeText(context, "Login successful", LENGTH_LONG).show()
 
-
+                        Navigation.findNavController(view).navigate(R.id.action_login_to_paramedicScreen)
+                    } else {
+                        Toast.makeText(context, "Login error" + response.code(), LENGTH_LONG).show()
+                        Log.d("Login Response", response.body().toString())
+                        Log.d("Response Code: ", response.code().toString())
+                    }
+                }
+            }else{
+                Toast.makeText(context, "No connection", LENGTH_SHORT).show()
+            }
+        }
         return view
     }
 

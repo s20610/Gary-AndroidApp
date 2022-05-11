@@ -1,170 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewModel"
-            type="com.example.mobileclient.model.UserViewModel"
-            />
+            type="com.example.mobileclient.model.UserViewModel" />
     </data>
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawerLayout"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_margin="1dp"
+            android:src="@drawable/blood_type_a_plus"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Jan Kowalski"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/bandButton"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:background="?attr/colorSecondary"
+            android:text="Band"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/userName" />
+
+        <TableLayout
+            android:id="@+id/allergies"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true">
+            android:layout_height="150dp"
+            android:layout_margin="10dp"
+            android:isScrollContainer="true"
+            android:scrollbars="vertical"
+            android:shrinkColumns="*"
+            android:stretchColumns="*"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageView">
 
-            <com.google.android.material.appbar.AppBarLayout
-                style="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface"
-                android:layout_width="match_parent"
+            <TableRow
                 android:layout_height="wrap_content"
-                android:fitsSystemWindows="true">
-
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/topAppBar"
-                    style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@android:color/transparent"
-                    android:elevation="0dp"
-                    app:navigationIcon="@drawable/ic_menu_24"
-                    app:title="User Details"/>
-            </com.google.android.material.appbar.AppBarLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    android:layout_margin="1dp"
-                    android:src="@drawable/blood_type_a_plus"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                android:background="?attr/colorPrimaryVariant"
+                android:padding="5dp">
 
                 <TextView
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/userName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Jan Kowalski"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_width="0dip"
+                    android:layout_column="0"
+                    android:layout_weight="1"
+                    android:text="Alergia"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textColor="@color/white" />
 
-                <Button
-                    android:id="@+id/bandButton"
-                    android:background="?attr/colorSecondary"
-                    android:layout_marginVertical="10dp"
-                    android:layout_width="180dp"
-                    android:layout_height="wrap_content"
-                    android:text="Band"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintTop_toBottomOf="@+id/userName" />
-                <TableLayout
-                    android:id="@+id/allergies"
-                    app:layout_constraintTop_toBottomOf="@id/imageView"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:isScrollContainer="true"
-                    android:shrinkColumns="*"
-                    android:stretchColumns="*"
-                    android:layout_margin="10dp"
-                    android:scrollbars="vertical">
-                    <TableRow
-                        android:background="?attr/colorPrimaryVariant"
-                        android:padding="5dp"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="0dip"
-                            android:layout_weight="1"
-                            android:textColor="@color/white"
-                            android:layout_column="0"
-                            android:text="Alergia"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
-                        <TextView
-                            android:layout_width="0dip"
-                            android:layout_weight="1"
-                            android:textColor="@color/white"
-                            android:id="@+id/allergy_type_header"
-                            android:text="Typ"
-                            android:layout_column="1"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
-                    </TableRow>
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/allergy_view"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:listitem="@layout/list_item_allergies">
+                <TextView
+                    android:id="@+id/allergy_type_header"
+                    android:layout_width="0dip"
+                    android:layout_column="1"
+                    android:layout_weight="1"
+                    android:text="Typ"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textColor="@color/white" />
+            </TableRow>
 
-                    </androidx.recyclerview.widget.RecyclerView>
-            </TableLayout>
-                <TableLayout
-                    android:id="@+id/diseases"
-                    app:layout_constraintTop_toBottomOf="@id/allergies"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:isScrollContainer="true"
-                    android:shrinkColumns="*"
-                    android:stretchColumns="*"
-                    android:layout_marginVertical="30dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:scrollbars="vertical">
-                    <TableRow
-                        android:background="?attr/colorPrimaryVariant"
-                        android:padding="5dp"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:textColor="@color/white"
-                            android:text="Choroba"
-                            android:layout_column="0"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
-                    </TableRow>
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/disease_view"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:listitem="@layout/list_item_diseases"/>
-                </TableLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/allergy_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/list_item_allergies">
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="100dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:padding="10dp"
-                    style="@style/Widget.Material3.Button"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/diseases"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:text="Add"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
+            </androidx.recyclerview.widget.RecyclerView>
+        </TableLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        <TableLayout
+            android:id="@+id/diseases"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="30dp"
+            android:isScrollContainer="true"
+            android:scrollbars="vertical"
+            android:shrinkColumns="*"
+            android:stretchColumns="*"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/allergies">
 
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/navigationView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            app:headerLayout="@layout/user_navigation_drawer_header"
-            app:menu="@menu/user_navigation_drawer" />
-    </androidx.drawerlayout.widget.DrawerLayout>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimaryVariant"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_column="0"
+                    android:text="Choroba"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textColor="@color/white" />
+            </TableRow>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/disease_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/list_item_diseases" />
+        </TableLayout>
+
+        <Button
+            style="@style/Widget.Material3.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="100dp"
+            android:padding="10dp"
+            android:text="Add"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/diseases" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

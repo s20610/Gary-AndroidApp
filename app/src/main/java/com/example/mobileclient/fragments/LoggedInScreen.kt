@@ -50,7 +50,7 @@ class LoggedInScreen : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentLoggedInScreenBinding.inflate(inflater, container, false)
 
@@ -62,43 +62,21 @@ class LoggedInScreen : Fragment() {
 
         val intent = Intent()
         val email = intent.getStringExtra("E-mail")
-        Toast.makeText(context, "Email zalogowano: "+email, Toast.LENGTH_LONG)
-        binding.guestScreenText.text = email
-        binding.topAppBar.setNavigationOnClickListener {
-            binding.drawerLayout.open()
-            binding.navigationView.setCheckedItem(R.id.nav_tutorials)
-        }
-        binding.navigationView.getHeaderView(0).setOnClickListener {
-            Navigation.findNavController(view)
-                .navigate(R.id.action_loggedInScreen_to_userInfo)
-
-        }
-        binding.addIncidentButton.setOnClickListener{
-            context?.let { it1 -> MaterialAlertDialogBuilder(it1).setTitle("Create Incident?")
-                .setMessage("Unjustified ambulance call may result in a fine. Are you sure?")
-                .setNegativeButton("Cancel"){
-                    dialog, which -> dialog.cancel()
-                }
-                .setPositiveButton("Accept"){
-                    dialog, which -> Navigation.findNavController(view).navigate(R.id.action_loggedInScreen_to_incident)
-                }
-                .show()}
-        }
-
-        binding.browseButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_loggedInScreen_to_incidentsBrowse)
-        }
-
-        binding.navigationView.setNavigationItemSelectedListener {
-            it.isChecked = true
-            if (it.toString() == "Log out") {
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_loggedInScreen_to_splashScreen)
-            }else if(it.toString() == "User Details"){
-                Navigation.findNavController(view).navigate((R.id.action_loggedInScreen_to_medicalInfoMain))
+        Toast.makeText(context, "Email zalogowano: " + email, Toast.LENGTH_LONG).show()
+        binding.loginResponse.text = email
+        binding.addIncidentButton.setOnClickListener {
+            context?.let { it1 ->
+                MaterialAlertDialogBuilder(it1).setTitle("Create Incident?")
+                    .setMessage("Unjustified ambulance call may result in a fine. Are you sure?")
+                    .setNegativeButton("Cancel") { dialog, which ->
+                        dialog.cancel()
+                    }
+                    .setPositiveButton("Accept") { dialog, which ->
+                        Navigation.findNavController(view)
+                            .navigate(R.id.action_loggedInScreen_to_incident)
+                    }
+                    .show()
             }
-            binding.drawerLayout.close()
-            true
         }
         return view
     }

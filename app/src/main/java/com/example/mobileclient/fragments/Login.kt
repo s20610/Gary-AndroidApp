@@ -14,7 +14,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import androidx.test.core.app.ApplicationProvider
+import com.example.mobileclient.ParamedicActivity
 import com.example.mobileclient.R
+import com.example.mobileclient.UserActivity
 import com.example.mobileclient.databinding.FragmentLoginBinding
 import com.example.mobileclient.model.Credentials
 import com.example.mobileclient.model.UserViewModel
@@ -59,11 +61,12 @@ class Login : Fragment() {
         val view = binding.root
         //SPACE TO ADD ONCLICK LISTENERS ETC.
         binding.forgotPassword.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.login_to_forgotpassword)
+            Navigation.findNavController(view).navigate(R.id.action_login_to_forgotPassword)
         }
         binding.loginButton.setOnClickListener {
-
-            Navigation.findNavController(view).navigate(R.id.login_to_loggedin)
+            val userActivity = Intent(context,UserActivity::class.java)
+            //Here we should apply putExtra method with auth token from login response
+            startActivity(userActivity)
 
             /*
             Log.d("Email", binding.emailFieldText.text.toString())
@@ -98,31 +101,34 @@ class Login : Fragment() {
              */
         }
         binding.paramedicButton.setOnClickListener{
-            Log.d("Email", binding.emailFieldText.text.toString())
-            Log.d("Password", binding.passwordFieldText.text.toString())
-            val credentials = Credentials(
-                binding.emailFieldText.text.toString().trim(),
-                binding.passwordFieldText.text.toString().trim()
-            )
-            Log.d("Credentials", credentials.toString())
-            if (credentials.username.isNotEmpty()) {
-                sharedViewModel.getLoginResponse(credentials)
-                sharedViewModel.loginResponse.observe(viewLifecycleOwner) { response ->
-                    if (response.isSuccessful) {
-                        Log.d("Login Response", response.body().toString())
-                        Log.d("Response Code", response.code().toString())
-                        Toast.makeText(context, "Login successful", LENGTH_LONG).show()
-
-                        Navigation.findNavController(view).navigate(R.id.action_login_to_paramedicScreen)
-                    } else {
-                        Toast.makeText(context, "Login error" + response.code(), LENGTH_LONG).show()
-                        Log.d("Login Response", response.body().toString())
-                        Log.d("Response Code: ", response.code().toString())
-                    }
-                }
-            }else{
-                Toast.makeText(context, "No connection", LENGTH_SHORT).show()
-            }
+//            Log.d("Email", binding.emailFieldText.text.toString())
+//            Log.d("Password", binding.passwordFieldText.text.toString())
+//            val credentials = Credentials(
+//                binding.emailFieldText.text.toString().trim(),
+//                binding.passwordFieldText.text.toString().trim()
+//            )
+//            Log.d("Credentials", credentials.toString())
+//            if (credentials.username.isNotEmpty()) {
+//                sharedViewModel.getLoginResponse(credentials)
+//                sharedViewModel.loginResponse.observe(viewLifecycleOwner) { response ->
+//                    if (response.isSuccessful) {
+//                        Log.d("Login Response", response.body().toString())
+//                        Log.d("Response Code", response.code().toString())
+//                        Toast.makeText(context, "Login successful", LENGTH_LONG).show()
+//
+//                        Navigation.findNavController(view).navigate(R.id.action_login_to_paramedicScreen)
+//                    } else {
+//                        Toast.makeText(context, "Login error" + response.code(), LENGTH_LONG).show()
+//                        Log.d("Login Response", response.body().toString())
+//                        Log.d("Response Code: ", response.code().toString())
+//                    }
+//                }
+//            }else{
+//                Toast.makeText(context, "No connection", LENGTH_SHORT).show()
+//            }
+            val paramedicActivity = Intent(context,ParamedicActivity::class.java)
+            //Here we should apply putExtra method with auth token from login response
+            startActivity(paramedicActivity)
         }
         return view
     }

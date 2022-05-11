@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/landing_nav"
+    app:startDestination="@id/splashScreen">
+
+    <fragment
+        android:id="@+id/splashScreen"
+        android:name="com.example.mobileclient.fragments.SplashScreen"
+        android:label="SplashScreen" >
+        <action
+            android:id="@+id/action_splashScreen_to_register"
+            app:destination="@id/register" />
+        <action
+            android:id="@+id/action_splashScreen_to_login"
+            app:destination="@id/login" />
+        <action
+            android:id="@+id/action_splashScreen_to_guestScreen"
+            app:destination="@id/guestScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/register"
+        android:name="com.example.mobileclient.fragments.Register"
+        android:label="Register" >
+        <action
+            android:id="@+id/action_register_to_splashScreen"
+            app:destination="@id/splashScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/login"
+        android:name="com.example.mobileclient.fragments.Login"
+        android:label="Login" >
+        <action
+            android:id="@+id/action_login_to_forgotPassword"
+            app:destination="@id/forgotPassword" />
+    </fragment>
+    <fragment
+        android:id="@+id/guestScreen"
+        android:name="com.example.mobileclient.fragments.GuestScreen"
+        android:label="GuestScreen" >
+        <action
+            android:id="@+id/action_guestScreen_to_register"
+            app:destination="@id/register" />
+        <action
+            android:id="@+id/action_guestScreen_to_login"
+            app:destination="@id/login" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgotPassword"
+        android:name="com.example.mobileclient.fragments.ForgotPassword"
+        android:label="ForgotPassword" />
+</navigation>

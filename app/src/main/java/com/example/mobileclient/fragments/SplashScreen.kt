@@ -44,13 +44,13 @@ class SplashScreen : Fragment() {
         _binding = FragmentSplashScreenBinding.inflate(inflater, container, false)
         val view = binding.root
         binding.splashScreenLogin.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.splashscreen_to_login)
+            Navigation.findNavController(view).navigate(R.id.action_splashScreen_to_login)
         }
         binding.splashScreenSignin.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.splashscreen_to_register)
+            Navigation.findNavController(view).navigate(R.id.action_splashScreen_to_register)
         }
         binding.guestButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.splashscreen_to_guestscreen)
+            Navigation.findNavController(view).navigate(R.id.action_splashScreen_to_guestScreen)
         }
         return view
     }

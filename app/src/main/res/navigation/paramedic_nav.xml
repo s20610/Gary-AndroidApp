@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/paramedic_nav"
+    app:startDestination="@id/paramedicScreen">
+
+    <fragment
+        android:id="@+id/paramedicScreen"
+        android:name="com.example.mobileclient.fragments.ParamedicScreen"
+        android:label="ParamedicScreen" />
+</navigation>

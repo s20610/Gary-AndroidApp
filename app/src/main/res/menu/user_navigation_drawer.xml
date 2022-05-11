@@ -4,7 +4,8 @@
     <group android:checkableBehavior="single" >
         <item android:title="Tutorials" android:icon="@drawable/ic_twotone_school_24" android:id="@+id/nav_tutorials"/>
         <item android:title="User Details" android:icon="@drawable/ic_twotone_health_and_safety_24" android:id="@+id/nav_user_details"/>
-        <item android:title="Map" android:icon="@drawable/ic_map_24"/>
+        <item android:title="Reported Incidents" android:icon="@drawable/ic_baseline_list_alt_24" android:id="@+id/nav_user_incidents"/>
+        <item android:title="Map" android:icon="@drawable/ic_map_24" android:id="@+id/nav_map"/>
         <item android:title="Log out" android:icon="@drawable/ic_sharp_logout_24" />
     </group>
 </menu>

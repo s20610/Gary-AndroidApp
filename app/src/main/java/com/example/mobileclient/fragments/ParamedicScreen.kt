@@ -65,17 +65,6 @@ class ParamedicScreen : Fragment() {
                 binding.checkinButton.text = "Check In"
             }
         }
-        binding.topAppBar.setNavigationOnClickListener {
-            binding.drawerLayout.open()
-        }
-        binding.navigationView.setNavigationItemSelectedListener {
-            it.isChecked = true
-            if (it.toString() == "Log out") {
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_paramedicScreen_to_login)
-            }
-            true
-        }
         return view
     }
 

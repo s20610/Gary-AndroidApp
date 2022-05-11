@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_nav"
+    app:startDestination="@id/loggedInScreen">
+
+
+    <fragment
+        android:id="@+id/loggedInScreen"
+        android:name="com.example.mobileclient.fragments.LoggedInScreen"
+        android:label="LoggedInScreen" >
+        <action
+            android:id="@+id/action_loggedInScreen_to_medicalInfoMain"
+            app:destination="@id/medicalInfoMain" />
+        <action
+            android:id="@+id/action_loggedInScreen_to_facilitiesMap"
+            app:destination="@id/facilitiesMap" />
+        <action
+            android:id="@+id/action_loggedInScreen_to_incidentsBrowse"
+            app:destination="@id/incidentsBrowse" />
+        <action
+            android:id="@+id/action_loggedInScreen_to_incident"
+            app:destination="@id/incident" />
+        <action
+            android:id="@+id/action_loggedInScreen_to_userInfo"
+            app:destination="@id/userInfo" />
+    </fragment>
+    <fragment
+        android:id="@+id/medicalInfoMain"
+        android:name="com.example.mobileclient.fragments.MedicalInfoMain"
+        android:label="MedicalInfoMain" >
+        <action
+            android:id="@+id/action_medicalInfoMain_to_bloodTypeForm"
+            app:destination="@id/bloodTypeForm" />
+    </fragment>
+    <fragment
+        android:id="@+id/incidentsBrowse"
+        android:name="com.example.mobileclient.fragments.IncidentsBrowse"
+        android:label="IncidentsBrowse" >
+        <action
+            android:id="@+id/action_incidentsBrowse_to_showIncident"
+            app:destination="@id/showIncident" />
+    </fragment>
+    <fragment
+        android:id="@+id/incident"
+        android:name="com.example.mobileclient.fragments.Incident"
+        android:label="Incident" >
+        <action
+            android:id="@+id/action_incident_to_loggedInScreen"
+            app:destination="@id/loggedInScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/bloodTypeForm"
+        android:name="com.example.mobileclient.fragments.BloodTypeForm"
+        android:label="BloodTypeForm" />
+    <fragment
+        android:id="@+id/facilitiesMap"
+        android:name="com.example.mobileclient.fragments.FacilitiesMap"
+        android:label="FacilitiesMap" />
+    <fragment
+        android:id="@+id/showIncident"
+        android:name="com.example.mobileclient.fragments.ShowIncident"
+        android:label="fragment_show_incident"
+        tools:layout="@layout/fragment_show_incident" />
+    <fragment
+        android:id="@+id/userInfo"
+        android:name="com.example.mobileclient.fragments.UserInfo"
+        android:label="UserInfo" />
+</navigation>

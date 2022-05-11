@@ -21,6 +21,7 @@ import com.example.mobileclient.model.UserViewModel
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
@@ -112,6 +113,19 @@ class Register : Fragment() {
             buttonEnable()
         }
 
+        binding.collectDataButton.setOnClickListener {
+            context?.let { it1 ->
+            MaterialAlertDialogBuilder(it1).setTitle("Why do we collect data?")
+                .setMessage("We need this data to properly identify users in case of unjustified ambulance call")
+                .setNegativeButton("Cancel") { dialog, which ->
+                    dialog.cancel()
+                }
+                .setPositiveButton("Accept") { dialog, which ->
+                    dialog.cancel()
+                }
+                .show()
+            }
+        }
 
         //New user creation on register button click
         binding.registerButton.setOnClickListener {
@@ -131,15 +145,14 @@ class Register : Fragment() {
                 emailInput.text.toString()
             )
             sharedViewModel.registerNewUser(newUser)
-            sharedViewModel.registerResponse.observe(viewLifecycleOwner){
-                response ->
-                if (response.isSuccessful){
+            sharedViewModel.registerResponse.observe(viewLifecycleOwner) { response ->
+                if (response.isSuccessful) {
                     Log.d("Register response", response.body().toString())
                     Log.d("Response Code", response.code().toString())
-                    Toast.makeText(context,"Registration successful", LENGTH_LONG).show()
-                    Navigation.findNavController(view).navigate(R.id.register_to_splashscreen)
-                }else{
-                    Toast.makeText(context, "Register error "+response.code(), LENGTH_LONG).show()
+                    Toast.makeText(context, "Registration successful", LENGTH_LONG).show()
+                    Navigation.findNavController(view).navigate(R.id.action_register_to_splashScreen)
+                } else {
+                    Toast.makeText(context, "Register error " + response.code(), LENGTH_LONG).show()
                     Log.d("Register Response", response.body().toString())
                     Log.d("Response Code: ", response.code().toString())
                 }

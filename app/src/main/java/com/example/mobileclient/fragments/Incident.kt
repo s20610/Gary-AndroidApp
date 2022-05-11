@@ -7,11 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentIncidentBinding
+import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
 import com.example.mobileclient.databinding.FragmentLoginBinding
 import com.example.mobileclient.model.UserViewModel
 
@@ -32,6 +35,8 @@ class Incident : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var _binding: FragmentIncidentBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,15 +56,27 @@ class Incident : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentIncidentBinding.inflate(inflater, container, false)
 
-        val incidents = arrayOf("Nieprzytomna osoba", "Zadławienie", "Rana kłóta", "Wypadek samochodowy", "Inne")
+        val incidents = arrayOf("Nieprzytomna osoba", "Zadławienie", "Rana kłuta", "Wypadek samochodowy", "Inne")
         val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, incidents)
-        binding.autoCompleteTextView2.setAdapter(arrayAdapter)
+        binding.autoCompleteTextView2!!.setAdapter(arrayAdapter)
 
         val view = binding.root
 
         binding.button2.setOnClickListener{
             Navigation.findNavController(view).navigate(R.id.action_incident_to_loggedInScreen)
 
+        }
+        binding.button.setOnClickListener {
+            var builder = NotificationCompat.Builder(requireContext(), "Notifications")
+                .setSmallIcon(R.drawable.ic_baseline_medical_services_24)
+                .setContentTitle("New incident reported")
+                .setContentText("First responders are on their way")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT).setAutoCancel(true)
+            var notificationId: Int = 1;
+            with(NotificationManagerCompat.from(requireContext())) {
+                // notificationId is a unique int for each notification that you must define
+                notify(notificationId, builder.build())
+            }
         }
         return view
     }

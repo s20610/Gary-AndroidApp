@@ -3,16 +3,18 @@ package com.example.mobileclient
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import org.osmdroid.config.Configuration
 
 class LandingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         createNotificationChannel()
+        Configuration.getInstance().userAgentValue = "Garry"
         Log.d("Notification channel","Created notification channel")
         setContentView(R.layout.activity_landing)
         Log.d("Landing","Content view set to landing")
@@ -32,6 +34,25 @@ class LandingActivity : AppCompatActivity() {
             val notificationManager: NotificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putBoolean("watchedOnboarding", true)
+        editor.apply()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
+        val watchedOnboarding = sharedPref.getBoolean("watchedOnboarding", false)
+        Log.d("watchedOnboarding", watchedOnboarding.toString())
+        if (!watchedOnboarding){
+            val onboardingActivity = Intent(applicationContext,OnboardingActivity::class.java)
+            startActivity(onboardingActivity)
         }
     }
 }

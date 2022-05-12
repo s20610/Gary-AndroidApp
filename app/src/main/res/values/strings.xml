@@ -19,6 +19,19 @@
     <string name="guest_button">Click here</string>
     <string name="guest_appbar_text">Guest View</string>
     <string name="user_appbar_text">User View</string>
+    <string name="create_incident_text">Create Incident</string>
+    <string name="type_of_incident">Type</string>
+    <string name="incident_localisation">Localisation</string>
+    <string name="incident_description">Description</string>
+    <string name="incident_add_button">Add</string>
+    <string name="incident_cancel_button">Cancel</string>
+    <string name="incident_type_hint">Select type</string>
+    <string name="incident_address_hint">Address</string>
+    <string name="incident_details_text">Incident details</string>
+    <string name="call_for_support_text">Call for support</string>
+    <string name="paramedic_type">Type of support</string>
+    <string name="paramedic_justification">Justification</string>
+    <string name="paramedic_justi_hint">Enter justification</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Paramedic_screen">Paramedic View</string>

@@ -21,6 +21,7 @@ class LandingActivity : AppCompatActivity() {
     }
 
     private fun createNotificationChannel() {
+        Configuration.getInstance().userAgentValue="Garry"
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

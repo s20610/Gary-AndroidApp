@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
+import com.example.mobileclient.databinding.FragmentIncidentBinding
 import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
 import com.example.mobileclient.databinding.FragmentMedicalInfoMainBinding
 import com.example.mobileclient.databinding.FragmentParamedicScreenBinding
@@ -24,6 +25,7 @@ import java.time.format.DateTimeFormatter
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+
 
 /**
  * A simple [Fragment] subclass.
@@ -65,6 +67,14 @@ class ParamedicScreen : Fragment() {
                 binding.checkinButton.text = "Check In"
             }
         }
+
+
+        binding.button3.setOnClickListener{
+            Navigation.findNavController(view).navigate(R.id.action_paramedicScreen_to_paramedicCallForSupport2)
+        }
+
+
+
         return view
     }
 

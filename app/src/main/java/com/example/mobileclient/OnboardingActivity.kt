@@ -12,7 +12,7 @@ import com.example.mobileclient.fragments.Onboarding3Fragment
 private const val NUM_PAGES = 3
 
 class OnboardingActivity : FragmentActivity() {
-    lateinit var mPager: ViewPager2
+    private lateinit var mPager: ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

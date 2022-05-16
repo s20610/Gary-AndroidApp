@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.mobileclient.R
-import com.example.mobileclient.databinding.Onboarding1Binding
 
 class Onboarding1Fragment : Fragment() {
     override fun onCreateView(

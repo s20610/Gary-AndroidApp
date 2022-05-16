@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single" >
-        <item android:title="Tutorials" android:icon="@drawable/ic_twotone_school_24" android:id="@+id/nav_tutorials"/>
-        <item android:title="User Details" android:icon="@drawable/ic_twotone_health_and_safety_24" android:id="@+id/nav_user_details"/>
-        <item android:title="Reported Incidents" android:icon="@drawable/ic_baseline_list_alt_24" android:id="@+id/nav_user_incidents"/>
-        <item android:title="Map" android:icon="@drawable/ic_map_24" android:id="@+id/nav_map"/>
-        <item android:title="Log out" android:icon="@drawable/ic_sharp_logout_24" />
+        <item android:title="@string/UserNavigation_Tutorials" android:icon="@drawable/ic_twotone_school_24" android:id="@+id/nav_tutorials"/>
+        <item android:title="@string/UserNavigation_UserDetails" android:icon="@drawable/ic_twotone_health_and_safety_24" android:id="@+id/nav_user_details"/>
+        <item android:title="@string/UserNavigation_ReportedIncidents" android:icon="@drawable/ic_baseline_list_alt_24" android:id="@+id/nav_user_incidents"/>
+        <item android:title="@string/UserNavigation_Map" android:icon="@drawable/ic_map_24" android:id="@+id/nav_map"/>
+        <item android:title="@string/UserNavigation_LogOut" android:icon="@drawable/ic_sharp_logout_24" />
     </group>
 </menu>

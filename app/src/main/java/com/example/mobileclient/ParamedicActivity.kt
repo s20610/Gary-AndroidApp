@@ -1,7 +1,6 @@
 package com.example.mobileclient
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.example.mobileclient.databinding.ActivityParamedicBinding

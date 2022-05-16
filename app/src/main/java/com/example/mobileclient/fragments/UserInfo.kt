@@ -1,13 +1,11 @@
 package com.example.mobileclient.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.mobileclient.R
-import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
 import com.example.mobileclient.databinding.FragmentUserInfoBinding
 import com.example.mobileclient.model.UserViewModel
 

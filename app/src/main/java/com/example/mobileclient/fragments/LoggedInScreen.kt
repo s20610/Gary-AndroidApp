@@ -1,17 +1,14 @@
 package com.example.mobileclient.fragments
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
-import androidx.test.core.app.ApplicationProvider
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
 import com.example.mobileclient.model.UserViewModel
@@ -62,7 +59,7 @@ class LoggedInScreen : Fragment() {
 
         val intent = Intent()
         val email = intent.getStringExtra("E-mail")
-        Toast.makeText(context, "Email zalogowano: " + email, Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "Email zalogowano: $email", Toast.LENGTH_LONG).show()
         binding.loginResponse.text = email
         binding.addIncidentButton.setOnClickListener {
             context?.let { it1 ->

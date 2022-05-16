@@ -68,8 +68,8 @@ class MedicalInfoMain : Fragment() {
                     "AB_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_ab_minus)
                     "B_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_b_plus)
                     "B_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_b_minus)
-                    "0_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_0_plus)
-                    "0_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_0_minus)
+                    "O_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_0_plus)
+                    "O_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_0_minus)
                     "UNKNOWN" -> binding.imageView.setImageResource(R.drawable.blood_type_add)
                     null -> binding.imageView.setImageResource(R.drawable.blood_type_add)
                 }

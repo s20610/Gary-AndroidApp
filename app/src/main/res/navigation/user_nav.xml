@@ -53,7 +53,11 @@
     <fragment
         android:id="@+id/bloodTypeForm"
         android:name="com.example.mobileclient.fragments.BloodTypeForm"
-        android:label="BloodTypeForm" />
+        android:label="BloodTypeForm" >
+        <action
+            android:id="@+id/action_bloodTypeForm_to_medicalInfoMain"
+            app:destination="@id/medicalInfoMain" />
+    </fragment>
     <fragment
         android:id="@+id/facilitiesMap"
         android:name="com.example.mobileclient.fragments.FacilitiesMap"

@@ -1,16 +1,21 @@
 package com.example.mobileclient.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.adapter.AllergyAdapter
 import com.example.mobileclient.databinding.FragmentGuestScreenBinding
 import com.example.mobileclient.databinding.FragmentMedicalInfoMainBinding
 import com.example.mobileclient.model.Allergy
+import com.example.mobileclient.model.UserViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +32,7 @@ class MedicalInfoMain : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var _binding: FragmentMedicalInfoMainBinding? = null
+    private val sharedViewModel: UserViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and
 // onDestroyView.
@@ -47,6 +53,35 @@ class MedicalInfoMain : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentMedicalInfoMainBinding.inflate(inflater, container, false)
         val view = binding.root
+        sharedViewModel.getMedicalInfoResponse(2)
+        sharedViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
+            if (response.isSuccessful) {
+                Log.d("Login Response", response.body().toString())
+                Log.d("Response Code", response.code().toString())
+                Toast.makeText(context, "Login successful", LENGTH_LONG).show()
+                val medicalInfo = response.body()
+
+                when(medicalInfo!!.bloodType){
+                    "A_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_a_plus)
+                    "A_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_a_minus)
+                    "AB_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_ab__plus)
+                    "AB_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_ab_minus)
+                    "B_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_b_plus)
+                    "B_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_b_minus)
+                    "0_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_0_plus)
+                    "0_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_0_minus)
+                    "UNKNOWN" -> binding.imageView.setImageResource(R.drawable.blood_type_add)
+                    null -> binding.imageView.setImageResource(R.drawable.blood_type_add)
+                }
+
+            } else {
+                Toast.makeText(context, "Login error" + response.code(), LENGTH_LONG).show()
+                Log.d("Login Response", response.body().toString())
+                Log.d("Response Code: ", response.code().toString())
+            }
+
+
+        }
         val allergies: List<Allergy> = mutableListOf(
             Allergy("Czekolada", "Jedzenie"),
             Allergy("Pyłki traw", "Wziewna"),

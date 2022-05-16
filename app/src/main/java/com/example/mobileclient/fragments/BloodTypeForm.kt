@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import com.example.mobileclient.R
+import com.example.mobileclient.databinding.FragmentBloodTypeFormBinding
+import com.example.mobileclient.databinding.FragmentGuestScreenBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +24,10 @@ class BloodTypeForm : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var _binding: FragmentBloodTypeFormBinding? = null
+    // This property is only valid between onCreateView and
+// onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +42,14 @@ class BloodTypeForm : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_blood_type_form, container, false)
+        _binding = FragmentBloodTypeFormBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+        binding.button2.setOnClickListener{
+            Navigation.findNavController(view).navigate(R.id.action_bloodTypeForm_to_medicalInfoMain)
+        }
+
+        return view
     }
 
     companion object {

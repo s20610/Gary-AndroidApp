@@ -14,4 +14,7 @@ class Repository {
     suspend fun registerNewUser(newUser: NewUser): Response<ResponseBody>{
         return RetrofitInstance.api.registerNewUser(newUser)
     }
+    suspend fun getUserInfo(id: Int): Response<User>{
+        return RetrofitInstance.api.getUserInfo(id)
+    }
 }

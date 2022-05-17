@@ -1,23 +1,18 @@
 package com.example.mobileclient.fragments
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
-import com.example.mobileclient.databinding.FragmentIncidentBinding
-import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
-import com.example.mobileclient.databinding.FragmentMedicalInfoMainBinding
 import com.example.mobileclient.databinding.FragmentParamedicScreenBinding
 import com.example.mobileclient.model.UserViewModel
-import com.google.android.material.color.MaterialColors
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -61,10 +56,10 @@ class ParamedicScreen : Fragment() {
         val formatted = current.format(formatter)
         binding.dayField.text = formatted
         binding.checkinButton.setOnClickListener{
-            if(binding.checkinButton.text == "Check In"){
-                binding.checkinButton.text = "Finish Shift"
+            if(binding.checkinButton.text == getString(R.string.ParamedicScreen_CheckIn)){
+                binding.checkinButton.text = getString(R.string.ParamedicScreen_FinishShift)
             }else {
-                binding.checkinButton.text = "Check In"
+                binding.checkinButton.text = getString(R.string.ParamedicScreen_CheckIn)
             }
         }
 

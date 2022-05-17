@@ -35,4 +35,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Paramedic_screen">Paramedic View</string>
+    <string name="ParamedicScreen_FinishShift">Finish Shift</string>
+    <string name="ParamedicScreen_CheckIn">Check In</string>
+    <string name="GuestNavigation_Map">Map</string>
+    <string name="ParamedicNavigation_Map">Map</string>
+    <string name="ParamedicNavigation_LogOut">Log out</string>
+    <string name="UserNavigation_Tutorials">Tutorials</string>
+    <string name="UserNavigation_UserDetails">User Details</string>
+    <string name="UserNavigation_ReportedIncidents">Reported Incidents</string>
+    <string name="UserNavigation_Map">Map</string>
+    <string name="UserNavigation_LogOut">Log out</string>
 </resources>

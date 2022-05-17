@@ -2,13 +2,11 @@ package com.example.mobileclient
 
 import android.R
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.navigation.Navigation
-import com.example.mobileclient.databinding.FragmentIncidentBinding
+import androidx.fragment.app.Fragment
 import com.example.mobileclient.databinding.FragmentParamedicCallForSupportBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -16,8 +14,6 @@ import com.example.mobileclient.databinding.FragmentParamedicCallForSupportBindi
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-private var _binding: FragmentParamedicCallForSupportBinding? = null
-private val binding get() = _binding!!
 
 /**
  * A simple [Fragment] subclass.
@@ -28,6 +24,8 @@ class ParamedicCallForSupport : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var _binding: FragmentParamedicCallForSupportBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +43,7 @@ class ParamedicCallForSupport : Fragment() {
 
         val supports = arrayOf("Straż pożarna", "Policja", "Karetka")
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, supports)
-        binding.autoCompleteTextView!!.setAdapter(arrayAdapter)
+        binding.autoCompleteTextView.setAdapter(arrayAdapter)
 
 
         val view = binding.root

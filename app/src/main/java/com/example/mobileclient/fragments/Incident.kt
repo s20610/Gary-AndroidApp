@@ -55,7 +55,6 @@ class Incident : Fragment() {
 
         binding.button2.setOnClickListener{
             Navigation.findNavController(view).navigate(R.id.action_incident_to_loggedInScreen)
-
         }
         binding.button.setOnClickListener {
             val builder = NotificationCompat.Builder(requireContext(), "Notifications")

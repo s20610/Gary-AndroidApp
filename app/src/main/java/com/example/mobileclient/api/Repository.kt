@@ -2,6 +2,7 @@ package com.example.mobileclient.api
 
 import com.example.mobileclient.model.Credentials
 import com.example.mobileclient.model.NewUser
+import com.example.mobileclient.model.Tutorial
 import com.example.mobileclient.model.User
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -16,5 +17,9 @@ class Repository {
     }
     suspend fun getUserInfo(id: Int): Response<User>{
         return RetrofitInstance.api.getUserInfo(id)
+    }
+
+    suspend fun getTutorials(): Response<List<Tutorial>>{
+        return RetrofitInstance.api.getTutorials()
     }
 }

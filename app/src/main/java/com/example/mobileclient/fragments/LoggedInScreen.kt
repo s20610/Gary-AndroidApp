@@ -2,6 +2,7 @@ package com.example.mobileclient.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
+import com.example.mobileclient.adapter.TutorialsAdapter
 import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
-import com.example.mobileclient.model.UserViewModel
+import com.example.mobileclient.model.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
@@ -31,6 +33,7 @@ class LoggedInScreen : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentLoggedInScreenBinding? = null
     private val sharedViewModel: UserViewModel by activityViewModels()
+    private val tutorialsViewModel: TutorialsViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and
 // onDestroyView.
@@ -56,10 +59,36 @@ class LoggedInScreen : Fragment() {
         //view1.findViewById<TextView>(R.id.email_field_text).text = email
 
         val view = binding.root
-
+        val tutorialsEmpty: List<Tutorial> = mutableListOf(
+            Tutorial("1", "","",5.0f)
+        )
+        binding.tutorialsGrid.adapter = TutorialsAdapter(tutorialsEmpty)
         val intent = Intent()
         val email = intent.getStringExtra("E-mail")
         Toast.makeText(context, "Email zalogowano: $email", Toast.LENGTH_LONG).show()
+        tutorialsViewModel.getTutorials()
+        tutorialsViewModel.getTutorialsResponse.observe(viewLifecycleOwner) { response ->
+            if (response.isSuccessful) {
+                val tutorials: List<Tutorial>? = response.body()
+                Log.d("Body", response.body().toString())
+                    binding.tutorialsGrid.adapter = tutorials?.let { TutorialsAdapter(it) }
+            } else {
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+            }
+        }
+        binding.refresh.setOnRefreshListener {
+            tutorialsViewModel.getTutorials()
+            tutorialsViewModel.getTutorialsResponse.observe(viewLifecycleOwner) { response ->
+                if (response.isSuccessful) {
+                    val tutorials: List<Tutorial>? = response.body()
+                    Log.d("Body", response.body().toString())
+                    binding.tutorialsGrid.adapter = tutorials?.let { TutorialsAdapter(it) }
+                    binding.refresh.isRefreshing = false
+                } else {
+                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
         binding.loginResponse.text = email
         binding.addIncidentButton.setOnClickListener {
             context?.let { it1 ->

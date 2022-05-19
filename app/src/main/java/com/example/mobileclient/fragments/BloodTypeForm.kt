@@ -103,9 +103,28 @@ class BloodTypeForm : Fragment() {
         }
 
         binding.button.setOnClickListener{
-            val s = binding.rhGroup.checkedRadioButtonId.toString()
-            Toast.makeText(context, "Login error" + s, Toast.LENGTH_LONG).show()
-            Navigation.findNavController(view).navigate(R.id.action_bloodTypeForm_to_medicalInfoMain)
+            var rh = ""
+            if(binding.rhPlus.isChecked){
+                rh = "PLUS"
+            }else if(binding.rhMinus.isChecked){
+                rh = "MINUS"
+            }
+            var blood = ""
+            if(binding.blood0.isChecked){
+                blood = "O"
+            }else if (binding.bloodA.isChecked){
+                blood = "A"
+            }else if(binding.bloodAB.isChecked){
+                blood = "AB"
+            }else if(binding.bloodB.isChecked){
+                blood = "B"
+            }
+            if(rh.isNotEmpty() && blood.isNotEmpty()) {
+                var req = blood + "_"+rh
+                Toast.makeText(context, "Login error " + req, Toast.LENGTH_LONG).show()
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_bloodTypeForm_to_medicalInfoMain)
+            }
         }
 
         return view

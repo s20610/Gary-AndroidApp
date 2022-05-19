@@ -1,7 +1,17 @@
 package com.example.mobileclient.model
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
-
-data class Allergy (val allergyName: String,val allergyType : String){
-}
+/**
+ * This class represents info about allergy
+ *
+ * <b> Sample usage <b>
+ *
+ * ```
+ * Allergy("Orzechy","Jedzenie")
+ * ```
+ *
+ * @param allergyName String name of allergy
+ * @param allergyType String type of allergy
+ *
+ * @see com.example.mobileclient.adapter.AllergyAdapter
+ */
+data class Allergy (val allergyName: String,val allergyType : String)

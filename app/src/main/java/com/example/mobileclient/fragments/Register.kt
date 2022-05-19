@@ -25,7 +25,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -116,7 +115,7 @@ class Register : Fragment() {
         binding.collectDataButton.setOnClickListener {
             context?.let { it1 ->
             MaterialAlertDialogBuilder(it1).setTitle("Why do we collect data?")
-                .setMessage("We need this data to properly identify users in case of unjustified ambulance call")
+                .setMessage("We need this data to provide our services with high quality")
                 .setNegativeButton("Cancel") { dialog, which ->
                     dialog.cancel()
                 }

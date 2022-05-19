@@ -1,22 +1,18 @@
 package com.example.mobileclient.fragments
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
-import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
-import com.example.mobileclient.databinding.FragmentMedicalInfoMainBinding
 import com.example.mobileclient.databinding.FragmentParamedicScreenBinding
 import com.example.mobileclient.model.UserViewModel
-import com.google.android.material.color.MaterialColors
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -24,6 +20,7 @@ import java.time.format.DateTimeFormatter
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+
 
 /**
  * A simple [Fragment] subclass.
@@ -59,12 +56,22 @@ class ParamedicScreen : Fragment() {
         val formatted = current.format(formatter)
         binding.dayField.text = formatted
         binding.checkinButton.setOnClickListener{
-            if(binding.checkinButton.text == "Check In"){
-                binding.checkinButton.text = "Finish Shift"
+            if(binding.checkinButton.text == getString(R.string.ParamedicScreen_CheckIn)){
+                binding.checkinButton.text = getString(R.string.ParamedicScreen_FinishShift)
             }else {
-                binding.checkinButton.text = "Check In"
+                binding.checkinButton.text = getString(R.string.ParamedicScreen_CheckIn)
             }
         }
+
+
+        binding.button3.setOnClickListener{
+            Navigation.findNavController(view).navigate(R.id.action_paramedicScreen_to_paramedicCallForSupport2)
+        }
+
+        binding.button4.setOnClickListener{
+            Navigation.findNavController(view).navigate(R.id.addVictimInfo)
+        }
+
         return view
     }
 

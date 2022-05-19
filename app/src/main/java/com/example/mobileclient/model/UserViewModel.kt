@@ -2,6 +2,7 @@ package com.example.mobileclient.model
 
 import android.util.Log
 import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,6 +17,7 @@ class UserViewModel : ViewModel() {
     var loginResponse: MutableLiveData<Response<String>> = MutableLiveData()
     var registerResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var getUserMedicalInfoResponse: MutableLiveData<Response<MedicalInfo>> = MutableLiveData()
+    var getUserInfoResponse: MutableLiveData<Response<User>> = MutableLiveData()
 
 
     fun getLoginResponse(credentials: Credentials) {
@@ -49,7 +51,7 @@ class UserViewModel : ViewModel() {
             try {
                 val response = repository.getUserMedicalInfo(id)
                 getUserMedicalInfoResponse.value = response
-            } catch (e: ConnectException) {
+            }catch (e: ConnectException) {
                 Log.d("Connection exception", e.stackTraceToString())
             }catch (e: Exception){
                 Log.d("Login exception", e.stackTraceToString())
@@ -57,4 +59,16 @@ class UserViewModel : ViewModel() {
         }
     }
 
+    fun getUserInfo(id: Int){
+        viewModelScope.launch {
+            try{
+                val response = repository.getUserInfo(id)
+                getUserInfoResponse.value = response
+            } catch (e: ConnectException) {
+                Log.d("Connection exception", e.stackTraceToString())
+            }catch (e: Exception){
+                Log.d("Login exception", e.stackTraceToString())
+            }
+        }
+    }
 }

@@ -8,13 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
+import android.widget.Toast.LENGTH_SHORT
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.adapter.AllergyAdapter
-import com.example.mobileclient.databinding.FragmentGuestScreenBinding
 import com.example.mobileclient.databinding.FragmentMedicalInfoMainBinding
 import com.example.mobileclient.model.Allergy
+import com.example.mobileclient.model.User
 import com.example.mobileclient.model.UserViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -91,6 +93,19 @@ class MedicalInfoMain : Fragment() {
         binding.imageView.setOnClickListener {
             Navigation.findNavController(view)
                 .navigate(R.id.action_medicalInfoMain_to_bloodTypeForm)
+        }
+        binding.bandButton.setOnClickListener {
+            sharedViewModel.getUserInfo(2)
+            sharedViewModel.getUserInfoResponse.observe(viewLifecycleOwner) { response ->
+                if (response.isSuccessful) {
+                    val user: User? = response.body()
+                    if (user != null) {
+                        Toast.makeText(context,user.bandCode,LENGTH_SHORT).show()
+                    }
+                }else{
+                    Toast.makeText(context,"Error",LENGTH_SHORT).show()
+                }
+            }
         }
         return view
     }

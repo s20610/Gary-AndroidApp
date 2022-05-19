@@ -3,8 +3,10 @@ package com.example.mobileclient.api
 import com.example.mobileclient.model.Credentials
 import com.example.mobileclient.model.MedicalInfo
 import com.example.mobileclient.model.NewUser
+import com.example.mobileclient.model.Tutorial
 import com.example.mobileclient.model.User
 import okhttp3.ResponseBody
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -17,13 +19,27 @@ interface BackendAPI {
         @Body credentials: Credentials
     ): Response<String>
 
+    @POST("login")
+    suspend fun getLogin2Response(@Body credentials: Credentials):  Call<String>
+
     @POST("register/normal")
     suspend fun registerNewUser(
         @Body newUser: NewUser
     ): Response<ResponseBody>
-
+  
     @GET("medicalInfo/{id}")
     suspend fun getUserMedicalInfo(
         @Path("id") userId: Int
     ) : Response<MedicalInfo>
+   
+    @GET("user/{id}")
+    suspend fun getUserInfo(
+        @Path("id") userId: Int
+    ): Response<User>
+
+    @GET("user/{id}")
+    suspend fun getUser2Info(@Path("id") userId: Int): Call<User>
+
+    @GET("tutorial")
+    suspend fun getTutorials(): Response<List<Tutorial>>
 }

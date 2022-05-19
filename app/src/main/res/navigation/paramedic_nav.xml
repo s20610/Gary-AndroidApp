@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/paramedic_nav"
     app:startDestination="@id/paramedicScreen">
 
     <fragment
         android:id="@+id/paramedicScreen"
         android:name="com.example.mobileclient.fragments.ParamedicScreen"
-        android:label="ParamedicScreen" />
+        android:label="ParamedicScreen" >
+        <action
+            android:id="@+id/action_paramedicScreen_to_ambulanceBreak"
+            app:destination="@id/ambulanceBreak" />
+    </fragment>
+    <fragment
+        android:id="@+id/ambulanceBreak"
+        android:name="com.example.mobileclient.fragments.AmbulanceBreak"
+        android:label="fragment_ambulance_break" />
 </navigation>

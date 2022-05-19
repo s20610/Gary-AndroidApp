@@ -2,6 +2,7 @@ package com.example.mobileclient
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import com.example.mobileclient.databinding.ActivityParamedicBinding
 
@@ -21,6 +22,9 @@ class ParamedicActivity : AppCompatActivity() {
             it.isChecked = true
             if (it.toString() == "Log out") {
                 TODO("Navigate from paramedic activity to landing activity")
+            }
+            if(it.toString() == "Break"){
+                navController.navigate(R.id.action_paramedicScreen_to_ambulanceBreak)
             }
             true
         }

@@ -1,6 +1,7 @@
 package com.example.mobileclient.api
 
 import com.example.mobileclient.model.Credentials
+import com.example.mobileclient.model.MedicalInfo
 import com.example.mobileclient.model.NewUser
 import com.example.mobileclient.model.Tutorial
 import com.example.mobileclient.model.User
@@ -15,10 +16,15 @@ class Repository {
     suspend fun registerNewUser(newUser: NewUser): Response<ResponseBody>{
         return RetrofitInstance.api.registerNewUser(newUser)
     }
+    
+    suspend fun getUserMedicalInfo(id: Int): Response<MedicalInfo>{
+        return RetrofitInstance.api.getUserMedicalInfo(id)
+    }
+    
     suspend fun getUserInfo(id: Int): Response<User>{
         return RetrofitInstance.api.getUserInfo(id)
     }
-
+    
     suspend fun getTutorials(): Response<List<Tutorial>>{
         return RetrofitInstance.api.getTutorials()
     }

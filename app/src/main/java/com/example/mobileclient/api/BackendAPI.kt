@@ -1,6 +1,7 @@
 package com.example.mobileclient.api
 
 import com.example.mobileclient.model.Credentials
+import com.example.mobileclient.model.MedicalInfo
 import com.example.mobileclient.model.NewUser
 import com.example.mobileclient.model.Tutorial
 import com.example.mobileclient.model.User
@@ -25,7 +26,12 @@ interface BackendAPI {
     suspend fun registerNewUser(
         @Body newUser: NewUser
     ): Response<ResponseBody>
-
+  
+    @GET("medicalInfo/{id}")
+    suspend fun getUserMedicalInfo(
+        @Path("id") userId: Int
+    ) : Response<MedicalInfo>
+   
     @GET("user/{id}")
     suspend fun getUserInfo(
         @Path("id") userId: Int

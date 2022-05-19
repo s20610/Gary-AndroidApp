@@ -10,12 +10,19 @@
         android:name="com.example.mobileclient.fragments.ParamedicScreen"
         android:label="ParamedicScreen" >
         <action
+            android:id="@+id/action_paramedicScreen_to_ambulanceBreak"
+            app:destination="@id/ambulanceBreak" />
+      <action
             android:id="@+id/action_paramedicScreen_to_paramedicCallForSupport2"
             app:destination="@id/paramedicCallForSupport2" />
         <action
             android:id="@+id/action_paramedicScreen_to_addVictimInfo"
             app:destination="@id/addVictimInfo" />
     </fragment>
+    <fragment
+        android:id="@+id/ambulanceBreak"
+        android:name="com.example.mobileclient.fragments.AmbulanceBreak"
+        android:label="fragment_ambulance_break" />
     <fragment
         android:id="@+id/paramedicCallForSupport2"
         android:name="com.example.mobileclient.ParamedicCallForSupport"

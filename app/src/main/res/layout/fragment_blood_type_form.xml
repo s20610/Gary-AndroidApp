@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="2dp"
             android:text="What is your blood type:"
-            android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+            android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
             android:textSize="18dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,29 +38,34 @@
             app:layout_constraintTop_toBottomOf="@id/bloodText">
 
             <RadioButton
+                android:id="@+id/blood_0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
                 android:text="0" />
 
             <RadioButton
+                android:id="@+id/blood_A"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
                 android:text="A" />
 
             <RadioButton
+                android:id="@+id/blood_B"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="B" />
 
             <RadioButton
+                android:id="@+id/blood_AB"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:text="AB" />
         </RadioGroup>
 
         <RadioGroup
+            android:id="@+id/rh_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="0dp"
@@ -71,25 +76,53 @@
             app:layout_constraintTop_toBottomOf="@id/bloodText">
 
             <RadioButton
+                android:id="@+id/rh_minus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
                 android:text="Rh-" />
 
             <RadioButton
+                android:id="@+id/rh_plus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
                 android:text="Rh+" />
 
         </RadioGroup>
-
-        <Button
+        <RelativeLayout
+            android:id="@+id/parentRelative"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bloodGroup" />
+            app:layout_constraintTop_toBottomOf="@id/bloodGroup"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            <Button
+                android:id="@+id/button"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Send"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button2"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/button"
+                android:text="Cancel"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

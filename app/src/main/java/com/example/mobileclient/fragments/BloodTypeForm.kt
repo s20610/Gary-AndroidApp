@@ -1,11 +1,18 @@
 package com.example.mobileclient.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation
 import com.example.mobileclient.R
+import com.example.mobileclient.databinding.FragmentBloodTypeFormBinding
+import com.example.mobileclient.databinding.FragmentGuestScreenBinding
+import com.example.mobileclient.model.UserViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +28,11 @@ class BloodTypeForm : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var _binding: FragmentBloodTypeFormBinding? = null
+    private val sharedViewModel: UserViewModel by activityViewModels()
+    // This property is only valid between onCreateView and
+// onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +47,87 @@ class BloodTypeForm : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_blood_type_form, container, false)
+        _binding = FragmentBloodTypeFormBinding.inflate(inflater, container, false)
+        val view = binding.root
+        sharedViewModel.getMedicalInfoResponse(2)
+        sharedViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
+            if (response.isSuccessful) {
+                val medicalInfo = response.body()
+
+                when(medicalInfo!!.bloodType){
+                    "A_PLUS" -> {
+                        binding.rhGroup.check(R.id.rh_plus)
+                        binding.bloodGroup.check(R.id.blood_A)
+                    }
+                    "A_MINUS" -> {
+                        binding.rhGroup.check(R.id.rh_minus)
+                        binding.bloodGroup.check(R.id.blood_A)
+                    }
+                    "AB_PLUS" -> {
+                        binding.rhGroup.check(R.id.rh_plus)
+                        binding.bloodGroup.check(R.id.blood_AB)
+                    }
+                    "AB_MINUS" -> {
+                        binding.rhGroup.check(R.id.rh_minus)
+                        binding.bloodGroup.check(R.id.blood_AB)
+                    }
+                    "B_PLUS" -> {
+                        binding.rhGroup.check(R.id.rh_plus)
+                        binding.bloodGroup.check(R.id.blood_B)
+                    }
+                    "B_MINUS" -> {
+                        binding.rhGroup.check(R.id.rh_minus)
+                        binding.bloodGroup.check(R.id.blood_B)
+                    }
+                    "O_PLUS" -> {
+                        binding.rhGroup.check(R.id.rh_plus)
+                        binding.bloodGroup.check(R.id.blood_0)
+                    }
+                    "O_MINUS" -> {
+                        binding.rhGroup.check(R.id.rh_minus)
+                        binding.bloodGroup.check(R.id.blood_0)
+                    }
+                }
+
+            } else {
+                Toast.makeText(context, "Login error" + response.code(), Toast.LENGTH_LONG).show()
+                Log.d("Login Response", response.body().toString())
+                Log.d("Response Code: ", response.code().toString())
+            }
+
+
+        }
+
+        binding.button2.setOnClickListener{
+            Navigation.findNavController(view).navigate(R.id.action_bloodTypeForm_to_medicalInfoMain)
+        }
+
+        binding.button.setOnClickListener{
+            var rh = ""
+            if(binding.rhPlus.isChecked){
+                rh = "PLUS"
+            }else if(binding.rhMinus.isChecked){
+                rh = "MINUS"
+            }
+            var blood = ""
+            if(binding.blood0.isChecked){
+                blood = "O"
+            }else if (binding.bloodA.isChecked){
+                blood = "A"
+            }else if(binding.bloodAB.isChecked){
+                blood = "AB"
+            }else if(binding.bloodB.isChecked){
+                blood = "B"
+            }
+            if(rh.isNotEmpty() && blood.isNotEmpty()) {
+                var req = blood + "_"+rh
+                Toast.makeText(context, "Login error " + req, Toast.LENGTH_LONG).show()
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_bloodTypeForm_to_medicalInfoMain)
+            }
+        }
+
+        return view
     }
 
     companion object {

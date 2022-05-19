@@ -1,10 +1,13 @@
 package com.example.mobileclient.fragments
 
 import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.LENGTH_SHORT
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -52,6 +55,32 @@ class MedicalInfoMain : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentMedicalInfoMainBinding.inflate(inflater, container, false)
         val view = binding.root
+        sharedViewModel.getMedicalInfoResponse(2)
+        sharedViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
+            if (response.isSuccessful) {
+                val medicalInfo = response.body()
+
+                when(medicalInfo!!.bloodType){
+                    "A_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_a_plus)
+                    "A_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_a_minus)
+                    "AB_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_ab__plus)
+                    "AB_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_ab_minus)
+                    "B_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_b_plus)
+                    "B_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_b_minus)
+                    "O_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_0_plus)
+                    "O_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_0_minus)
+                    "UNKNOWN" -> binding.imageView.setImageResource(R.drawable.blood_type_add)
+                    null -> binding.imageView.setImageResource(R.drawable.blood_type_add)
+                }
+
+            } else {
+                Toast.makeText(context, "Login error" + response.code(), LENGTH_LONG).show()
+                Log.d("Login Response", response.body().toString())
+                Log.d("Response Code: ", response.code().toString())
+            }
+
+
+        }
         val allergies: List<Allergy> = mutableListOf(
             Allergy("Czekolada", "Jedzenie"),
             Allergy("Pyłki traw", "Wziewna"),

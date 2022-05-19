@@ -1,15 +1,9 @@
 package com.example.mobileclient.api
 
-import com.example.mobileclient.model.Credentials
-import com.example.mobileclient.model.MedicalInfo
-import com.example.mobileclient.model.NewUser
-import com.example.mobileclient.model.User
+import com.example.mobileclient.model.*
 import okhttp3.ResponseBody
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface BackendAPI {
     @POST("login")
@@ -26,4 +20,10 @@ interface BackendAPI {
     suspend fun getUserMedicalInfo(
         @Path("id") userId: Int
     ) : Response<MedicalInfo>
+
+    @PUT("medicalInfo/blood/{id}")
+    suspend fun putUserMedicalInfoBlood(
+        @Path("id") userId: Int,
+        @Body blood: String
+    ) : Response <MedicalInfo>
 }

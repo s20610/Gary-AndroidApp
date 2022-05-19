@@ -16,6 +16,7 @@ class UserViewModel : ViewModel() {
     var loginResponse: MutableLiveData<Response<String>> = MutableLiveData()
     var registerResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var getUserMedicalInfoResponse: MutableLiveData<Response<MedicalInfo>> = MutableLiveData()
+    var putMedicalInfoBloodResponse : MutableLiveData<Response<MedicalInfo>> = MutableLiveData()
 
 
     fun getLoginResponse(credentials: Credentials) {
@@ -49,6 +50,19 @@ class UserViewModel : ViewModel() {
             try {
                 val response = repository.getUserMedicalInfo(id)
                 getUserMedicalInfoResponse.value = response
+            } catch (e: ConnectException) {
+                Log.d("Connection exception", e.stackTraceToString())
+            }catch (e: Exception){
+                Log.d("Login exception", e.stackTraceToString())
+            }
+        }
+    }
+
+    fun putMedicalInfoBloodResponse(id: Int, blood: String){
+        viewModelScope.launch {
+            try {
+                val response = repository.putUserMedicalInfoBlood(id, blood)
+                putMedicalInfoBloodResponse.value = response
             } catch (e: ConnectException) {
                 Log.d("Connection exception", e.stackTraceToString())
             }catch (e: Exception){

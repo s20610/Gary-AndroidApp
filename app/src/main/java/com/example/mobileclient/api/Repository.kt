@@ -18,4 +18,7 @@ class Repository {
     suspend fun getUserMedicalInfo(id: Int): Response<MedicalInfo>{
         return RetrofitInstance.api.getUserMedicalInfo(id)
     }
+    suspend fun putUserMedicalInfoBlood(id: Int, blood : String) : Response<MedicalInfo>{
+        return RetrofitInstance.api.putUserMedicalInfoBlood(id, blood)
+    }
 }

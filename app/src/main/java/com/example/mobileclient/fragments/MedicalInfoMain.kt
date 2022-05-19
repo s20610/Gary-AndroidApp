@@ -56,9 +56,6 @@ class MedicalInfoMain : Fragment() {
         sharedViewModel.getMedicalInfoResponse(2)
         sharedViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
             if (response.isSuccessful) {
-                Log.d("Login Response", response.body().toString())
-                Log.d("Response Code", response.code().toString())
-                Toast.makeText(context, "Login successful", LENGTH_LONG).show()
                 val medicalInfo = response.body()
 
                 when(medicalInfo!!.bloodType){

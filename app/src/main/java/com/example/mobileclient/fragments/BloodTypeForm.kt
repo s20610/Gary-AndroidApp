@@ -121,7 +121,7 @@ class BloodTypeForm : Fragment() {
             }
             if(rh.isNotEmpty() && blood.isNotEmpty()) {
                 var req = blood + "_"+rh
-                Toast.makeText(context, "Login error " + req, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Login error $req", Toast.LENGTH_LONG).show()
                 Navigation.findNavController(view)
                     .navigate(R.id.action_bloodTypeForm_to_medicalInfoMain)
             }

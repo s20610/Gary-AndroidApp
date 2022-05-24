@@ -48,4 +48,12 @@
     <string name="UserNavigation_ReportedIncidents">Reported Incidents</string>
     <string name="UserNavigation_Map">Map</string>
     <string name="UserNavigation_LogOut">Log out</string>
+    <string name="incident_scan">Scan</string>
+    <string name="scan_prompt">Scan victims band code</string>
+    <string-array name="filterTutorialsArray">
+        <item>All Tutorials</item>
+        <item>FILE_EMERGENCE</item>
+        <item>COURSE</item>
+        <item>GUIDE</item>
+    </string-array>
 </resources>

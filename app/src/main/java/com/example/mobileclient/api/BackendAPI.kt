@@ -20,18 +20,18 @@ interface BackendAPI {
     ): Response<String>
 
     @POST("login")
-    suspend fun getLogin2Response(@Body credentials: Credentials):  Call<String>
+    suspend fun getLogin2Response(@Body credentials: Credentials): Call<String>
 
     @POST("register/normal")
     suspend fun registerNewUser(
         @Body newUser: NewUser
     ): Response<ResponseBody>
-  
+
     @GET("medicalInfo/{id}")
     suspend fun getUserMedicalInfo(
         @Path("id") userId: Int
-    ) : Response<MedicalInfo>
-   
+    ): Response<MedicalInfo>
+
     @GET("user/{id}")
     suspend fun getUserInfo(
         @Path("id") userId: Int

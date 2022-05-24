@@ -43,7 +43,8 @@ class AmbulanceBreak : Fragment() {
         _binding = FragmentAmbulanceBreakBinding.inflate(inflater, container, false)
 
         val incidents = arrayOf("Refuel", "Food break", "5 min break", "Breakdown", "Others")
-        val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, incidents)
+        val arrayAdapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, incidents)
         binding.autoCompleteTextView!!.setAdapter(arrayAdapter)
 
         val view = binding.root

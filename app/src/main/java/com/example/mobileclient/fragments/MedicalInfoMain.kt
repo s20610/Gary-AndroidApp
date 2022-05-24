@@ -2,7 +2,6 @@ package com.example.mobileclient.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,7 +54,7 @@ class MedicalInfoMain : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentMedicalInfoMainBinding.inflate(inflater, container, false)
         val view = binding.root
-        sharedViewModel.getMedicalInfoResponse(2)
+        sharedViewModel.getMedicalInfoResponse(4)
         sharedViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
             if (response.isSuccessful) {
                 val medicalInfo = response.body()
@@ -75,7 +74,7 @@ class MedicalInfoMain : Fragment() {
 
             } else {
                 Toast.makeText(context, "Login error" + response.code(), LENGTH_LONG).show()
-                Log.d("Login Response", response.body().toString())
+                Log.d("Server Response", response.body().toString())
                 Log.d("Response Code: ", response.code().toString())
             }
 
@@ -103,7 +102,7 @@ class MedicalInfoMain : Fragment() {
                         Toast.makeText(context,user.bandCode,LENGTH_SHORT).show()
                     }
                 }else{
-                    Toast.makeText(context,"Error",LENGTH_SHORT).show()
+                    Toast.makeText(context,"Error ${response.code()}",LENGTH_SHORT).show()
                 }
             }
         }

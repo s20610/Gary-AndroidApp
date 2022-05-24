@@ -1,16 +1,26 @@
 package com.example.mobileclient.fragments
 
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
+import com.example.mobileclient.ScanBandCodeActivity
 import com.example.mobileclient.databinding.FragmentIncidentBinding
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanIntentResult
+import com.journeyapps.barcodescanner.ScanOptions
+
+
+
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -67,6 +77,32 @@ class Incident : Fragment() {
                 // notificationId is a unique int for each notification that you must define
                 notify(notificationId, builder.build())
             }
+        }
+
+
+        val barcodeLauncher = registerForActivityResult(
+            ScanContract()
+        ) { result: ScanIntentResult ->
+            if (result.contents == null) {
+                Toast.makeText(context, "Cancelled", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(
+                    context,
+                    "Scanned band code: " + result.contents,
+                    Toast.LENGTH_LONG
+                ).show()
+                binding.barcodeInputText.setText(result.contents)
+            }
+        }
+        val options = ScanOptions()
+        options.setPrompt(resources.getString(R.string.scan_prompt))
+        options.setCameraId(0) // Use a specific camera of the device
+        options.setBeepEnabled(true)
+        options.captureActivity = ScanBandCodeActivity::class.java
+        options.setOrientationLocked(false)
+        options.setBarcodeImageEnabled(true)
+        binding.scanButton.setOnClickListener {
+            barcodeLauncher.launch(options)
         }
         return view
     }

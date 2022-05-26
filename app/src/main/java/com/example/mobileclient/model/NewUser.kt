@@ -1,7 +1,5 @@
 package com.example.mobileclient.model
 
-import java.time.LocalDate
-
 data class NewUser(
     val firstName: String,
     val lastName: String,

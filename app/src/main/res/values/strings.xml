@@ -19,7 +19,33 @@
     <string name="guest_button">Click here</string>
     <string name="guest_appbar_text">Guest View</string>
     <string name="user_appbar_text">User View</string>
+    <string name="create_incident_text">Create Incident</string>
+    <string name="type_of_incident">Type</string>
+    <string name="incident_localisation">Localisation</string>
+    <string name="incident_description">Description</string>
+    <string name="incident_add_button">Add</string>
+    <string name="incident_cancel_button">Cancel</string>
+    <string name="incident_type_hint">Select type</string>
+    <string name="incident_address_hint">Address</string>
+    <string name="incident_details_text">Incident details</string>
+    <string name="call_for_support_text">Call for support</string>
+    <string name="paramedic_type">Type of support</string>
+    <string name="paramedic_justification">Justification</string>
+    <string name="paramedic_justi_hint">Enter justification</string>
+    <string name="paramedic_call_button_ambulance">Ambulance</string>
+    <string name="paramedic_call_button_fireStation">Fire truck</string>
+    <string name="paramedic_call_button_police">Police</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Paramedic_screen">Paramedic View</string>
+    <string name="ParamedicScreen_FinishShift">Finish Shift</string>
+    <string name="ParamedicScreen_CheckIn">Check In</string>
+    <string name="GuestNavigation_Map">Map</string>
+    <string name="ParamedicNavigation_Map">Map</string>
+    <string name="ParamedicNavigation_LogOut">Log out</string>
+    <string name="UserNavigation_Tutorials">Tutorials</string>
+    <string name="UserNavigation_UserDetails">User Details</string>
+    <string name="UserNavigation_ReportedIncidents">Reported Incidents</string>
+    <string name="UserNavigation_Map">Map</string>
+    <string name="UserNavigation_LogOut">Log out</string>
 </resources>

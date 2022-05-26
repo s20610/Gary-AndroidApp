@@ -1,5 +1,8 @@
 package com.example.mobileclient.model
 
-data class MedicalInfo(val id: Int, var bloodType: String, val chronicDiseases: String, val allergies: String){
-
-}
+data class MedicalInfo(
+    val id: Int,
+    val bloodType: String,
+    val chronicDiseases: String,
+    val allergies: String
+    )

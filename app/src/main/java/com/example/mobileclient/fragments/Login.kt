@@ -1,27 +1,18 @@
 package com.example.mobileclient.fragments
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
-import android.widget.Toast.LENGTH_SHORT
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
-import androidx.test.core.app.ApplicationProvider
 import com.example.mobileclient.ParamedicActivity
 import com.example.mobileclient.R
 import com.example.mobileclient.UserActivity
 import com.example.mobileclient.databinding.FragmentLoginBinding
-import com.example.mobileclient.model.Credentials
 import com.example.mobileclient.model.UserViewModel
-import java.lang.Exception
-import java.net.ConnectException
 
 
 // TODO: Rename parameter arguments, choose names that match

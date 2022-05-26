@@ -1,30 +1,21 @@
 package com.example.mobileclient.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentIncidentBinding
-import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
-import com.example.mobileclient.databinding.FragmentLoginBinding
-import com.example.mobileclient.model.UserViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-
-private var _binding: FragmentIncidentBinding? = null
-private val binding get() = _binding!!
 
 /**
  * A simple [Fragment] subclass.
@@ -51,28 +42,27 @@ class Incident : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         // Inflate the layout for this fragment
         _binding = FragmentIncidentBinding.inflate(inflater, container, false)
 
         val incidents = arrayOf("Nieprzytomna osoba", "Zadławienie", "Rana kłuta", "Wypadek samochodowy", "Inne")
         val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, incidents)
-        binding.autoCompleteTextView2!!.setAdapter(arrayAdapter)
+        binding.autoCompleteTextView2.setAdapter(arrayAdapter)
 
         val view = binding.root
 
         binding.button2.setOnClickListener{
             Navigation.findNavController(view).navigate(R.id.action_incident_to_loggedInScreen)
-
         }
         binding.button.setOnClickListener {
-            var builder = NotificationCompat.Builder(requireContext(), "Notifications")
+            val builder = NotificationCompat.Builder(requireContext(), "Notifications")
                 .setSmallIcon(R.drawable.ic_baseline_medical_services_24)
                 .setContentTitle("New incident reported")
                 .setContentText("First responders are on their way")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT).setAutoCancel(true)
-            var notificationId: Int = 1;
+            val notificationId = 1
             with(NotificationManagerCompat.from(requireContext())) {
                 // notificationId is a unique int for each notification that you must define
                 notify(notificationId, builder.build())

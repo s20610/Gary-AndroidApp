@@ -4,7 +4,7 @@
     android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/mainscreen_background"
+    android:background="@drawable/mainscreen_background_night"
     android:fillViewport="true">
 
     <LinearLayout
@@ -43,7 +43,7 @@
                     android:textAlignment="center"
                     android:textAllCaps="true"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="@id/image"
                     app:layout_constraintStart_toStartOf="@id/image"
@@ -67,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@color/green_dark"
+                    android:background="@color/mustard"
                     android:textColor="@color/white"
                     android:paddingLeft="7dp"
                     android:paddingRight="7dp"
@@ -75,7 +75,7 @@
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView3"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

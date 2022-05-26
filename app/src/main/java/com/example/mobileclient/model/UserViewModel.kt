@@ -60,12 +60,6 @@ class UserViewModel : ViewModel() {
             }
         }
     }
-
-    fun putMedicalInfoBloodResponse(id: Int, blood: BloodType){
-        viewModelScope.launch {
-            try {
-                val response = repository.putUserMedicalInfoBlood(id, blood)
-                putMedicalInfoBloodResponse.value = response
     fun getUserInfo(id: Int){
         viewModelScope.launch {
             try{

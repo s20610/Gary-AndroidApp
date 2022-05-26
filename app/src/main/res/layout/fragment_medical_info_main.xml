@@ -128,6 +128,7 @@
         </TableLayout>
 
         <Button
+            android:id="@+id/add_button"
             style="@style/Widget.Material3.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

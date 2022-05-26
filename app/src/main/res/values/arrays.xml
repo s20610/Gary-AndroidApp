@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="medicalInfoArray" >
+        <item name="Blood Type">Blood Type</item>
+        <item name="Allergy">Allergy</item>
+        <item name="Disease">Disease</item>
+    </string-array>
+</resources>

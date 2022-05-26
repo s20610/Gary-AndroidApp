@@ -14,11 +14,11 @@ class Repository {
         return RetrofitInstance.api.getLoginResponse(credentials)
     }
 
-    suspend fun registerNewUser(newUser: NewUser): Response<ResponseBody>{
+    suspend fun registerNewUser(newUser: NewUser): Response<ResponseBody> {
         return RetrofitInstance.api.registerNewUser(newUser)
     }
-    
-    suspend fun getUserMedicalInfo(id: Int): Response<MedicalInfo>{
+
+    suspend fun getUserMedicalInfo(id: Int): Response<MedicalInfo> {
         return RetrofitInstance.api.getUserMedicalInfo(id)
     }
     suspend fun putUserMedicalInfoBlood(id: Int, blood : BloodType) : Response<ResponseBody>{
@@ -28,14 +28,12 @@ class Repository {
     suspend fun postUserMedicalInfo(id: Int, medicalInfo: MedicalInfo): Response<ResponseBody>{
         return RetrofitInstance.api.postUserMedicalInfo(id, medicalInfo)
     }
-
-
     
-    suspend fun getUserInfo(id: Int): Response<User>{
+    suspend fun getUserInfo(id: Int): Response<User> {
         return RetrofitInstance.api.getUserInfo(id)
     }
-    
-    suspend fun getTutorials(): Response<List<Tutorial>>{
+
+    suspend fun getTutorials(): Response<List<Tutorial>> {
         return RetrofitInstance.api.getTutorials()
     }
 }

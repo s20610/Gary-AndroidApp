@@ -132,6 +132,7 @@ class BloodTypeForm : Fragment() {
                         Toast.makeText(context, "Login error " + medicalInfo!!.toString(), Toast.LENGTH_LONG).show()
                     }
                 }
+                Toast.makeText(context, "Login error $req", Toast.LENGTH_LONG).show()
                 Navigation.findNavController(view)
                     .navigate(R.id.action_bloodTypeForm_to_medicalInfoMain)
             }

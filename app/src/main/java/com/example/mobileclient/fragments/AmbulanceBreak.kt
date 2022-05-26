@@ -71,7 +71,10 @@ class AmbulanceBreak : Fragment() {
         binding.autoCompleteTextView.setAdapter(arrayAdapter)
         binding.startDateInput
             .setOnClickListener {
-
+        val arrayAdapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, incidents)
+        binding.autoCompleteTextView!!.setAdapter(arrayAdapter)
+        
             timePicker.show(parentFragmentManager, "start_time_picker")
                 timePicker.addOnPositiveButtonClickListener {
                     var s = timePicker.hour.toString() + ":" + timePicker.minute.toString()

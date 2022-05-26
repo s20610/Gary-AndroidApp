@@ -10,15 +10,15 @@
         android:id="@+id/header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="@string/create_incident_text"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
         android:textColor="@color/green_dark"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         android:id="@+id/incidentLevel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -26,6 +26,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
         android:text="@string/type_of_incident"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,12 +63,12 @@
         app:layout_constraintTop_toBottomOf="@+id/localisation">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         android:id="@+id/incidentDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -75,44 +76,82 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:text="@string/incident_description"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_marginEnd="32dp"
-        app:counterEnabled="true"
-        app:counterMaxLength="150"
         app:boxCornerRadiusBottomEnd="20dp"
         app:boxCornerRadiusBottomStart="20dp"
         app:boxCornerRadiusTopEnd="20dp"
         app:boxCornerRadiusTopStart="20dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="150"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/incidentDescription">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:inputType="text"
+            android:id="@+id/incidentDescriptionText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/incidentDescriptionText"/>
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/scanButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/ic_baseline_qr_code_scanner_24"
+        android:drawableTint="@color/white"
+        android:text="@string/incident_scan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/barcodeInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Victim band code"
+        app:boxCornerRadiusBottomEnd="20dp"
+        android:layout_marginLeft="8dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        android:layout_marginRight="32dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxCornerRadiusTopStart="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/scanButton"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:inputType="number"
+            android:id="@+id/barcodeInputText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <RelativeLayout
         android:id="@+id/parentRelative"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayout3"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
+        app:layout_constraintTop_toBottomOf="@id/scanButton">
 
         <Button
             android:id="@+id/button"
@@ -140,8 +179,8 @@
     </RelativeLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:id="@+id/textInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"

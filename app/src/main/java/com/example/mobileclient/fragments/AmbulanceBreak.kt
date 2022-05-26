@@ -1,14 +1,19 @@
 package com.example.mobileclient.fragments
 
+import android.icu.util.Calendar
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.databinding.adapters.TextViewBindingAdapter.setText
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentAmbulanceBreakBinding
 import com.example.mobileclient.databinding.FragmentIncidentBinding
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_KEYBOARD
+import com.google.android.material.timepicker.TimeFormat
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,11 +48,48 @@ class AmbulanceBreak : Fragment() {
         _binding = FragmentAmbulanceBreakBinding.inflate(inflater, container, false)
 
         val incidents = arrayOf("Refuel", "Food break", "5 min break", "Breakdown", "Others")
+        val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, incidents)
+        val c = Calendar.getInstance()
+        val timePicker = MaterialTimePicker.Builder()
+            .setTimeFormat(TimeFormat.CLOCK_12H)
+            .setHour(c.get(Calendar.HOUR_OF_DAY))
+            .setMinute(c.get(Calendar.MINUTE))
+            .setInputMode(INPUT_MODE_KEYBOARD)
+            .build()
+        timePicker.addOnCancelListener {
+            timePicker.dismiss()
+        }
+        val timePicker1 = MaterialTimePicker.Builder()
+            .setTimeFormat(TimeFormat.CLOCK_12H)
+            .setHour(c.get(Calendar.HOUR_OF_DAY))
+            .setMinute(c.get(Calendar.MINUTE))
+            .setInputMode(INPUT_MODE_KEYBOARD)
+            .build()
+        timePicker1.addOnCancelListener {
+            timePicker1.dismiss()
+        }
+        binding.autoCompleteTextView.setAdapter(arrayAdapter)
+        binding.startDateInput
+            .setOnClickListener {
         val arrayAdapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, incidents)
         binding.autoCompleteTextView!!.setAdapter(arrayAdapter)
-
+        
+            timePicker.show(parentFragmentManager, "start_time_picker")
+                timePicker.addOnPositiveButtonClickListener {
+                    var s = timePicker.hour.toString() + ":" + timePicker.minute.toString()
+                    binding.startDateInput.setText(s)
+                }
+        }
+        binding.endDateInput.setOnClickListener {
+            timePicker1.show(parentFragmentManager,"end_time_picker")
+            timePicker1.addOnPositiveButtonClickListener {
+                var s = timePicker1.hour.toString() + ":" + timePicker1.minute.toString()
+                binding.endDateInput.setText(s)
+            }
+        }
         val view = binding.root
+
 
         return view
     }

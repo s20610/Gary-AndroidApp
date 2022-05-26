@@ -21,9 +21,15 @@ interface BackendAPI {
         @Path("id") userId: Int
     ) : Response<MedicalInfo>
 
+    @POST("medicalInfo/{id}")
+    suspend fun postUserMedicalInfo(
+        @Path("id") userId: Int,
+        @Body newMedicalInfo: MedicalInfo
+    ) : Response<ResponseBody>
+
     @PUT("medicalInfo/blood/{id}")
     suspend fun putUserMedicalInfoBlood(
         @Path("id") userId: Int,
-        @Body blood: String
-    ) : Response <MedicalInfo>
+        @Body blood: BloodType
+    ) : Response <ResponseBody>
 }

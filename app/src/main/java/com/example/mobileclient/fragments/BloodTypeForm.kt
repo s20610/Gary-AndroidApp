@@ -11,7 +11,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentBloodTypeFormBinding
-import com.example.mobileclient.databinding.FragmentGuestScreenBinding
+import com.example.mobileclient.model.BloodType
+import com.example.mobileclient.model.MedicalInfo
 import com.example.mobileclient.model.UserViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -50,9 +51,10 @@ class BloodTypeForm : Fragment() {
         _binding = FragmentBloodTypeFormBinding.inflate(inflater, container, false)
         val view = binding.root
         sharedViewModel.getMedicalInfoResponse(2)
+        var medicalInfo : MedicalInfo? = null
         sharedViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
             if (response.isSuccessful) {
-                val medicalInfo = response.body()
+                medicalInfo = response.body()
 
                 when(medicalInfo!!.bloodType){
                     "A_PLUS" -> {
@@ -121,11 +123,13 @@ class BloodTypeForm : Fragment() {
             }
             if(rh.isNotEmpty() && blood.isNotEmpty()) {
                 var req = blood + "_"+rh
-                sharedViewModel.putMedicalInfoBloodResponse(2, req)
-                sharedViewModel.putMedicalInfoBloodResponse.observe(viewLifecycleOwner) { response ->
+                medicalInfo?.bloodType = req
+
+                sharedViewModel.postMedicalInfoResponse(2, medicalInfo!!)
+                sharedViewModel.postUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
                     if(response.isSuccessful){
                         val medicalInfo = response.body()
-                        Toast.makeText(context, "Login error " + medicalInfo!!.bloodType, Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "Login error " + medicalInfo!!.toString(), Toast.LENGTH_LONG).show()
                     }
                 }
                 Navigation.findNavController(view)

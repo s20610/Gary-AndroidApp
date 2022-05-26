@@ -1,9 +1,6 @@
 package com.example.mobileclient.api
 
-import com.example.mobileclient.model.Credentials
-import com.example.mobileclient.model.MedicalInfo
-import com.example.mobileclient.model.NewUser
-import com.example.mobileclient.model.User
+import com.example.mobileclient.model.*
 import okhttp3.ResponseBody
 import retrofit2.Response
 
@@ -18,7 +15,13 @@ class Repository {
     suspend fun getUserMedicalInfo(id: Int): Response<MedicalInfo>{
         return RetrofitInstance.api.getUserMedicalInfo(id)
     }
-    suspend fun putUserMedicalInfoBlood(id: Int, blood : String) : Response<MedicalInfo>{
+    suspend fun putUserMedicalInfoBlood(id: Int, blood : BloodType) : Response<ResponseBody>{
         return RetrofitInstance.api.putUserMedicalInfoBlood(id, blood)
     }
+
+    suspend fun postUserMedicalInfo(id: Int, medicalInfo: MedicalInfo): Response<ResponseBody>{
+        return RetrofitInstance.api.postUserMedicalInfo(id, medicalInfo)
+    }
+
+
 }

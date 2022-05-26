@@ -119,6 +119,9 @@ class MedicalInfoMain : Fragment() {
                             if(which == 0){
                                 Navigation.findNavController(view)
                                     .navigate(R.id.action_medicalInfoMain_to_bloodTypeForm)
+                            }else if(which == 1){
+                                Navigation.findNavController(view)
+                                    .navigate(R.id.action_medicalInfoMain_to_allergyForm)
                             }
                             // The 'which' argument contains the index position
                             // of the selected item

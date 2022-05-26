@@ -1,5 +1,6 @@
 package com.example.mobileclient.api
 
+import com.example.mobileclient.model.*
 import com.example.mobileclient.model.Credentials
 import com.example.mobileclient.model.MedicalInfo
 import com.example.mobileclient.model.NewUser
@@ -20,6 +21,15 @@ class Repository {
     suspend fun getUserMedicalInfo(id: Int): Response<MedicalInfo>{
         return RetrofitInstance.api.getUserMedicalInfo(id)
     }
+    suspend fun putUserMedicalInfoBlood(id: Int, blood : BloodType) : Response<ResponseBody>{
+        return RetrofitInstance.api.putUserMedicalInfoBlood(id, blood)
+    }
+
+    suspend fun postUserMedicalInfo(id: Int, medicalInfo: MedicalInfo): Response<ResponseBody>{
+        return RetrofitInstance.api.postUserMedicalInfo(id, medicalInfo)
+    }
+
+
     
     suspend fun getUserInfo(id: Int): Response<User>{
         return RetrofitInstance.api.getUserInfo(id)

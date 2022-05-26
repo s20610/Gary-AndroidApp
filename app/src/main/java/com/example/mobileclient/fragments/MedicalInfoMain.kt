@@ -1,5 +1,6 @@
 package com.example.mobileclient.fragments
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.LENGTH_SHORT
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
@@ -18,6 +18,7 @@ import com.example.mobileclient.databinding.FragmentMedicalInfoMainBinding
 import com.example.mobileclient.model.Allergy
 import com.example.mobileclient.model.User
 import com.example.mobileclient.model.UserViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -105,6 +106,24 @@ class MedicalInfoMain : Fragment() {
                 }else{
                     Toast.makeText(context,"Error",LENGTH_SHORT).show()
                 }
+            }
+        }
+        binding.addButton.setOnClickListener {
+            context?.let { it1 ->
+                MaterialAlertDialogBuilder(it1).setTitle("Add medical info?")
+                    .setNegativeButton("Cancel") { dialog, which ->
+                        dialog.cancel()
+                    }
+                    .setItems(R.array.medicalInfoArray,
+                        DialogInterface.OnClickListener { dialog, which ->
+                            if(which == 0){
+                                Navigation.findNavController(view)
+                                    .navigate(R.id.action_medicalInfoMain_to_bloodTypeForm)
+                            }
+                            // The 'which' argument contains the index position
+                            // of the selected item
+                        }).create()
+                    .show()
             }
         }
         return view

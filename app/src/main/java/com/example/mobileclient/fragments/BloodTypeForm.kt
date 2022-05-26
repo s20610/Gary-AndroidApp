@@ -122,14 +122,13 @@ class BloodTypeForm : Fragment() {
                 blood = "B"
             }
             if(rh.isNotEmpty() && blood.isNotEmpty()) {
-                var req = blood + "_"+rh
+                val req = blood + "_"+rh
                 medicalInfo?.bloodType = req
-
                 sharedViewModel.postMedicalInfoResponse(2, medicalInfo!!)
                 sharedViewModel.postUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
+                    Log.e("Blood response: ", response.toString())
                     if(response.isSuccessful){
-                        val medicalInfo = response.body()
-                        Toast.makeText(context, "Login error " + medicalInfo!!.toString(), Toast.LENGTH_LONG).show()
+                        Log.i("Blood: ","Success")
                     }
                 }
                 Navigation.findNavController(view)

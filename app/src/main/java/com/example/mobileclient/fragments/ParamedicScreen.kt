@@ -72,6 +72,10 @@ class ParamedicScreen : Fragment() {
             Navigation.findNavController(view).navigate(R.id.addVictimInfo)
         }
 
+        binding.button5.setOnClickListener{
+            Navigation.findNavController(view).navigate(R.id.action_paramedicScreen_to_equipment)
+        }
+
         return view
     }
 

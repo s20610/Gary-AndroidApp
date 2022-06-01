@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_paramedicScreen_to_addVictimInfo"
             app:destination="@id/addVictimInfo" />
+        <action
+            android:id="@+id/action_paramedicScreen_to_equipment"
+            app:destination="@id/equipment" />
     </fragment>
     <fragment
         android:id="@+id/ambulanceBreak"
@@ -33,4 +36,18 @@
         android:name="com.example.mobileclient.AddVictimInfo"
         android:label="fragment_add_victim_info"
         tools:layout="@layout/fragment_add_victim_info" />
+    <fragment
+        android:id="@+id/equipment"
+        android:name="com.example.mobileclient.Equipment"
+        android:label="fragment_equipment"
+        tools:layout="@layout/fragment_equipment" >
+        <action
+            android:id="@+id/action_equipment_to_checkEquipment"
+            app:destination="@id/checkEquipment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkEquipment"
+        android:name="com.example.mobileclient.CheckEquipment"
+        android:label="fragment_check_equipment"
+        tools:layout="@layout/fragment_check_equipment" />
 </navigation>

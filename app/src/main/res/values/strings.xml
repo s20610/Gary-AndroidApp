@@ -50,6 +50,7 @@
     <string name="UserNavigation_LogOut">Log out</string>
     <string name="incident_scan">Scan</string>
     <string name="scan_prompt">Scan victims band code</string>
+    <string name="choose_your_location">Tap to choose your location</string>
     <string-array name="filterTutorialsArray">
         <item>All Tutorials</item>
         <item>FILE_EMERGENCE</item>

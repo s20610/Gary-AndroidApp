@@ -6,6 +6,7 @@ import com.example.mobileclient.model.MedicalInfo
 import com.example.mobileclient.model.NewUser
 import com.example.mobileclient.model.Tutorial
 import com.example.mobileclient.model.User
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 
@@ -21,12 +22,12 @@ class Repository {
     suspend fun getUserMedicalInfo(id: Int): Response<MedicalInfo> {
         return RetrofitInstance.api.getUserMedicalInfo(id)
     }
-    suspend fun putUserMedicalInfoBlood(id: Int, blood : BloodType) : Response<ResponseBody>{
+    suspend fun putUserMedicalInfoBlood(id: Int, blood : RequestBody) : Response<ResponseBody>{
         return RetrofitInstance.api.putUserMedicalInfoBlood(id, blood)
     }
 
     suspend fun postUserMedicalInfo(id: Int, medicalInfo: MedicalInfo): Response<ResponseBody>{
-        return RetrofitInstance.api.postUserMedicalInfo(id, medicalInfo)
+        return RetrofitInstance.api.putUserMedicalInfo(id, medicalInfo)
     }
     
     suspend fun getUserInfo(id: Int): Response<User> {

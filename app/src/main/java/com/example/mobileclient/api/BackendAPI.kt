@@ -7,6 +7,7 @@ import com.example.mobileclient.model.MedicalInfo
 import com.example.mobileclient.model.NewUser
 import com.example.mobileclient.model.Tutorial
 import com.example.mobileclient.model.User
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -31,8 +32,8 @@ interface BackendAPI {
         @Path("id") userId: Int
     ) : Response<MedicalInfo>
 
-    @POST("medicalInfo/{id}")
-    suspend fun postUserMedicalInfo(
+    @PUT("medicalInfo/{id}")
+    suspend fun putUserMedicalInfo(
         @Path("id") userId: Int,
         @Body newMedicalInfo: MedicalInfo
     ) : Response<ResponseBody>
@@ -40,7 +41,7 @@ interface BackendAPI {
     @PUT("medicalInfo/blood/{id}")
     suspend fun putUserMedicalInfoBlood(
         @Path("id") userId: Int,
-        @Body blood: BloodType
+        @Body blood: RequestBody
     ) : Response <ResponseBody>
 
     @GET("user/{id}")

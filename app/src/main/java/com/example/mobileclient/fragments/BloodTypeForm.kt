@@ -11,9 +11,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentBloodTypeFormBinding
-import com.example.mobileclient.model.BloodType
 import com.example.mobileclient.model.MedicalInfo
 import com.example.mobileclient.model.UserViewModel
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,6 +34,7 @@ class BloodTypeForm : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentBloodTypeFormBinding? = null
     private val sharedViewModel: UserViewModel by activityViewModels()
+
     // This property is only valid between onCreateView and
 // onDestroyView.
     private val binding get() = _binding!!
@@ -51,12 +55,12 @@ class BloodTypeForm : Fragment() {
         _binding = FragmentBloodTypeFormBinding.inflate(inflater, container, false)
         val view = binding.root
         sharedViewModel.getMedicalInfoResponse(2)
-        var medicalInfo : MedicalInfo? = null
+        var medicalInfo: MedicalInfo? = null
         sharedViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
             if (response.isSuccessful) {
                 medicalInfo = response.body()
 
-                when(medicalInfo!!.bloodType){
+                when (medicalInfo!!.bloodType) {
                     "A_PLUS" -> {
                         binding.rhGroup.check(R.id.rh_plus)
                         binding.bloodGroup.check(R.id.blood_A)
@@ -100,43 +104,51 @@ class BloodTypeForm : Fragment() {
 
         }
 
-        binding.button2.setOnClickListener{
-            Navigation.findNavController(view).navigate(R.id.action_bloodTypeForm_to_medicalInfoMain)
+        binding.button2.setOnClickListener {
+            Navigation.findNavController(view)
+                .navigate(R.id.action_bloodTypeForm_to_medicalInfoMain)
         }
 
-        binding.button.setOnClickListener{
+        binding.button.setOnClickListener {
             var rh = ""
-            if(binding.rhPlus.isChecked){
+            if (binding.rhPlus.isChecked) {
                 rh = "PLUS"
-            }else if(binding.rhMinus.isChecked){
+            } else if (binding.rhMinus.isChecked) {
                 rh = "MINUS"
             }
             var blood = ""
-            if(binding.blood0.isChecked){
+            if (binding.blood0.isChecked) {
                 blood = "O"
-            }else if (binding.bloodA.isChecked){
+            } else if (binding.bloodA.isChecked) {
                 blood = "A"
-            }else if(binding.bloodAB.isChecked){
+            } else if (binding.bloodAB.isChecked) {
                 blood = "AB"
-            }else if(binding.bloodB.isChecked){
+            } else if (binding.bloodB.isChecked) {
                 blood = "B"
             }
-            if(rh.isNotEmpty() && blood.isNotEmpty()) {
-                val req = blood + "_"+rh
+            if (rh.isNotEmpty() && blood.isNotEmpty()) {
+                val req = blood + "_" + rh
                 medicalInfo?.bloodType = req
-                sharedViewModel.postMedicalInfoResponse(2, medicalInfo!!)
-                sharedViewModel.postUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
-                    Log.e("Blood response: ", response.toString())
-                    if(response.isSuccessful){
-                        Log.i("Blood: ","Success")
+                val mediaType : MediaType = "text/plain; charset=utf-8".toMediaType()
+                val requestBodyWithBloodType : RequestBody =
+                    medicalInfo!!.bloodType.toRequestBody(mediaType)
+                sharedViewModel.putUserMedicalInfoBlood(2, requestBodyWithBloodType)
+                sharedViewModel.putMedicalInfoBloodResponse.observe(viewLifecycleOwner) { response ->
+                    if (response.isSuccessful) {
+                        Log.d("Blood type update", medicalInfo!!.bloodType)
+                        Toast.makeText(context, "Update successful", Toast.LENGTH_SHORT).show()
+                        Navigation.findNavController(view)
+                            .navigate(R.id.action_bloodTypeForm_to_medicalInfoMain)
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Update error " + response.code(),
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
-                Toast.makeText(context, "Login error $req", Toast.LENGTH_LONG).show()
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_bloodTypeForm_to_medicalInfoMain)
             }
         }
-
         return view
     }
 

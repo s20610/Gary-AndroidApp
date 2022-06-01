@@ -9,6 +9,7 @@ import com.example.mobileclient.databinding.FragmentFacilitiesMapBinding
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
@@ -47,15 +48,19 @@ class FacilitiesMap : Fragment() {
         val view = binding.root
         val map = binding.map
         mLocationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(context),binding.map)
+        var mRotationGestureOverlay = RotationGestureOverlay(context, map)
+        mRotationGestureOverlay.isEnabled = true;
         map.controller.setCenter(GeoPoint(52.237049,21.017532))
         map.setTileSource(TileSourceFactory.MAPNIK)
         map.overlayManager.add(mLocationOverlay)
+        map.overlayManager.add(mRotationGestureOverlay)
         mLocationOverlay!!.enableMyLocation()
         mLocationOverlay!!.enableFollowLocation()
         mLocationOverlay!!.isOptionsMenuEnabled = true
         val pointOnMap = GeoPoint(52.2728979,20.9741827)
         val marker = Marker(map)
         marker.position = pointOnMap
+        marker.isDraggable = true
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
         map.overlayManager.add(marker)
         map.setBuiltInZoomControls(true)

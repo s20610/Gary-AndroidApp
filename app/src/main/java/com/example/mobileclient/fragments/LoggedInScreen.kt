@@ -17,7 +17,6 @@ import com.example.mobileclient.R
 import com.example.mobileclient.adapter.TutorialsAdapter
 import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
 import com.example.mobileclient.model.*
-import com.example.mobileclient.util.isInternetAvailable
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
@@ -76,7 +75,20 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener {
         val intent = Intent()
         val email = intent.getStringExtra("E-mail")
 //        Toast.makeText(context, "Email zalogowano: $email", Toast.LENGTH_LONG).show()
-        if (isInternetAvailable()) {
+        tutorialsViewModel.getTutorials()
+        tutorialsViewModel.getTutorialsResponse.observe(viewLifecycleOwner) { response ->
+            if (response.isSuccessful) {
+                tutorialsFromAPI = response.body()
+                currentlyDisplayedTutorials = tutorialsFromAPI
+                Log.d("Body", response.body().toString())
+                binding.tutorialsGrid.adapter =
+                    currentlyDisplayedTutorials?.let { TutorialsAdapter(it) }
+            } else {
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.refresh.setOnRefreshListener {
             tutorialsViewModel.getTutorials()
             tutorialsViewModel.getTutorialsResponse.observe(viewLifecycleOwner) { response ->
                 if (response.isSuccessful) {
@@ -85,29 +97,13 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener {
                     Log.d("Body", response.body().toString())
                     binding.tutorialsGrid.adapter =
                         currentlyDisplayedTutorials?.let { TutorialsAdapter(it) }
+                    binding.filterMenu.setSelection(0)
+                    binding.refresh.isRefreshing = false
                 } else {
                     Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
                 }
             }
-        }
-
-        binding.refresh.setOnRefreshListener {
-            if (isInternetAvailable()) {
-                tutorialsViewModel.getTutorials()
-                tutorialsViewModel.getTutorialsResponse.observe(viewLifecycleOwner) { response ->
-                    if (response.isSuccessful) {
-                        tutorialsFromAPI = response.body()
-                        currentlyDisplayedTutorials = tutorialsFromAPI
-                        Log.d("Body", response.body().toString())
-                        binding.tutorialsGrid.adapter =
-                            currentlyDisplayedTutorials?.let { TutorialsAdapter(it) }
-                        binding.filterMenu.setSelection(0)
-                        binding.refresh.isRefreshing = false
-                    } else {
-                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
+            binding.refresh.isRefreshing = false
         }
         binding.loginResponse.text = email
         binding.addIncidentButton.setOnClickListener {
@@ -168,58 +164,54 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener {
     //Methods for filterMenu from AdapterView.OnItemSelectedListener
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         p0?.getItemAtPosition(p2).toString()
-        if (isInternetAvailable()) {
-            when (p0?.getItemAtPosition(p2).toString()) {
-                "All Tutorials" -> {
-                    currentlyDisplayedTutorials = tutorialsFromAPI
-                    binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                        TutorialsAdapter(
-                            it
-                        )
-                    }
+        when (p0?.getItemAtPosition(p2).toString()) {
+            "All Tutorials" -> {
+                currentlyDisplayedTutorials = tutorialsFromAPI
+                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
+                    TutorialsAdapter(
+                        it
+                    )
                 }
-                "FILE_EMERGENCE" -> {
-                    val filteredEmergenceTutorials =
-                        tutorialsFromAPI?.filter { it.tutorialKind == "FILE_EMERGENCE" }
-                    currentlyDisplayedTutorials = filteredEmergenceTutorials
-                    binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                        TutorialsAdapter(
-                            it
-                        )
-                    }
+            }
+            "FILE_EMERGENCE" -> {
+                val filteredEmergenceTutorials =
+                    tutorialsFromAPI?.filter { it.tutorialKind == "FILE_EMERGENCE" }
+                currentlyDisplayedTutorials = filteredEmergenceTutorials
+                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
+                    TutorialsAdapter(
+                        it
+                    )
                 }
-                "COURSE" -> {
-                    val filteredCourseTutorials =
-                        tutorialsFromAPI?.filter { it.tutorialKind == "COURSE" }
-                    currentlyDisplayedTutorials = filteredCourseTutorials
-                    binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                        TutorialsAdapter(
-                            it
-                        )
-                    }
+            }
+            "COURSE" -> {
+                val filteredCourseTutorials =
+                    tutorialsFromAPI?.filter { it.tutorialKind == "COURSE" }
+                currentlyDisplayedTutorials = filteredCourseTutorials
+                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
+                    TutorialsAdapter(
+                        it
+                    )
                 }
-                "GUIDE" -> {
-                    val filteredGuideTutorials =
-                        tutorialsFromAPI?.filter { it.tutorialKind == "GUIDE" }
-                    currentlyDisplayedTutorials = filteredGuideTutorials
-                    binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                        TutorialsAdapter(
-                            it
-                        )
-                    }
+            }
+            "GUIDE" -> {
+                val filteredGuideTutorials =
+                    tutorialsFromAPI?.filter { it.tutorialKind == "GUIDE" }
+                currentlyDisplayedTutorials = filteredGuideTutorials
+                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
+                    TutorialsAdapter(
+                        it
+                    )
                 }
             }
         }
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
-        if (isInternetAvailable()) {
-            currentlyDisplayedTutorials = tutorialsFromAPI
-            binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                TutorialsAdapter(
-                    it
-                )
-            }
+        currentlyDisplayedTutorials = tutorialsFromAPI
+        binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
+            TutorialsAdapter(
+                it
+            )
         }
     }
 }

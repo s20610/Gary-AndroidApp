@@ -78,6 +78,14 @@ class Incident : Fragment() {
                 notify(notificationId, builder.build())
             }
         }
+        val incidentLocationPicker = IncidentLocationPicker.newInstance()
+        binding.locationInput.setOnClickListener {
+           incidentLocationPicker.show(childFragmentManager,"incident_location_picker")
+        }
+        childFragmentManager.setFragmentResultListener("incidentLocation",this) { _, bundle ->
+            val result = bundle.getString("bundleKey")
+            binding.locationInputText.setText(result)
+        }
 
 
         val barcodeLauncher = registerForActivityResult(
@@ -96,7 +104,7 @@ class Incident : Fragment() {
         }
         val options = ScanOptions()
         options.setPrompt(resources.getString(R.string.scan_prompt))
-        options.setCameraId(0) // Use a specific camera of the device
+        options.setCameraId(0)
         options.setBeepEnabled(true)
         options.captureActivity = ScanBandCodeActivity::class.java
         options.setOrientationLocked(false)

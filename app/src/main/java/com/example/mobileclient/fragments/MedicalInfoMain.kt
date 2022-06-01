@@ -9,12 +9,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.LENGTH_SHORT
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.adapter.AllergyAdapter
+import com.example.mobileclient.adapter.ChronicDiseasesAdapter
 import com.example.mobileclient.databinding.FragmentMedicalInfoMainBinding
 import com.example.mobileclient.model.Allergy
+import com.example.mobileclient.model.MedicalInfo
 import com.example.mobileclient.model.User
 import com.example.mobileclient.model.UserViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -55,12 +58,24 @@ class MedicalInfoMain : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentMedicalInfoMainBinding.inflate(inflater, container, false)
         val view = binding.root
-        sharedViewModel.getMedicalInfoResponse(4)
+        //Data before api request is handled
+        var medicalInfo: MedicalInfo? = MedicalInfo(0, "A_PLUS", "Brak", "Brak")
+        val allergiesEmpty: List<Allergy> = mutableListOf(
+            Allergy(medicalInfo!!.allergies, "Jedzenie"),
+        )
+        val chronicDiseasesEmpty: List<String> = mutableListOf(
+            medicalInfo.chronicDiseases
+        )
+        binding.allergyView.adapter = AllergyAdapter(allergiesEmpty)
+        binding.allergyView.setHasFixedSize(true)
+        binding.diseaseView.adapter = ChronicDiseasesAdapter(chronicDiseasesEmpty)
+        binding.diseaseView.setHasFixedSize(true)
+        //
+        sharedViewModel.getMedicalInfoResponse(2)
         sharedViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
             if (response.isSuccessful) {
-                val medicalInfo = response.body()
-
-                when(medicalInfo!!.bloodType){
+                medicalInfo = response.body()
+                when (medicalInfo!!.bloodType) {
                     "A_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_a_plus)
                     "A_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_a_minus)
                     "AB_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_ab__plus)
@@ -70,26 +85,24 @@ class MedicalInfoMain : Fragment() {
                     "O_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_0_plus)
                     "O_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_0_minus)
                     "UNKNOWN" -> binding.imageView.setImageResource(R.drawable.blood_type_add)
-                    null -> binding.imageView.setImageResource(R.drawable.blood_type_add)
+                    "" -> binding.imageView.setImageResource(R.drawable.blood_type_add)
                 }
-
+                val allergiesFromApi: List<Allergy> = mutableListOf(
+                    Allergy(medicalInfo!!.allergies, "Jedzenie"),
+                )
+                val chronicDiseasesFromApi: List<String> = mutableListOf(
+                    medicalInfo!!.chronicDiseases
+                )
+                binding.allergyView.adapter = AllergyAdapter(allergiesFromApi)
+                binding.diseaseView.adapter = ChronicDiseasesAdapter(chronicDiseasesFromApi)
             } else {
-                Toast.makeText(context, "Login error" + response.code(), LENGTH_LONG).show()
+                Toast.makeText(context, "Server error" + response.code(), LENGTH_LONG).show()
                 Log.d("Server Response", response.body().toString())
                 Log.d("Response Code: ", response.code().toString())
             }
 
 
         }
-        val allergies: List<Allergy> = mutableListOf(
-            Allergy("Czekolada", "Jedzenie"),
-            Allergy("Pyłki traw", "Wziewna"),
-            Allergy("Truskawki", "Jedzenie"),
-            Allergy("Jad pszczoły", "Jad"),
-            Allergy("Nauka", "Inne")
-        )
-        binding.allergyView.adapter = AllergyAdapter(allergies)
-        binding.allergyView.setHasFixedSize(true)
         binding.imageView.setOnClickListener {
             Navigation.findNavController(view)
                 .navigate(R.id.action_medicalInfoMain_to_bloodTypeForm)
@@ -100,10 +113,10 @@ class MedicalInfoMain : Fragment() {
                 if (response.isSuccessful) {
                     val user: User? = response.body()
                     if (user != null) {
-                        Toast.makeText(context,user.bandCode,LENGTH_SHORT).show()
+                        Toast.makeText(context, user.bandCode, LENGTH_SHORT).show()
                     }
-                }else{
-                    Toast.makeText(context,"Error ${response.code()}",LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Error ${response.code()}", LENGTH_SHORT).show()
                 }
             }
         }
@@ -115,7 +128,7 @@ class MedicalInfoMain : Fragment() {
                     }
                     .setItems(R.array.medicalInfoArray,
                         DialogInterface.OnClickListener { dialog, which ->
-                            if(which == 0){
+                            if (which == 0) {
                                 Navigation.findNavController(view)
                                     .navigate(R.id.action_medicalInfoMain_to_bloodTypeForm)
                             }else if(which == 1){

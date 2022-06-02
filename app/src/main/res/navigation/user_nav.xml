@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_medicalInfoMain_to_allergyForm"
             app:destination="@id/allergyForm" />
+        <action
+            android:id="@+id/action_medicalInfoMain_to_diseaseForm"
+            app:destination="@id/diseaseForm" />
     </fragment>
     <fragment
         android:id="@+id/incidentsBrowse"
@@ -80,6 +83,14 @@
         android:label="fragment_allergy_form" >
         <action
             android:id="@+id/action_allergyForm_to_medicalInfoMain"
+            app:destination="@id/medicalInfoMain" />
+    </fragment>
+    <fragment
+        android:id="@+id/diseaseForm"
+        android:name="com.example.mobileclient.fragments.DiseaseForm"
+        android:label="fragment_disease_form">
+        <action
+            android:id="@+id/action_diseaseForm_to_medicalInfoMain"
             app:destination="@id/medicalInfoMain" />
     </fragment>
 </navigation>

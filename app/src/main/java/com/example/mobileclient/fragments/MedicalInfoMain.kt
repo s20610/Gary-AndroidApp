@@ -1,5 +1,6 @@
 package com.example.mobileclient.fragments
 
+import android.app.ProgressDialog.show
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -134,6 +135,9 @@ class MedicalInfoMain : Fragment() {
                             }else if(which == 1){
                                 Navigation.findNavController(view)
                                     .navigate(R.id.action_medicalInfoMain_to_allergyForm)
+                            }else{
+                                Navigation.findNavController(view)
+                                    .navigate(R.id.action_medicalInfoMain_to_diseaseForm)
                             }
                             // The 'which' argument contains the index position
                             // of the selected item

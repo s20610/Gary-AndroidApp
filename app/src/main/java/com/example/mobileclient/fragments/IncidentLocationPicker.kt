@@ -97,10 +97,6 @@ class IncidentLocationPicker : DialogFragment() {
         marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_warning_24)
         map.overlayManager.add(marker)
         binding.myLocationButton.setOnClickListener {
-//            marker.position = GeoPoint(
-//                mLocationOverlay!!.myLocation.latitude + 0.00015,
-//                mLocationOverlay!!.myLocation.longitude + 0.00015
-//            )
             map.controller.animateTo(mLocationOverlay!!.myLocation)
         }
         binding.dialogAccept.setOnClickListener {

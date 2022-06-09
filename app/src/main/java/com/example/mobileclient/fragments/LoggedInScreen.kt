@@ -105,7 +105,6 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener {
             }
             binding.refresh.isRefreshing = false
         }
-        binding.loginResponse.text = email
         binding.addIncidentButton.setOnClickListener {
             context?.let { it1 ->
                 MaterialAlertDialogBuilder(it1).setTitle("Create Incident?")

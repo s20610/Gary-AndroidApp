@@ -79,7 +79,7 @@ class Incident : Fragment() {
             }
         }
         val incidentLocationPicker = IncidentLocationPicker.newInstance()
-        binding.locationInput.setOnClickListener {
+        binding.openMapButton!!.setOnClickListener {
            incidentLocationPicker.show(childFragmentManager,"incident_location_picker")
         }
         childFragmentManager.setFragmentResultListener("incidentLocation",this) { _, bundle ->

@@ -18,24 +18,16 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/ekg_background"
+            android:backgroundTint="@color/lighter_grey"
+            android:backgroundTintMode="add"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <TextView
-                android:id="@+id/login_response"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.loginResponse.body().toString()}"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-                app:layout_constraintEnd_toStartOf="@+id/filterMenu"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <Spinner
                 android:id="@+id/filterMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/tutorials_grid"
+                android:layout_width="140dp"
+                android:layout_height="30dp"
+                android:background="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,12 +35,13 @@
                 android:id="@+id/tutorials_grid"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:layout_marginTop="2dp"
                 android:clipToPadding="true"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/login_response"
+                app:layout_constraintTop_toBottomOf="@+id/filterMenu"
                 tools:itemCount="2"
                 tools:listitem="@layout/tutorial_view_item" />
 
@@ -58,13 +51,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
                 android:layout_margin="16dp"
-                app:fabSize="normal"
                 android:backgroundTint="@color/red"
-                app:tint="@color/white"
                 android:contentDescription="Create Incident"
                 android:src="@drawable/ic_emergency_ambulance"
+                app:fabSize="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:tint="@color/white" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

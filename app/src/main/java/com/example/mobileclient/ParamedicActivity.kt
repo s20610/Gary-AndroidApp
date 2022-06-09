@@ -1,10 +1,12 @@
 package com.example.mobileclient
 
 import android.os.Bundle
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import com.example.mobileclient.databinding.ActivityParamedicBinding
+
 
 class ParamedicActivity : AppCompatActivity() {
     private lateinit var binding: ActivityParamedicBinding
@@ -14,6 +16,8 @@ class ParamedicActivity : AppCompatActivity() {
         setContentView(binding.root)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
+        val tp = ThreadPolicy.LAX
+        StrictMode.setThreadPolicy(tp)
 
         binding.topAppBar.setNavigationOnClickListener {
             binding.drawerLayout.open()

@@ -83,18 +83,20 @@ class ParamedicScreen : Fragment() {
             }
         }
 
-
-        binding.button3.setOnClickListener{
-            Navigation.findNavController(view).navigate(R.id.action_paramedicScreen_to_paramedicCallForSupport2)
+        binding.bottomNavigation?.setOnItemSelectedListener {
+            it.isChecked = true
+            if(it.toString()=="Equipment"){
+                Navigation.findNavController(view).navigate(R.id.action_paramedicScreen_to_equipment)
+            }
+            else if (it.toString()=="Victim"){
+                Navigation.findNavController(view).navigate(R.id.addVictimInfo)
+            }
+            else if(it.toString() == "Support"){
+                Navigation.findNavController(view).navigate(R.id.action_paramedicScreen_to_paramedicCallForSupport2)
+            }
+            true
         }
 
-        binding.button4.setOnClickListener{
-            Navigation.findNavController(view).navigate(R.id.addVictimInfo)
-        }
-
-        binding.button5.setOnClickListener{
-            Navigation.findNavController(view).navigate(R.id.action_paramedicScreen_to_equipment)
-        }
         map = binding.map
         map.setTileSource(TileSourceFactory.MAPNIK)
         map.controller.setZoom(15.0)

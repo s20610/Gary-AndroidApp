@@ -115,8 +115,8 @@ class ParamedicScreen : Fragment() {
         waypoints.add(palacKultury)
         waypoints.add(medicLocation)
         val road: Road = roadManager.getRoad(waypoints)
-        val roadOverlay: Polyline = RoadManager.buildRoadOverlay(road,R.color.green_light_30,12f)
-        roadOverlay.outlinePaint.color = R.color.green_light_30
+        val color: Int = ContextCompat.getColor(requireContext(),R.color.green_light)
+        val roadOverlay: Polyline = RoadManager.buildRoadOverlay(road,color,12f)
 //        roadOverlay.outlinePaint.strokeWidth = 10f
         gpsProvider.locationUpdateMinTime = 5000
 //        gpsProvider.startLocationProvider { location, _ ->

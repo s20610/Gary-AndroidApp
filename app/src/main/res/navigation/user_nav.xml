@@ -55,6 +55,9 @@
         <action
             android:id="@+id/action_incident_to_loggedInScreen"
             app:destination="@id/loggedInScreen" />
+        <action
+            android:id="@+id/action_incident_to_incidentVictim"
+            app:destination="@id/incidentVictim" />
     </fragment>
     <fragment
         android:id="@+id/bloodTypeForm"
@@ -93,4 +96,8 @@
             android:id="@+id/action_diseaseForm_to_medicalInfoMain"
             app:destination="@id/medicalInfoMain" />
     </fragment>
+    <fragment
+        android:id="@+id/incidentVictim"
+        android:name="com.example.mobileclient.fragments.IncidentVictim"
+        android:label="fragment_incident_victim" />
 </navigation>

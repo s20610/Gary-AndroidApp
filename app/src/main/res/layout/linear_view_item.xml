@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
-                android:text="Title"
+                android:text="@string/title"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/thumbnail" />
@@ -65,7 +65,7 @@
                 android:paddingLeft="10dp"
                 android:paddingTop="3dp"
                 android:paddingBottom="5dp"
-                android:text="Short description"
+                android:text="@string/short_description"
                 android:textAppearance="?attr/textAppearanceBody1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/title" />

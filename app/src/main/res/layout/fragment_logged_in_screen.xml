@@ -51,7 +51,7 @@
                 android:layout_gravity="end|bottom"
                 android:layout_margin="16dp"
                 android:backgroundTint="@color/red"
-                android:contentDescription="Create Incident"
+                android:contentDescription="@string/create_incident_text"
                 android:src="@drawable/ic_emergency_ambulance"
                 app:fabSize="normal"
                 app:layout_constraintBottom_toBottomOf="parent"

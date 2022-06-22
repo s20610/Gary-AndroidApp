@@ -9,7 +9,7 @@
         android:id="@+id/header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ambulance Break"
+        android:text="@string/ambulance_break"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
         android:textColor="@color/green_dark"
         android:layout_marginTop="10dp"
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        android:text="Break type"
+        android:text="@string/break_type"
         android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="@id/header"
         app:layout_constraintTop_toBottomOf="@id/header"/>
@@ -46,14 +46,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:inputType="none"
-            android:text="Choose" />
+            android:text="@string/choose" />
     </com.google.android.material.textfield.TextInputLayout>
     <TextView
         android:id="@+id/time_from_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        android:text="Start time"
+        android:text="@string/start_time"
         android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="@id/header"
         app:layout_constraintTop_toBottomOf="@id/type_input"/>
@@ -87,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        android:text="End time"
+        android:text="@string/end_time"
         android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="@id/header"
         app:layout_constraintTop_toBottomOf="@id/start_date_field"/>
@@ -134,7 +134,7 @@
             style="@style/Widget.Material3.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add"
+            android:text="@string/add"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -147,7 +147,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/button"
-            android:text="Cancel"
+            android:text="@string/incident_cancel_button"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"

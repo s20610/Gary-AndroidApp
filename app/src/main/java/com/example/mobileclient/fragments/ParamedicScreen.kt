@@ -75,24 +75,24 @@ class ParamedicScreen : Fragment() {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         val formatted = current.format(formatter)
         binding.dayField.text = formatted
-        binding.checkinButton.setOnClickListener{
-            if(binding.checkinButton.text == getString(R.string.ParamedicScreen_CheckIn)){
+        binding.checkinButton.setOnClickListener {
+            if (binding.checkinButton.text == getString(R.string.ParamedicScreen_CheckIn)) {
                 binding.checkinButton.text = getString(R.string.ParamedicScreen_FinishShift)
-            }else {
+            } else {
                 binding.checkinButton.text = getString(R.string.ParamedicScreen_CheckIn)
             }
         }
 
         binding.bottomNavigation?.setOnItemSelectedListener {
             it.isChecked = true
-            if(it.toString()=="Equipment"){
-                Navigation.findNavController(view).navigate(R.id.action_paramedicScreen_to_equipment)
-            }
-            else if (it.toString()=="Victim"){
+            if (it.toString() == "Equipment") {
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_paramedicScreen_to_equipment)
+            } else if (it.toString() == "Victim") {
                 Navigation.findNavController(view).navigate(R.id.addVictimInfo)
-            }
-            else if(it.toString() == "Support"){
-                Navigation.findNavController(view).navigate(R.id.action_paramedicScreen_to_paramedicCallForSupport2)
+            } else if (it.toString() == "Support") {
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_paramedicScreen_to_paramedicCallForSupport2)
             }
             true
         }
@@ -101,52 +101,45 @@ class ParamedicScreen : Fragment() {
         map.setTileSource(TileSourceFactory.MAPNIK)
         map.controller.setZoom(15.0)
         val marker: Marker = Marker(map)
-        val palacKultury: GeoPoint = GeoPoint(52.231888,21.005967)
-        val medicLocation: GeoPoint = GeoPoint(52.22133,21.005923)
+        val palacKultury: GeoPoint = GeoPoint(52.231888, 21.005967)
         val marker2: Marker = Marker(map)
-        marker2.position = medicLocation
-        marker2.title = "Medic location"
         marker.position = palacKultury
         marker.title = "Location of incident"
         marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_warning_24)
         val roadManager: RoadManager = OSRMRoadManager(context, "garry")
         val gpsProvider: GpsMyLocationProvider = GpsMyLocationProvider(context)
+        gpsProvider.locationUpdateMinTime = 6000
         val waypoints: ArrayList<GeoPoint> = ArrayList()
-        waypoints.add(palacKultury)
-        waypoints.add(medicLocation)
-        val road: Road = roadManager.getRoad(waypoints)
-        val color: Int = ContextCompat.getColor(requireContext(),R.color.green_light)
-        val roadOverlay: Polyline = RoadManager.buildRoadOverlay(road,color,12f)
-//        roadOverlay.outlinePaint.strokeWidth = 10f
-        gpsProvider.locationUpdateMinTime = 5000
-//        gpsProvider.startLocationProvider { location, _ ->
-//            if (waypoints.contains(medicLocation)) {
-//                waypoints.remove(medicLocation)
-//            }
-//            if (location != null) {
-//                medicLocation.latitude = location.latitude
-//                medicLocation.longitude = location.longitude
-//                waypoints.add(medicLocation)
-//                road = roadManager.getRoad(waypoints)
-//                roadOverlay = RoadManager.buildRoadOverlay(road)
-//                Log.d("Road creation", "Road created for $waypoints")
-//                map.invalidate()
-//            }
-//        }
+        val color: Int = ContextCompat.getColor(requireContext(), R.color.green_light)
         mLocationOverlay = MyLocationNewOverlay(gpsProvider, binding.map)
         mLocationOverlay!!.enableMyLocation()
         mLocationOverlay!!.enableFollowLocation()
-        map.overlayManager.add(marker)
-        map.overlayManager.add(marker2)
-        map.overlayManager.add(mLocationOverlay)
+        mLocationOverlay!!.runOnFirstFix {
+            marker2.position = mLocationOverlay!!.myLocation
+            marker2.title = "Medic location"
+            waypoints.add(palacKultury)
+            waypoints.add(marker2.position)
+            var road: Road = roadManager.getRoad(waypoints)
+            var roadOverlay: Polyline = RoadManager.buildRoadOverlay(road, color, 12f)
+            map.overlayManager.add(roadOverlay)
+            map.overlayManager.add(marker)
+            map.overlayManager.add(marker2)
+//            map.overlayManager.add(mLocationOverlay)
+            map.invalidate()
+            mLocationOverlay!!.myLocationProvider.startLocationProvider { location, _ ->
+                waypoints.remove(marker2.position)
+                marker2.position = GeoPoint(location.latitude, location.longitude)
+                waypoints.add(marker2.position)
+                map.overlayManager.remove(roadOverlay)
+                road = roadManager.getRoad(waypoints)
+                roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
+                Log.d("Road creation", "Road created for $waypoints")
+                map.overlayManager.add(roadOverlay)
+                map.invalidate()
+                map.controller.animateTo(marker2.position)
+            }
+        }
         map.invalidate()
-        map.overlays.add(roadOverlay)
-        map.invalidate()
-
-
-
-
-
         return view
     }
 

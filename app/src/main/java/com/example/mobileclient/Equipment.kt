@@ -70,7 +70,7 @@ class Equipment : Fragment() {
 
         val arrayAdapter =
             ArrayAdapter(requireContext(), R.layout.simple_list_item_1, names)
-        binding.ambulanceList.adapter=arrayAdapter;
+        binding.ambulanceList.adapter=arrayAdapter
 
         binding.ambulanceList.setOnItemClickListener{ adapterView, view, i, l ->
             Navigation.findNavController(view)

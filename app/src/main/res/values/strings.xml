@@ -36,8 +36,6 @@
     <string name="paramedic_call_button_ambulance">Ambulance</string>
     <string name="paramedic_call_button_fireStation">Fire truck</string>
     <string name="paramedic_call_button_police">Police</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Paramedic_screen">Paramedic View</string>
     <string name="ParamedicScreen_FinishShift">Finish Shift</string>
     <string name="ParamedicScreen_CheckIn">Check In</string>
@@ -114,7 +112,13 @@
     <string name="select_language">Select language</string>
     <string name="notifications">Notifications</string>
     <string name="create_incident">Create incident</string>
-
+    <string name="barcode_scanning_cancelled">Cancelled</string>
+    <string name="barcode_scanning_successful">Scanned band code: </string>
+    <string name="create_incident_popup_title">Create Incident?</string>
+    <string name="create_incident_popup_alert">Unjustified ambulance call may result in a fine. Are you sure?</string>
+    <string name="cancel">Cancel</string>
+    <string name="accept">Accept</string>
+    <string name="login_toast">Email logged: </string>
     <string-array name="filterTutorialsArray">
         <item>All Tutorials</item>
         <item>FILE_EMERGENCE</item>

@@ -56,8 +56,8 @@ class Login : Fragment() {
             Navigation.findNavController(view).navigate(R.id.action_login_to_forgotPassword)
         }
         binding.loginButton.setOnClickListener {
-            val userActivity = Intent(context,UserActivity::class.java)
-            Toast.makeText(context, "Email zalogowano: ", Toast.LENGTH_LONG).show()
+            val userActivity = Intent(context, UserActivity::class.java)
+            Toast.makeText(context, getString(R.string.login_toast), Toast.LENGTH_LONG).show()
             //Here we should apply putExtra method with auth token from login response
             startActivity(userActivity)
 
@@ -93,7 +93,7 @@ class Login : Fragment() {
 
              */
         }
-        binding.paramedicButton.setOnClickListener{
+        binding.paramedicButton.setOnClickListener {
 //            Log.d("Email", binding.emailFieldText.text.toString())
 //            Log.d("Password", binding.passwordFieldText.text.toString())
 //            val credentials = Credentials(
@@ -119,7 +119,7 @@ class Login : Fragment() {
 //            }else{
 //                Toast.makeText(context, "No connection", LENGTH_SHORT).show()
 //            }
-            val paramedicActivity = Intent(context,ParamedicActivity::class.java)
+            val paramedicActivity = Intent(context, ParamedicActivity::class.java)
             //Here we should apply putExtra method with auth token from login response
             startActivity(paramedicActivity)
         }

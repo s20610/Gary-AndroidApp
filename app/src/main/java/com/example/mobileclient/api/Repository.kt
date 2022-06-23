@@ -22,14 +22,15 @@ class Repository {
     suspend fun getUserMedicalInfo(id: Int): Response<MedicalInfo> {
         return RetrofitInstance.api.getUserMedicalInfo(id)
     }
-    suspend fun putUserMedicalInfoBlood(id: Int, blood : RequestBody) : Response<ResponseBody>{
+
+    suspend fun putUserMedicalInfoBlood(id: Int, blood: RequestBody): Response<ResponseBody> {
         return RetrofitInstance.api.putUserMedicalInfoBlood(id, blood)
     }
 
-    suspend fun postUserMedicalInfo(id: Int, medicalInfo: MedicalInfo): Response<ResponseBody>{
+    suspend fun postUserMedicalInfo(id: Int, medicalInfo: MedicalInfo): Response<ResponseBody> {
         return RetrofitInstance.api.putUserMedicalInfo(id, medicalInfo)
     }
-    
+
     suspend fun getUserInfo(id: Int): Response<User> {
         return RetrofitInstance.api.getUserInfo(id)
     }

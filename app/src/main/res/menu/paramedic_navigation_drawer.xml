@@ -4,7 +4,5 @@
         <item android:title="Map" android:icon="@drawable/ic_map_24"/>
         <item android:title="Break" android:icon="@drawable/ic_baseline_list_alt_24"/>
         <item android:title="@string/log_out" android:icon="@drawable/ic_sharp_logout_24" />
-        <item android:title="@string/ParamedicNavigation_Map" android:icon="@drawable/ic_map_24"/>
-        <item android:title="@string/ParamedicNavigation_LogOut" android:icon="@drawable/ic_sharp_logout_24" />
     </group>
 </menu>

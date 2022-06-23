@@ -19,9 +19,6 @@ interface BackendAPI {
         @Body credentials: Credentials
     ): Response<String>
 
-    @POST("login")
-    suspend fun getLogin2Response(@Body credentials: Credentials): Call<String>
-
     @POST("register/normal")
     suspend fun registerNewUser(
         @Body newUser: NewUser
@@ -30,27 +27,24 @@ interface BackendAPI {
     @GET("medicalInfo/{id}")
     suspend fun getUserMedicalInfo(
         @Path("id") userId: Int
-    ) : Response<MedicalInfo>
+    ): Response<MedicalInfo>
 
     @PUT("medicalInfo/{id}")
     suspend fun putUserMedicalInfo(
         @Path("id") userId: Int,
         @Body newMedicalInfo: MedicalInfo
-    ) : Response<ResponseBody>
+    ): Response<ResponseBody>
 
     @PUT("medicalInfo/blood/{id}")
     suspend fun putUserMedicalInfoBlood(
         @Path("id") userId: Int,
         @Body blood: RequestBody
-    ) : Response <ResponseBody>
+    ): Response<ResponseBody>
 
     @GET("user/{id}")
     suspend fun getUserInfo(
         @Path("id") userId: Int
     ): Response<User>
-
-    @GET("user/{id}")
-    suspend fun getUser2Info(@Path("id") userId: Int): Call<User>
 
     @GET("tutorial")
     suspend fun getTutorials(): Response<List<Tutorial>>

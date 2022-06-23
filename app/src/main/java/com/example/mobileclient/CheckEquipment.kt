@@ -55,72 +55,72 @@ class CheckEquipment : Fragment() {
         binding.btnLess.setOnClickListener{
             if(x1!=0){
                 x1--
-                binding.etNumber.setText(x1.toString());
+                binding.etNumber.setText(x1.toString())
             }
         }
         binding.btnMore.setOnClickListener{
             x1++
-            binding.etNumber.setText(x1.toString());
+            binding.etNumber.setText(x1.toString())
         }
         binding.btn1Less.setOnClickListener{
             if(x2!=0){
                 x2--
-                binding.et1Number.setText(x2.toString());
+                binding.et1Number.setText(x2.toString())
             }
         }
         binding.btn1More.setOnClickListener{
             x2++
-            binding.et1Number.setText(x2.toString());
+            binding.et1Number.setText(x2.toString())
         }
         binding.btn2Less.setOnClickListener{
             if(x3!=0){
                 x3--
-                binding.et2Number.setText(x3.toString());
+                binding.et2Number.setText(x3.toString())
             }
         }
         binding.btn2More.setOnClickListener{
             x3++
-            binding.et2Number.setText(x3.toString());
+            binding.et2Number.setText(x3.toString())
         }
         binding.btn3Less.setOnClickListener{
             if(x4!=0){
                 x4--
-                binding.et3Number.setText(x4.toString());
+                binding.et3Number.setText(x4.toString())
             }
         }
         binding.btn3More.setOnClickListener{
             x4++
-            binding.et3Number.setText(x4.toString());
+            binding.et3Number.setText(x4.toString())
         }
         binding.btn4Less.setOnClickListener{
             if(x5!=0){
                 x5--
-                binding.et4Number.setText(x5.toString());
+                binding.et4Number.setText(x5.toString())
             }
         }
         binding.btn4More.setOnClickListener{
             x5++
-            binding.et4Number.setText(x5.toString());
+            binding.et4Number.setText(x5.toString())
         }
         binding.btn5Less.setOnClickListener{
             if(x6!=0){
                 x6--
-                binding.et5Number.setText(x6.toString());
+                binding.et5Number.setText(x6.toString())
             }
         }
         binding.btn5More.setOnClickListener{
             x6++
-            binding.et5Number.setText(x6.toString());
+            binding.et5Number.setText(x6.toString())
         }
         binding.btn6Less.setOnClickListener{
             if(x7!=0){
                 x7--
-                binding.et6Number.setText(x7.toString());
+                binding.et6Number.setText(x7.toString())
             }
         }
         binding.btn6More.setOnClickListener{
             x7++
-            binding.et6Number.setText(x7.toString());
+            binding.et6Number.setText(x7.toString())
         }
 
 

@@ -96,12 +96,10 @@ class BloodTypeForm : Fragment() {
                 }
 
             } else {
-                Toast.makeText(context, "Login error" + response.code(), Toast.LENGTH_LONG).show()
-                Log.d("Login Response", response.body().toString())
-                Log.d("Response Code: ", response.code().toString())
+                Toast.makeText(context, "Server error" + response.code(), Toast.LENGTH_LONG).show()
+                Log.d("getUserMedicalInfoError-Body", response.body().toString())
+                Log.d("getUserMedicalInfoError-ResponseCode", response.code().toString())
             }
-
-
         }
 
         binding.button2.setOnClickListener {
@@ -129,8 +127,8 @@ class BloodTypeForm : Fragment() {
             if (rh.isNotEmpty() && blood.isNotEmpty()) {
                 val req = blood + "_" + rh
                 medicalInfo?.bloodType = req
-                val mediaType : MediaType = "text/plain; charset=utf-8".toMediaType()
-                val requestBodyWithBloodType : RequestBody =
+                val mediaType: MediaType = "text/plain; charset=utf-8".toMediaType()
+                val requestBodyWithBloodType: RequestBody =
                     medicalInfo!!.bloodType.toRequestBody(mediaType)
                 sharedViewModel.putUserMedicalInfoBlood(2, requestBodyWithBloodType)
                 sharedViewModel.putMedicalInfoBloodResponse.observe(viewLifecycleOwner) { response ->
@@ -140,6 +138,7 @@ class BloodTypeForm : Fragment() {
                         Navigation.findNavController(view)
                             .navigate(R.id.action_bloodTypeForm_to_medicalInfoMain)
                     } else {
+                        Log.d("Blood type update", response.body().toString())
                         Toast.makeText(
                             context,
                             "Update error " + response.code(),

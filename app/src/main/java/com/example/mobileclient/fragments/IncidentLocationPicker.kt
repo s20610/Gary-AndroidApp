@@ -58,7 +58,7 @@ class IncidentLocationPicker : DialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentIncidentLocationPickerBinding.inflate(inflater, container, false)
         val view = binding.root
         map = binding.map

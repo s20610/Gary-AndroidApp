@@ -44,15 +44,19 @@ class AllergyForm : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentAllergyFormBinding.inflate(inflater, container, false)
         val view = binding.root
-        val allergiesArray = getResources().getStringArray(R.array.medicalInfoAllergies)
-        val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, allergiesArray)
+        val allergiesArray = resources.getStringArray(R.array.medicalInfoAllergies)
+        val arrayAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_dropdown_item_1line,
+            allergiesArray
+        )
         binding.autoCompleteTextView.setAdapter(arrayAdapter)
 
-        binding.button2.setOnClickListener{
+        binding.button2.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_allergyForm_to_medicalInfoMain)
         }
         return view

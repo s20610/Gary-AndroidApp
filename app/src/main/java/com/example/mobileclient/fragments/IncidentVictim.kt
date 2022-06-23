@@ -64,11 +64,16 @@ class IncidentVictim : Fragment() {
             ScanContract()
         ) { result: ScanIntentResult ->
             if (result.contents == null) {
-                Toast.makeText(context, "Cancelled", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    context,
+                    resources.getString(R.string.barcode_scanning_cancelled),
+                    Toast.LENGTH_LONG
+                )
+                    .show()
             } else {
                 Toast.makeText(
                     context,
-                    "Scanned band code: " + result.contents,
+                    "${resources.getString(R.string.barcode_scanning_successful)} ${result.contents}",
                     Toast.LENGTH_LONG
                 ).show()
                 binding.barcodeInputText.setText(result.contents)

@@ -98,8 +98,8 @@ class MedicalInfoMain : Fragment() {
                 binding.diseaseView.adapter = ChronicDiseasesAdapter(chronicDiseasesFromApi)
             } else {
                 Toast.makeText(context, "Server error" + response.code(), LENGTH_LONG).show()
-                Log.d("Server Response", response.body().toString())
-                Log.d("Response Code: ", response.code().toString())
+                Log.d("getUserMedicalInfoResponseBody", response.body().toString())
+                Log.d("getUserMedicalInfoResponseCode", response.code().toString())
             }
 
 
@@ -128,16 +128,20 @@ class MedicalInfoMain : Fragment() {
                         dialog.cancel()
                     }
                     .setItems(R.array.medicalInfoArray,
-                        DialogInterface.OnClickListener { dialog, which ->
-                            if (which == 0) {
-                                Navigation.findNavController(view)
-                                    .navigate(R.id.action_medicalInfoMain_to_bloodTypeForm)
-                            }else if(which == 1){
-                                Navigation.findNavController(view)
-                                    .navigate(R.id.action_medicalInfoMain_to_allergyForm)
-                            }else{
-                                Navigation.findNavController(view)
-                                    .navigate(R.id.action_medicalInfoMain_to_diseaseForm)
+                        DialogInterface.OnClickListener { _, which ->
+                            when (which) {
+                                0 -> {
+                                    Navigation.findNavController(view)
+                                        .navigate(R.id.action_medicalInfoMain_to_bloodTypeForm)
+                                }
+                                1 -> {
+                                    Navigation.findNavController(view)
+                                        .navigate(R.id.action_medicalInfoMain_to_allergyForm)
+                                }
+                                else -> {
+                                    Navigation.findNavController(view)
+                                        .navigate(R.id.action_medicalInfoMain_to_diseaseForm)
+                                }
                             }
                             // The 'which' argument contains the index position
                             // of the selected item

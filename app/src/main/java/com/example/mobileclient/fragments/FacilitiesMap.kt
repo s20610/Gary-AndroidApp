@@ -49,7 +49,7 @@ class FacilitiesMap : Fragment() {
         val map = binding.map
         mLocationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(context),binding.map)
         var mRotationGestureOverlay = RotationGestureOverlay(context, map)
-        mRotationGestureOverlay.isEnabled = true;
+        mRotationGestureOverlay.isEnabled = true
         map.controller.setCenter(GeoPoint(52.237049,21.017532))
         map.setTileSource(TileSourceFactory.MAPNIK)
         map.overlayManager.add(mLocationOverlay)

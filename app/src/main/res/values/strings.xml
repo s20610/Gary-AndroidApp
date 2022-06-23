@@ -51,6 +51,13 @@
     <string name="incident_scan">Scan</string>
     <string name="scan_prompt">Scan victims band code</string>
     <string name="choose_your_location">Tap to choose incident location</string>
+    <string name="barcode_scanning_cancelled">Cancelled</string>
+    <string name="barcode_scanning_successful">Scanned band code: </string>
+    <string name="create_incident_popup_title">Create Incident?</string>
+    <string name="create_incident_popup_alert">Unjustified ambulance call may result in a fine. Are you sure?</string>
+    <string name="cancel">Cancel</string>
+    <string name="accept">Accept</string>
+    <string name="login_toast">Email logged: </string>
     <string-array name="filterTutorialsArray">
         <item>All Tutorials</item>
         <item>FILE_EMERGENCE</item>

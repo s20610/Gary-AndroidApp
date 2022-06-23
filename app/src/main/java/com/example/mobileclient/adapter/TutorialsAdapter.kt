@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mobileclient.databinding.TutorialViewItemBinding
 import com.example.mobileclient.model.Tutorial
 
-class TutorialsAdapter(private val tutorials: List<Tutorial>): RecyclerView.Adapter<TutorialsAdapter.TutorialViewHolder>() {
-
+class TutorialsAdapter(private val tutorials: List<Tutorial>) :
+    RecyclerView.Adapter<TutorialsAdapter.TutorialViewHolder>() {
 
     class TutorialViewHolder(
         private var binding: TutorialViewItemBinding

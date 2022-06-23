@@ -19,9 +19,6 @@ import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 
 
-
-
-
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -57,13 +54,20 @@ class Incident : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentIncidentBinding.inflate(inflater, container, false)
 
-        val incidents = arrayOf("Nieprzytomna osoba", "Zadławienie", "Rana kłuta", "Wypadek samochodowy", "Inne")
-        val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, incidents)
+        val incidents = arrayOf(
+            "Nieprzytomna osoba",
+            "Zadławienie",
+            "Rana kłuta",
+            "Wypadek samochodowy",
+            "Inne"
+        )
+        val arrayAdapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, incidents)
         binding.autoCompleteTextView2.setAdapter(arrayAdapter)
 
         val view = binding.root
 
-        binding.button2.setOnClickListener{
+        binding.button2.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_incident_to_loggedInScreen)
         }
         binding.button.setOnClickListener {
@@ -71,9 +75,9 @@ class Incident : Fragment() {
         }
         val incidentLocationPicker = IncidentLocationPicker.newInstance()
         binding.openMapButton!!.setOnClickListener {
-           incidentLocationPicker.show(childFragmentManager,"incident_location_picker")
+            incidentLocationPicker.show(childFragmentManager, "incident_location_picker")
         }
-        childFragmentManager.setFragmentResultListener("incidentLocation",this) { _, bundle ->
+        childFragmentManager.setFragmentResultListener("incidentLocation", this) { _, bundle ->
             val result = bundle.getString("bundleKey")
             binding.locationInputText.setText(result)
         }

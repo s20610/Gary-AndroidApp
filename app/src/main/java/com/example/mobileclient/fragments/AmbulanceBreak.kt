@@ -7,10 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.databinding.adapters.TextViewBindingAdapter.setText
-import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentAmbulanceBreakBinding
-import com.example.mobileclient.databinding.FragmentIncidentBinding
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_KEYBOARD
 import com.google.android.material.timepicker.TimeFormat
@@ -43,17 +40,18 @@ class AmbulanceBreak : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         _binding = FragmentAmbulanceBreakBinding.inflate(inflater, container, false)
-
-        val incidents = arrayOf("Refuel", "Food break", "5 min break", "Breakdown", "Others")
-        val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, incidents)
-        val c = Calendar.getInstance()
+        val view = binding.root
+        val breakTypes = arrayOf("Refuel", "Food break", "5 min break", "Breakdown", "Others")
+        val arrayAdapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, breakTypes)
+        binding.autoCompleteTextView.setAdapter(arrayAdapter)
+        val calendar = Calendar.getInstance()
         val timePicker = MaterialTimePicker.Builder()
             .setTimeFormat(TimeFormat.CLOCK_12H)
-            .setHour(c.get(Calendar.HOUR_OF_DAY))
-            .setMinute(c.get(Calendar.MINUTE))
+            .setHour(calendar.get(Calendar.HOUR_OF_DAY))
+            .setMinute(calendar.get(Calendar.MINUTE))
             .setInputMode(INPUT_MODE_KEYBOARD)
             .build()
         timePicker.addOnCancelListener {
@@ -61,36 +59,31 @@ class AmbulanceBreak : Fragment() {
         }
         val timePicker1 = MaterialTimePicker.Builder()
             .setTimeFormat(TimeFormat.CLOCK_12H)
-            .setHour(c.get(Calendar.HOUR_OF_DAY))
-            .setMinute(c.get(Calendar.MINUTE))
+            .setHour(calendar.get(Calendar.HOUR_OF_DAY))
+            .setMinute(calendar.get(Calendar.MINUTE))
             .setInputMode(INPUT_MODE_KEYBOARD)
             .build()
         timePicker1.addOnCancelListener {
             timePicker1.dismiss()
         }
-        binding.autoCompleteTextView.setAdapter(arrayAdapter)
         binding.startDateInput
             .setOnClickListener {
-        val arrayAdapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, incidents)
-        binding.autoCompleteTextView!!.setAdapter(arrayAdapter)
-        
-            timePicker.show(parentFragmentManager, "start_time_picker")
+                binding.autoCompleteTextView.setAdapter(arrayAdapter)
+                timePicker.show(parentFragmentManager, "start_time_picker")
                 timePicker.addOnPositiveButtonClickListener {
-                    var s = timePicker.hour.toString() + ":" + timePicker.minute.toString()
-                    binding.startDateInput.setText(s)
+                    val startTimeInputValue =
+                        timePicker.hour.toString() + ":" + timePicker.minute.toString()
+                    binding.startDateInput.setText(startTimeInputValue)
                 }
-        }
+            }
         binding.endDateInput.setOnClickListener {
-            timePicker1.show(parentFragmentManager,"end_time_picker")
+            timePicker1.show(parentFragmentManager, "end_time_picker")
             timePicker1.addOnPositiveButtonClickListener {
-                var s = timePicker1.hour.toString() + ":" + timePicker1.minute.toString()
-                binding.endDateInput.setText(s)
+                val endTimeInputValue =
+                    timePicker1.hour.toString() + ":" + timePicker1.minute.toString()
+                binding.endDateInput.setText(endTimeInputValue)
             }
         }
-        val view = binding.root
-
-
         return view
     }
 

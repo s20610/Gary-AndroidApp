@@ -37,8 +37,8 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener {
     private var _binding: FragmentLoggedInScreenBinding? = null
     private val sharedViewModel: UserViewModel by activityViewModels()
     private val tutorialsViewModel: TutorialsViewModel by activityViewModels()
-    var tutorialsFromAPI: List<Tutorial>? = null
-    var currentlyDisplayedTutorials: List<Tutorial>? = null
+    private var tutorialsFromAPI: List<Tutorial>? = null
+    private var currentlyDisplayedTutorials: List<Tutorial>? = null
 
     // This property is only valid between onCreateView and
 // onDestroyView.
@@ -80,11 +80,13 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener {
             if (response.isSuccessful) {
                 tutorialsFromAPI = response.body()
                 currentlyDisplayedTutorials = tutorialsFromAPI
-                Log.d("Body", response.body().toString())
+                Log.d("getTutorialsResponseBody", response.body().toString())
                 binding.tutorialsGrid.adapter =
                     currentlyDisplayedTutorials?.let { TutorialsAdapter(it) }
             } else {
-                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Login error ${response.code()}", Toast.LENGTH_SHORT).show()
+                Log.d("getTutorialsResponseBody", response.body().toString())
+                Log.d("getTutorialsResponseCode", response.code().toString())
             }
         }
 
@@ -94,25 +96,28 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener {
                 if (response.isSuccessful) {
                     tutorialsFromAPI = response.body()
                     currentlyDisplayedTutorials = tutorialsFromAPI
-                    Log.d("Body", response.body().toString())
+                    Log.d("getTutorialsResponseBody", response.body().toString())
                     binding.tutorialsGrid.adapter =
                         currentlyDisplayedTutorials?.let { TutorialsAdapter(it) }
                     binding.filterMenu.setSelection(0)
                     binding.refresh.isRefreshing = false
                 } else {
-                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Login error ${response.code()}", Toast.LENGTH_SHORT)
+                        .show()
+                    Log.d("getTutorialsResponseBody", response.body().toString())
+                    Log.d("getTutorialsResponseCode", response.code().toString())
                 }
             }
             binding.refresh.isRefreshing = false
         }
         binding.addIncidentButton.setOnClickListener {
             context?.let { it1 ->
-                MaterialAlertDialogBuilder(it1).setTitle("Create Incident?")
-                    .setMessage("Unjustified ambulance call may result in a fine. Are you sure?")
-                    .setNegativeButton("Cancel") { dialog, which ->
+                MaterialAlertDialogBuilder(it1).setTitle(getString(R.string.create_incident_popup_title))
+                    .setMessage(getString(R.string.create_incident_popup_alert))
+                    .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
                         dialog.cancel()
                     }
-                    .setPositiveButton("Accept") { dialog, which ->
+                    .setPositiveButton(getString(R.string.accept)) { _, _ ->
                         Navigation.findNavController(view)
                             .navigate(R.id.action_loggedInScreen_to_incident)
                     }

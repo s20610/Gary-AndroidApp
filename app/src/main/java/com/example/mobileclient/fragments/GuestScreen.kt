@@ -24,6 +24,7 @@ class GuestScreen : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var _binding: FragmentGuestScreenBinding? = null
+
     // This property is only valid between onCreateView and
 // onDestroyView.
     private val binding get() = _binding!!
@@ -48,9 +49,9 @@ class GuestScreen : Fragment() {
         }
         binding.navigationView.setNavigationItemSelectedListener {
             it.isChecked = true
-            if (it.toString() == getString(R.string.sign_up)){
+            if (it.toString() == getString(R.string.sign_up)) {
                 Navigation.findNavController(view).navigate(R.id.action_guestScreen_to_register)
-            }else if(it.toString() == getString(R.string.log_in)){
+            } else if (it.toString() == getString(R.string.log_in)) {
                 Navigation.findNavController(view).navigate(R.id.action_guestScreen_to_login)
             }
             binding.drawerLayout.close()

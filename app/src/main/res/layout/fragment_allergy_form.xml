@@ -9,7 +9,7 @@
         android:id="@+id/header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Allergy"
+        android:text="@string/allergy"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
         android:textColor="@color/green_dark"
         android:layout_marginTop="10dp"
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        android:text="Allergy Type"
+        android:text="@string/allergy_type"
         android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="@id/header"
         app:layout_constraintTop_toBottomOf="@id/header"
@@ -47,7 +47,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:inputType="none"
-            android:text="Choose" />
+            android:text="@string/choose" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/start_date_field"
@@ -55,7 +55,7 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
-        android:hint="Allergy name"
+        android:hint="@string/allergy_name"
         app:endIconMode="clear_text"
         app:layout_constraintStart_toStartOf="@id/header"
         app:layout_constraintEnd_toEndOf="@id/header"
@@ -78,7 +78,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        android:text="Additional Info"
+        android:text="@string/allergy_additional_info"
         android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="@id/header"
         app:layout_constraintTop_toBottomOf="@id/start_date_field"
@@ -89,7 +89,7 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
         android:layout_height="150dp"
-        android:hint="Additional info"
+        android:hint="@string/allergy_additional_info"
         app:endIconMode="clear_text"
         app:layout_constraintStart_toStartOf="@id/header"
         app:layout_constraintEnd_toEndOf="@id/header"
@@ -109,15 +109,7 @@
         android:gravity="top"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/share_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/adittional_info_field"
-        android:layout_margin="15dp"
-        android:text="Share with band scanning?">
-    </com.google.android.material.switchmaterial.SwitchMaterial>
+
     <RelativeLayout
         android:id="@+id/parentRelative"
         android:layout_width="wrap_content"
@@ -125,7 +117,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/share_switch"
+        app:layout_constraintTop_toBottomOf="@id/adittional_info_field"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal"
         android:layout_gravity="center">
@@ -134,7 +126,7 @@
             style="@style/Widget.Material3.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send"
+            android:text="@string/send"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -147,7 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/button"
-            android:text="Cancel"
+            android:text="@string/incident_cancel_button"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"

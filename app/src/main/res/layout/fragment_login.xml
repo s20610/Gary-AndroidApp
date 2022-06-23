@@ -115,7 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Paramedic"
+                    android:text="@string/paramedic_login_button"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                     app:layout_constraintEnd_toEndOf="@+id/password_field"
                     app:layout_constraintStart_toStartOf="@+id/password_field"

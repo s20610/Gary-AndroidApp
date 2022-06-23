@@ -22,7 +22,7 @@
                 android:id="@+id/editAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edit Account"
+                android:text="@string/edit_account"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +50,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:scaleType="centerCrop"
-                    android:contentDescription="User Avatar" />
+                    android:contentDescription="@string/user_avatar" />
             </androidx.cardview.widget.CardView>
 
 
@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:hint="Old password"
+                android:hint="@string/old_password"
                 app:endIconMode="password_toggle"
                 app:helperText="Required*"
                 app:helperTextEnabled="true"
@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:hint="New password"
+                android:hint="@string/new_password"
                 app:endIconMode="password_toggle"
                 app:helperText="Required*"
                 app:helperTextEnabled="true"
@@ -113,7 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Save"
+                android:text="@string/save"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                 app:layout_constraintEnd_toEndOf="@+id/birthday_field"
                 app:layout_constraintStart_toStartOf="@+id/birthday_field"

@@ -4,15 +4,15 @@
         android:id="@+id/page_1"
         android:enabled="true"
         android:icon="@drawable/ic_round_emergency_24"
-        android:title="Victim"/>
+        android:title="@string/menu_victim"/>
     <item
         android:id="@+id/page_2"
         android:enabled="true"
         android:icon="@drawable/ic_ambulance"
-        android:title="Support"/>
+        android:title="@string/menu_support"/>
     <item
         android:id="@+id/page_3"
         android:enabled="true"
         android:icon="@drawable/ic_twotone_category_24"
-        android:title="Equipment"/>
+        android:title="@string/menu_equipment"/>
 </menu>

@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:text="You can easily report various incidents and get help from medical professionals"
+                    android:text="@string/you_can_easily_report_various_incidents_and_get_help_from_medical_professionals"
                     android:textAlignment="center"
                     android:textSize="22sp"
                     app:layout_constraintEnd_toEndOf="parent"

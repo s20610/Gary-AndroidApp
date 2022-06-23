@@ -164,7 +164,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
-                android:text="Want to know why do we need this data?"
+                android:text="@string/want_to_know_why_do_we_need_this_data"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="@+id/birthday_field"
                 app:layout_constraintStart_toStartOf="@+id/birthday_field"

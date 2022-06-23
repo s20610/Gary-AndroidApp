@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_loggedInScreen_to_userInfo"
             app:destination="@id/userInfo" />
+        <action
+            android:id="@+id/action_loggedInScreen_to_user_settings"
+            app:destination="@id/user_settings" />
     </fragment>
     <fragment
         android:id="@+id/medicalInfoMain"
@@ -100,4 +103,9 @@
         android:id="@+id/incidentVictim"
         android:name="com.example.mobileclient.fragments.IncidentVictim"
         android:label="fragment_incident_victim" />
+    <fragment
+        android:id="@+id/user_settings"
+        android:name="com.example.mobileclient.User_settings"
+        android:label="fragment_user_settings"
+        tools:layout="@layout/fragment_user_settings" />
 </navigation>

@@ -33,7 +33,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:scaleType="centerCrop"
-            android:contentDescription="User Avatar" />
+            android:contentDescription="@string/user_avatar" />
         </androidx.cardview.widget.CardView>
 
         <TextView

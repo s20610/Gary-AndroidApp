@@ -41,7 +41,7 @@
                 android:id="@+id/guest_screen_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Info about this screen"
+                android:text="@string/info_about_this_screen"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
                 app:layout_constraintEnd_toEndOf="parent"

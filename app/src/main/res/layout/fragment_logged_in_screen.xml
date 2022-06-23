@@ -51,12 +51,24 @@
                 android:layout_gravity="end|bottom"
                 android:layout_margin="16dp"
                 android:backgroundTint="@color/red"
-                android:contentDescription="Create Incident"
+                android:contentDescription="@string/create_incident_text"
                 android:src="@drawable/ic_emergency_ambulance"
                 app:fabSize="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:tint="@color/white" />
+
+            <Button
+                android:id="@+id/settings_tmp_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="24dp"
+                android:text="s"
+                app:layout_constraintBottom_toTopOf="@+id/add_incident_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tutorials_grid" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

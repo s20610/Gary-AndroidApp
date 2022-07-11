@@ -83,19 +83,19 @@ class ParamedicScreen : Fragment() {
             }
         }
 
-        binding.bottomNavigation?.setOnItemSelectedListener {
-            it.isChecked = true
-            if (it.toString() == "Equipment") {
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_paramedicScreen_to_equipment)
-            } else if (it.toString() == "Victim") {
-                Navigation.findNavController(view).navigate(R.id.addVictimInfo)
-            } else if (it.toString() == "Support") {
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_paramedicScreen_to_paramedicCallForSupport2)
-            }
-            true
-        }
+//        binding.bottomNavigation?.setOnItemSelectedListener {
+//            it.isChecked = true
+//            if (it.toString() == "Equipment") {
+//                Navigation.findNavController(view)
+//                    .navigate(R.id.action_paramedicScreen_to_equipment)
+//            } else if (it.toString() == "Victim") {
+//                Navigation.findNavController(view).navigate(R.id.addVictimInfo)
+//            } else if (it.toString() == "Support") {
+//                Navigation.findNavController(view)
+//                    .navigate(R.id.action_paramedicScreen_to_paramedicCallForSupport2)
+//            }
+//            true
+//        }
 
         map = binding.map
         map.setTileSource(TileSourceFactory.MAPNIK)

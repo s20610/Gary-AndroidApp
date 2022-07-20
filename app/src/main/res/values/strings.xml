@@ -119,6 +119,10 @@
     <string name="cancel">Cancel</string>
     <string name="accept">Accept</string>
     <string name="login_toast">Email logged: </string>
+    <string name="UserNavigation_Settings">Settings</string>
+    <string name="new_password_confirm">Confirm new password</string>
+    <string name="paramedic_day_label">Day:</string>
+    <string name="paramedic_ambulance_shift_label">Ambulance shifts</string>
     <string-array name="filterTutorialsArray">
         <item>All Tutorials</item>
         <item>FILE_EMERGENCE</item>

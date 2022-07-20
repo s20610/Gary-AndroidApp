@@ -17,8 +17,8 @@ class ParamedicActivity : AppCompatActivity() {
         setContentView(binding.root)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
-        val tp = ThreadPolicy.LAX
-        StrictMode.setThreadPolicy(tp)
+//        val tp = ThreadPolicy.LAX
+//        StrictMode.setThreadPolicy(tp)
 
         binding.topAppBar.setNavigationOnClickListener {
             binding.drawerLayout.open()

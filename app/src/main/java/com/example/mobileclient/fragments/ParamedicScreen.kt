@@ -1,22 +1,27 @@
 package com.example.mobileclient.fragments
 
 import android.annotation.SuppressLint
-import android.location.Location
 import android.os.Build
 import android.os.Bundle
+import android.os.Looper
+import android.os.Looper.loop
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentParamedicScreenBinding
-import com.example.mobileclient.model.UserViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.internal.wait
 import org.osmdroid.bonuspack.routing.OSRMRoadManager
 import org.osmdroid.bonuspack.routing.Road
 import org.osmdroid.bonuspack.routing.RoadManager
@@ -24,11 +29,8 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
-import org.osmdroid.views.overlay.PolyOverlayWithIW
 import org.osmdroid.views.overlay.Polyline
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
-import org.osmdroid.views.overlay.mylocation.IMyLocationConsumer
-import org.osmdroid.views.overlay.mylocation.IMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -50,7 +52,6 @@ class ParamedicScreen : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var _binding: FragmentParamedicScreenBinding? = null
-    private val sharedViewModel: UserViewModel by activityViewModels()
     private var mLocationOverlay: MyLocationNewOverlay? = null
     private lateinit var map: MapView
     private val binding get() = _binding!!
@@ -63,7 +64,6 @@ class ParamedicScreen : Fragment() {
         }
     }
 
-    @SuppressLint("ResourceAsColor")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,42 +76,45 @@ class ParamedicScreen : Fragment() {
         val formatted = current.format(formatter)
         binding.dayField.text = formatted
         binding.checkinButton.setOnClickListener {
-            if (binding.checkinButton.text == getString(R.string.ParamedicScreen_CheckIn)) {
-                binding.checkinButton.text = getString(R.string.ParamedicScreen_FinishShift)
-            } else {
-                binding.checkinButton.text = getString(R.string.ParamedicScreen_CheckIn)
+            when (binding.checkinButton.text) {
+                getString(R.string.ParamedicScreen_CheckIn) -> {
+                    binding.checkinButton.text = getString(R.string.ParamedicScreen_FinishShift)
+                }
+                else -> {
+                    binding.checkinButton.text = getString(R.string.ParamedicScreen_CheckIn)
+                }
             }
         }
-
+        //TODO("Change bottom buttons in phone view")
         binding.bottomNavigation?.setOnItemSelectedListener {
             it.isChecked = true
             if (it.toString() == "Equipment") {
                 Navigation.findNavController(view)
-                    .navigate(R.id.action_paramedicScreen_to_equipment)
+                    .navigate(R.id.equipment)
             } else if (it.toString() == "Victim") {
                 Navigation.findNavController(view).navigate(R.id.addVictimInfo)
             } else if (it.toString() == "Support") {
                 Navigation.findNavController(view)
-                    .navigate(R.id.action_paramedicScreen_to_paramedicCallForSupport2)
+                    .navigate(R.id.paramedicCallForSupport2)
             }
             true
         }
 
         map = binding.map
-        map.setTileSource(TileSourceFactory.MAPNIK)
+        setupMap(map)
+        return view
+    }
+
+    private fun setupMap(mapView: MapView) {
+        map.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE)
         map.controller.setZoom(15.0)
-        val marker: Marker = Marker(map)
-        val palacKultury: GeoPoint = GeoPoint(52.231888, 21.005967)
-        val marker2: Marker = Marker(map)
-        marker.position = palacKultury
-        marker.title = "Location of incident"
-        marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_warning_24)
-        val roadManager: RoadManager = OSRMRoadManager(context, "garry")
+        val (marker: Marker, marker2: Marker, palacKultury: GeoPoint) = markerSetup()
+        val roadManager: RoadManager = OSRMRoadManager(context, "Garry")
         val gpsProvider: GpsMyLocationProvider = GpsMyLocationProvider(context)
         gpsProvider.locationUpdateMinTime = 6000
         val waypoints: ArrayList<GeoPoint> = ArrayList()
         val color: Int = ContextCompat.getColor(requireContext(), R.color.green_light)
-        mLocationOverlay = MyLocationNewOverlay(gpsProvider, binding.map)
+        mLocationOverlay = MyLocationNewOverlay(gpsProvider, map)
         mLocationOverlay!!.enableMyLocation()
         mLocationOverlay!!.enableFollowLocation()
         mLocationOverlay!!.runOnFirstFix {
@@ -119,28 +122,45 @@ class ParamedicScreen : Fragment() {
             marker2.title = "Medic location"
             waypoints.add(palacKultury)
             waypoints.add(marker2.position)
-            var road: Road = roadManager.getRoad(waypoints)
-            var roadOverlay: Polyline = RoadManager.buildRoadOverlay(road, color, 12f)
-            map.overlayManager.add(roadOverlay)
-            map.overlayManager.add(marker)
-            map.overlayManager.add(marker2)
-//            map.overlayManager.add(mLocationOverlay)
-            map.invalidate()
+            var road: Road = Road()
+            var roadOverlay: Polyline = Polyline()
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    road = roadManager.getRoad(waypoints)
+                    roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
+                    map.overlayManager.add(roadOverlay)
+                    map.overlayManager.add(marker)
+                    map.overlayManager.add(marker2)
+                    map.invalidate()
+                }
+            }
             mLocationOverlay!!.myLocationProvider.startLocationProvider { location, _ ->
-                waypoints.remove(marker2.position)
-                marker2.position = GeoPoint(location.latitude, location.longitude)
-                waypoints.add(marker2.position)
-                map.overlayManager.remove(roadOverlay)
-                road = roadManager.getRoad(waypoints)
-                roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
-                Log.d("Road creation", "Road created for $waypoints")
-                map.overlayManager.add(roadOverlay)
-                map.invalidate()
-                map.controller.animateTo(marker2.position)
+                lifecycleScope.launch {
+                    withContext(Dispatchers.IO) {
+                        waypoints.remove(marker2.position)
+                        marker2.position = GeoPoint(location.latitude, location.longitude)
+                        waypoints.add(marker2.position)
+                        map.overlayManager.remove(roadOverlay)
+                        road = roadManager.getRoad(waypoints)
+                        roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
+                        Log.d("Road creation", "Road created for $waypoints")
+                        map.overlayManager.add(roadOverlay)
+                        map.invalidate()
+                        map.controller.animateTo(marker2.position)
+                    }
+                }
             }
         }
-        map.invalidate()
-        return view
+    }
+
+    private fun markerSetup(): Triple<Marker, Marker, GeoPoint> {
+        val marker: Marker = Marker(map)
+        val marker2: Marker = Marker(map)
+        val palacKultury: GeoPoint = GeoPoint(52.231888, 21.005967)
+        marker.position = palacKultury
+        marker.title = "Location of incident"
+        marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_warning_24)
+        return Triple(marker, marker2, palacKultury)
     }
 
     companion object {

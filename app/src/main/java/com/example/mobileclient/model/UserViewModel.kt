@@ -14,7 +14,7 @@ import retrofit2.Response
 import java.net.ConnectException
 
 class UserViewModel : ViewModel() {
-    private var repository: Repository = Repository()
+    private var repository: Repository = Repository
     var loginResponse: MutableLiveData<Response<String>> = MutableLiveData()
     var registerResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var getUserMedicalInfoResponse: MutableLiveData<Response<MedicalInfo>> = MutableLiveData()

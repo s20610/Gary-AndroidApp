@@ -8,9 +8,12 @@ import com.example.mobileclient.model.Tutorial
 import com.example.mobileclient.model.User
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import org.osmdroid.bonuspack.routing.Road
+import org.osmdroid.bonuspack.routing.RoadManager
+import org.osmdroid.util.GeoPoint
 import retrofit2.Response
 
-class Repository {
+object Repository {
     suspend fun getLoginResponse(credentials: Credentials): Response<String> {
         return RetrofitInstance.api.getLoginResponse(credentials)
     }

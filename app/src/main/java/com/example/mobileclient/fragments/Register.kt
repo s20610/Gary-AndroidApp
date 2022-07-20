@@ -72,6 +72,7 @@ class Register : Fragment() {
         val phoneNumber: TextInputEditText = binding.phonenumberInput
         val passwordInput: TextInputEditText = binding.passwordInput
         val birthdayInput: TextInputEditText = binding.birthdayInput
+        val openCalendarButton: Button = binding.openCalendarButton
         val agreeSwitch: SwitchMaterial = binding.switchMaterial
         val registerButton: Button = binding.registerButton
         registerButton.isEnabled = false
@@ -93,7 +94,7 @@ class Register : Fragment() {
         datePicker.addOnCancelListener {
             datePicker.dismiss()
         }
-        birthdayInput.setOnClickListener {
+        openCalendarButton.setOnClickListener {
             datePicker.show(parentFragmentManager, "birthdate_picker")
         }
         firstNameInput.doAfterTextChanged {
@@ -116,10 +117,10 @@ class Register : Fragment() {
             context?.let { it1 ->
             MaterialAlertDialogBuilder(it1).setTitle("Why do we collect data?")
                 .setMessage("We need this data to provide our services with high quality")
-                .setNegativeButton("Cancel") { dialog, which ->
+                .setNegativeButton("Cancel") { dialog, _ ->
                     dialog.cancel()
                 }
-                .setPositiveButton("Accept") { dialog, which ->
+                .setPositiveButton("Accept") { dialog, _ ->
                     dialog.cancel()
                 }
                 .show()

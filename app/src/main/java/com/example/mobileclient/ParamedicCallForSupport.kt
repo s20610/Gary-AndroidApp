@@ -46,15 +46,27 @@ class ParamedicCallForSupport : Fragment() {
         val check3 = binding.checkBoxC
 
         binding.button.setOnClickListener{
+            var s: String = "";
             if (check1.isChecked){
-                Toast.makeText(context, "Ambulance", Toast.LENGTH_LONG).show()
-            } else {}
+                if(s.isNotEmpty()){
+                    s+=", "
+                }
+                s += "Ambulance"
+
+            }
             if (check2.isChecked){
-                Toast.makeText(context, "Fire Truck", Toast.LENGTH_LONG).show()
-            } else {}
+                if(s.isNotEmpty()){
+                    s+=", "
+                }
+                s+= "Fire Truck"
+            }
             if (check3.isChecked){
-                Toast.makeText(context, "Police", Toast.LENGTH_LONG).show()
-            } else {}
+                if(s.isNotEmpty()){
+                    s+=", "
+                }
+                s+= "Police"
+            }
+            Toast.makeText(context, s, Toast.LENGTH_LONG).show()
         }
 
         val view = binding.root

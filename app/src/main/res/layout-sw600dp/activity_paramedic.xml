@@ -46,16 +46,32 @@
                 app:navGraph="@navigation/paramedic_nav"
                 tools:layout="@layout/fragment_paramedic_screen"
                 tools:layout_editor_absoluteY="1dp" />
+            <LinearLayout
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/bottom_navigation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+                    app:menu="@menu/bottom_paramedic_navigation" />
+
+            </LinearLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/paramedic_navigation_drawer_header"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
         app:menu="@menu/paramedic_navigation_drawer" />
 
 

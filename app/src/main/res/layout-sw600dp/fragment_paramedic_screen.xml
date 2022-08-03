@@ -13,8 +13,8 @@
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:layout_marginHorizontal="100dp"
+            android:layout_marginTop="30dp"
             android:padding="10dp"
             app:cardCornerRadius="4dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -31,8 +31,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Ambulance shifts"
-                    android:textAppearance="?attr/textAppearanceHeadline5"
+                    android:text="@string/paramedic_ambulance_shift_label"
+                    android:textAppearance="?attr/textAppearanceHeadline4"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -42,9 +42,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="Day:"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/paramedic_day_label"
+                    android:textAppearance="?attr/textAppearanceHeadline5"
+                    app:layout_constraintEnd_toStartOf="@id/day_field"
+                    app:layout_constraintStart_toStartOf="@+id/shift_title"
                     app:layout_constraintTop_toBottomOf="@id/shift_title" />
 
                 <TextView
@@ -52,11 +53,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:textSize="16dp"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
                     app:layout_constraintBottom_toBottomOf="@id/day_label"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/shift_title"
                     app:layout_constraintStart_toEndOf="@id/day_label"
-                    app:layout_constraintTop_toBottomOf="@id/shift_title" />
+                    app:layout_constraintTop_toTopOf="@id/day_label" />
 
                 <Button
                     android:id="@+id/checkin_button"
@@ -76,16 +77,27 @@
 
         <org.osmdroid.views.MapView
             android:id="@+id/map"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:padding="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="parent"
+            android:layout_width="700dp"
+            android:layout_height="500dp"
+            android:layout_margin="10dp"
+            app:layout_constraintEnd_toEndOf="@+id/cardView"
+            app:layout_constraintStart_toStartOf="@+id/cardView"
             app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation"
+                style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:menu="@menu/bottom_paramedic_navigation" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

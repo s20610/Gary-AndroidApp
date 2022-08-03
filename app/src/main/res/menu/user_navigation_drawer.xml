@@ -5,6 +5,7 @@
         <item android:title="@string/UserNavigation_UserDetails" android:icon="@drawable/ic_twotone_health_and_safety_24" android:id="@+id/nav_user_details"/>
         <item android:title="@string/UserNavigation_ReportedIncidents" android:icon="@drawable/ic_baseline_list_alt_24" android:id="@+id/nav_user_incidents"/>
         <item android:title="@string/UserNavigation_Map" android:icon="@drawable/ic_map_24" android:id="@+id/nav_map"/>
+        <item android:title="@string/UserNavigation_Settings" android:icon="@drawable/ic_baseline_settings_24" android:id="@+id/nav_settings"/>
         <item android:title="@string/UserNavigation_LogOut" android:icon="@drawable/ic_sharp_logout_24" />
     </group>
 </menu>

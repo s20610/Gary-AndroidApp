@@ -10,7 +10,7 @@ import retrofit2.Response
 import java.net.ConnectException
 
 class TutorialsViewModel: ViewModel() {
-    private var repository: Repository = Repository()
+    private var repository: Repository = Repository
     var getTutorialsResponse: MutableLiveData<Response<List<Tutorial>>> = MutableLiveData()
 
     fun getTutorials(){

@@ -124,12 +124,6 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener {
                     .show()
             }
         }
-
-        binding.settingsTmpButton.setOnClickListener{
-            Navigation.findNavController(view)
-                .navigate(R.id.action_loggedInScreen_to_user_settings)
-        }
-
         //Filter menu
         val filterMenu: Spinner = binding.filterMenu
         ArrayAdapter.createFromResource(

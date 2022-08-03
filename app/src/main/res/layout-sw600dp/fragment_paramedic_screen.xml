@@ -99,6 +99,6 @@
                 android:layout_height="wrap_content"
                 app:menu="@menu/bottom_paramedic_navigation" />
 
-
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

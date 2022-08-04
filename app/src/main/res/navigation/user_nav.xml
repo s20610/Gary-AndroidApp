@@ -108,4 +108,9 @@
         android:name="com.example.mobileclient.User_settings"
         android:label="fragment_user_settings"
         tools:layout="@layout/fragment_user_settings" />
+    <fragment
+        android:id="@+id/dangerousForm"
+        android:name="com.example.mobileclient.fragments.DangerousForm"
+        android:label="fragment_dangerous_form"
+        tools:layout="@layout/fragment_dangerous_form" />
 </navigation>

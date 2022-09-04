@@ -104,7 +104,6 @@ class ParamedicScreen : Fragment() {
         setupMap(map)
         return view
     }
-//Comment added to check if github action is working
     private fun setupMap(mapView: MapView) {
         map.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE)
         map.controller.setZoom(15.0)

@@ -7,5 +7,5 @@ data class User(
     val birthDate: String,
     val phone: String,
     val bandCode: String,
-    val medicalInfo: MedicalInfo
+    val medicalInfo: MedicalInfo,
 )

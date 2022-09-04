@@ -85,25 +85,27 @@ class ParamedicScreen : Fragment() {
                 }
             }
         }
-        //TODO("Change bottom buttons in phone view")
+
         binding.bottomNavigation?.setOnItemSelectedListener {
             it.isChecked = true
             if (it.toString() == "Equipment") {
                 Navigation.findNavController(view)
-                    .navigate(R.id.equipment)
+                    .navigate(R.id.action_paramedicScreen_to_equipment)
             } else if (it.toString() == "Victim") {
                 Navigation.findNavController(view).navigate(R.id.addVictimInfo)
             } else if (it.toString() == "Support") {
                 Navigation.findNavController(view)
-                    .navigate(R.id.paramedicCallForSupport2)
+                    .navigate(R.id.action_paramedicScreen_to_paramedicCallForSupport2)
             }
             true
-        }
+            }
+
 
         map = binding.map
         setupMap(map)
         return view
     }
+
     private fun setupMap(mapView: MapView) {
         map.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE)
         map.controller.setZoom(15.0)

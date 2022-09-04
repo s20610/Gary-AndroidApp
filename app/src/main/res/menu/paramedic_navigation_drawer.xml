@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single" >
-        <item android:title="Map" android:icon="@drawable/ic_map_24"/>
+
         <item android:title="Break" android:icon="@drawable/ic_baseline_list_alt_24"/>
+        <item android:title="Options" android:icon="@drawable/ic_sharp_settings_24" />
         <item android:title="@string/log_out" android:icon="@drawable/ic_sharp_logout_24" />
     </group>
 </menu>

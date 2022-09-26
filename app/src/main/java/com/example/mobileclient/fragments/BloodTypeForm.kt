@@ -12,7 +12,7 @@ import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentBloodTypeFormBinding
 import com.example.mobileclient.model.MedicalInfo
-import com.example.mobileclient.model.UserViewModel
+import com.example.mobileclient.viewmodels.UserViewModel
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody

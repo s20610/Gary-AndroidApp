@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.mobileclient.model.UserViewModel" />
+            type="com.example.mobileclient.viewmodels.UserViewModel" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

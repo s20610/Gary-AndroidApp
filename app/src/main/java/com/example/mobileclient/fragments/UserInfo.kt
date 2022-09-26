@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.mobileclient.databinding.FragmentUserInfoBinding
-import com.example.mobileclient.model.UserViewModel
+import com.example.mobileclient.viewmodels.UserViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

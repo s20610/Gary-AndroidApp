@@ -1,6 +1,5 @@
 package com.example.mobileclient.fragments
 
-import android.app.ProgressDialog.show
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -20,7 +19,7 @@ import com.example.mobileclient.databinding.FragmentMedicalInfoMainBinding
 import com.example.mobileclient.model.Allergy
 import com.example.mobileclient.model.MedicalInfo
 import com.example.mobileclient.model.User
-import com.example.mobileclient.model.UserViewModel
+import com.example.mobileclient.viewmodels.UserViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 // TODO: Rename parameter arguments, choose names that match

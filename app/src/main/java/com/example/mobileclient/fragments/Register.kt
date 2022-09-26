@@ -17,7 +17,7 @@ import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentRegisterBinding
 import com.example.mobileclient.model.NewUser
-import com.example.mobileclient.model.UserViewModel
+import com.example.mobileclient.viewmodels.UserViewModel
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker

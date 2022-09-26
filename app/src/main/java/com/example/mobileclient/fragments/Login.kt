@@ -13,7 +13,7 @@ import com.example.mobileclient.ParamedicActivity
 import com.example.mobileclient.R
 import com.example.mobileclient.UserActivity
 import com.example.mobileclient.databinding.FragmentLoginBinding
-import com.example.mobileclient.model.UserViewModel
+import com.example.mobileclient.viewmodels.UserViewModel
 
 
 // TODO: Rename parameter arguments, choose names that match

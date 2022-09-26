@@ -17,6 +17,8 @@ import com.example.mobileclient.R
 import com.example.mobileclient.adapter.TutorialsAdapter
 import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
 import com.example.mobileclient.model.*
+import com.example.mobileclient.viewmodels.TutorialsViewModel
+import com.example.mobileclient.viewmodels.UserViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 

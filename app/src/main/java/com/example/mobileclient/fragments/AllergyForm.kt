@@ -58,6 +58,10 @@ class AllergyForm : Fragment() {
         binding.button2.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_allergyForm_to_medicalInfoMain)
         }
+        binding.button2.setOnClickListener {
+            //TODO("Add allergy to database with api call")
+            Navigation.findNavController(view).navigate(R.id.action_allergyForm_to_medicalInfoMain)
+        }
         return view
     }
 

@@ -46,6 +46,10 @@ class DiseaseForm : Fragment() {
         val view = binding.root
 
         binding.button2.setOnClickListener {
+            //TODO: Add disease to database with api call
+            Navigation.findNavController(view).navigate(R.id.action_diseaseForm_to_medicalInfoMain)
+        }
+        binding.button2.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_diseaseForm_to_medicalInfoMain)
         }
 

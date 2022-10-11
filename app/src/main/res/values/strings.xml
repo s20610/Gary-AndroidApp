@@ -131,4 +131,6 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="log_in_to_see_tutorial">Log in to read tutorials</string>
+    <string name="log_in_to_see_tutorial_message">Tutorials are available only for logged in users</string>
 </resources>

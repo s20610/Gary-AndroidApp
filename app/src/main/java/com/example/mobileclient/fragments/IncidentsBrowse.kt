@@ -43,7 +43,7 @@ class IncidentsBrowse : Fragment() {
 
         _binding = FragmentIncidentsBrowseBinding.inflate(inflater, container, false)
         val view = binding.root
-
+//TODO: Add code to populate the list with incidents from database
         val names = arrayOf(
             "Zgloszenie1  10-10-2022",
             "Zgloszenie2  10-10-2022",

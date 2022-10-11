@@ -1,5 +1,6 @@
 package com.example.mobileclient.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -58,6 +59,9 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
         binding.refresh.setOnRefreshListener {
             getTutorialsFromAPI()
             binding.refresh.isRefreshing = false
+        }
+        if (!activity!!.getPreferences(Context.MODE_PRIVATE).getBoolean("createIncidentON", false)){
+            binding.addIncidentButton.hide()
         }
         binding.addIncidentButton.setOnClickListener {
             context?.let { it1 ->

@@ -1,4 +1,4 @@
-package com.example.mobileclient
+package com.example.mobileclient.activities
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mobileclient.R
 import org.osmdroid.config.Configuration
 
 class LandingActivity : AppCompatActivity() {
@@ -52,7 +53,7 @@ class LandingActivity : AppCompatActivity() {
         val watchedOnboarding = sharedPref.getBoolean("watchedOnboarding", false)
         Log.d("watchedOnboarding", watchedOnboarding.toString())
         if (!watchedOnboarding){
-            val onboardingActivity = Intent(applicationContext,OnboardingActivity::class.java)
+            val onboardingActivity = Intent(applicationContext, OnboardingActivity::class.java)
             startActivity(onboardingActivity)
         }
     }

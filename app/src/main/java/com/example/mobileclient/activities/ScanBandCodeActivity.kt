@@ -1,4 +1,4 @@
-package com.example.mobileclient
+package com.example.mobileclient.activities
 
 import com.journeyapps.barcodescanner.CaptureActivity
 

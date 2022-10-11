@@ -6,10 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
@@ -21,21 +18,8 @@ import com.example.mobileclient.viewmodels.TutorialsViewModel
 import com.example.mobileclient.viewmodels.UserViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [LoggedInScreen.newInstance] factory method to
- * create an instance of this fragment.
- */
-class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener, TutorialsAdapter.OnItemClickListener {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
+    TutorialsAdapter.OnItemClickListener {
     private var _binding: FragmentLoggedInScreenBinding? = null
     private val sharedViewModel: UserViewModel by activityViewModels()
     private val tutorialsViewModel: TutorialsViewModel by activityViewModels()
@@ -45,14 +29,6 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener, Tutorials
     // This property is only valid between onCreateView and
 // onDestroyView.
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,43 +49,14 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener, Tutorials
             Tutorial("4", "Tutorial 4", "FILE_EMERGENCE", 5.0f),
             Tutorial("5", "Tutorial 5", "COURSE", 5.0f),
         )
-        binding.tutorialsGrid.adapter = TutorialsAdapter(tutorialsEmpty,this)
+        binding.tutorialsGrid.adapter =
+            TutorialsAdapter(tutorialsEmpty, this, ratingBarChangeListener)
         val intent = Intent()
         val email = intent.getStringExtra("E-mail")
 //        Toast.makeText(context, "Email zalogowano: $email", Toast.LENGTH_LONG).show()
-        tutorialsViewModel.getTutorials()
-        tutorialsViewModel.getTutorialsResponse.observe(viewLifecycleOwner) { response ->
-            if (response.isSuccessful) {
-                tutorialsFromAPI = response.body()
-                currentlyDisplayedTutorials = tutorialsFromAPI
-                Log.d("getTutorialsResponseBody", response.body().toString())
-                binding.tutorialsGrid.adapter =
-                    currentlyDisplayedTutorials?.let { TutorialsAdapter(it,this) }
-            } else {
-                Toast.makeText(context, "Login error ${response.code()}", Toast.LENGTH_SHORT).show()
-                Log.d("getTutorialsResponseBody", response.body().toString())
-                Log.d("getTutorialsResponseCode", response.code().toString())
-            }
-        }
-
+        getTutorialsFromAPI()
         binding.refresh.setOnRefreshListener {
-            tutorialsViewModel.getTutorials()
-            tutorialsViewModel.getTutorialsResponse.observe(viewLifecycleOwner) { response ->
-                if (response.isSuccessful) {
-                    tutorialsFromAPI = response.body()
-                    currentlyDisplayedTutorials = tutorialsFromAPI
-                    Log.d("getTutorialsResponseBody", response.body().toString())
-                    binding.tutorialsGrid.adapter =
-                        currentlyDisplayedTutorials?.let { TutorialsAdapter(it,this) }
-                    binding.filterMenu.setSelection(0)
-                    binding.refresh.isRefreshing = false
-                } else {
-                    Toast.makeText(context, "Login error ${response.code()}", Toast.LENGTH_SHORT)
-                        .show()
-                    Log.d("getTutorialsResponseBody", response.body().toString())
-                    Log.d("getTutorialsResponseCode", response.code().toString())
-                }
-            }
+            getTutorialsFromAPI()
             binding.refresh.isRefreshing = false
         }
         binding.addIncidentButton.setOnClickListener {
@@ -147,26 +94,6 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener, Tutorials
         super.onViewCreated(view, savedInstanceState)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoggedInScreen.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoggedInScreen().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-
     //Methods for filterMenu from AdapterView.OnItemSelectedListener
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         p0?.getItemAtPosition(p2).toString()
@@ -175,7 +102,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener, Tutorials
                 currentlyDisplayedTutorials = tutorialsFromAPI
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(
-                        it,this
+                        it, this, ratingBarChangeListener
                     )
                 }
             }
@@ -185,7 +112,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener, Tutorials
                 currentlyDisplayedTutorials = filteredEmergenceTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(
-                        it,this
+                        it, this, ratingBarChangeListener
                     )
                 }
             }
@@ -195,7 +122,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener, Tutorials
                 currentlyDisplayedTutorials = filteredCourseTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(
-                        it,this
+                        it, this, ratingBarChangeListener
                     )
                 }
             }
@@ -205,7 +132,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener, Tutorials
                 currentlyDisplayedTutorials = filteredGuideTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(
-                        it,this
+                        it, this, ratingBarChangeListener
                     )
                 }
             }
@@ -216,7 +143,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener, Tutorials
         currentlyDisplayedTutorials = tutorialsFromAPI
         binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
             TutorialsAdapter(
-                it,this
+                it, this, ratingBarChangeListener
             )
         }
     }
@@ -225,4 +152,37 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener, Tutorials
         Log.d("Tutorial clicked", "User clicked tutorial $position")
         Toast.makeText(requireContext(), "Tutorial $position", Toast.LENGTH_SHORT).show()
     }
+
+    private fun getTutorialsFromAPI() {
+        tutorialsViewModel.getTutorials()
+        tutorialsViewModel.getTutorialsResponse.observe(viewLifecycleOwner) { response ->
+            if (response.isSuccessful) {
+                tutorialsFromAPI = response.body()
+                currentlyDisplayedTutorials = tutorialsFromAPI
+                Log.d("getTutorialsResponseBody", response.body().toString())
+                binding.tutorialsGrid.adapter =
+                    currentlyDisplayedTutorials?.let {
+                        TutorialsAdapter(
+                            it,
+                            this,
+                            ratingBarChangeListener
+                        )
+                    }
+                binding.filterMenu.setSelection(0)
+            } else {
+                Toast.makeText(context, "Tutorials error ${response.code()}", Toast.LENGTH_SHORT)
+                    .show()
+                Log.d("getTutorialsResponseBody", response.body().toString())
+                Log.d("getTutorialsResponseCode", response.code().toString())
+            }
+        }
+    }
+
+    private val ratingBarChangeListener =
+        RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser ->
+            if (fromUser) {
+                Toast.makeText(context, "Thanks for rating our tutorial!", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
 }

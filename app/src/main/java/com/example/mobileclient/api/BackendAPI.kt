@@ -1,5 +1,6 @@
 package com.example.mobileclient.api
 
+import com.example.mobileclient.fragments.Incident
 import com.example.mobileclient.model.*
 
 import com.example.mobileclient.model.Credentials
@@ -9,7 +10,6 @@ import com.example.mobileclient.model.Tutorial
 import com.example.mobileclient.model.User
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -53,6 +53,11 @@ interface BackendAPI {
     @POST("emergency/new")
     suspend fun createNewEmergency(
         @Body newEmergencyInfo: Emergency
+    ): Response<ResponseBody>
+
+    @POST("incident/new")
+    suspend fun createNewIncident(
+        @Body newIncidentInfo: Incidentt
     ): Response<ResponseBody>
 
     //Victim api calls

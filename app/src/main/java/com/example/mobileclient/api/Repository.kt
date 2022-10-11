@@ -1,5 +1,6 @@
 package com.example.mobileclient.api
 
+import com.example.mobileclient.fragments.Incident
 import com.example.mobileclient.model.*
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -32,6 +33,10 @@ object Repository {
 
     suspend fun createNewEmergency(newEmergencyInfo: Emergency): Response<ResponseBody> {
         return RetrofitInstance.api.createNewEmergency(newEmergencyInfo)
+    }
+
+    suspend fun createNewIncident(newIncidentInfo: Incidentt): Response<ResponseBody>{
+        return RetrofitInstance.api.createNewIncident(newIncidentInfo)
     }
 
     suspend fun getVictim(id: Int): Response<User> {

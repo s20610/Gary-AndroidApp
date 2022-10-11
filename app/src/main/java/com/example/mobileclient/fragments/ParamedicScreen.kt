@@ -1,10 +1,7 @@
 package com.example.mobileclient.fragments
 
-import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import android.os.Looper
-import android.os.Looper.loop
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,16 +9,13 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentParamedicScreenBinding
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.internal.wait
 import org.osmdroid.bonuspack.routing.OSRMRoadManager
 import org.osmdroid.bonuspack.routing.Road
 import org.osmdroid.bonuspack.routing.RoadManager
@@ -98,20 +92,20 @@ class ParamedicScreen : Fragment() {
                     .navigate(R.id.action_paramedicScreen_to_paramedicCallForSupport2)
             }
             true
-            }
+        }
 
 
         map = binding.map
-        setupMap(map)
+        setupMap()
         return view
     }
 
-    private fun setupMap(mapView: MapView) {
+    private fun setupMap() {
         map.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE)
         map.controller.setZoom(15.0)
         val (marker: Marker, marker2: Marker, palacKultury: GeoPoint) = markerSetup()
         val roadManager: RoadManager = OSRMRoadManager(context, "Garry")
-        val gpsProvider: GpsMyLocationProvider = GpsMyLocationProvider(context)
+        val gpsProvider = GpsMyLocationProvider(context)
         gpsProvider.locationUpdateMinTime = 6000
         val waypoints: ArrayList<GeoPoint> = ArrayList()
         val color: Int = ContextCompat.getColor(requireContext(), R.color.green_light)
@@ -123,8 +117,8 @@ class ParamedicScreen : Fragment() {
             marker2.title = "Medic location"
             waypoints.add(palacKultury)
             waypoints.add(marker2.position)
-            var road: Road = Road()
-            var roadOverlay: Polyline = Polyline()
+            var road: Road
+            var roadOverlay = Polyline()
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
                     road = roadManager.getRoad(waypoints)
@@ -155,9 +149,9 @@ class ParamedicScreen : Fragment() {
     }
 
     private fun markerSetup(): Triple<Marker, Marker, GeoPoint> {
-        val marker: Marker = Marker(map)
-        val marker2: Marker = Marker(map)
-        val palacKultury: GeoPoint = GeoPoint(52.231888, 21.005967)
+        val marker = Marker(map)
+        val marker2 = Marker(map)
+        val palacKultury = GeoPoint(52.231888, 21.005967)
         marker.position = palacKultury
         marker.title = "Location of incident"
         marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_warning_24)

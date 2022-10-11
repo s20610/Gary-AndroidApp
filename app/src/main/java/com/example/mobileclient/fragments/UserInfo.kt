@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation
+import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentUserInfoBinding
 import com.example.mobileclient.viewmodels.UserViewModel
 
@@ -45,6 +47,11 @@ class UserInfo : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentUserInfoBinding.inflate(inflater, container, false)
         val view = binding.root
+        binding.saveChangesButton.setOnClickListener {
+            //TODO: Save changes to database with api call
+            Navigation.findNavController(view)
+                .navigate(R.id.action_userInfo_to_loggedInScreen)
+        }
 
         return view
     }

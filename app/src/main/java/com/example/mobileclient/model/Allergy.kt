@@ -15,3 +15,4 @@ package com.example.mobileclient.model
  * @see com.example.mobileclient.adapter.AllergyAdapter
  */
 data class Allergy (val allergyName: String,val allergyType : String)
+//TODO(Allergy): Should allergy contain extra info or no

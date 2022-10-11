@@ -32,7 +32,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [LoggedInScreen.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener {
+class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener, TutorialsAdapter.OnItemClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -73,7 +73,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener {
             Tutorial("4", "Tutorial 4", "FILE_EMERGENCE", 5.0f),
             Tutorial("5", "Tutorial 5", "COURSE", 5.0f),
         )
-        binding.tutorialsGrid.adapter = TutorialsAdapter(tutorialsEmpty)
+        binding.tutorialsGrid.adapter = TutorialsAdapter(tutorialsEmpty,this)
         val intent = Intent()
         val email = intent.getStringExtra("E-mail")
 //        Toast.makeText(context, "Email zalogowano: $email", Toast.LENGTH_LONG).show()
@@ -84,7 +84,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener {
                 currentlyDisplayedTutorials = tutorialsFromAPI
                 Log.d("getTutorialsResponseBody", response.body().toString())
                 binding.tutorialsGrid.adapter =
-                    currentlyDisplayedTutorials?.let { TutorialsAdapter(it) }
+                    currentlyDisplayedTutorials?.let { TutorialsAdapter(it,this) }
             } else {
                 Toast.makeText(context, "Login error ${response.code()}", Toast.LENGTH_SHORT).show()
                 Log.d("getTutorialsResponseBody", response.body().toString())
@@ -100,7 +100,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener {
                     currentlyDisplayedTutorials = tutorialsFromAPI
                     Log.d("getTutorialsResponseBody", response.body().toString())
                     binding.tutorialsGrid.adapter =
-                        currentlyDisplayedTutorials?.let { TutorialsAdapter(it) }
+                        currentlyDisplayedTutorials?.let { TutorialsAdapter(it,this) }
                     binding.filterMenu.setSelection(0)
                     binding.refresh.isRefreshing = false
                 } else {
@@ -175,7 +175,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener {
                 currentlyDisplayedTutorials = tutorialsFromAPI
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(
-                        it
+                        it,this
                     )
                 }
             }
@@ -185,7 +185,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener {
                 currentlyDisplayedTutorials = filteredEmergenceTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(
-                        it
+                        it,this
                     )
                 }
             }
@@ -195,7 +195,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener {
                 currentlyDisplayedTutorials = filteredCourseTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(
-                        it
+                        it,this
                     )
                 }
             }
@@ -205,7 +205,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener {
                 currentlyDisplayedTutorials = filteredGuideTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(
-                        it
+                        it,this
                     )
                 }
             }
@@ -216,8 +216,13 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener {
         currentlyDisplayedTutorials = tutorialsFromAPI
         binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
             TutorialsAdapter(
-                it
+                it,this
             )
         }
+    }
+
+    override fun onItemClick(position: Int) {
+        Log.d("Tutorial clicked", "User clicked tutorial $position")
+        Toast.makeText(requireContext(), "Tutorial $position", Toast.LENGTH_SHORT).show()
     }
 }

@@ -82,7 +82,11 @@
     <fragment
         android:id="@+id/userInfo"
         android:name="com.example.mobileclient.fragments.UserInfo"
-        android:label="UserInfo" />
+        android:label="UserInfo" >
+        <action
+            android:id="@+id/action_userInfo_to_loggedInScreen"
+            app:destination="@id/loggedInScreen" />
+    </fragment>
     <fragment
         android:id="@+id/allergyForm"
         android:name="com.example.mobileclient.fragments.AllergyForm"

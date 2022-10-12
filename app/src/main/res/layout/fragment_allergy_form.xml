@@ -50,7 +50,7 @@
             android:text="@string/choose" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/start_date_field"
+        android:id="@+id/allergy_name_field"
         android:layout_width="match_parent"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
@@ -68,7 +68,7 @@
         app:layout_constraintTop_toBottomOf="@+id/type_input">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/start_date_input"
+            android:id="@+id/allergy_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="text" />
@@ -81,10 +81,10 @@
         android:text="@string/allergy_additional_info"
         android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="@id/header"
-        app:layout_constraintTop_toBottomOf="@id/start_date_field"
+        app:layout_constraintTop_toBottomOf="@id/allergy_name_field"
         android:layout_margin="15dp"/>
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/adittional_info_field"
+        android:id="@+id/additional_info_field"
         android:layout_width="match_parent"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
@@ -102,7 +102,7 @@
         app:layout_constraintTop_toBottomOf="@+id/Additional_label">
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/adittional_info_input"
+        android:id="@+id/additional_info_input"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:inputType="text|textMultiLine"
@@ -117,7 +117,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/adittional_info_field"
+        app:layout_constraintTop_toBottomOf="@id/additional_info_field"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal"
         android:layout_gravity="center">

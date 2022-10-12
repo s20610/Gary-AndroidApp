@@ -6,10 +6,8 @@ import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.mobileclient.UserActivity
 
 fun isOnline(context: Context): Boolean {
     val connectivityManager =

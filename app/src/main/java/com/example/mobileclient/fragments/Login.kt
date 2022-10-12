@@ -9,9 +9,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
-import com.example.mobileclient.ParamedicActivity
+import com.example.mobileclient.activities.ParamedicActivity
 import com.example.mobileclient.R
-import com.example.mobileclient.UserActivity
+import com.example.mobileclient.activities.UserActivity
 import com.example.mobileclient.databinding.FragmentLoginBinding
 import com.example.mobileclient.viewmodels.UserViewModel
 

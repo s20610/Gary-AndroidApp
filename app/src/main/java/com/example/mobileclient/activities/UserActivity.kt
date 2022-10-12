@@ -1,10 +1,11 @@
-package com.example.mobileclient
+package com.example.mobileclient.activities
 
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
+import com.example.mobileclient.R
 import com.example.mobileclient.databinding.ActivityUserBinding
 
 class UserActivity : AppCompatActivity() {

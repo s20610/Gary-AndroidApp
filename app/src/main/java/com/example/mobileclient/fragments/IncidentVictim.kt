@@ -9,8 +9,7 @@ import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.mobileclient.R
-import com.example.mobileclient.ScanBandCodeActivity
-import com.example.mobileclient.databinding.FragmentIncidentBinding
+import com.example.mobileclient.activities.ScanBandCodeActivity
 import com.example.mobileclient.databinding.FragmentIncidentVictimBinding
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult

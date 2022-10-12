@@ -1,12 +1,10 @@
-package com.example.mobileclient
+package com.example.mobileclient.activities
 
 import android.os.Bundle
-import android.os.StrictMode
-import android.os.StrictMode.ThreadPolicy
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
+import com.example.mobileclient.R
 import com.example.mobileclient.databinding.ActivityParamedicBinding
 
 

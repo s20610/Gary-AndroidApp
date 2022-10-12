@@ -195,7 +195,7 @@ class UserViewModel : ViewModel() {
         }
     }
 
-    fun postMedicalInfoAllergies(id: Int, allergies: List<Allergy>) {
+    fun postMedicalInfoAllergies(id: Int, allergies: ArrayList<Allergy>) {
         viewModelScope.launch {
             try {
                 val response = repository.postUserMedicalInfoAllergies(id, allergies)

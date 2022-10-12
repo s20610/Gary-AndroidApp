@@ -61,7 +61,7 @@ class MedicalInfoMain : Fragment() {
         //Data before api request is handled
         var medicalInfo: MedicalInfo? = MedicalInfo(0, "A_PLUS", "Brak", "Brak")
         val allergiesEmpty: List<Allergy> = mutableListOf(
-            Allergy(medicalInfo!!.allergies, "Jedzenie"),
+            Allergy(medicalInfo!!.allergies, "Jedzenie",""),
         )
         val chronicDiseasesEmpty: List<String> = mutableListOf(
             medicalInfo.chronicDiseases
@@ -88,7 +88,7 @@ class MedicalInfoMain : Fragment() {
                     "" -> binding.imageView.setImageResource(R.drawable.blood_type_add)
                 }
                 val allergiesFromApi: List<Allergy> = mutableListOf(
-                    Allergy(medicalInfo!!.allergies, "Jedzenie"),
+                    Allergy(medicalInfo!!.allergies, "Jedzenie",""),
                 )
                 val chronicDiseasesFromApi: List<String> = mutableListOf(
                     medicalInfo!!.chronicDiseases

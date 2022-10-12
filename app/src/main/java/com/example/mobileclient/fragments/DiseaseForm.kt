@@ -5,10 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentDiseaseFormBinding
+import com.example.mobileclient.model.Disease
 import com.example.mobileclient.viewmodels.UserViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -47,6 +49,23 @@ class DiseaseForm : Fragment() {
 
         binding.button2.setOnClickListener {
             //TODO: Add disease to database with api call
+
+            val disease = Disease(
+                binding.startDateInput.text.toString(),
+                binding.adittionalInfoInput.text.toString()
+            )
+
+            sharedViewModel.postMedicalInfoChronic(2,disease.toString());
+            sharedViewModel.postCallResponseBody.observe(viewLifecycleOwner){response ->
+                if (response.isSuccessful) {
+                    Toast.makeText(context, "Update successful", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Update error " + response.code(), Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+
+
             Navigation.findNavController(view).navigate(R.id.action_diseaseForm_to_medicalInfoMain)
         }
         binding.button2.setOnClickListener {

@@ -108,7 +108,6 @@ class BloodTypeForm : Fragment() {
         }
 
         binding.button.setOnClickListener {
-            //TODO("Refactor this to make it more readable, extract to methods")
             var rh = ""
             if (binding.rhPlus.isChecked) {
                 rh = "PLUS"
@@ -132,7 +131,10 @@ class BloodTypeForm : Fragment() {
                 val requestBodyWithBloodType: RequestBody =
                     medicalInfo!!.bloodType.toRequestBody(mediaType)
                 sharedViewModel.putUserMedicalInfoBlood(2, requestBodyWithBloodType)
-                sharedViewModel.updateCallResponseBody.observe(viewLifecycleOwner) { response ->
+
+                /*
+
+                sharedViewModel.putMedicalInfoBloodResponse.observe(viewLifecycleOwner) { response ->
                     if (response.isSuccessful) {
                         Log.d("Blood type update", medicalInfo!!.bloodType)
                         Toast.makeText(context, "Update successful", Toast.LENGTH_SHORT).show()
@@ -147,6 +149,8 @@ class BloodTypeForm : Fragment() {
                         ).show()
                     }
                 }
+
+                 */
             }
         }
         return view

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.mobileclient.LandingActivity
+import com.example.mobileclient.activities.LandingActivity
 import com.example.mobileclient.databinding.Onboarding3Binding
 
 class Onboarding3Fragment : Fragment() {

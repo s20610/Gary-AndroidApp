@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    tools:context=".CheckEquipment">
+    tools:context=".fragments.CheckEquipment">
 
     <TextView
         android:id="@+id/textView17"

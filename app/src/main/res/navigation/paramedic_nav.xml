@@ -28,17 +28,17 @@
         android:label="fragment_ambulance_break" />
     <fragment
         android:id="@+id/paramedicCallForSupport2"
-        android:name="com.example.mobileclient.ParamedicCallForSupport"
+        android:name="com.example.mobileclient.fragments.ParamedicCallForSupport"
         android:label="fragment_paramedic_call_for_support"
         tools:layout="@layout/fragment_paramedic_call_for_support" />
     <fragment
         android:id="@+id/addVictimInfo"
-        android:name="com.example.mobileclient.AddVictimInfo"
+        android:name="com.example.mobileclient.fragments.AddVictimInfo"
         android:label="fragment_add_victim_info"
         tools:layout="@layout/fragment_add_victim_info" />
     <fragment
         android:id="@+id/equipment"
-        android:name="com.example.mobileclient.Equipment"
+        android:name="com.example.mobileclient.fragments.Equipment"
         android:label="fragment_equipment"
         tools:layout="@layout/fragment_equipment" >
         <action
@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/checkEquipment"
-        android:name="com.example.mobileclient.CheckEquipment"
+        android:name="com.example.mobileclient.fragments.CheckEquipment"
         android:label="fragment_check_equipment"
         tools:layout="@layout/fragment_check_equipment" />
 </navigation>

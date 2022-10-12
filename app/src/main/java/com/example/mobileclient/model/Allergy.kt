@@ -14,5 +14,5 @@ package com.example.mobileclient.model
  *
  * @see com.example.mobileclient.adapter.AllergyAdapter
  */
-data class Allergy (val allergyName: String,val allergyType : String)
+data class Allergy (val allergyName: String,val allergyType : String, val allergyInfo: String)
 //TODO(Allergy): Should allergy contain extra info or no

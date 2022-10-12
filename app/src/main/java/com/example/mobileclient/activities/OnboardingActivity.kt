@@ -1,10 +1,11 @@
-package com.example.mobileclient
+package com.example.mobileclient.activities
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.example.mobileclient.R
 import com.example.mobileclient.fragments.Onboarding1Fragment
 import com.example.mobileclient.fragments.Onboarding2Fragment
 import com.example.mobileclient.fragments.Onboarding3Fragment

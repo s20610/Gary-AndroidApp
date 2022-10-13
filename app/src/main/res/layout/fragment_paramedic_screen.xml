@@ -86,36 +86,42 @@
 
         <Button
             android:id="@+id/button3"
+            style="@style/Widget.Material3.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="147dp"
+            android:layout_marginStart="137dp"
             android:layout_marginEnd="170dp"
             android:layout_marginBottom="62dp"
             android:text="@string/call"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/button4"
-            android:layout_width="0dp"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="22dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="62dp"
             android:text="@string/victim_button"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button3"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/button5"
+            style="@style/Widget.Material3.Button"
             android:layout_width="125dp"
             android:layout_height="53dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="71dp"
             android:layout_marginBottom="60dp"
-            android:text="@string/equipment_button"
+            android:text="Stuff"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

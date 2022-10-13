@@ -44,26 +44,9 @@ class Equipment : Fragment() {
         val view = binding.root
 
         val names = arrayOf(
-            "Karetka1",
-            "Karetka2",
-            "Karetka3",
-            "Karetka4",
-            "Karetka5",
-            "Karetka6",
-            "Karetka7",
-            "Karetka8",
-            "Karetka9",
-            "Karetka10",
-            "Karetka11",
-            "Karetka12",
-            "Karetka13",
-            "Karetka14",
-            "Karetka15",
-            "Karetka16",
-            "Karetka17",
-            "Karetka18",
-            "Karetka19",
-            "Karetka20"
+            "Karetka1 specialistyczna WE1234",
+            "Karetka2 covid WE54321",
+            "Karetka3 specialistyczna WE1434"
         )
 
         val arrayAdapter =

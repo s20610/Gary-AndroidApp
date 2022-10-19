@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/settingsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/languageText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -31,10 +31,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+        app:layout_constraintTop_toBottomOf="@+id/settingsText" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textField"
+        android:id="@+id/languageSelectField"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -47,10 +47,10 @@
         app:boxCornerRadiusTopStart="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21">
+        app:layout_constraintTop_toBottomOf="@+id/languageText">
 
         <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextView4"
+            android:id="@+id/languageSelection"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -60,23 +60,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switch1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/notifications"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textField">
-
-    </com.google.android.material.switchmaterial.SwitchMaterial>
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switch2"
+        android:id="@+id/createIncidentSwitch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
@@ -87,20 +71,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch1" >
+        app:layout_constraintTop_toBottomOf="@id/languageSelectField" >
     </com.google.android.material.switchmaterial.SwitchMaterial>
 
     <Button
-        android:id="@+id/button6"
-        android:layout_width="0dp"
+        android:id="@+id/appInfoButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="300dp"
-        android:text="App info"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch2" />
+        android:layout_margin="10dp"
+        android:text="@string/about_us"
+        app:layout_constraintEnd_toEndOf="@+id/languageSelectField"
+        app:layout_constraintStart_toStartOf="@+id/languageSelectField"
+        app:layout_constraintTop_toBottomOf="@+id/createIncidentSwitch" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

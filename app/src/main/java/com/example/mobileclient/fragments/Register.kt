@@ -27,20 +27,7 @@ import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
 import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [Register.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Register : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var _binding: FragmentRegisterBinding? = null
     private val sharedViewModel: UserViewModel by activityViewModels()
 
@@ -48,20 +35,11 @@ class Register : Fragment() {
 // onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        //TODO: Zrobić wstepną walidacje pól (required, length, email, password)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         val view = binding.root
@@ -115,15 +93,15 @@ class Register : Fragment() {
 
         binding.collectDataButton.setOnClickListener {
             context?.let { it1 ->
-            MaterialAlertDialogBuilder(it1).setTitle("Why do we collect data?")
-                .setMessage("We need this data to provide our services with high quality")
-                .setNegativeButton("Cancel") { dialog, _ ->
-                    dialog.cancel()
-                }
-                .setPositiveButton("Accept") { dialog, _ ->
-                    dialog.cancel()
-                }
-                .show()
+                MaterialAlertDialogBuilder(it1).setTitle("Why do we collect data?")
+                    .setMessage("We need this data to provide our services with high quality")
+                    .setNegativeButton("Cancel") { dialog, _ ->
+                        dialog.cancel()
+                    }
+                    .setPositiveButton("Accept") { dialog, _ ->
+                        dialog.cancel()
+                    }
+                    .show()
             }
         }
 
@@ -142,7 +120,6 @@ class Register : Fragment() {
                 passwordInput.text.toString(),
                 birthdate,
                 phoneNumber.text.toString(),
-                emailInput.text.toString()
             )
             sharedViewModel.registerNewUser(newUser)
             sharedViewModel.registerResponse.observe(viewLifecycleOwner) { response ->
@@ -150,7 +127,8 @@ class Register : Fragment() {
                     Log.d("Register response", response.body().toString())
                     Log.d("Response Code", response.code().toString())
                     Toast.makeText(context, "Registration successful", LENGTH_LONG).show()
-                    Navigation.findNavController(view).navigate(R.id.action_register_to_splashScreen)
+                    Navigation.findNavController(view)
+                        .navigate(R.id.action_register_to_splashScreen)
                 } else {
                     Toast.makeText(context, "Register error " + response.code(), LENGTH_LONG).show()
                     Log.d("Register Response", response.body().toString())
@@ -159,12 +137,6 @@ class Register : Fragment() {
             }
 
         }
-
-
-
-
-
-
         return view
     }
 
@@ -200,25 +172,5 @@ class Register : Fragment() {
             passwordInput.error = "This field is required"
             false
         }
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Register.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Register().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

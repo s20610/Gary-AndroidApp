@@ -37,10 +37,10 @@
 
         <Button
             android:id="@+id/bandButton"
-            android:layout_width="180dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
-            android:background="?attr/colorSecondary"
+            android:background="@drawable/rounded_corners"
             android:text="@string/band"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -62,13 +62,14 @@
 
             <TableRow
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimaryVariant"
+                android:background="@drawable/rounded_corners"
                 android:padding="5dp">
 
                 <TextView
                     android:layout_width="0dip"
                     android:layout_column="0"
                     android:layout_weight="1"
+                    android:paddingLeft="5dp"
                     android:text="@string/allergy"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                     android:textColor="@color/white" />
@@ -109,12 +110,13 @@
 
             <TableRow
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimaryVariant"
+                android:background="@drawable/rounded_corners"
                 android:padding="5dp">
 
                 <TextView
                     android:layout_column="0"
-                    android:text="Choroba"
+                    android:paddingLeft="5dp"
+                    android:text="@string/disease"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                     android:textColor="@color/white" />
             </TableRow>

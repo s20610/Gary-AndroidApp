@@ -3,19 +3,16 @@ package com.example.mobileclient.fragments
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentIncidentLocationPickerBinding
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.osmdroid.events.MapEventsReceiver
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
@@ -26,34 +23,13 @@ import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [IncidentLocationPicker.newInstance] factory method to
- * create an instance of this fragment.
- */
 class IncidentLocationPicker : DialogFragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var _binding: FragmentIncidentLocationPickerBinding? = null
     private val binding get() = _binding!!
     private var mLocationOverlay: MyLocationNewOverlay? = null
     private lateinit var map: MapView
     private var pointOnMap = GeoPoint(10.0, 10.0)
     private lateinit var marker: Marker
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,12 +39,12 @@ class IncidentLocationPicker : DialogFragment() {
         val view = binding.root
         map = binding.map
         var address: List<Address>
-        val geocoder = Geocoder(context, Locale("pol"))
+        val geocoder = Geocoder(requireContext(), Locale("pol"))
         val mReceive: MapEventsReceiver = object : MapEventsReceiver {
             override fun singleTapConfirmedHelper(p: GeoPoint?): Boolean {
                 marker.position = p
                 address =
-                    geocoder.getFromLocation(marker.position.latitude, marker.position.longitude, 1)
+                    geocoder.getFromLocation(marker.position.latitude, marker.position.longitude, 1)!!
                 var resultAddress: String = ""
                 for (i in 0..address[0].maxAddressLineIndex) {
                     resultAddress += address[0].getAddressLine(i)

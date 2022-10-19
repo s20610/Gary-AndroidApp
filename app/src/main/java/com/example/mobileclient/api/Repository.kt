@@ -1,13 +1,12 @@
 package com.example.mobileclient.api
 
-import com.example.mobileclient.fragments.Incident
 import com.example.mobileclient.model.*
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 
 object Repository {
-    suspend fun getLoginResponse(credentials: Credentials): Response<String> {
+    suspend fun getLoginResponse(credentials: Credentials): Response<AuthResponse> {
         return RetrofitInstance.api.getLoginResponse(credentials)
     }
 
@@ -35,7 +34,7 @@ object Repository {
         return RetrofitInstance.api.createNewEmergency(newEmergencyInfo)
     }
 
-    suspend fun createNewIncident(newIncidentInfo: Incidentt): Response<ResponseBody>{
+    suspend fun createNewIncident(newIncidentInfo: com.example.mobileclient.model.Incident): Response<ResponseBody>{
         return RetrofitInstance.api.createNewIncident(newIncidentInfo)
     }
 
@@ -79,16 +78,28 @@ object Repository {
         return RetrofitInstance.api.putUserMedicalInfo(id, medicalInfo)
     }
 
-    suspend fun postUserMedicalInfoChronic(id: Int, chronic: String): Response<ResponseBody> {
-        return RetrofitInstance.api.putUserMedicalInfoChronic(id, chronic)
-    }
-
-    suspend fun postUserMedicalInfoAllergies(
-        id: Int,
-        allergies: List<Allergy>
+    suspend fun postUserDisease(
+        disease: Disease
     ): Response<ResponseBody> {
-        return RetrofitInstance.api.putUserMedicalInfoAllergies(id, allergies)
+        return RetrofitInstance.api.postUserDisease(disease)
     }
 
+    suspend fun postUserAllergy(
+        allergy: Allergy
+    ): Response<ResponseBody> {
+        return RetrofitInstance.api.postUserMedicalInfoAllergies(allergy)
+    }
+
+    suspend fun getAllergyTypes(): Response<List<String>> {
+        return RetrofitInstance.api.getAllergyTypes()
+    }
+
+    suspend fun getRhTypes(): Response<List<String>> {
+        return RetrofitInstance.api.getRhTypes()
+    }
+
+    suspend fun getBloodTypes(): Response<List<String>> {
+        return RetrofitInstance.api.getBloodTypes()
+    }
 
 }

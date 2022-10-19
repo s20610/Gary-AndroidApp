@@ -5,10 +5,4 @@
         <item name="Allergy">Allergy</item>
         <item name="Disease">Disease</item>
     </string-array>
-    <string-array name="medicalInfoAllergies" >
-        <item name="Blood Type">Wziewna</item>
-        <item name="Allergy">Jedzenie</item>
-        <item name="Disease">Jad</item>
-        <item name="Inne">Inne</item>
-    </string-array>
 </resources>

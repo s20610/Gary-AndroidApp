@@ -11,14 +11,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentIncidentBinding
-import com.example.mobileclient.model.Emergency
-import com.example.mobileclient.model.Incidentt
-import com.example.mobileclient.viewmodels.EmergencyViewModel
+import com.example.mobileclient.model.Incident
 import com.example.mobileclient.viewmodels.IncidentViewModel
-import com.example.mobileclient.viewmodels.UserViewModel
-import com.journeyapps.barcodescanner.ScanContract
-import com.journeyapps.barcodescanner.ScanIntentResult
-import com.journeyapps.barcodescanner.ScanOptions
 
 
 class Incident : Fragment() {
@@ -55,24 +49,24 @@ class Incident : Fragment() {
         }
         binding.button.setOnClickListener {
 
-            val incident = Incidentt(
+            val incident = Incident(
                 binding.autoCompleteTextView2.text.toString(),
                 binding.victimsEdit.toString(),
                 binding.locationInputText.text.toString()
             )
 
             incidentViewModel.createNewIncident(incident)
-            incidentViewModel.postCallResponseBody.observe(viewLifecycleOwner){response ->
+            incidentViewModel.postCallResponseBody.observe(viewLifecycleOwner) { response ->
                 if (response.isSuccessful) {
                     Toast.makeText(context, "Update successful", Toast.LENGTH_SHORT).show()
-                    Navigation.findNavController(view).navigate(R.id.action_incident_to_incidentVictim)
+                    Navigation.findNavController(view)
+                        .navigate(R.id.action_incident_to_incidentVictim)
                 } else {
-                    Toast.makeText(context, "Update error " + response.code(), Toast.LENGTH_LONG
+                    Toast.makeText(
+                        context, "Update error " + response.code(), Toast.LENGTH_LONG
                     ).show()
                 }
             }
-
-
 
 
         }

@@ -14,7 +14,7 @@ import java.net.ConnectException
 
 class UserViewModel : ViewModel() {
     private var repository: Repository = Repository
-    var loginResponse: MutableLiveData<Response<String>> = MutableLiveData()
+    var loginResponse: MutableLiveData<Response<AuthResponse>> = MutableLiveData()
     var registerResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var getUserMedicalInfoResponse: MutableLiveData<Response<MedicalInfo>> = MutableLiveData()
 
@@ -169,23 +169,10 @@ class UserViewModel : ViewModel() {
         }
     }
 
-    fun postMedicalInfo(id: Int, medicalInfo: MedicalInfo) {
+    fun postUserDisease(disease: Disease) {
         viewModelScope.launch {
             try {
-                val response = repository.postUserMedicalInfo(id, medicalInfo)
-                updateCallResponseBody.value = response
-            } catch (e: ConnectException) {
-                Log.d("Connection exception", e.stackTraceToString())
-            } catch (e: Exception) {
-                Log.d("postMedicalInfoResponse exception", e.stackTraceToString())
-            }
-        }
-    }
-
-    fun postMedicalInfoChronic(id: Int, chronic: String) {
-        viewModelScope.launch {
-            try {
-                val response = repository.postUserMedicalInfoChronic(id, chronic)
+                val response = repository.postUserDisease(disease)
                 postCallResponseBody.value = response
             } catch (e: ConnectException) {
                 Log.d("Connection exception", e.stackTraceToString())
@@ -195,10 +182,10 @@ class UserViewModel : ViewModel() {
         }
     }
 
-    fun postMedicalInfoAllergies(id: Int, allergies: ArrayList<Allergy>) {
+    fun postUserAllergy(allergy: Allergy) {
         viewModelScope.launch {
             try {
-                val response = repository.postUserMedicalInfoAllergies(id, allergies)
+                val response = repository.postUserAllergy(allergy)
                 postCallResponseBody.value = response
             } catch (e: ConnectException) {
                 Log.d("Connection exception", e.stackTraceToString())

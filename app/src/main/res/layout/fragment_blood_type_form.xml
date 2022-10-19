@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -19,110 +20,143 @@
             android:id="@+id/bloodText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="2dp"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="30dp"
             android:text="@string/blood_type_question"
-            android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-            android:textSize="18dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            android:textColor="@color/green_dark"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <RadioGroup
-            android:id="@+id/bloodGroup"
-            android:layout_width="wrap_content"
+        <TableLayout
+            android:id="@+id/allergies"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingTop="4dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bloodText">
-
-            <RadioButton
-                android:id="@+id/blood_0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:text="0" />
-
-            <RadioButton
-                android:id="@+id/blood_A"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:text="A" />
-
-            <RadioButton
-                android:id="@+id/blood_B"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="B" />
-
-            <RadioButton
-                android:id="@+id/blood_AB"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:text="AB" />
-        </RadioGroup>
-
-        <RadioGroup
-            android:id="@+id/rh_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:orientation="vertical"
-            android:paddingTop="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/bloodGroup"
-            app:layout_constraintTop_toBottomOf="@id/bloodText">
-
-            <RadioButton
-                android:id="@+id/rh_minus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:text="Rh-" />
-
-            <RadioButton
-                android:id="@+id/rh_plus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:text="Rh+" />
-
-        </RadioGroup>
-        <RelativeLayout
-            android:id="@+id/parentRelative"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:isScrollContainer="true"
+            android:scrollbars="vertical"
+            android:shrinkColumns="*"
+            android:stretchColumns="*"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bloodGroup"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
-            <Button
-                android:id="@+id/button"
-                style="@style/Widget.Material3.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/send"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/bloodText">
 
-            <Button
-                android:id="@+id/button2"
-                style="@style/Widget.Material3.Button"
-                android:layout_width="wrap_content"
+            <TableRow
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/button"
-                android:text="@string/incident_cancel_button"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </RelativeLayout>
+                android:background="@drawable/rounded_corners"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/bloodType"
+                    android:layout_width="0dip"
+                    android:layout_column="0"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:text="@string/bloodType"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/rhType"
+                    android:layout_width="0dip"
+                    android:layout_column="1"
+                    android:layout_weight="1"
+                    android:text="@string/rhType"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textColor="@color/white" />
+            </TableRow>
+
+            <TableRow>
+
+                <RadioGroup
+                    android:id="@+id/bloodGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="4dp">
+
+                    <RadioButton
+                        android:id="@+id/blood_0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:text="0" />
+
+                    <RadioButton
+                        android:id="@+id/blood_A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:text="A" />
+
+                    <RadioButton
+                        android:id="@+id/blood_B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="B" />
+
+                    <RadioButton
+                        android:id="@+id/blood_AB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:text="AB" />
+                </RadioGroup>
+
+                <RadioGroup
+                    android:id="@+id/rh_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:orientation="vertical"
+                    android:paddingTop="4dp">
+
+                    <RadioButton
+                        android:id="@+id/rh_minus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:text="Rh-" />
+
+                    <RadioButton
+                        android:id="@+id/rh_plus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:text="Rh+" />
+
+                </RadioGroup>
+            </TableRow>
+
+        </TableLayout>
+
+        <Button
+            android:id="@+id/sendButton"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="140dp"
+            android:text="@string/send"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/allergies" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="140dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/sendButton"
+            android:text="@string/incident_cancel_button"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/allergies" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

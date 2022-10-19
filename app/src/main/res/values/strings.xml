@@ -13,7 +13,7 @@
     <string name="log_in">Log in</string>
     <string name="log_out">Log out</string>
     <string name="login_button_text">Log in</string>
-    <string name="send">SEND</string>
+    <string name="send">Send</string>
     <string name="forgot_password">Forgot password</string>
     <string name="forgot_passwordq">Forgot password?</string>
     <string name="guest_text">Don\'t want to create an account?</string>
@@ -55,7 +55,7 @@
     <string name="select">Select</string>
     <string name="choose">Choose</string>
     <string name="confirm">Confirm</string>
-    <string name="add">Add</string>
+    <string name="add">Add information</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="call">Call</string>
@@ -88,7 +88,7 @@
     <string name="victims_amount">Victims amount</string>
     <string name="how_many_victims_needs_medical_support">How many victims needs medical support?</string>
     <string name="not_breathing_victim">Not breathing victim</string>
-    <string name="band">Band</string>
+    <string name="band">Band code</string>
     <string name="equipment_button">equipment</string>
     <string name="want_to_know_why_do_we_need_this_data">Want to know why do we need this data?</string>
     <string name="edit_account">Edit Account</string>
@@ -133,4 +133,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="log_in_to_see_tutorial">Log in to read tutorials</string>
     <string name="log_in_to_see_tutorial_message">Tutorials are available only for logged in users</string>
+    <string name="about_us">About us</string>
+    <string name="disease">Diseases</string>
+    <string name="bloodType">Blood type</string>
+    <string name="rhType">Rh</string>
 </resources>

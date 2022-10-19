@@ -38,10 +38,6 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
         // Inflate the layout for this fragment
         _binding = FragmentLoggedInScreenBinding.inflate(inflater, container, false)
 
-
-        //val view1 = inflater.inflate(R.layout.user_navigation_drawer_header, null) as View
-        //view1.findViewById<TextView>(R.id.email_field_text).text = email
-
         val view = binding.root
         val tutorialsEmpty: List<Tutorial> = mutableListOf(
             Tutorial("1", "Tutorial 1", "COURSE", 5.0f),
@@ -53,14 +49,16 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
         binding.tutorialsGrid.adapter =
             TutorialsAdapter(tutorialsEmpty, this, ratingBarChangeListener)
         val intent = Intent()
-        val email = intent.getStringExtra("E-mail")
-//        Toast.makeText(context, "Email zalogowano: $email", Toast.LENGTH_LONG).show()
+        val token = intent.getStringExtra("token")
+        Toast.makeText(context, "Jwt token: $token", Toast.LENGTH_LONG).show()
         getTutorialsFromAPI()
         binding.refresh.setOnRefreshListener {
             getTutorialsFromAPI()
             binding.refresh.isRefreshing = false
         }
-        if (!activity!!.getPreferences(Context.MODE_PRIVATE).getBoolean("createIncidentON", false)){
+        if (requireActivity().getPreferences(Context.MODE_PRIVATE)
+                .getBoolean("createIncidentON", false)
+        ) {
             binding.addIncidentButton.hide()
         }
         binding.addIncidentButton.setOnClickListener {

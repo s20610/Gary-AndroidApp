@@ -1,10 +1,8 @@
 package com.example.mobileclient.model
 
-import org.osmdroid.util.GeoPoint
 
-
-data class Incidentt (
+data class Incident (
     val type: String,
-    val vamount: String,
+    val amount: String,
     val location: String
 )

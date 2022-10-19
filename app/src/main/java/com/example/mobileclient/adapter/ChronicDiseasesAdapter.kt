@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobileclient.R
-import com.example.mobileclient.model.Allergy
 
 class ChronicDiseasesAdapter(private val dataset: List<String>) :
     RecyclerView.Adapter<ChronicDiseasesAdapter.ItemViewHolder>() {

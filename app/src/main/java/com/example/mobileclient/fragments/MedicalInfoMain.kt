@@ -1,6 +1,5 @@
 package com.example.mobileclient.fragments
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,46 +21,25 @@ import com.example.mobileclient.model.User
 import com.example.mobileclient.viewmodels.UserViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MedicalInfoMain.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MedicalInfoMain : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var _binding: FragmentMedicalInfoMainBinding? = null
-    private val sharedViewModel: UserViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and
 // onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentMedicalInfoMainBinding.inflate(inflater, container, false)
         val view = binding.root
         //Data before api request is handled
         var medicalInfo: MedicalInfo? = MedicalInfo(0, "A_PLUS", "Brak", "Brak")
         val allergiesEmpty: List<Allergy> = mutableListOf(
-            Allergy(medicalInfo!!.allergies, "Jedzenie",""),
+            Allergy(medicalInfo!!.allergies, "Jedzenie", "",""),
         )
         val chronicDiseasesEmpty: List<String> = mutableListOf(
             medicalInfo.chronicDiseases
@@ -71,8 +49,8 @@ class MedicalInfoMain : Fragment() {
         binding.diseaseView.adapter = ChronicDiseasesAdapter(chronicDiseasesEmpty)
         binding.diseaseView.setHasFixedSize(true)
         //
-        sharedViewModel.getMedicalInfoResponse(2)
-        sharedViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
+        userViewModel.getMedicalInfoResponse(2)
+        userViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
             if (response.isSuccessful) {
                 medicalInfo = response.body()
                 when (medicalInfo!!.bloodType) {
@@ -88,7 +66,7 @@ class MedicalInfoMain : Fragment() {
                     "" -> binding.imageView.setImageResource(R.drawable.blood_type_add)
                 }
                 val allergiesFromApi: List<Allergy> = mutableListOf(
-                    Allergy(medicalInfo!!.allergies, "Jedzenie",""),
+                    Allergy("","","",""),
                 )
                 val chronicDiseasesFromApi: List<String> = mutableListOf(
                     medicalInfo!!.chronicDiseases
@@ -108,8 +86,8 @@ class MedicalInfoMain : Fragment() {
                 .navigate(R.id.action_medicalInfoMain_to_bloodTypeForm)
         }
         binding.bandButton.setOnClickListener {
-            sharedViewModel.getUserInfo(2)
-            sharedViewModel.getUserInfoResponse.observe(viewLifecycleOwner) { response ->
+            userViewModel.getUserInfo(2)
+            userViewModel.getUserInfoResponse.observe(viewLifecycleOwner) { response ->
                 if (response.isSuccessful) {
                     val user: User? = response.body()
                     if (user != null) {
@@ -126,48 +104,29 @@ class MedicalInfoMain : Fragment() {
                     .setNegativeButton("Cancel") { dialog, which ->
                         dialog.cancel()
                     }
-                    .setItems(R.array.medicalInfoArray,
-                        DialogInterface.OnClickListener { _, which ->
-                            when (which) {
-                                0 -> {
-                                    Navigation.findNavController(view)
-                                        .navigate(R.id.action_medicalInfoMain_to_bloodTypeForm)
-                                }
-                                1 -> {
-                                    Navigation.findNavController(view)
-                                        .navigate(R.id.action_medicalInfoMain_to_allergyForm)
-                                }
-                                else -> {
-                                    Navigation.findNavController(view)
-                                        .navigate(R.id.action_medicalInfoMain_to_diseaseForm)
-                                }
+                    .setItems(
+                        R.array.medicalInfoArray
+                    ) { _, which ->
+                        when (which) {
+                            0 -> {
+                                Navigation.findNavController(view)
+                                    .navigate(R.id.action_medicalInfoMain_to_bloodTypeForm)
                             }
-                            // The 'which' argument contains the index position
-                            // of the selected item
-                        }).create()
+                            1 -> {
+                                Navigation.findNavController(view)
+                                    .navigate(R.id.action_medicalInfoMain_to_allergyForm)
+                            }
+                            else -> {
+                                Navigation.findNavController(view)
+                                    .navigate(R.id.action_medicalInfoMain_to_diseaseForm)
+                            }
+                        }
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                    }.create()
                     .show()
             }
         }
         return view
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MedicalInfoMain.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MedicalInfoMain().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

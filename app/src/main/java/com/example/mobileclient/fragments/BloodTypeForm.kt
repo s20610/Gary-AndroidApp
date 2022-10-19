@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentBloodTypeFormBinding
 import com.example.mobileclient.model.MedicalInfo
+import com.example.mobileclient.viewmodels.TypesViewModel
 import com.example.mobileclient.viewmodels.UserViewModel
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
@@ -33,7 +34,8 @@ class BloodTypeForm : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var _binding: FragmentBloodTypeFormBinding? = null
-    private val sharedViewModel: UserViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
+    private val typesViewModel: TypesViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and
 // onDestroyView.
@@ -50,64 +52,70 @@ class BloodTypeForm : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentBloodTypeFormBinding.inflate(inflater, container, false)
         val view = binding.root
-        sharedViewModel.getMedicalInfoResponse(2)
+        userViewModel.getMedicalInfoResponse(2)
+        typesViewModel.getBloodTypes()
+        typesViewModel.getRhTypes()
         var medicalInfo: MedicalInfo? = null
-        sharedViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
-            if (response.isSuccessful) {
-                medicalInfo = response.body()
+        userViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
+            when {
+                response.isSuccessful -> {
+                    medicalInfo = response.body()
 
-                when (medicalInfo!!.bloodType) {
-                    "A_PLUS" -> {
-                        binding.rhGroup.check(R.id.rh_plus)
-                        binding.bloodGroup.check(R.id.blood_A)
+                    when (medicalInfo!!.bloodType) {
+                        "A_PLUS" -> {
+                            binding.rhGroup.check(R.id.rh_plus)
+                            binding.bloodGroup.check(R.id.blood_A)
+                        }
+                        "A_MINUS" -> {
+                            binding.rhGroup.check(R.id.rh_minus)
+                            binding.bloodGroup.check(R.id.blood_A)
+                        }
+                        "AB_PLUS" -> {
+                            binding.rhGroup.check(R.id.rh_plus)
+                            binding.bloodGroup.check(R.id.blood_AB)
+                        }
+                        "AB_MINUS" -> {
+                            binding.rhGroup.check(R.id.rh_minus)
+                            binding.bloodGroup.check(R.id.blood_AB)
+                        }
+                        "B_PLUS" -> {
+                            binding.rhGroup.check(R.id.rh_plus)
+                            binding.bloodGroup.check(R.id.blood_B)
+                        }
+                        "B_MINUS" -> {
+                            binding.rhGroup.check(R.id.rh_minus)
+                            binding.bloodGroup.check(R.id.blood_B)
+                        }
+                        "O_PLUS" -> {
+                            binding.rhGroup.check(R.id.rh_plus)
+                            binding.bloodGroup.check(R.id.blood_0)
+                        }
+                        "O_MINUS" -> {
+                            binding.rhGroup.check(R.id.rh_minus)
+                            binding.bloodGroup.check(R.id.blood_0)
+                        }
                     }
-                    "A_MINUS" -> {
-                        binding.rhGroup.check(R.id.rh_minus)
-                        binding.bloodGroup.check(R.id.blood_A)
-                    }
-                    "AB_PLUS" -> {
-                        binding.rhGroup.check(R.id.rh_plus)
-                        binding.bloodGroup.check(R.id.blood_AB)
-                    }
-                    "AB_MINUS" -> {
-                        binding.rhGroup.check(R.id.rh_minus)
-                        binding.bloodGroup.check(R.id.blood_AB)
-                    }
-                    "B_PLUS" -> {
-                        binding.rhGroup.check(R.id.rh_plus)
-                        binding.bloodGroup.check(R.id.blood_B)
-                    }
-                    "B_MINUS" -> {
-                        binding.rhGroup.check(R.id.rh_minus)
-                        binding.bloodGroup.check(R.id.blood_B)
-                    }
-                    "O_PLUS" -> {
-                        binding.rhGroup.check(R.id.rh_plus)
-                        binding.bloodGroup.check(R.id.blood_0)
-                    }
-                    "O_MINUS" -> {
-                        binding.rhGroup.check(R.id.rh_minus)
-                        binding.bloodGroup.check(R.id.blood_0)
-                    }
+
                 }
-
-            } else {
-                Toast.makeText(context, "Server error" + response.code(), Toast.LENGTH_LONG).show()
-                Log.d("getUserMedicalInfoError-Body", response.body().toString())
-                Log.d("getUserMedicalInfoError-ResponseCode", response.code().toString())
+                else -> {
+                    Toast.makeText(context, "Server error" + response.code(), Toast.LENGTH_LONG)
+                        .show()
+                    Log.d("getUserMedicalInfoError-Body", response.body().toString())
+                    Log.d("getUserMedicalInfoError-ResponseCode", response.code().toString())
+                }
             }
         }
 
-        binding.button2.setOnClickListener {
+        binding.cancelButton.setOnClickListener {
             Navigation.findNavController(view)
                 .navigate(R.id.action_bloodTypeForm_to_medicalInfoMain)
         }
 
-        binding.button.setOnClickListener {
+        binding.sendButton.setOnClickListener {
             var rh = ""
             if (binding.rhPlus.isChecked) {
                 rh = "PLUS"
@@ -130,7 +138,7 @@ class BloodTypeForm : Fragment() {
                 val mediaType: MediaType = "text/plain; charset=utf-8".toMediaType()
                 val requestBodyWithBloodType: RequestBody =
                     medicalInfo!!.bloodType.toRequestBody(mediaType)
-                sharedViewModel.putUserMedicalInfoBlood(2, requestBodyWithBloodType)
+                userViewModel.putUserMedicalInfoBlood(2, requestBodyWithBloodType)
 
                 /*
 

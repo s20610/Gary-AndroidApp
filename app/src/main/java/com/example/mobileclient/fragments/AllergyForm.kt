@@ -1,24 +1,26 @@
 package com.example.mobileclient.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentAllergyFormBinding
 import com.example.mobileclient.model.Allergy
+import com.example.mobileclient.viewmodels.TypesViewModel
 import com.example.mobileclient.viewmodels.UserViewModel
 
 class AllergyForm : Fragment() {
     private var _binding: FragmentAllergyFormBinding? = null
     private val userViewModel : UserViewModel by activityViewModels()
+    private val typesViewModel : TypesViewModel by activityViewModels()
     private val binding get() = _binding!!
 
     @SuppressLint("ResourceType")
@@ -29,27 +31,28 @@ class AllergyForm : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentAllergyFormBinding.inflate(inflater, container, false)
         val view = binding.root
-        val allergiesArray = resources.getStringArray(R.array.medicalInfoAllergies)
-        val arrayAdapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_dropdown_item_1line,
-            allergiesArray
-        )
-        binding.autoCompleteTextView.setAdapter(arrayAdapter)
+        typesViewModel.getAllergyTypes()
+        typesViewModel.allergyTypes.observe(viewLifecycleOwner) {
+            val arrayAdapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_dropdown_item_1line,
+                it,
+            )
+            binding.autoCompleteTextView.setAdapter(arrayAdapter)
+        }
 
         binding.button2.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_allergyForm_to_medicalInfoMain)
         }
         binding.button.setOnClickListener {
-            //TODO("Add allergy to database with api call")
-            val allergies: ArrayList<Allergy> = ArrayList()
+            val userEmail: String =requireActivity().getSharedPreferences("userInfo",Context.MODE_PRIVATE).getString("email", "")!!
             val allergy = Allergy(
+                userEmail,
                 binding.allergyName.text.toString(),
                 binding.autoCompleteTextView.text.toString(),
                 binding.additionalInfoInput.text.toString(),
             )
-            allergies.add(allergy)
-            userViewModel.postMedicalInfoAllergies(2,allergies)
+            userViewModel.postUserAllergy(allergy)
             userViewModel.postCallResponseBody.observe(viewLifecycleOwner) { response ->
                 if (response.isSuccessful) {
                     Navigation.findNavController(view).navigate(R.id.action_allergyForm_to_medicalInfoMain)

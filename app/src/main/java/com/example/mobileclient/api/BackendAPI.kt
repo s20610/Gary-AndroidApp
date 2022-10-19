@@ -1,13 +1,6 @@
 package com.example.mobileclient.api
 
-import com.example.mobileclient.fragments.Incident
 import com.example.mobileclient.model.*
-
-import com.example.mobileclient.model.Credentials
-import com.example.mobileclient.model.MedicalInfo
-import com.example.mobileclient.model.NewUser
-import com.example.mobileclient.model.Tutorial
-import com.example.mobileclient.model.User
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -15,12 +8,12 @@ import retrofit2.http.*
 
 interface BackendAPI {
     //Login api calls
-    @POST("login")
+    @POST("auth/login")
     suspend fun getLoginResponse(
         @Body credentials: Credentials
-    ): Response<String>
+    ): Response<AuthResponse>
 
-    @POST("register/normal")
+    @POST("auth/signup")
     suspend fun registerNewUser(
         @Body newUser: NewUser
     ): Response<ResponseBody>
@@ -57,7 +50,7 @@ interface BackendAPI {
 
     @POST("incident/new")
     suspend fun createNewIncident(
-        @Body newIncidentInfo: Incidentt
+        @Body newIncidentInfo: com.example.mobileclient.model.Incident
     ): Response<ResponseBody>
 
     //Victim api calls
@@ -132,16 +125,22 @@ interface BackendAPI {
         @Body blood: RequestBody
     ): Response<ResponseBody>
 
-    @PUT("medicalInfo/chronic/{id}")
-    suspend fun putUserMedicalInfoChronic(
-        @Path("id") userId: Int,
-        @Body chronic: String
+    @POST("disease")
+    suspend fun postUserDisease(
+        @Body disease: Disease
     ): Response<ResponseBody>
 
-    @PUT("medicalInfo/allergies/{id}")
-    suspend fun putUserMedicalInfoAllergies(
-        @Path("id") userId: Int,
-        @Body allergies: List<Allergy>
+    @POST("allergy")
+    suspend fun postUserMedicalInfoAllergies(
+        @Body allergy: Allergy
     ): Response<ResponseBody>
 
+    @GET("enum/allergy_type")
+    suspend fun getAllergyTypes(): Response<List<String>>
+
+    @GET("enum/rh_type")
+    suspend fun getRhTypes(): Response<List<String>>
+
+    @GET("enum/blood_type")
+    suspend fun getBloodTypes(): Response<List<String>>
 }

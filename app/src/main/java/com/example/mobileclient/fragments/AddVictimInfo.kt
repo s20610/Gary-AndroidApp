@@ -17,7 +17,7 @@ class AddVictimInfo : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAddVictimInfoBinding.inflate(inflater, container, false)
 
         val incidents = arrayOf("Zadławienie", "Rana kłuta", "Wypadek samochodowy", "Inne")

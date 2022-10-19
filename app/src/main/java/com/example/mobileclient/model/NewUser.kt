@@ -7,5 +7,4 @@ data class NewUser(
     val password: String,
     val birthDate: String,
     val phoneNumber: String,
-    val username: String
 )

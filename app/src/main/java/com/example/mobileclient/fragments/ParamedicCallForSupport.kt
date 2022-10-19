@@ -40,7 +40,7 @@ class ParamedicCallForSupport : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentParamedicCallForSupportBinding.inflate(inflater, container, false)
 
         val check1 = binding.checkBoxA
@@ -48,7 +48,7 @@ class ParamedicCallForSupport : Fragment() {
         val check3 = binding.checkBoxC
 
         binding.button.setOnClickListener{
-            var s: String = "";
+            var s: String = ""
             if (check1.isChecked){
                 if(s.isNotEmpty()){
                     s+=", "

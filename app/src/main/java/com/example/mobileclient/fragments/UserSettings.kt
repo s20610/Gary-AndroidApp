@@ -2,12 +2,10 @@ package com.example.mobileclient.fragments
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.mobileclient.R
-import com.example.mobileclient.databinding.FragmentIncidentBinding
+import androidx.fragment.app.Fragment
 import com.example.mobileclient.databinding.FragmentUserSettingsBinding
 
 
@@ -17,25 +15,15 @@ class UserSettings : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        val sharedPref = activity!!.getPreferences(Context.MODE_PRIVATE)
+        val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
         _binding = FragmentUserSettingsBinding.inflate(inflater, container, false)
         val view = binding.root
-        binding.switch1.isChecked = sharedPref.getBoolean("notificationsON", false)
-        binding.switch1.setOnClickListener {
-            if(binding.switch1.isChecked){
-                editor.putBoolean("notificationsON", true)
-            }
-            else{
-                editor.putBoolean("notificationsON", false)
-            }
-            editor.apply()
-        }
-        binding.switch2.isChecked = sharedPref.getBoolean("createIncidentON", false)
-        binding.switch2.setOnClickListener {
-            if(binding.switch2.isChecked){
+        binding.createIncidentSwitch.isChecked = sharedPref.getBoolean("createIncidentON", false)
+        binding.createIncidentSwitch.setOnClickListener {
+            if(binding.createIncidentSwitch.isChecked){
                 editor.putBoolean("createIncidentON", true)
             }
             else{

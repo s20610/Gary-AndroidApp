@@ -1,4 +1,3 @@
 package com.example.mobileclient.model
 
-data class Disease (val diseaseName: String, val diseaseInfo: String){
-}
+data class Disease(val userEmail: String, val diseaseName: String, val description: String, val shareWithBand: Boolean)

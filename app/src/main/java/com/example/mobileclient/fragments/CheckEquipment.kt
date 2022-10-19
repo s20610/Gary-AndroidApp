@@ -125,7 +125,7 @@ class CheckEquipment : Fragment() {
 
 
         binding.button2.setOnClickListener{
-            Navigation.findNavController(view).navigate(R.id.equipment)
+            Navigation.findNavController(view).navigate(R.id.paramedicScreen)
         }
 
         return view

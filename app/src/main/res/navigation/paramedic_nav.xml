@@ -20,7 +20,7 @@
             app:destination="@id/addVictimInfo" />
         <action
             android:id="@+id/action_paramedicScreen_to_equipment"
-            app:destination="@id/equipment" />
+            app:destination="@id/checkEquipment" />
     </fragment>
     <fragment
         android:id="@+id/ambulanceBreak"

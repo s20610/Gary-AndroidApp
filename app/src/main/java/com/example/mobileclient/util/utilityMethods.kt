@@ -16,3 +16,4 @@ fun checkPermission(permission: String, requestCode: Int, context: Context, acti
         Log.d("Permission", "$permission already granted")
     }
 }
+

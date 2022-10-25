@@ -18,58 +18,6 @@ interface BackendAPI {
         @Body newUser: NewUser
     ): Response<ResponseBody>
 
-    //User api calls
-    @GET("user/{id}")
-    suspend fun getUser(
-        @Path("id") userId: Int
-    ): Response<User>
-
-    @PUT("user/{id}")
-    suspend fun putUser(
-        @Path("id") userId: Int,
-        @Body newUser: User
-    ): Response<ResponseBody>
-
-    @PUT("user/info/{id}")
-    suspend fun putUserInfo(
-        @Path("id") userId: Int,
-        @Body newUserInfo: User
-    ): Response<ResponseBody>
-
-    @POST("user/info/{id}")
-    suspend fun postUserInfo(
-        @Path("id") userId: Int,
-        @Body newUserInfo: User
-    ): Response<ResponseBody>
-
-    //Emergency api calls
-    @POST("emergency/new")
-    suspend fun createNewEmergency(
-        @Body newEmergencyInfo: Emergency
-    ): Response<ResponseBody>
-
-    @POST("incident/new")
-    suspend fun createNewIncident(
-        @Body newIncidentInfo: com.example.mobileclient.model.Incident
-    ): Response<ResponseBody>
-
-    //Victim api calls
-    @GET("victim/{id}")
-    suspend fun getVictim(
-        @Path("id") victimId: Int,
-    ): Response<User>
-
-    @PUT("victim/{id}")
-    suspend fun putVictim(
-        @Path("id") victimId: Int,
-        @Body newVictim: User
-    ): Response<ResponseBody>
-
-    @POST("victim")
-    suspend fun postVictim(
-        @Body newVictim: User
-    ): Response<ResponseBody>
-
     //Tutorial api calls
     @GET("tutorial")
     suspend fun getTutorials(): Response<List<Tutorial>>
@@ -77,57 +25,62 @@ interface BackendAPI {
     @GET("tutorial/{id}")
     suspend fun getTutorial(@Path("id") tutorialId: Int): Response<Tutorial>
 
-    //Staff api calls
-    @GET("staff/{id}")
-    suspend fun getStaff(
-        @Path("id") staffId: Int,
-    ): Response<User> //TODO(Create Staff data class)
-
-    @PUT("staff/{id}")
-    suspend fun putStaff(
-        @Path("id") staffId: Int,
-        @Body newStaff: User //TODO(Create Staff data class)
-    ): Response<ResponseBody>
-
-    //Review api calls
-    @GET("review/{id}")
-    suspend fun getReview(
-        @Path("id") reviewId: Int,
-    ): Response<Review>
-
-    @PUT("review/{id}")
-    suspend fun putReview(
-        @Path("id") reviewId: Int,
-        @Body newReview: Review
-    ): Response<ResponseBody>
-
-    @POST("review/{id}")
-    suspend fun postReview(
-        @Path("id") reviewId: Int,
-        @Body newReview: Review
-    ): Response<ResponseBody>
-
     //Medical info api calls
-    @GET("medicalInfo/{id}")
-    suspend fun getUserMedicalInfo(
-        @Path("id") userId: Int
+    @GET("medical_info/user/{email}")
+    suspend fun getUserMedicalInfo(@Path("email") userEmail: String
     ): Response<MedicalInfo>
 
-    @PUT("medicalInfo/{id}")
-    suspend fun putUserMedicalInfo(
-        @Path("id") userId: Int,
-        @Body newMedicalInfo: MedicalInfo
+    @GET("medical_info/blood/{id}")
+    suspend fun getUserBlood(
+        @Path("id") id: Int,
+    ): Response<Blood>
+
+    @PUT("medical_info/blood/{id}")
+    suspend fun putUserBlood(
+        @Path("id") id: Int,
+        @Body blood: Blood
     ): Response<ResponseBody>
 
-    @PUT("medicalInfo/blood/{id}")
-    suspend fun putUserMedicalInfoBlood(
-        @Path("id") userId: Int,
-        @Body blood: RequestBody
+    @POST("medical_info/blood")
+    suspend fun postUserBlood(
+        @Body blood: Blood
+    ): Response<ResponseBody>
+
+    @GET("disease/{id}")
+    suspend fun getDisease(
+        @Path("id") id: Int,
+    ): Response<Disease>
+
+    @PUT("disease/{id}")
+    suspend fun putUserDisease(
+        @Path("id") id: Int,
+        @Body disease: Disease
+    ): Response<ResponseBody>
+
+    @DELETE("disease/{id}")
+    suspend fun deleteUserDisease(
+        @Path("id") id: Int,
     ): Response<ResponseBody>
 
     @POST("disease")
     suspend fun postUserDisease(
         @Body disease: Disease
+    ): Response<ResponseBody>
+
+    @GET("allergy/{id}")
+    suspend fun getAllergy(
+        @Path("id") id: Int,
+    ): Response<Allergy>
+
+    @PUT("allergy/{id}")
+    suspend fun putUserAllergy(
+        @Path("id") id: Int,
+        @Body allergy: Allergy
+    ): Response<ResponseBody>
+
+    @DELETE("allergy/{id}")
+    suspend fun deleteUserAllergy(
+        @Path("id") id: Int,
     ): Response<ResponseBody>
 
     @POST("allergy")

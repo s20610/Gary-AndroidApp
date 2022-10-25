@@ -1,5 +1,6 @@
 package com.example.mobileclient.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentBloodTypeFormBinding
+import com.example.mobileclient.model.Blood
 import com.example.mobileclient.model.MedicalInfo
 import com.example.mobileclient.viewmodels.TypesViewModel
 import com.example.mobileclient.viewmodels.UserViewModel
@@ -19,20 +21,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [BloodTypeForm.newInstance] factory method to
- * create an instance of this fragment.
- */
 class BloodTypeForm : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var _binding: FragmentBloodTypeFormBinding? = null
     private val userViewModel: UserViewModel by activityViewModels()
     private val typesViewModel: TypesViewModel by activityViewModels()
@@ -41,14 +30,6 @@ class BloodTypeForm : Fragment() {
 // onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,7 +37,10 @@ class BloodTypeForm : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentBloodTypeFormBinding.inflate(inflater, container, false)
         val view = binding.root
-        userViewModel.getMedicalInfoResponse(2)
+        val userEmail: String =
+            requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+                .getString("email", "")!!
+        userViewModel.getUserMedicalInfo(userEmail)
         typesViewModel.getBloodTypes()
         typesViewModel.getRhTypes()
         var medicalInfo: MedicalInfo? = null
@@ -133,16 +117,9 @@ class BloodTypeForm : Fragment() {
                 blood = "B"
             }
             if (rh.isNotEmpty() && blood.isNotEmpty()) {
-                val req = blood + "_" + rh
-                medicalInfo?.bloodType = req
-                val mediaType: MediaType = "text/plain; charset=utf-8".toMediaType()
-                val requestBodyWithBloodType: RequestBody =
-                    medicalInfo!!.bloodType.toRequestBody(mediaType)
-                userViewModel.putUserMedicalInfoBlood(2, requestBodyWithBloodType)
-
-                /*
-
-                sharedViewModel.putMedicalInfoBloodResponse.observe(viewLifecycleOwner) { response ->
+                val blood = Blood(userEmail, rh, blood)
+                userViewModel.putUserMedicalInfoBlood(medicalInfo!!.medicalInfoId, blood)
+                userViewModel.updateCallResponseBody.observe(viewLifecycleOwner) { response ->
                     if (response.isSuccessful) {
                         Log.d("Blood type update", medicalInfo!!.bloodType)
                         Toast.makeText(context, "Update successful", Toast.LENGTH_SHORT).show()
@@ -158,29 +135,8 @@ class BloodTypeForm : Fragment() {
                     }
                 }
 
-                 */
             }
         }
         return view
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BloodTypeForm.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BloodTypeForm().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

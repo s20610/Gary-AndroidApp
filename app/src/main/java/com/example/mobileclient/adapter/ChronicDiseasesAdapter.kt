@@ -6,12 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobileclient.R
+import com.example.mobileclient.model.Disease
 
-class ChronicDiseasesAdapter(private val dataset: List<String>) :
+class ChronicDiseasesAdapter(private val dataset: List<Disease>) :
     RecyclerView.Adapter<ChronicDiseasesAdapter.ItemViewHolder>() {
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
         val textView: TextView = view.findViewById(R.id.alergy_text)
-        val textView1: TextView = view.findViewById(R.id.alergy_type)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -22,7 +23,7 @@ class ChronicDiseasesAdapter(private val dataset: List<String>) :
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
-        holder.textView.text = item
+        holder.textView.text = item.diseaseName
     }
 
     override fun getItemCount(): Int {

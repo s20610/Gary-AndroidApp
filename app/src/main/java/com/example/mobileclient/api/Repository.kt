@@ -14,42 +14,6 @@ object Repository {
         return RetrofitInstance.api.registerNewUser(newUser)
     }
 
-    suspend fun getUserInfo(id: Int): Response<User> {
-        return RetrofitInstance.api.getUser(id)
-    }
-
-    suspend fun putUser(id: Int, newUser: User): Response<ResponseBody> {
-        return RetrofitInstance.api.putUser(id, newUser)
-    }
-
-    suspend fun putUserInfo(id: Int, newUser: User): Response<ResponseBody> {
-        return RetrofitInstance.api.putUserInfo(id, newUser)
-    }
-
-    suspend fun postUserInfo(id: Int, newUser: User): Response<ResponseBody> {
-        return RetrofitInstance.api.postUserInfo(id, newUser)
-    }
-
-    suspend fun createNewEmergency(newEmergencyInfo: Emergency): Response<ResponseBody> {
-        return RetrofitInstance.api.createNewEmergency(newEmergencyInfo)
-    }
-
-    suspend fun createNewIncident(newIncidentInfo: com.example.mobileclient.model.Incident): Response<ResponseBody>{
-        return RetrofitInstance.api.createNewIncident(newIncidentInfo)
-    }
-
-    suspend fun getVictim(id: Int): Response<User> {
-        return RetrofitInstance.api.getVictim(id)
-    }
-
-    suspend fun putVictim(id: Int, newVictim: User): Response<ResponseBody> {
-        return RetrofitInstance.api.putVictim(id, newVictim)
-    }
-
-    suspend fun postVictim(newVictim: User): Response<ResponseBody> {
-        return RetrofitInstance.api.postVictim(newVictim)
-    }
-
     suspend fun getTutorials(): Response<List<Tutorial>> {
         return RetrofitInstance.api.getTutorials()
     }
@@ -58,36 +22,53 @@ object Repository {
         return RetrofitInstance.api.getTutorial(id)
     }
 
-    suspend fun getStaff(id: Int): Response<User> {
-        return RetrofitInstance.api.getStaff(id)
+    suspend fun getUserMedicalInfo(userEmail: String): Response<MedicalInfo> {
+        return RetrofitInstance.api.getUserMedicalInfo(userEmail)
     }
 
-    suspend fun putStaff(id: Int, newStaff: User): Response<ResponseBody> {
-        return RetrofitInstance.api.putStaff(id, newStaff)
+    suspend fun getUserBlood(id: Int): Response<Blood> {
+        return RetrofitInstance.api.getUserBlood(id)
     }
 
-    suspend fun getUserMedicalInfo(id: Int): Response<MedicalInfo> {
-        return RetrofitInstance.api.getUserMedicalInfo(id)
+    suspend fun putUserBlood(id: Int, blood: Blood): Response<ResponseBody> {
+        return RetrofitInstance.api.putUserBlood(id, blood)
     }
 
-    suspend fun putUserMedicalInfoBlood(id: Int, blood: RequestBody): Response<ResponseBody> {
-        return RetrofitInstance.api.putUserMedicalInfoBlood(id, blood)
+    suspend fun postUserBlood(blood: Blood): Response<ResponseBody> {
+        return RetrofitInstance.api.postUserBlood(blood)
     }
 
-    suspend fun postUserMedicalInfo(id: Int, medicalInfo: MedicalInfo): Response<ResponseBody> {
-        return RetrofitInstance.api.putUserMedicalInfo(id, medicalInfo)
+    suspend fun getUserDisease(id: Int): Response<Disease> {
+        return RetrofitInstance.api.getDisease(id)
     }
 
-    suspend fun postUserDisease(
-        disease: Disease
-    ): Response<ResponseBody> {
+    suspend fun putUserDisease(id: Int, disease: Disease): Response<ResponseBody> {
+        return RetrofitInstance.api.putUserDisease(id, disease)
+    }
+
+    suspend fun deleteUserDisease(id: Int): Response<ResponseBody> {
+        return RetrofitInstance.api.deleteUserDisease(id)
+    }
+    suspend fun postUserDisease(disease: Disease): Response<ResponseBody> {
         return RetrofitInstance.api.postUserDisease(disease)
+    }
+
+    suspend fun getUserAllergy(id: Int): Response<Allergy> {
+        return RetrofitInstance.api.getAllergy(id)
+    }
+
+    suspend fun putUserAllergy(id: Int, allergy: Allergy): Response<ResponseBody> {
+        return RetrofitInstance.api.putUserAllergy(id, allergy)
     }
 
     suspend fun postUserAllergy(
         allergy: Allergy
     ): Response<ResponseBody> {
         return RetrofitInstance.api.postUserMedicalInfoAllergies(allergy)
+    }
+
+    suspend fun deleteUserAllergy(id: Int): Response<ResponseBody> {
+        return RetrofitInstance.api.deleteUserAllergy(id)
     }
 
     suspend fun getAllergyTypes(): Response<List<String>> {

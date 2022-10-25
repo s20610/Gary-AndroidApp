@@ -14,16 +14,4 @@ class IncidentViewModel:ViewModel() {
     private var repository: Repository = Repository
     var postCallResponseBody: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
 
-    fun createNewIncident(newIncidentInfo: com.example.mobileclient.model.Incident) {
-        viewModelScope.launch {
-            try {
-                val response = repository.createNewIncident(newIncidentInfo)
-                postCallResponseBody.value = response
-            } catch (e: ConnectException) {
-                Log.d("Connection exception", e.stackTraceToString())
-            } catch (e: Exception) {
-                Log.d("getUserInfo exception", e.stackTraceToString())
-            }
-        }
-    }
 }

@@ -37,7 +37,6 @@ class Login : Fragment() {
             Navigation.findNavController(view).navigate(R.id.action_login_to_forgotPassword)
         }
         binding.loginButton.setOnClickListener {
-            var token: String
             val email = binding.emailFieldText.text.toString().trim()
             val password = binding.passwordFieldText.text.toString().trim()
             if (email.isNotEmpty() && password.isNotEmpty()) {
@@ -45,16 +44,14 @@ class Login : Fragment() {
                     email,
                     password
                 )
-                addEmailToSharedPref(email)
                 sharedViewModel.getLoginResponse(credentials)
                 sharedViewModel.loginResponse.observe(viewLifecycleOwner) { response ->
                     if (response.isSuccessful) {
                         Log.d("Login Response", response.body().toString())
                         Log.d("Response Code", response.code().toString())
-                        token = response.body()!!.token
                         Toast.makeText(context, "Login successful", LENGTH_LONG).show()
+                        addEmailAndTokenToSharedPref(email,response.body()!!.token)
                         val userActivity = Intent(context, UserActivity::class.java)
-                        userActivity.putExtra("token", token)
                         startActivity(userActivity)
                     } else {
                         Toast.makeText(context, "Login error" + response.code(), LENGTH_LONG).show()
@@ -104,10 +101,11 @@ class Login : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    private fun addEmailToSharedPref(email: String) {
+    private fun addEmailAndTokenToSharedPref(email: String, token: String) {
         val sharedPref = activity?.getSharedPreferences("userInfo",Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {
             putString("email", email)
+            putString("token", token)
             apply()
         }
     }

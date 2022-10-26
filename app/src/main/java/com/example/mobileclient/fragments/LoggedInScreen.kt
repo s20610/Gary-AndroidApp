@@ -2,6 +2,7 @@ package com.example.mobileclient.fragments
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
+import com.example.mobileclient.activities.UserActivity
 import com.example.mobileclient.adapter.TutorialsAdapter
 import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
 import com.example.mobileclient.model.*
@@ -22,7 +24,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
     TutorialsAdapter.OnItemClickListener {
     private var _binding: FragmentLoggedInScreenBinding? = null
-    private val sharedViewModel: UserViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
     private val tutorialsViewModel: TutorialsViewModel by activityViewModels()
     private var tutorialsFromAPI: List<Tutorial>? = null
     private var currentlyDisplayedTutorials: List<Tutorial>? = null
@@ -48,8 +50,8 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
         )
         binding.tutorialsGrid.adapter =
             TutorialsAdapter(tutorialsEmpty, this, ratingBarChangeListener)
-        val intent = Intent()
-        val token = intent.getStringExtra("token")
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+        val token: String = sharedPreferences.getString("token", "")!!
         Toast.makeText(context, "Jwt token: $token", Toast.LENGTH_LONG).show()
         getTutorialsFromAPI()
         binding.refresh.setOnRefreshListener {
@@ -91,7 +93,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.apply {
-            viewModel = sharedViewModel
+            viewModel = userViewModel
         }
         super.onViewCreated(view, savedInstanceState)
     }

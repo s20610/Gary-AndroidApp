@@ -1,8 +1,9 @@
 package com.example.mobileclient.model
 
 data class MedicalInfo(
-    val id: Int,
+    val medicalInfoId: Int,
+    var rhType: String,
     var bloodType: String,
-    val chronicDiseases: String,
-    val allergies: String
+    val allergies: List<Allergy>,
+    val diseases: List<Disease>
     )

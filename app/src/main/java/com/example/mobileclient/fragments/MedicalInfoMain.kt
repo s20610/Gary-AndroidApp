@@ -1,5 +1,7 @@
 package com.example.mobileclient.fragments
 
+import android.app.Fragment
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,8 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
-import android.widget.Toast.LENGTH_SHORT
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
@@ -16,8 +16,8 @@ import com.example.mobileclient.adapter.AllergyAdapter
 import com.example.mobileclient.adapter.ChronicDiseasesAdapter
 import com.example.mobileclient.databinding.FragmentMedicalInfoMainBinding
 import com.example.mobileclient.model.Allergy
+import com.example.mobileclient.model.Disease
 import com.example.mobileclient.model.MedicalInfo
-import com.example.mobileclient.model.User
 import com.example.mobileclient.viewmodels.UserViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -37,19 +37,21 @@ class MedicalInfoMain : Fragment() {
         _binding = FragmentMedicalInfoMainBinding.inflate(inflater, container, false)
         val view = binding.root
         //Data before api request is handled
-        var medicalInfo: MedicalInfo? = MedicalInfo(0, "A_PLUS", "Brak", "Brak")
         val allergiesEmpty: List<Allergy> = mutableListOf(
-            Allergy(medicalInfo!!.allergies, "Jedzenie", "",""),
+            Allergy("", "", "",""),
         )
-        val chronicDiseasesEmpty: List<String> = mutableListOf(
-            medicalInfo.chronicDiseases
+        val chronicDiseasesEmpty: List<Disease> = mutableListOf(
+            Disease("", "", "",true),
         )
         binding.allergyView.adapter = AllergyAdapter(allergiesEmpty)
         binding.allergyView.setHasFixedSize(true)
         binding.diseaseView.adapter = ChronicDiseasesAdapter(chronicDiseasesEmpty)
         binding.diseaseView.setHasFixedSize(true)
-        //
-        userViewModel.getMedicalInfoResponse(2)
+        var userEmail: String =
+            requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+                .getString("email", "")!!
+        userViewModel.getUserMedicalInfo(userEmail)
+        var medicalInfo: MedicalInfo? = null
         userViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
             if (response.isSuccessful) {
                 medicalInfo = response.body()
@@ -65,12 +67,8 @@ class MedicalInfoMain : Fragment() {
                     "UNKNOWN" -> binding.imageView.setImageResource(R.drawable.blood_type_add)
                     "" -> binding.imageView.setImageResource(R.drawable.blood_type_add)
                 }
-                val allergiesFromApi: List<Allergy> = mutableListOf(
-                    Allergy("","","",""),
-                )
-                val chronicDiseasesFromApi: List<String> = mutableListOf(
-                    medicalInfo!!.chronicDiseases
-                )
+                val allergiesFromApi: List<Allergy> = medicalInfo!!.allergies
+                val chronicDiseasesFromApi: List<Disease> = medicalInfo!!.diseases
                 binding.allergyView.adapter = AllergyAdapter(allergiesFromApi)
                 binding.diseaseView.adapter = ChronicDiseasesAdapter(chronicDiseasesFromApi)
             } else {
@@ -86,17 +84,7 @@ class MedicalInfoMain : Fragment() {
                 .navigate(R.id.action_medicalInfoMain_to_bloodTypeForm)
         }
         binding.bandButton.setOnClickListener {
-            userViewModel.getUserInfo(2)
-            userViewModel.getUserInfoResponse.observe(viewLifecycleOwner) { response ->
-                if (response.isSuccessful) {
-                    val user: User? = response.body()
-                    if (user != null) {
-                        Toast.makeText(context, user.bandCode, LENGTH_SHORT).show()
-                    }
-                } else {
-                    Toast.makeText(context, "Error ${response.code()}", LENGTH_SHORT).show()
-                }
-            }
+
         }
         binding.addButton.setOnClickListener {
             context?.let { it1 ->

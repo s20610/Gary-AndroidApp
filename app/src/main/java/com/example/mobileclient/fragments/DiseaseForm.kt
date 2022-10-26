@@ -27,7 +27,7 @@ class DiseaseForm : Fragment() {
         _binding = FragmentDiseaseFormBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        binding.button2.setOnClickListener {
+        binding.button.setOnClickListener {
             val userEmail: String =
                 requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
                     .getString("email", "")!!

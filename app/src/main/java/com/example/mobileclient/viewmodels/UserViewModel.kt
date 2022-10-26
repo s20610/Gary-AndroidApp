@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.mobileclient.api.Repository
 import com.example.mobileclient.model.*
 import kotlinx.coroutines.launch
-import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 import java.net.ConnectException
@@ -51,103 +50,10 @@ class UserViewModel : ViewModel() {
         }
     }
 
-    fun putUser(id: Int, newUser: User) {
+    fun getUserMedicalInfo(userEmail: String) {
         viewModelScope.launch {
             try {
-                val response = repository.putUser(id, newUser)
-                updateCallResponseBody.value = response
-            } catch (e: ConnectException) {
-                Log.d("Connection exception", e.stackTraceToString())
-            } catch (e: Exception) {
-                Log.d("Put User exception", e.stackTraceToString())
-            }
-        }
-    }
-
-    fun getUserInfo(id: Int) {
-        viewModelScope.launch {
-            try {
-                val response = repository.getUserInfo(id)
-                if (response.code() == 200) {
-                    getUserInfoResponse.value = response
-                }
-            } catch (e: ConnectException) {
-                Log.d("Connection exception", e.stackTraceToString())
-            } catch (e: Exception) {
-                Log.d("getUserInfo exception", e.stackTraceToString())
-            }
-        }
-    }
-
-    fun putUserInfo(id: Int, newUser: User) {
-        viewModelScope.launch {
-            try {
-                val response = repository.putUserInfo(id, newUser)
-                updateCallResponseBody.value = response
-            } catch (e: ConnectException) {
-                Log.d("Connection exception", e.stackTraceToString())
-            } catch (e: Exception) {
-                Log.d("getUserInfo exception", e.stackTraceToString())
-            }
-        }
-    }
-
-    fun postUserInfo(id: Int, newUser: User) {
-        viewModelScope.launch {
-            try {
-                val response = repository.postUserInfo(id, newUser)
-                postCallResponseBody.value = response
-            } catch (e: ConnectException) {
-                Log.d("Connection exception", e.stackTraceToString())
-            } catch (e: Exception) {
-                Log.d("getUserInfo exception", e.stackTraceToString())
-            }
-        }
-    }
-
-    fun getVictim(id: Int){
-        viewModelScope.launch {
-            try {
-                val response = repository.getVictim(id)
-                victimResponse.value = response
-            } catch (e: ConnectException) {
-                Log.d("Connection exception", e.stackTraceToString())
-            } catch (e: Exception) {
-                Log.d("getUserInfo exception", e.stackTraceToString())
-            }
-        }
-    }
-
-    fun putVictim(id: Int, newVictim: User){
-        viewModelScope.launch {
-            try {
-                val response = repository.putVictim(id,newVictim)
-                updateCallResponseBody.value = response
-            } catch (e: ConnectException) {
-                Log.d("Connection exception", e.stackTraceToString())
-            } catch (e: Exception) {
-                Log.d("getUserInfo exception", e.stackTraceToString())
-            }
-        }
-    }
-
-    fun postVictim(id: Int, newVictim: User){
-        viewModelScope.launch {
-            try {
-                val response = repository.postVictim(newVictim)
-                postCallResponseBody.value = response
-            } catch (e: ConnectException) {
-                Log.d("Connection exception", e.stackTraceToString())
-            } catch (e: Exception) {
-                Log.d("getUserInfo exception", e.stackTraceToString())
-            }
-        }
-    }
-
-    fun getMedicalInfoResponse(id: Int) {
-        viewModelScope.launch {
-            try {
-                val response = repository.getUserMedicalInfo(id)
+                val response = repository.getUserMedicalInfo(userEmail)
                 getUserMedicalInfoResponse.value = response
             } catch (e: ConnectException) {
                 Log.d("Connection exception", e.stackTraceToString())
@@ -157,12 +63,11 @@ class UserViewModel : ViewModel() {
         }
     }
 
-    fun putUserMedicalInfoBlood(id: Int, blood: RequestBody) {
+    fun putUserMedicalInfoBlood(id: Int, blood: Blood) {
         viewModelScope.launch {
             try {
-                val response = repository.putUserMedicalInfoBlood(id, blood)
+                val response = repository.putUserBlood(id, blood)
                 updateCallResponseBody.value = response
-                getUserInfo(id)
             } catch (e: Exception) {
                 Log.d("Medical info exception", e.stackTraceToString())
             }

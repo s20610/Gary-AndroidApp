@@ -48,8 +48,8 @@ class AllergyForm : Fragment() {
             val userEmail: String =requireActivity().getSharedPreferences("userInfo",Context.MODE_PRIVATE).getString("email", "")!!
             val allergy = Allergy(
                 userEmail,
-                binding.allergyName.text.toString(),
                 binding.autoCompleteTextView.text.toString(),
+                binding.allergyName.text.toString(),
                 binding.additionalInfoInput.text.toString(),
             )
             userViewModel.postUserAllergy(allergy)

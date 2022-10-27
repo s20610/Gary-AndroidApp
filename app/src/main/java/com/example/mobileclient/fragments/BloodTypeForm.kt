@@ -49,40 +49,40 @@ class BloodTypeForm : Fragment() {
                 response.isSuccessful -> {
                     medicalInfo = response.body()
 
-                    when (medicalInfo!!.bloodType) {
-                        "A_PLUS" -> {
-                            binding.rhGroup.check(R.id.rh_plus)
-                            binding.bloodGroup.check(R.id.blood_A)
-                        }
-                        "A_MINUS" -> {
-                            binding.rhGroup.check(R.id.rh_minus)
-                            binding.bloodGroup.check(R.id.blood_A)
-                        }
-                        "AB_PLUS" -> {
-                            binding.rhGroup.check(R.id.rh_plus)
-                            binding.bloodGroup.check(R.id.blood_AB)
-                        }
-                        "AB_MINUS" -> {
-                            binding.rhGroup.check(R.id.rh_minus)
-                            binding.bloodGroup.check(R.id.blood_AB)
-                        }
-                        "B_PLUS" -> {
-                            binding.rhGroup.check(R.id.rh_plus)
-                            binding.bloodGroup.check(R.id.blood_B)
-                        }
-                        "B_MINUS" -> {
-                            binding.rhGroup.check(R.id.rh_minus)
-                            binding.bloodGroup.check(R.id.blood_B)
-                        }
-                        "O_PLUS" -> {
-                            binding.rhGroup.check(R.id.rh_plus)
-                            binding.bloodGroup.check(R.id.blood_0)
-                        }
-                        "O_MINUS" -> {
-                            binding.rhGroup.check(R.id.rh_minus)
-                            binding.bloodGroup.check(R.id.blood_0)
-                        }
-                    }
+//                    when (medicalInfo!!.bloodType) {
+//                        "A_PLUS" -> {
+//                            binding.rhGroup.check(R.id.rh_plus)
+//                            binding.bloodGroup.check(R.id.blood_A)
+//                        }
+//                        "A_MINUS" -> {
+//                            binding.rhGroup.check(R.id.rh_minus)
+//                            binding.bloodGroup.check(R.id.blood_A)
+//                        }
+//                        "AB_PLUS" -> {
+//                            binding.rhGroup.check(R.id.rh_plus)
+//                            binding.bloodGroup.check(R.id.blood_AB)
+//                        }
+//                        "AB_MINUS" -> {
+//                            binding.rhGroup.check(R.id.rh_minus)
+//                            binding.bloodGroup.check(R.id.blood_AB)
+//                        }
+//                        "B_PLUS" -> {
+//                            binding.rhGroup.check(R.id.rh_plus)
+//                            binding.bloodGroup.check(R.id.blood_B)
+//                        }
+//                        "B_MINUS" -> {
+//                            binding.rhGroup.check(R.id.rh_minus)
+//                            binding.bloodGroup.check(R.id.blood_B)
+//                        }
+//                        "O_PLUS" -> {
+//                            binding.rhGroup.check(R.id.rh_plus)
+//                            binding.bloodGroup.check(R.id.blood_0)
+//                        }
+//                        "O_MINUS" -> {
+//                            binding.rhGroup.check(R.id.rh_minus)
+//                            binding.bloodGroup.check(R.id.blood_0)
+//                        }
+//                    }
 
                 }
                 else -> {
@@ -108,7 +108,7 @@ class BloodTypeForm : Fragment() {
             }
             var blood = ""
             if (binding.blood0.isChecked) {
-                blood = "O"
+                blood = "ZERO"
             } else if (binding.bloodA.isChecked) {
                 blood = "A"
             } else if (binding.bloodAB.isChecked) {
@@ -121,7 +121,6 @@ class BloodTypeForm : Fragment() {
                 userViewModel.putUserMedicalInfoBlood(medicalInfo!!.medicalInfoId, blood)
                 userViewModel.updateCallResponseBody.observe(viewLifecycleOwner) { response ->
                     if (response.isSuccessful) {
-                        Log.d("Blood type update", medicalInfo!!.bloodType)
                         Toast.makeText(context, "Update successful", Toast.LENGTH_SHORT).show()
                         Navigation.findNavController(view)
                             .navigate(R.id.action_bloodTypeForm_to_medicalInfoMain)

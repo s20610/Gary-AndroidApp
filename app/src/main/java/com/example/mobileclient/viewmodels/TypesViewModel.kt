@@ -15,6 +15,9 @@ class TypesViewModel: ViewModel() {
     private var allergyTypesResponse: MutableLiveData<List<String>> = MutableLiveData()
     private var bloodTypesResponse: MutableLiveData<List<String>> = MutableLiveData()
     private var rhTypesResponse: MutableLiveData<List<String>> = MutableLiveData()
+    private var ambulanceTypesResponse: MutableLiveData<List<String>> = MutableLiveData()
+    private var ambulanceStatesResponse: MutableLiveData<List<String>> = MutableLiveData()
+    private var ambulanceClassesResponse: MutableLiveData<List<String>> = MutableLiveData()
     val allergyTypes: LiveData<List<String>> = allergyTypesResponse
     val bloodTypes: LiveData<List<String>> = bloodTypesResponse
     val rhTypes: LiveData<List<String>> = rhTypesResponse
@@ -46,6 +49,39 @@ class TypesViewModel: ViewModel() {
             try {
                 val response = repository.getRhTypes()
                 rhTypesResponse.value = response.body()
+            } catch (e: ConnectException) {
+                Log.d("Connection exception", e.stackTraceToString())
+            }
+        }
+    }
+
+    fun getAmbulanceTypes() {
+        viewModelScope.launch {
+            try {
+                val response = repository.getAmbulanceTypes()
+                ambulanceTypesResponse.value = response.body()
+            } catch (e: ConnectException) {
+                Log.d("Connection exception", e.stackTraceToString())
+            }
+        }
+    }
+
+    fun getAmbulanceStates() {
+        viewModelScope.launch {
+            try {
+                val response = repository.getAmbulanceStates()
+                ambulanceStatesResponse.value = response.body()
+            } catch (e: ConnectException) {
+                Log.d("Connection exception", e.stackTraceToString())
+            }
+        }
+    }
+
+    fun getAmbulanceClasses(){
+        viewModelScope.launch {
+            try {
+                val response = repository.getAmbulanceClasses()
+                ambulanceClassesResponse.value = response.body()
             } catch (e: ConnectException) {
                 Log.d("Connection exception", e.stackTraceToString())
             }

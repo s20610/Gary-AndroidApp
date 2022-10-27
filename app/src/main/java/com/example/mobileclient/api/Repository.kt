@@ -83,4 +83,16 @@ object Repository {
         return RetrofitInstance.api.getBloodTypes()
     }
 
+    suspend fun getAmbulanceTypes(): Response<List<String>> {
+        return RetrofitInstance.api.getAmbulanceTypes()
+    }
+
+    suspend fun getAmbulanceStates(): Response<List<String>> {
+        return RetrofitInstance.api.getAmbulanceStates()
+    }
+
+    suspend fun getAmbulanceClasses(): Response<List<String>> {
+        return RetrofitInstance.api.getAmbulanceClasses()
+    }
+
 }

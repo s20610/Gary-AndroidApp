@@ -1,6 +1,6 @@
 package com.example.mobileclient.fragments
 
-import android.app.Fragment
+import androidx.fragment.app.Fragment
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -38,37 +38,26 @@ class MedicalInfoMain : Fragment() {
         val view = binding.root
         //Data before api request is handled
         val allergiesEmpty: List<Allergy> = mutableListOf(
-            Allergy("", "", "",""),
+            Allergy("", "", "", ""),
         )
         val chronicDiseasesEmpty: List<Disease> = mutableListOf(
-            Disease("", "", "",true),
+            Disease("", "", "", true),
         )
         binding.allergyView.adapter = AllergyAdapter(allergiesEmpty)
-        binding.allergyView.setHasFixedSize(true)
+//        binding.allergyView.setHasFixedSize(true)
         binding.diseaseView.adapter = ChronicDiseasesAdapter(chronicDiseasesEmpty)
-        binding.diseaseView.setHasFixedSize(true)
+//        binding.diseaseView.setHasFixedSize(true)
         var userEmail: String =
             requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
                 .getString("email", "")!!
         userViewModel.getUserMedicalInfo(userEmail)
-        var medicalInfo: MedicalInfo? = null
         userViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
+            Log.d("Medical Info", response.toString())
+            Log.d("Medical Info", response.body().toString())
             if (response.isSuccessful) {
-                medicalInfo = response.body()
-                when (medicalInfo!!.bloodType) {
-                    "A_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_a_plus)
-                    "A_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_a_minus)
-                    "AB_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_ab__plus)
-                    "AB_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_ab_minus)
-                    "B_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_b_plus)
-                    "B_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_b_minus)
-                    "O_PLUS" -> binding.imageView.setImageResource(R.drawable.blood_type_0_plus)
-                    "O_MINUS" -> binding.imageView.setImageResource(R.drawable.blood_type_0_minus)
-                    "UNKNOWN" -> binding.imageView.setImageResource(R.drawable.blood_type_add)
-                    "" -> binding.imageView.setImageResource(R.drawable.blood_type_add)
-                }
-                val allergiesFromApi: List<Allergy> = medicalInfo!!.allergies
-                val chronicDiseasesFromApi: List<Disease> = medicalInfo!!.diseases
+//TODO("Handle changing picture based on blood type")
+                val allergiesFromApi: List<Allergy> = response.body()!!.allergies
+                val chronicDiseasesFromApi: List<Disease> = response.body()!!.diseases
                 binding.allergyView.adapter = AllergyAdapter(allergiesFromApi)
                 binding.diseaseView.adapter = ChronicDiseasesAdapter(chronicDiseasesFromApi)
             } else {

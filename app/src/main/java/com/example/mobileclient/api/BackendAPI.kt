@@ -96,4 +96,13 @@ interface BackendAPI {
 
     @GET("enum/blood_type")
     suspend fun getBloodTypes(): Response<List<String>>
+
+    @GET("enum/ambulance_types")
+    suspend fun getAmbulanceTypes(): Response<List<String>>
+
+    @GET("enum/ambulance_states")
+    suspend fun getAmbulanceStates(): Response<List<String>>
+
+    @GET("enum/ambulance_classes")
+    suspend fun getAmbulanceClasses(): Response<List<String>>
 }

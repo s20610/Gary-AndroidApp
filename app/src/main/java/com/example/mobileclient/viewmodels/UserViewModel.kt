@@ -19,10 +19,8 @@ class UserViewModel : ViewModel() {
 
     //    var putMedicalInfoBloodResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
 //    var postUserMedicalInfoResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
-    var getUserInfoResponse: MutableLiveData<Response<User>> = MutableLiveData()
     var updateCallResponseBody: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var postCallResponseBody: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
-    var victimResponse: MutableLiveData<Response<User>> = MutableLiveData()
 
     fun getLoginResponse(credentials: Credentials) {
         viewModelScope.launch {

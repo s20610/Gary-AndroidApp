@@ -137,4 +137,7 @@
     <string name="disease">Diseases</string>
     <string name="bloodType">Blood type</string>
     <string name="rhType">Rh</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
 </resources>

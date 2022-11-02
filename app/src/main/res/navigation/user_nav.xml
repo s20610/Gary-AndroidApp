@@ -42,6 +42,12 @@
         <action
             android:id="@+id/action_medicalInfoMain_to_diseaseForm"
             app:destination="@id/diseaseForm" />
+        <action
+            android:id="@+id/action_medicalInfoMain_to_allergyDetails"
+            app:destination="@id/allergyDetails" />
+        <action
+            android:id="@+id/action_medicalInfoMain_to_diseaseDetails"
+            app:destination="@id/diseaseDetails" />
     </fragment>
     <fragment
         android:id="@+id/incidentsBrowse"
@@ -117,4 +123,20 @@
         android:name="com.example.mobileclient.fragments.DangerousForm"
         android:label="fragment_dangerous_form"
         tools:layout="@layout/fragment_dangerous_form" />
+    <fragment
+        android:id="@+id/allergyDetails"
+        android:name="com.example.mobileclient.fragments.AllergyDetails"
+        android:label="AllergyDetails" >
+        <action
+            android:id="@+id/action_allergyDetails_to_medicalInfoMain"
+            app:destination="@id/medicalInfoMain" />
+    </fragment>
+    <fragment
+        android:id="@+id/diseaseDetails"
+        android:name="com.example.mobileclient.fragments.DiseaseDetails"
+        android:label="DiseaseDetails" >
+        <action
+            android:id="@+id/action_diseaseDetails_to_medicalInfoMain"
+            app:destination="@id/medicalInfoMain" />
+    </fragment>
 </navigation>

@@ -3,31 +3,56 @@ package com.example.mobileclient.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mobileclient.R
+import com.example.mobileclient.databinding.ListItemDiseasesBinding
 import com.example.mobileclient.model.Disease
 
-class ChronicDiseasesAdapter(private val dataset: List<Disease>) :
+class ChronicDiseasesAdapter(
+    private val dataset: List<Disease>,
+    private var onItemClickListener: OnItemClickListener
+) :
     RecyclerView.Adapter<ChronicDiseasesAdapter.ItemViewHolder>() {
-    class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        val textView: TextView = view.findViewById(R.id.alergy_text)
+    class ItemViewHolder(
+        private var binding: ListItemDiseasesBinding,
+        private var itemClickListener: OnItemClickListener
+    ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+        fun bind(disease: Disease) {
+            binding.disease = disease
+            binding.root.setOnClickListener(this)
+            binding.executePendingBindings()
+        }
+
+        override fun onClick(p0: View?) {
+            itemClickListener.onItemClick(adapterPosition)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val adapterLayout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_allergies, parent, false)
-        return ItemViewHolder(adapterLayout)
+        return ItemViewHolder(
+            ListItemDiseasesBinding.inflate(
+                LayoutInflater.from(
+                    parent.context
+                )
+            ),
+            onItemClickListener
+        )
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = dataset[position]
-        holder.textView.text = item.diseaseName
+        val disease = dataset[position]
+        holder.bind(disease)
     }
 
     override fun getItemCount(): Int {
         return dataset.size
     }
 
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
+
+    fun getDisease(position: Int): Disease {
+        return dataset[position]
+    }
 }

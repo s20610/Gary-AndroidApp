@@ -21,7 +21,8 @@ import com.example.mobileclient.model.MedicalInfo
 import com.example.mobileclient.viewmodels.UserViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class MedicalInfoMain : Fragment() {
+class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
+    ChronicDiseasesAdapter.OnItemClickListener {
     private var _binding: FragmentMedicalInfoMainBinding? = null
     private val userViewModel: UserViewModel by activityViewModels()
 
@@ -43,9 +44,9 @@ class MedicalInfoMain : Fragment() {
         val chronicDiseasesEmpty: List<Disease> = mutableListOf(
             Disease("", "", "", true),
         )
-        binding.allergyView.adapter = AllergyAdapter(allergiesEmpty)
+        binding.allergyView.adapter = AllergyAdapter(allergiesEmpty, this)
 //        binding.allergyView.setHasFixedSize(true)
-        binding.diseaseView.adapter = ChronicDiseasesAdapter(chronicDiseasesEmpty)
+        binding.diseaseView.adapter = ChronicDiseasesAdapter(chronicDiseasesEmpty, this)
 //        binding.diseaseView.setHasFixedSize(true)
         var userEmail: String =
             requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
@@ -58,8 +59,8 @@ class MedicalInfoMain : Fragment() {
 //TODO("Handle changing picture based on blood type")
                 val allergiesFromApi: List<Allergy> = response.body()!!.allergies
                 val chronicDiseasesFromApi: List<Disease> = response.body()!!.diseases
-                binding.allergyView.adapter = AllergyAdapter(allergiesFromApi)
-                binding.diseaseView.adapter = ChronicDiseasesAdapter(chronicDiseasesFromApi)
+                binding.allergyView.adapter = AllergyAdapter(allergiesFromApi, this)
+                binding.diseaseView.adapter = ChronicDiseasesAdapter(chronicDiseasesFromApi, this)
             } else {
                 Toast.makeText(context, "Server error" + response.code(), LENGTH_LONG).show()
                 Log.d("getUserMedicalInfoResponseBody", response.body().toString())
@@ -76,34 +77,56 @@ class MedicalInfoMain : Fragment() {
 
         }
         binding.addButton.setOnClickListener {
-            context?.let { it1 ->
-                MaterialAlertDialogBuilder(it1).setTitle("Add medical info?")
-                    .setNegativeButton("Cancel") { dialog, which ->
-                        dialog.cancel()
-                    }
-                    .setItems(
-                        R.array.medicalInfoArray
-                    ) { _, which ->
-                        when (which) {
-                            0 -> {
-                                Navigation.findNavController(view)
-                                    .navigate(R.id.action_medicalInfoMain_to_bloodTypeForm)
-                            }
-                            1 -> {
-                                Navigation.findNavController(view)
-                                    .navigate(R.id.action_medicalInfoMain_to_allergyForm)
-                            }
-                            else -> {
-                                Navigation.findNavController(view)
-                                    .navigate(R.id.action_medicalInfoMain_to_diseaseForm)
-                            }
-                        }
-                        // The 'which' argument contains the index position
-                        // of the selected item
-                    }.create()
-                    .show()
-            }
+            addMedicalInfo(view)
         }
         return view
     }
+
+    private fun addMedicalInfo(view: View) {
+        context?.let { it1 ->
+            MaterialAlertDialogBuilder(it1).setTitle("Add medical info?")
+                .setNegativeButton("Cancel") { dialog, which ->
+                    dialog.cancel()
+                }
+                .setItems(
+                    R.array.medicalInfoArray
+                ) { _, which ->
+                    when (which) {
+                        0 -> {
+                            Navigation.findNavController(view)
+                                .navigate(R.id.action_medicalInfoMain_to_bloodTypeForm)
+                        }
+                        1 -> {
+                            Navigation.findNavController(view)
+                                .navigate(R.id.action_medicalInfoMain_to_allergyForm)
+                        }
+                        else -> {
+                            Navigation.findNavController(view)
+                                .navigate(R.id.action_medicalInfoMain_to_diseaseForm)
+                        }
+                    }
+                    // The 'which' argument contains the index position
+                    // of the selected item
+                }.create()
+                .show()
+        }
+    }
+
+    override fun onItemClick(position: Int) {
+        if (binding.allergyView.adapter is AllergyAdapter) {
+            val allergy = (binding.allergyView.adapter as AllergyAdapter).getAllergy(position)
+            val bundle = Bundle()
+            bundle.putSerializable("allergy", allergy)
+            Navigation.findNavController(binding.root)
+                .navigate(R.id.action_medicalInfoMain_to_allergyDetails, bundle)
+        } else {
+            val disease =
+                (binding.diseaseView.adapter as ChronicDiseasesAdapter).getDisease(position)
+            val bundle = Bundle()
+            bundle.putSerializable("disease", disease)
+            Navigation.findNavController(binding.root)
+                .navigate(R.id.action_medicalInfoMain_to_diseaseDetails, bundle)
+        }
+    }
+
 }

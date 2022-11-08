@@ -37,6 +37,9 @@ class Login : Fragment() {
             Navigation.findNavController(view).navigate(R.id.action_login_to_forgotPassword)
         }
         binding.loginButton.setOnClickListener {
+            val userActivity = Intent(context, UserActivity::class.java)
+            startActivity(userActivity)
+            /*
             val email = binding.emailFieldText.text.toString().trim()
             val password = binding.passwordFieldText.text.toString().trim()
             if (email.isNotEmpty() && password.isNotEmpty()) {
@@ -60,6 +63,8 @@ class Login : Fragment() {
                     }
                 }
             }
+
+             */
         }
         binding.paramedicButton.setOnClickListener {
 //            Log.d("Email", binding.emailFieldText.text.toString())

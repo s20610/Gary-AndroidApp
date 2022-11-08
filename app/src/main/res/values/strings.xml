@@ -8,7 +8,6 @@
     <string name="email_hint">E-mail</string>
     <string name="password_hint">Password</string>
     <string name="birthday_hint">Your birth date</string>
-    <string name="register_hint">I agree to the terms and conditions of service</string>
     <string name="register_button_text">Create account</string>
     <string name="log_in">Log in</string>
     <string name="log_out">Log out</string>
@@ -97,7 +96,7 @@
     <string name="new_password">New password</string>
     <string name="save">Save</string>
     <string name="username">Username</string>
-    <string name="placeholder">Placeholder</string>
+    <string name="placeholder" translatable="false">Placeholder</string>
     <string name="title">Title</string>
     <string name="short_description">Short description</string>
     <string name="get_help_everywhere_you_go">Get help everywhere you go</string>
@@ -106,13 +105,13 @@
     <string name="our_tutorials_will_quickly_teach_you_basic_medical_skill_you_need_in_critical_situations">Our tutorials will quickly teach you basic medical skill you need in critical situations</string>
     <string name="see_nearby_emergency_services_facilities_near_you">See nearby emergency services facilities near you</string>
     <string name="interactive_map_will_show_you_nearby_hospitals_police_stations_and_fire_departments">Interactive map will show you nearby hospitals, police stations and fire departments</string>
-    <string name="go_to_app">Go to app</string>
+    <string name="go_to_app" translatable="false">Go to app</string>
     <string name="settings">Settings</string>
     <string name="language">Language</string>
     <string name="select_language">Select language</string>
     <string name="notifications">Notifications</string>
     <string name="create_incident">Create incident</string>
-    <string name="barcode_scanning_cancelled">Cancelled</string>
+    <string name="barcode_scanning_cancelled" translatable="false">Cancelled</string>
     <string name="barcode_scanning_successful">Scanned band code: </string>
     <string name="create_incident_popup_title">Create Incident?</string>
     <string name="create_incident_popup_alert">Unjustified ambulance call may result in a fine. Are you sure?</string>
@@ -130,11 +129,12 @@
         <item>GUIDE</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="log_in_to_see_tutorial">Log in to read tutorials</string>
     <string name="log_in_to_see_tutorial_message">Tutorials are available only for logged in users</string>
     <string name="about_us">About us</string>
     <string name="disease">Diseases</string>
     <string name="bloodType">Blood type</string>
-    <string name="rhType">Rh</string>
+    <string name="rhType" translatable="false">Rh</string>
+    <string name="register_hint">I agree to the terms and conditions of service</string>
 </resources>

@@ -20,7 +20,7 @@
     <string name="register_button_text">Utwórz konto</string>
     <string name="log_in">Zaloguj się</string>
     <string name="log_out">Wyloguj się</string>
-    <string name="login_button_text">Zaloguj się</string>
+    <string name="login_button_text">Logowanie</string>
     <string name="send">Wyślij</string>
     <string name="forgot_password">Zapomniałem hasła</string>
     <string name="forgot_passwordq">Zapomniałeś hasła?</string>
@@ -50,11 +50,13 @@
     <string name="GuestNavigation_Map">Mapa</string>
     <string name="ParamedicNavigation_Map">Mapa</string>
     <string name="ParamedicNavigation_LogOut">Wyloguj się</string>
+
     <string name="UserNavigation_Tutorials">Tutoriale</string>
     <string name="UserNavigation_UserDetails">Szczegóły użytkownika</string>
     <string name="UserNavigation_ReportedIncidents">Historia zgłoszeń</string>
     <string name="UserNavigation_Map">Mapa</string>
     <string name="UserNavigation_LogOut">Wyloguj się</string>
+
     <string name="incident_scan">Skan</string>
     <string name="scan_prompt">Scan opaski poszkodowanego</string>
     <string name="choose_your_location">Dotknij aby wybrać lokalizacje zdarzenia</string>
@@ -95,7 +97,7 @@
     <string name="info_about_this_screen">Informacje o tym ekranie</string>
     <string name="victims_amount">Liczba ofiar</string>
     <string name="how_many_victims_needs_medical_support">Ilu poszkodowanych potrzebuje wsparcia medycznego</string>
-    <string name="not_breathing_victim">Nieodychający poszkodowany</string>
+    <string name="not_breathing_victim">Nieoddychający poszkodowany</string>
     <string name="band">Kod opaski</string>
     <string name="equipment_button">wyposażenie</string>
     <string name="want_to_know_why_do_we_need_this_data">Chcesz wiedzieć, dlaczego potrzebujemy tych danych?</string>
@@ -124,4 +126,5 @@
     <string name="learn_how_to_properly_perform_cpr">Dowiedz się, jak prawidłowo wykonywać resuscytację krążeniowo-oddechową</string>
     <string name="you_can_easily_report_various_incidents_and_get_help_from_medical_professionals">Możesz łatwo zgłaszać różne incydenty i uzyskać pomoc od lekarzy</string>
     <string name="get_help_everywhere_you_go">Uzyskaj pomoc, gdziekolwiek jesteś</string>
+    <string name="guest">Gość</string>
 </resources>

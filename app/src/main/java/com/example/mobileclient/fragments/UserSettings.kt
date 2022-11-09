@@ -1,8 +1,6 @@
 package com.example.mobileclient.fragments
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +10,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentUserSettingsBinding
 import java.util.*
 
@@ -52,8 +49,9 @@ class UserSettings : Fragment() {
                 Toast.makeText(context,"jezyk polski", Toast.LENGTH_LONG).show()
             }
             if (position == 1){
-                setAppLocale("")
+                setAppLocale("en-rUS")
                 Toast.makeText(context,"jezyk angielski", Toast.LENGTH_LONG).show()
+
             }
         }
         return view
@@ -63,9 +61,8 @@ class UserSettings : Fragment() {
         val res = resources
         val dm = res.displayMetrics
         val conf = res.configuration
-        if (language == ""){
-            conf.setLocale(Locale.getDefault())
-
+        if (language == "en-rUS"){
+            conf.setLocale(Locale(language))
         }else{
             conf.setLocale(Locale(language))
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -73,7 +70,6 @@ class UserSettings : Fragment() {
             } else {
                 conf.locale = Locale(language.toLowerCase());
             }
-
         }
         res.updateConfiguration(conf,dm)
         onConfigurationChanged(conf)

@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.mobileclient.databinding.FragmentUserSettingsBinding
 import java.util.*
@@ -37,23 +35,26 @@ class UserSettings : Fragment() {
             editor.apply()
         }
 
-        val languages = arrayOf("Polish", "English")
 
-        val arrayAdapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, languages)
-        binding.languageSelection.setAdapter(arrayAdapter)
-
-        binding.languageSelection.setOnItemClickListener { parent:AdapterView<*>, view:View, position: Int, id: Long ->
-            if (position == 0){
-                setAppLocale("pl")
-                Toast.makeText(context,"jezyk polski", Toast.LENGTH_LONG).show()
-            }
-            if (position == 1){
-                setAppLocale("en-rUS")
-                Toast.makeText(context,"jezyk angielski", Toast.LENGTH_LONG).show()
-
+        binding.languageSelection.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, listOf("en", "pl")))
+        val selectedLanguage: String = sharedPref.getString("language", "")!!
+        binding.languageSelection.setOnItemClickListener { adapterView, view, i, l ->
+            if (selectedLanguage !=binding.languageSelection.text.toString()){
+                if(binding.languageSelection.text.toString() == "en"){
+                    editor.putString("language", "en")
+                    setAppLocale("en-rUS")
+                    editor.apply()
+                } else{
+                    editor.putString("language", "pl")
+                    setAppLocale("pl")
+                    editor.apply()
+                }
+                requireActivity().finish()
+                startActivity(requireActivity().intent)
+                requireActivity().overridePendingTransition(0, 0)
             }
         }
+
         return view
     }
 
@@ -73,7 +74,6 @@ class UserSettings : Fragment() {
         }
         res.updateConfiguration(conf,dm)
         onConfigurationChanged(conf)
-
     }
 
 

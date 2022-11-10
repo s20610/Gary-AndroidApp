@@ -36,7 +36,7 @@
     <string name="incident_cancel_button">Wyjdź</string>
     <string name="incident_type_hint">Wybierz typ</string>
     <string name="incident_address_hint">Adres</string>
-    <string name="incident_details_text">Szczegóły zdarzenia</string>
+    <string name="incident_details_text">Szczegóły</string>
     <string name="call_for_support_text">Wezwij wsparcie</string>
     <string name="paramedic_type">Typ wsparcia</string>
     <string name="paramedic_justification">Uzasadnienie</string>
@@ -74,7 +74,7 @@
     <string name="allergy_type">Typ alergii</string>
     <string name="allergy_name">Nazwa alergii</string>
     <string name="allergy_additional_info">Dodatkowe informacje</string>
-    <string name="blood_type_question">Jaka jest twoja grupa krwi</string>
+    <string name="blood_type_question">Wybierz swoją grupę krwi</string>
     <string name="check_equipment">Sprawdź wyposażenie</string>
     <string name="disease_label">Choroba</string>
     <string name="disease_name">Nazwa choroby</string>

@@ -19,6 +19,8 @@ class UserViewModel : ViewModel() {
     var updateCallResponseBody: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var postCallResponseBody: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var deleteCallResponseBody: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
+    private var chosenAllergy: MutableLiveData<Allergy> = MutableLiveData()
+    private var chosenDisease: MutableLiveData<Disease> = MutableLiveData()
 
     fun getLoginResponse(credentials: Credentials) {
         viewModelScope.launch {
@@ -138,6 +140,22 @@ class UserViewModel : ViewModel() {
                 Log.d("Medical info exception", e.stackTraceToString())
             }
         }
+    }
+
+    fun getChosenAllergy(): Allergy? {
+        return chosenAllergy.value
+    }
+
+    fun getChosenDisease(): Disease? {
+        return chosenDisease.value
+    }
+
+    fun setChosenAllergy(allergy: Allergy) {
+        chosenAllergy.value = allergy
+    }
+
+    fun setChosenDisease(disease: Disease) {
+        chosenDisease.value = disease
     }
 
 

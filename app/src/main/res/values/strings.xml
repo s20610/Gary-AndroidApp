@@ -140,4 +140,12 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="update">Update</string>
+    <string name="isVictimBreathing">Is victim breathing?</string>
+    <string name="optional_band_code">Optional victim band code</string>
+    <string name="isVictimConscious">Is victim conscious?</string>
+    <string name="addedAccidentReport">Accident report created succesfully</string>
+    <string name="trusted_person">Trusted Person</string>
+    <string name="trusted_person_info">Contact information</string>
+    <string name="phonenumber_hint">Phone Number</string>
+    <string name="trusted_person_hint">Who should be informed in case of emergency?</string>
 </resources>

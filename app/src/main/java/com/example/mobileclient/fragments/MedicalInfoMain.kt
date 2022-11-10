@@ -17,7 +17,6 @@ import com.example.mobileclient.adapter.ChronicDiseasesAdapter
 import com.example.mobileclient.databinding.FragmentMedicalInfoMainBinding
 import com.example.mobileclient.model.Allergy
 import com.example.mobileclient.model.Disease
-import com.example.mobileclient.model.MedicalInfo
 import com.example.mobileclient.viewmodels.UserViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -100,9 +99,13 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
                             Navigation.findNavController(view)
                                 .navigate(R.id.action_medicalInfoMain_to_allergyForm)
                         }
-                        else -> {
+                        2 -> {
                             Navigation.findNavController(view)
                                 .navigate(R.id.action_medicalInfoMain_to_diseaseForm)
+                        }
+                        else -> {
+                            Navigation.findNavController(view)
+                                .navigate(R.id.action_medicalInfoMain_to_trustedPersonForm)
                         }
                     }
                     // The 'which' argument contains the index position
@@ -112,21 +115,22 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
         }
     }
 
-    override fun onItemClick(position: Int) {
-        if (binding.allergyView.adapter is AllergyAdapter) {
-            val allergy = (binding.allergyView.adapter as AllergyAdapter).getAllergy(position)
-            val bundle = Bundle()
-            bundle.putSerializable("allergy", allergy)
-            Navigation.findNavController(binding.root)
-                .navigate(R.id.action_medicalInfoMain_to_allergyDetails, bundle)
-        } else {
-            val disease =
-                (binding.diseaseView.adapter as ChronicDiseasesAdapter).getDisease(position)
-            val bundle = Bundle()
-            bundle.putSerializable("disease", disease)
-            Navigation.findNavController(binding.root)
-                .navigate(R.id.action_medicalInfoMain_to_diseaseDetails, bundle)
-        }
+    override fun onAllergyClick(position: Int) {
+        val allergy =
+            (binding.allergyView.adapter as AllergyAdapter).getAllergy(position)
+//        val allergy = Allergy("test@test.pl", "INGESTION", "Testowa", "Testowa alergia")
+        Log.d("Allergy", allergy.toString())
+        userViewModel.setChosenAllergy(allergy)
+        Navigation.findNavController(binding.root)
+            .navigate(R.id.action_medicalInfoMain_to_allergyDetails)
     }
 
+    override fun onDiseaseClick(position: Int) {
+        val disease =
+            (binding.diseaseView.adapter as ChronicDiseasesAdapter).getDisease(position)
+        Log.d("Disease", disease.toString())
+        userViewModel.setChosenDisease(disease)
+        Navigation.findNavController(binding.root)
+            .navigate(R.id.action_medicalInfoMain_to_diseaseDetails)
+    }
 }

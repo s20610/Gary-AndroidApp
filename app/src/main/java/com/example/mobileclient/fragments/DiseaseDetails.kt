@@ -1,5 +1,6 @@
 package com.example.mobileclient.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +11,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentDiseaseDetailsBinding
-import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
-import com.example.mobileclient.model.Allergy
 import com.example.mobileclient.model.Disease
 import com.example.mobileclient.viewmodels.UserViewModel
-
-private const val disease = "disease"
 
 class DiseaseDetails : Fragment() {
     private var disease: Disease? = null
@@ -23,13 +20,6 @@ class DiseaseDetails : Fragment() {
     private val userViewModel: UserViewModel by activityViewModels()
 
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            disease = it.getSerializable(com.example.mobileclient.fragments.disease) as Disease
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,12 +29,18 @@ class DiseaseDetails : Fragment() {
         _binding = FragmentDiseaseDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        binding.diseaseName.setText(disease?.diseaseName)
-        binding.adittionalInfoInput.setText(disease?.description)
-        if (disease?.shareWithBand == true) {
-            binding.shareSwitch.isChecked = true
+        disease = userViewModel.getChosenDisease()
+        val userEmail: String =requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("email", "")!!
+        if (disease != null) {
+            disease?.userEmail = userEmail
+            binding.diseaseName.setText(disease?.diseaseName)
+            binding.adittionalInfoInput.setText(disease?.description)
+            if (disease?.shareWithBand == true) {
+                binding.shareSwitch.isChecked = true
+            }
+        } else {
+            Toast.makeText(context, "No disease selected", Toast.LENGTH_SHORT).show()
         }
-
         binding.button.setOnClickListener {
             val updatedDisease = Disease(
                 disease!!.userEmail,
@@ -57,7 +53,7 @@ class DiseaseDetails : Fragment() {
 
         binding.button2.setOnClickListener {
             Navigation.findNavController(view)
-                .navigate(R.id.action_allergyDetails_to_medicalInfoMain)
+                .navigate(R.id.action_diseaseDetails_to_medicalInfoMain)
         }
 
         binding.deleteButton.setOnClickListener {
@@ -72,15 +68,5 @@ class DiseaseDetails : Fragment() {
         }
 
         return view
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(disease: Disease) =
-            DiseaseDetails().apply {
-                arguments = Bundle().apply {
-                    putSerializable(com.example.mobileclient.fragments.disease, disease)
-                }
-            }
     }
 }

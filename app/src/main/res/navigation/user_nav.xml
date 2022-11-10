@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_loggedInScreen_to_user_settings"
             app:destination="@id/user_settings" />
+        <action
+            android:id="@+id/action_loggedInScreen_to_tutorialHtmlView"
+            app:destination="@id/tutorialHtmlView" />
     </fragment>
     <fragment
         android:id="@+id/medicalInfoMain"
@@ -48,6 +51,9 @@
         <action
             android:id="@+id/action_medicalInfoMain_to_diseaseDetails"
             app:destination="@id/diseaseDetails" />
+        <action
+            android:id="@+id/action_medicalInfoMain_to_trustedPersonForm"
+            app:destination="@id/trustedPersonForm" />
     </fragment>
     <fragment
         android:id="@+id/incidentsBrowse"
@@ -130,6 +136,9 @@
         <action
             android:id="@+id/action_allergyDetails_to_medicalInfoMain"
             app:destination="@id/medicalInfoMain" />
+        <argument
+            android:name="Allergy"
+            app:argType="com.example.mobileclient.model.Allergy" />
     </fragment>
     <fragment
         android:id="@+id/diseaseDetails"
@@ -137,6 +146,23 @@
         android:label="DiseaseDetails" >
         <action
             android:id="@+id/action_diseaseDetails_to_medicalInfoMain"
+            app:destination="@id/medicalInfoMain" />
+    </fragment>
+    <fragment
+        android:id="@+id/tutorialHtmlView"
+        android:name="com.example.mobileclient.fragments.TutorialHtmlView"
+        android:label="fragment_tutorial_html_view"
+        tools:layout="@layout/fragment_tutorial_html_view" >
+        <action
+            android:id="@+id/action_tutorialHtmlView_to_loggedInScreen"
+            app:destination="@id/loggedInScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/trustedPersonForm"
+        android:name="com.example.mobileclient.fragments.TrustedPersonForm"
+        android:label="fragment_trusted_person_form">
+        <action
+            android:id="@+id/action_trustedPersonForm_to_medicalInfoMain"
             app:destination="@id/medicalInfoMain" />
     </fragment>
 </navigation>

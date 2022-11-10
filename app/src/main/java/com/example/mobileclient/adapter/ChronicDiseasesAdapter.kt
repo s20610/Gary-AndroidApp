@@ -24,7 +24,7 @@ class ChronicDiseasesAdapter(
         }
 
         override fun onClick(p0: View?) {
-            itemClickListener.onItemClick(adapterPosition)
+            itemClickListener.onDiseaseClick(adapterPosition)
         }
     }
 
@@ -49,7 +49,7 @@ class ChronicDiseasesAdapter(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(position: Int)
+        fun onDiseaseClick(position: Int)
     }
 
     fun getDisease(position: Int): Disease {

@@ -76,7 +76,8 @@ class IncidentLocationPicker : DialogFragment() {
             map.controller.animateTo(mLocationOverlay!!.myLocation)
         }
         binding.dialogAccept.setOnClickListener {
-            val result = marker.position.toString()
+//            val result = marker.position.toString()
+            val result = marker.position
             setFragmentResult("incidentLocation", bundleOf("bundleKey" to result))
             dismiss()
         }

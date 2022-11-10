@@ -1,7 +1,6 @@
 package com.example.mobileclient.fragments
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -10,13 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
-import com.example.mobileclient.activities.UserActivity
 import com.example.mobileclient.adapter.TutorialsAdapter
 import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
-import com.example.mobileclient.model.*
+import com.example.mobileclient.model.Tutorial
 import com.example.mobileclient.viewmodels.TutorialsViewModel
 import com.example.mobileclient.viewmodels.UserViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -50,14 +49,15 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
         )
         binding.tutorialsGrid.adapter =
             TutorialsAdapter(tutorialsEmpty, this, ratingBarChangeListener)
-        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+        val sharedPreferences: SharedPreferences =
+            requireContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
         val token: String = sharedPreferences.getString("token", "")!!
         Toast.makeText(context, "Jwt token: $token", Toast.LENGTH_LONG).show()
-        getTutorialsFromAPI()
-        binding.refresh.setOnRefreshListener {
-            getTutorialsFromAPI()
-            binding.refresh.isRefreshing = false
-        }
+//        getTutorialsFromAPI()
+//        binding.refresh.setOnRefreshListener {
+//            getTutorialsFromAPI()
+//            binding.refresh.isRefreshing = false
+//        }
         if (requireActivity().getPreferences(Context.MODE_PRIVATE)
                 .getBoolean("createIncidentON", false)
         ) {
@@ -103,12 +103,12 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
         p0?.getItemAtPosition(p2).toString()
         when (p0?.getItemAtPosition(p2).toString()) {
             "All Tutorials" -> {
-                currentlyDisplayedTutorials = tutorialsFromAPI
-                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                    TutorialsAdapter(
-                        it, this, ratingBarChangeListener
-                    )
-                }
+//                currentlyDisplayedTutorials = tutorialsFromAPI
+//                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
+//                    TutorialsAdapter(
+//                        it, this, ratingBarChangeListener
+//                    )
+//                }
             }
             "FILE_EMERGENCE" -> {
                 val filteredEmergenceTutorials =
@@ -154,7 +154,12 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
 
     override fun onItemClick(position: Int) {
         Log.d("Tutorial clicked", "User clicked tutorial $position")
-        Toast.makeText(requireContext(), "Tutorial $position", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(requireContext(), "Tutorial $position", Toast.LENGTH_SHORT).show()
+        val fragment: Fragment = TutorialHtmlView.newInstance("", "")
+        Log.d("Fragment created", fragment.toString())
+        //navigate to tutorial html view
+        Navigation.findNavController(binding.root)
+            .navigate(R.id.action_loggedInScreen_to_tutorialHtmlView)
     }
 
     private fun getTutorialsFromAPI() {

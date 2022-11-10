@@ -5,5 +5,5 @@ data class Victim(
     val firstname: String,
     val lastname: String,
     val medicalInfo: MedicalInfo,
-    val reportSurveys: Set<Emergency>
+    val reportSurveys: Set<AccidentReport>
 )

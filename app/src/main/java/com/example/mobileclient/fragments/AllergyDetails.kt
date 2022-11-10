@@ -1,5 +1,6 @@
 package com.example.mobileclient.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +11,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentAllergyDetailsBinding
-import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
 import com.example.mobileclient.model.Allergy
 import com.example.mobileclient.viewmodels.UserViewModel
-
-private const val allergy = "allergy"
 
 class AllergyDetails : Fragment() {
     private var allergy: Allergy? = null
@@ -23,13 +21,6 @@ class AllergyDetails : Fragment() {
 
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            allergy = it.getSerializable(com.example.mobileclient.fragments.allergy) as Allergy
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,10 +28,16 @@ class AllergyDetails : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentAllergyDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
-
-        binding.autoCompleteTextView.setText(allergy?.allergyType)
-        binding.allergyName.setText(allergy?.allergyName)
-        binding.additionalInfoInput.setText(allergy?.other)
+        allergy = userViewModel.getChosenAllergy()
+        val userEmail: String =requireActivity().getSharedPreferences("userInfo",Context.MODE_PRIVATE).getString("email", "")!!
+        if (allergy != null) {
+            allergy?.userEmail = userEmail
+            binding.autoCompleteTextView.setText(allergy?.allergyType)
+            binding.allergyName.setText(allergy?.allergyName)
+            binding.additionalInfoInput.setText(allergy?.other)
+        } else {
+            Toast.makeText(context, "No allergy selected", Toast.LENGTH_SHORT).show()
+        }
 
         binding.button.setOnClickListener {
             val updatedAllergy = Allergy(
@@ -53,7 +50,8 @@ class AllergyDetails : Fragment() {
         }
 
         binding.button2.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_allergyDetails_to_medicalInfoMain)
+            Navigation.findNavController(view)
+                .navigate(R.id.action_allergyDetails_to_medicalInfoMain)
         }
 
         binding.deleteButton.setOnClickListener {
@@ -67,15 +65,5 @@ class AllergyDetails : Fragment() {
             }
         }
         return view
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(allergy: Allergy) =
-            AllergyDetails().apply {
-                arguments = Bundle().apply {
-                    putSerializable(com.example.mobileclient.fragments.allergy, allergy)
-                }
-            }
     }
 }

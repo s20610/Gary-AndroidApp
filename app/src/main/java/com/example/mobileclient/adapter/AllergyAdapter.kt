@@ -25,7 +25,7 @@ class AllergyAdapter(
         }
 
         override fun onClick(p0: View?) {
-            itemClickListener.onItemClick(adapterPosition)
+            itemClickListener.onAllergyClick(adapterPosition)
         }
     }
 
@@ -46,7 +46,7 @@ class AllergyAdapter(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(position: Int)
+        fun onAllergyClick(position: Int)
     }
 
     fun getAllergy(position: Int): Allergy {

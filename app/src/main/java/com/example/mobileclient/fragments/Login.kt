@@ -37,29 +37,9 @@ class Login : Fragment() {
             Navigation.findNavController(view).navigate(R.id.action_login_to_forgotPassword)
         }
         binding.loginButton.setOnClickListener {
-            val email = binding.emailFieldText.text.toString().trim()
-            val password = binding.passwordFieldText.text.toString().trim()
-            if (email.isNotEmpty() && password.isNotEmpty()) {
-                val credentials = Credentials(
-                    email,
-                    password
-                )
-                sharedViewModel.getLoginResponse(credentials)
-                sharedViewModel.loginResponse.observe(viewLifecycleOwner) { response ->
-                    if (response.isSuccessful) {
-                        Log.d("Login Response", response.body().toString())
-                        Log.d("Response Code", response.code().toString())
-                        Toast.makeText(context, "Login successful", LENGTH_LONG).show()
-                        addEmailAndTokenToSharedPref(email,response.body()!!.token)
-                        val userActivity = Intent(context, UserActivity::class.java)
-                        startActivity(userActivity)
-                    } else {
-                        Toast.makeText(context, "Login error" + response.code(), LENGTH_LONG).show()
-                        Log.d("Login Response", response.body().toString())
-                        Log.d("Response Code: ", response.code().toString())
-                    }
-                }
-            }
+            loginUser()
+//            val userActivity = Intent(context, UserActivity::class.java)
+//            startActivity(userActivity)
         }
         binding.paramedicButton.setOnClickListener {
 //            Log.d("Email", binding.emailFieldText.text.toString())
@@ -92,6 +72,32 @@ class Login : Fragment() {
             startActivity(paramedicActivity)
         }
         return view
+    }
+
+    private fun loginUser() {
+        val email = binding.emailFieldText.text.toString().trim()
+        val password = binding.passwordFieldText.text.toString().trim()
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            val credentials = Credentials(
+                email,
+                password
+            )
+            sharedViewModel.getLoginResponse(credentials)
+            sharedViewModel.loginResponse.observe(viewLifecycleOwner) { response ->
+                if (response.isSuccessful) {
+                    Log.d("Login Response", response.body().toString())
+                    Log.d("Response Code", response.code().toString())
+                    Toast.makeText(context, "Login successful", LENGTH_LONG).show()
+                    addEmailAndTokenToSharedPref(email, response.body()!!.token)
+                    val userActivity = Intent(context, UserActivity::class.java)
+                    startActivity(userActivity)
+                } else {
+                    Toast.makeText(context, "Login error" + response.code(), LENGTH_LONG).show()
+                    Log.d("Login Response", response.body().toString())
+                    Log.d("Response Code: ", response.code().toString())
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

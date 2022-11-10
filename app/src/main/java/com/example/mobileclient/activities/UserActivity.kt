@@ -80,6 +80,12 @@ class UserActivity : AppCompatActivity() {
         )
     }
 
+    override fun recreate() {
+        super.recreate()
+        binding.navigationView.setCheckedItem(R.id.nav_tutorials)
+
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,

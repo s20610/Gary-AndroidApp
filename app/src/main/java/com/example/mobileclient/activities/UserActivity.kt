@@ -59,6 +59,31 @@ class UserActivity : AppCompatActivity() {
                     binding.navigationView.setCheckedItem(R.id.nav_tutorials)
                     navController.navigate((R.id.loggedInScreen))
                 }
+
+                it.toString() == "Wyloguj się" -> {
+                    TODO("Go from UserActivity to LandingActivity")
+                }
+                it.toString() == "Ustawienia" -> {
+                    binding.navigationView.setCheckedItem(R.id.nav_settings)
+                    navController.navigate(R.id.user_settings)
+                }
+                it.toString() == "Szczegóły użytkownika" -> {
+                    binding.navigationView.setCheckedItem(R.id.nav_user_details)
+                    navController.navigate((R.id.medicalInfoMain))
+                }
+                it.toString() == "Historia zgłoszeń" -> {
+                    binding.navigationView.setCheckedItem(R.id.nav_user_incidents)
+                    navController.navigate((R.id.incidentsBrowse))
+                }
+                it.toString() == "Mapa" -> {
+                    binding.navigationView.setCheckedItem(R.id.nav_map)
+                    navController.navigate((R.id.facilitiesMap))
+                }
+                it.toString() == "Tutoriale" -> {
+                    binding.navigationView.setCheckedItem(R.id.nav_tutorials)
+                    navController.navigate((R.id.loggedInScreen))
+                }
+
             }
             binding.drawerLayout.close()
             true

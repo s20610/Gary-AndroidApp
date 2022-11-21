@@ -5,20 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RatingBar
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.adapter.TutorialsAdapter
 import com.example.mobileclient.databinding.FragmentGuestScreenBinding
 import com.example.mobileclient.model.Tutorial
 import com.example.mobileclient.viewmodels.TutorialsViewModel
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class GuestScreen : Fragment(),
-    TutorialsAdapter.OnItemClickListener {
+    TutorialsAdapter.OnItemClickListener, AdapterView.OnItemSelectedListener {
     private var _binding: FragmentGuestScreenBinding? = null
     private val tutorialsViewModel: TutorialsViewModel by activityViewModels()
     private var tutorialsFromAPI: List<Tutorial>? = null
@@ -53,34 +50,24 @@ class GuestScreen : Fragment(),
         binding.topAppBar.setNavigationOnClickListener {
             binding.drawerLayout.open()
         }
-        binding.navigationView.setNavigationItemSelectedListener {
-            it.isChecked = true
-            if (it.toString() == getString(R.string.sign_up)) {
-                Navigation.findNavController(view).navigate(R.id.action_guestScreen_to_register)
-            } else if (it.toString() == getString(R.string.log_in)) {
-                Navigation.findNavController(view).navigate(R.id.action_guestScreen_to_login)
-            }
-            binding.drawerLayout.close()
-            true
+
+        //Filter menu
+        val filterMenu: Spinner = binding.filterMenu
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.filterTutorialsArray,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            filterMenu.adapter = adapter
         }
+        filterMenu.onItemSelectedListener = this
+
         return view
     }
 
     override fun onItemClick(position: Int) {
         Log.d("Tutorial clicked", "Guest clicked tutorial $position")
-        context?.let {
-            MaterialAlertDialogBuilder(it).setTitle(getString(R.string.log_in_to_see_tutorial))
-                .setMessage(getString(R.string.log_in_to_see_tutorial_message))
-                .setNegativeButton(getString(R.string.register)) { _, _ ->
-                    Navigation.findNavController(view!!)
-                        .navigate(R.id.register)
-                }
-                .setPositiveButton(getString(R.string.log_in)) { _, _ ->
-                    Navigation.findNavController(view!!)
-                        .navigate(R.id.login)
-                }
-                .show()
-        }
     }
 
     private fun getTutorialsFromAPI() {
@@ -112,4 +99,57 @@ class GuestScreen : Fragment(),
                     .show()
             }
         }
+
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        p0?.getItemAtPosition(p2).toString()
+        when (p0?.getItemAtPosition(p2).toString()) {
+            "All Tutorials" -> {
+                currentlyDisplayedTutorials = tutorialsFromAPI
+                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
+                    TutorialsAdapter(
+                        it, this, ratingBarChangeListener
+                    )
+                }
+            }
+            "FILE_EMERGENCE" -> {
+                val filteredEmergenceTutorials =
+                    tutorialsFromAPI?.filter { it.tutorialKind == "FILE_EMERGENCE" }
+                currentlyDisplayedTutorials = filteredEmergenceTutorials
+                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
+                    TutorialsAdapter(
+                        it, this, ratingBarChangeListener
+                    )
+                }
+            }
+            "COURSE" -> {
+                val filteredCourseTutorials =
+                    tutorialsFromAPI?.filter { it.tutorialKind == "COURSE" }
+                currentlyDisplayedTutorials = filteredCourseTutorials
+                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
+                    TutorialsAdapter(
+                        it, this, ratingBarChangeListener
+                    )
+                }
+            }
+            "GUIDE" -> {
+                val filteredGuideTutorials =
+                    tutorialsFromAPI?.filter { it.tutorialKind == "GUIDE" }
+                currentlyDisplayedTutorials = filteredGuideTutorials
+                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
+                    TutorialsAdapter(
+                        it, this, ratingBarChangeListener
+                    )
+                }
+            }
+        }
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        currentlyDisplayedTutorials = tutorialsFromAPI
+        binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
+            TutorialsAdapter(
+                it, this, ratingBarChangeListener
+            )
+        }
+    }
 }

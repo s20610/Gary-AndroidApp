@@ -27,7 +27,8 @@ interface BackendAPI {
 
     //Medical info api calls
     @GET("medical_info/user/{email}")
-    suspend fun getUserMedicalInfo(@Path("email") userEmail: String
+    suspend fun getUserMedicalInfo(
+        @Path("email") userEmail: String
     ): Response<MedicalInfo>
 
     @GET("medical_info/blood/{id}")
@@ -88,6 +89,8 @@ interface BackendAPI {
         @Body allergy: Allergy
     ): Response<ResponseBody>
 
+    //enum types
+
     @GET("enum/allergy_type")
     suspend fun getAllergyTypes(): Response<List<String>>
 
@@ -105,4 +108,59 @@ interface BackendAPI {
 
     @GET("enum/ambulance_classes")
     suspend fun getAmbulanceClasses(): Response<List<String>>
+
+    @GET("enum/emergency_type")
+    suspend fun getEmergencyTypes(): Response<List<String>>
+
+    @GET("enum/facility_type")
+    suspend fun getFacilityTypes(): Response<List<String>>
+
+    // Trusted Person
+
+    @GET("trusted/{email}")
+    suspend fun getTrustedPerson(
+        @Path("email") userEmail: String,
+    ): Response<TrustedPerson>
+
+    @POST("trusted")
+    suspend fun postTrustedPerson(
+        @Body trustedPerson: TrustedPerson
+    ): Response<ResponseBody>
+
+    @PUT("trusted")
+    suspend fun putTrustedPerson(
+        @Body trustedPerson: TrustedPerson
+    ): Response<ResponseBody>
+
+    @DELETE("trusted/{email}")
+    suspend fun deleteTrustedPerson(
+        @Path("email") userEmail: String,
+    ): Response<ResponseBody>
+
+    //Accident Report
+    @GET("accident_report/{id}")
+    suspend fun getAccidentReport(
+        @Path("id") id: Int,
+    ): Response<AccidentReport>
+
+    @GET("accident_report/user/{email}")
+    suspend fun getUserAccidentReports(
+        @Path("email") userEmail: String,
+    ): Response<List<AccidentReport>>
+
+    @POST("accident_report")
+    suspend fun postAccidentReport(
+        @Body accidentReport: AccidentReport
+    ): Response<ResponseBody>
+
+    //Employee shifts
+    @GET("employee/shift/start")
+    suspend fun startShift(): Response<ResponseBody>
+
+    @GET("employee/shift/end")
+    suspend fun endShift(): Response<ResponseBody>
+
+    //Facilities
+    @GET("facility")
+    suspend fun getFacilities(): Response<List<Facility>>
 }

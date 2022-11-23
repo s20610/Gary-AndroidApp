@@ -16,11 +16,11 @@ class UserViewModel : ViewModel() {
     var loginResponse: MutableLiveData<Response<AuthResponse>> = MutableLiveData()
     var registerResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var getUserMedicalInfoResponse: MutableLiveData<Response<MedicalInfo>> = MutableLiveData()
-
-    //    var putMedicalInfoBloodResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
-//    var postUserMedicalInfoResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var updateCallResponseBody: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var postCallResponseBody: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
+    var deleteCallResponseBody: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
+    private var chosenAllergy: MutableLiveData<Allergy> = MutableLiveData()
+    private var chosenDisease: MutableLiveData<Disease> = MutableLiveData()
 
     fun getLoginResponse(credentials: Credentials) {
         viewModelScope.launch {
@@ -96,6 +96,66 @@ class UserViewModel : ViewModel() {
                 Log.d("postMedicalInfoResponse exception", e.stackTraceToString())
             }
         }
+    }
+
+    fun putUserAllergy(id: Int, allergy: Allergy) {
+        viewModelScope.launch {
+            try {
+                val response = repository.putUserAllergy(id, allergy)
+                updateCallResponseBody.value = response
+            } catch (e: Exception) {
+                Log.d("Medical info exception", e.stackTraceToString())
+            }
+        }
+    }
+
+    fun putUserDisease(id: Int, disease: Disease) {
+        viewModelScope.launch {
+            try {
+                val response = repository.putUserDisease(id, disease)
+                updateCallResponseBody.value = response
+            } catch (e: Exception) {
+                Log.d("Medical info exception", e.stackTraceToString())
+            }
+        }
+    }
+
+    fun deleteUserAllergy(id: Int) {
+        viewModelScope.launch {
+            try {
+                val response = repository.deleteUserAllergy(id)
+                deleteCallResponseBody.value = response
+            } catch (e: Exception) {
+                Log.d("Medical info exception", e.stackTraceToString())
+            }
+        }
+    }
+
+    fun deleteUserDisese(id: Int) {
+        viewModelScope.launch {
+            try {
+                val response = repository.deleteUserDisease(id)
+                deleteCallResponseBody.value = response
+            } catch (e: Exception) {
+                Log.d("Medical info exception", e.stackTraceToString())
+            }
+        }
+    }
+
+    fun getChosenAllergy(): Allergy? {
+        return chosenAllergy.value
+    }
+
+    fun getChosenDisease(): Disease? {
+        return chosenDisease.value
+    }
+
+    fun setChosenAllergy(allergy: Allergy) {
+        chosenAllergy.value = allergy
+    }
+
+    fun setChosenDisease(disease: Disease) {
+        chosenDisease.value = disease
     }
 
 

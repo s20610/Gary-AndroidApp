@@ -8,6 +8,7 @@
     <string name="email_hint" translatable="false">E-mail</string>
     <string name="password_hint">Password</string>
     <string name="birthday_hint">Your birth date</string>
+    <string name="register_hint">I agree to the terms and conditions of service</string>
     <string name="register_button_text">Create account</string>
     <string name="log_in">Log in</string>
     <string name="log_out">Log out</string>
@@ -128,14 +129,22 @@
         <item>COURSE</item>
         <item>GUIDE</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="log_in_to_see_tutorial">Log in to read tutorials</string>
     <string name="log_in_to_see_tutorial_message">Tutorials are available only for logged in users</string>
     <string name="about_us">About us</string>
     <string name="disease">Diseases</string>
     <string name="bloodType">Blood type</string>
-    <string name="rhType" translatable="false">Rh</string>
-    <string name="register_hint">I agree to the terms and conditions of service</string>
+    <string name="rhType">Rh</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
+    <string name="isVictimBreathing">Is victim breathing?</string>
+    <string name="optional_band_code">Optional victim band code</string>
+    <string name="isVictimConscious">Is victim conscious?</string>
+    <string name="addedAccidentReport">Accident report created succesfully</string>
+    <string name="trusted_person">Trusted Person</string>
+    <string name="trusted_person_info">Contact information</string>
+    <string name="phonenumber_hint">Phone Number</string>
+    <string name="trusted_person_hint">Who should be informed in case of emergency?</string>
     <string name="guest">Guest</string>
 </resources>

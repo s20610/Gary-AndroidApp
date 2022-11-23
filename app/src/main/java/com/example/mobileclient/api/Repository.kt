@@ -49,6 +49,7 @@ object Repository {
     suspend fun deleteUserDisease(id: Int): Response<ResponseBody> {
         return RetrofitInstance.api.deleteUserDisease(id)
     }
+
     suspend fun postUserDisease(disease: Disease): Response<ResponseBody> {
         return RetrofitInstance.api.postUserDisease(disease)
     }
@@ -70,6 +71,8 @@ object Repository {
     suspend fun deleteUserAllergy(id: Int): Response<ResponseBody> {
         return RetrofitInstance.api.deleteUserAllergy(id)
     }
+
+    //Enum types
 
     suspend fun getAllergyTypes(): Response<List<String>> {
         return RetrofitInstance.api.getAllergyTypes()
@@ -93,6 +96,59 @@ object Repository {
 
     suspend fun getAmbulanceClasses(): Response<List<String>> {
         return RetrofitInstance.api.getAmbulanceClasses()
+    }
+
+    suspend fun getEmergencyTypes(): Response<List<String>> {
+        return RetrofitInstance.api.getEmergencyTypes()
+    }
+
+    suspend fun getFacilityTypes(): Response<List<String>> {
+        return RetrofitInstance.api.getFacilityTypes()
+    }
+
+    // Trusted Person
+    suspend fun getTrustedPerson(email: String): Response<TrustedPerson> {
+        return RetrofitInstance.api.getTrustedPerson(email)
+    }
+
+    suspend fun putTrustedPerson(trustedPerson: TrustedPerson): Response<ResponseBody> {
+        return RetrofitInstance.api.putTrustedPerson(trustedPerson)
+    }
+
+    suspend fun postTrustedPerson(trustedPerson: TrustedPerson): Response<ResponseBody> {
+        return RetrofitInstance.api.postTrustedPerson(trustedPerson)
+    }
+
+    suspend fun deleteTrustedPerson(email: String): Response<ResponseBody> {
+        return RetrofitInstance.api.deleteTrustedPerson(email)
+    }
+
+    //Accident Report
+
+    suspend fun getAccidentReport(id: Int): Response<AccidentReport> {
+        return RetrofitInstance.api.getAccidentReport(id)
+    }
+
+    suspend fun getAccidentReports(userEmail: String): Response<List<AccidentReport>> {
+        return RetrofitInstance.api.getUserAccidentReports(userEmail)
+    }
+
+    suspend fun postAccidentReport(accidentReport: AccidentReport): Response<ResponseBody> {
+        return RetrofitInstance.api.postAccidentReport(accidentReport)
+    }
+
+    //Employee shift
+    suspend fun startEmployeeShift():Response<ResponseBody> {
+        return RetrofitInstance.api.startShift()
+    }
+
+    suspend fun endEmployeeShift():Response<ResponseBody> {
+        return RetrofitInstance.api.endShift()
+    }
+
+    //Facilities
+    suspend fun getFacilities():Response<List<Facility>> {
+        return RetrofitInstance.api.getFacilities()
     }
 
 }

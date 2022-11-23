@@ -122,15 +122,13 @@
     <string name="UserNavigation_Settings">Settings</string>
     <string name="new_password_confirm">Confirm new password</string>
     <string name="paramedic_day_label">Day:</string>
-    <string name="paramedic_ambulance_shift_label">Ambulance shifts</string>
+    <string name="paramedic_ambulance_shift_label">Ambulance shift</string>
     <string-array name="filterTutorialsArray">
         <item>All Tutorials</item>
         <item>FILE_EMERGENCE</item>
         <item>COURSE</item>
         <item>GUIDE</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="log_in_to_see_tutorial">Log in to read tutorials</string>
     <string name="log_in_to_see_tutorial_message">Tutorials are available only for logged in users</string>
     <string name="about_us">About us</string>

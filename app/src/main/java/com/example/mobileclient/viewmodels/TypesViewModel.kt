@@ -19,6 +19,7 @@ class TypesViewModel: ViewModel() {
     private var ambulanceStatesResponse: MutableLiveData<List<String>> = MutableLiveData()
     private var ambulanceClassesResponse: MutableLiveData<List<String>> = MutableLiveData()
     private var emergencyTypesResponse: MutableLiveData<List<String>> = MutableLiveData()
+    private var facilityTypesResponse: MutableLiveData<List<String>> = MutableLiveData()
 
     val allergyTypes: LiveData<List<String>> = allergyTypesResponse
     val bloodTypes: LiveData<List<String>> = bloodTypesResponse
@@ -27,6 +28,7 @@ class TypesViewModel: ViewModel() {
     val ambulanceStates: LiveData<List<String>> = ambulanceStatesResponse
     val ambulanceClasses: LiveData<List<String>> = ambulanceClassesResponse
     val emergencyTypes: LiveData<List<String>> = emergencyTypesResponse
+    val facilityTypes: LiveData<List<String>> = facilityTypesResponse
 
     fun getAllergyTypes() {
         viewModelScope.launch {
@@ -98,6 +100,17 @@ class TypesViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 val response = repository.getEmergencyTypes()
+                emergencyTypesResponse.value = response.body()
+            } catch (e: ConnectException) {
+                Log.d("Connection exception", e.stackTraceToString())
+            }
+        }
+    }
+
+    fun getFacilityTypes() {
+        viewModelScope.launch {
+            try {
+                val response = repository.getFacilityTypes()
                 emergencyTypesResponse.value = response.body()
             } catch (e: ConnectException) {
                 Log.d("Connection exception", e.stackTraceToString())

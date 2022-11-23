@@ -1,19 +1,20 @@
 package com.example.mobileclient.fragments
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentParamedicScreenBinding
+import com.example.mobileclient.viewmodels.ParamedicViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.osmdroid.bonuspack.routing.OSRMRoadManager
@@ -30,35 +31,13 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ParamedicScreen.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ParamedicScreen : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var _binding: FragmentParamedicScreenBinding? = null
     private var mLocationOverlay: MyLocationNewOverlay? = null
+    private val paramedicViewModel: ParamedicViewModel by activityViewModels()
     private lateinit var map: MapView
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -66,21 +45,45 @@ class ParamedicScreen : Fragment() {
         _binding = FragmentParamedicScreenBinding.inflate(inflater, container, false)
         val view = binding.root
         val current = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val formatted = current.format(formatter)
         binding.dayField.text = formatted
         binding.checkinButton.setOnClickListener {
             when (binding.checkinButton.text) {
                 getString(R.string.ParamedicScreen_CheckIn) -> {
-                    binding.checkinButton.text = getString(R.string.ParamedicScreen_FinishShift)
+                    paramedicViewModel.startEmployeeShift()
+                    paramedicViewModel.employeeShiftResponse.observe(viewLifecycleOwner) { response ->
+                        if (response.isSuccessful) {
+                            binding.checkinButton.text =
+                                getString(R.string.ParamedicScreen_FinishShift)
+                            binding.checkinButton.setBackgroundColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.red
+                                )
+                            )
+                        }
+                    }
                 }
                 else -> {
-                    binding.checkinButton.text = getString(R.string.ParamedicScreen_CheckIn)
+                    paramedicViewModel.endEmployeeShift()
+                    //Add message box to confirm end of shift
+                    paramedicViewModel.employeeShiftResponse.observe(viewLifecycleOwner) { response ->
+                        if (response.isSuccessful) {
+                            binding.checkinButton.text = getString(R.string.ParamedicScreen_CheckIn)
+                            binding.checkinButton.setBackgroundColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.green_dark
+                                )
+                            )
+                        }
+                    }
                 }
             }
         }
 
-        binding.bottomNavigation?.setOnItemSelectedListener {
+        binding.bottomNavigation.setOnItemSelectedListener {
             it.isChecked = true
             if (it.toString() == "Equipment") {
                 Navigation.findNavController(view)
@@ -101,8 +104,8 @@ class ParamedicScreen : Fragment() {
     }
 
     private fun setupMap() {
-        map.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE)
-        map.controller.setZoom(15.0)
+        map.setTileSource(TileSourceFactory.MAPNIK)
+        map.controller.setZoom(15)
         val (marker: Marker, marker2: Marker, palacKultury: GeoPoint) = markerSetup()
         val roadManager: RoadManager = OSRMRoadManager(context, "Garry")
         val gpsProvider = GpsMyLocationProvider(context)
@@ -115,8 +118,10 @@ class ParamedicScreen : Fragment() {
         mLocationOverlay!!.runOnFirstFix {
             marker2.position = mLocationOverlay!!.myLocation
             marker2.title = "Medic location"
+            marker2.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ambulance_icon)
             waypoints.add(palacKultury)
             waypoints.add(marker2.position)
+            Log.d("waypoints", waypoints.toString())
             var road: Road
             var roadOverlay = Polyline()
             lifecycleScope.launch {
@@ -133,19 +138,36 @@ class ParamedicScreen : Fragment() {
                 lifecycleScope.launch {
                     withContext(Dispatchers.IO) {
                         waypoints.remove(marker2.position)
+                        Log.d("waypoints after remove", waypoints.toString())
                         marker2.position = GeoPoint(location.latitude, location.longitude)
                         waypoints.add(marker2.position)
+                        Log.d("waypoints after add", waypoints.toString())
                         map.overlayManager.remove(roadOverlay)
                         road = roadManager.getRoad(waypoints)
                         roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
                         Log.d("Road creation", "Road created for $waypoints")
                         map.overlayManager.add(roadOverlay)
                         map.invalidate()
-                        map.controller.animateTo(marker2.position)
                     }
                 }
+                map.controller.animateTo(marker2.position)
             }
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        map.onDetach()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        map.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        map.onPause()
     }
 
     private fun markerSetup(): Triple<Marker, Marker, GeoPoint> {
@@ -156,25 +178,5 @@ class ParamedicScreen : Fragment() {
         marker.title = "Location of incident"
         marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_warning_24)
         return Triple(marker, marker2, palacKultury)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ParamedicScreen.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ParamedicScreen().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

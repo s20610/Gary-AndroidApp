@@ -27,9 +27,17 @@ class IncidentsBrowse : Fragment() {
 
         _binding = FragmentIncidentsBrowseBinding.inflate(inflater, container, false)
         val view = binding.root
-//TODO: Add code to populate the list with incidents from database
         val userEmail: String =requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("email", "")!!
         accidentReportViewModel.getAccidentReports(userEmail)
+//        val testAccidentReport = AccidentReport("test@test.pl", "1234", "CAR_ACCIDENT", 1, 1.0, 1.0, true, true)
+//        val testList: ArrayList<AccidentReport> = ArrayList()
+//        testList.add(testAccidentReport)
+//        val arrayAdapter = ArrayAdapter(
+//            requireContext(),
+//            android.R.layout.simple_list_item_1,
+//            testList,
+//        )
+//        binding.listView.adapter = arrayAdapter
         accidentReportViewModel.getAccidentReportsResponse.observe(viewLifecycleOwner) { response ->
             if (response.isSuccessful) {
                 val arrayAdapter = ArrayAdapter(

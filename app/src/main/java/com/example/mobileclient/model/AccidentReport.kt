@@ -1,6 +1,7 @@
 package com.example.mobileclient.model
 
 data class AccidentReport(
+    var date: String,
     val email: String,
     val bandCode: String,
     val emergencyType: String,
@@ -9,8 +10,14 @@ data class AccidentReport(
     val latitude: Double,
     val conscious: Boolean,
     val breathing: Boolean,
+    val description: String,
 ){
+    private fun formatDate(){
+        date = date.substring(0,9)
+    }
+
     override fun toString(): String {
-        return emergencyType
+        formatDate()
+        return "$emergencyType $date"
     }
 }

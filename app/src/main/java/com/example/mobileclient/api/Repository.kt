@@ -102,6 +102,10 @@ object Repository {
         return RetrofitInstance.api.getEmergencyTypes()
     }
 
+    suspend fun getFacilityTypes(): Response<List<String>> {
+        return RetrofitInstance.api.getFacilityTypes()
+    }
+
     // Trusted Person
     suspend fun getTrustedPerson(email: String): Response<TrustedPerson> {
         return RetrofitInstance.api.getTrustedPerson(email)
@@ -131,6 +135,20 @@ object Repository {
 
     suspend fun postAccidentReport(accidentReport: AccidentReport): Response<ResponseBody> {
         return RetrofitInstance.api.postAccidentReport(accidentReport)
+    }
+
+    //Employee shift
+    suspend fun startEmployeeShift():Response<ResponseBody> {
+        return RetrofitInstance.api.startShift()
+    }
+
+    suspend fun endEmployeeShift():Response<ResponseBody> {
+        return RetrofitInstance.api.endShift()
+    }
+
+    //Facilities
+    suspend fun getFacilities():Response<List<Facility>> {
+        return RetrofitInstance.api.getFacilities()
     }
 
 }

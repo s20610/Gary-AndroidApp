@@ -62,6 +62,7 @@ class Incident : Fragment() {
                 val isConscious = binding.consciousYes?.isChecked == true
                 val isBreathing = binding.breathingYes?.isChecked == true
                 val accidentReport = AccidentReport(
+                    date = "",
                     userEmail,
                     barcode,
                     accidentType,
@@ -69,7 +70,8 @@ class Incident : Fragment() {
                     pickedLocation.longitude,
                     pickedLocation.latitude,
                     isConscious,
-                    isBreathing
+                    isBreathing,
+                    description = ""
                 )
                 accidentReportViewModel.postAccidentReport(accidentReport)
                 accidentReportViewModel.postCallResponseBody.observe(viewLifecycleOwner) {

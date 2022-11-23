@@ -24,10 +24,13 @@ class ShowIncident : Fragment() {
         val view = binding.root
         val pickedAccidentReport = accidentReportViewModel.pickedAccidentReport
         binding.autoCompleteTextView2.setText(pickedAccidentReport?.emergencyType)
+        binding.autoCompleteTextView2.isEnabled = false
         binding.victimsEdit.setText(pickedAccidentReport?.victimCount.toString())
+        binding.victimsEdit.isEnabled = false
         val locationString =
             pickedAccidentReport?.latitude.toString() + ", " + pickedAccidentReport?.longitude.toString()
         binding.locationInputText.setText(locationString)
+        binding.locationInputText.isEnabled = false
         if (pickedAccidentReport?.conscious == true) {
             binding.consciousYes.isChecked = true
         } else {
@@ -38,7 +41,10 @@ class ShowIncident : Fragment() {
         } else {
             binding.breathingNo.isChecked = true
         }
+        binding.consciousGroup.isEnabled = false
+        binding.breathingGroup.isEnabled = false
         binding.barcodeInputText.setText(pickedAccidentReport?.bandCode)
+        binding.barcodeInputText.isEnabled = false
 
 
         return view

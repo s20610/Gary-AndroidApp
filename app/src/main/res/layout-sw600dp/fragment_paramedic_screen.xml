@@ -11,7 +11,8 @@
         <org.osmdroid.views.MapView
             android:id="@+id/map"
             android:layout_width="match_parent"
-            android:layout_height="900dp"
+            android:layout_height="640dp"
+            app:layout_constraintBottom_toTopOf="@+id/current_emergency_card"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,6 +21,7 @@
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:elevation="10dp"
             android:padding="10dp"
             app:cardCornerRadius="30dp"
             app:layout_constraintEnd_toEndOf="parent"

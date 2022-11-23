@@ -106,6 +106,8 @@ class ParamedicScreen : Fragment() {
     private fun setupMap() {
         map.setTileSource(TileSourceFactory.MAPNIK)
         map.controller.setZoom(15)
+        map.setMultiTouchControls(true)
+        map.setBuiltInZoomControls(true)
         val (marker: Marker, marker2: Marker, palacKultury: GeoPoint) = markerSetup()
         val roadManager: RoadManager = OSRMRoadManager(context, "Garry")
         val gpsProvider = GpsMyLocationProvider(context)

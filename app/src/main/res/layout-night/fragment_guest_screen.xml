@@ -17,7 +17,6 @@
             style="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/mustard"
             android:fitsSystemWindows="true"
             android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -45,12 +44,23 @@
                 android:backgroundTintMode="add"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
                 <Spinner
                     android:id="@+id/filterMenu"
                     android:layout_width="140dp"
                     android:layout_height="30dp"
                     android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="   "
+                    app:layout_constraintBottom_toTopOf="@+id/tutorials_grid"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -63,7 +73,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/filterMenu"
+                    app:layout_constraintTop_toBottomOf="@id/text"
                     tools:itemCount="2"
                     tools:listitem="@layout/tutorial_view_item" />
             </androidx.constraintlayout.widget.ConstraintLayout>

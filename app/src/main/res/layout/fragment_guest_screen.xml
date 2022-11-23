@@ -44,6 +44,15 @@
                 android:backgroundTintMode="add"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
+                <Spinner
+                    android:id="@+id/filterMenu"
+                    android:layout_width="140dp"
+                    android:layout_height="30dp"
+                    android:background="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text" />
+
                 <TextView
                     android:id="@+id/text"
                     android:layout_width="match_parent"

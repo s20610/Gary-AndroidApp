@@ -14,7 +14,7 @@
         android:layout_marginTop="10dp"
         android:text="@string/check_equipment"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
-        android:textColor="@color/green_dark"
+        android:textColor="@color/mustard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

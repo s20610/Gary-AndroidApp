@@ -153,4 +153,9 @@
     <string name="current_emergency_address">Address:</string>
     <string name="current_emergency_victims">Victims:</string>
     <string name="current_emergency_victim_state">Victim state:</string>
+    <string name="this_is_a_map_of_facilities_near_you">This is a map of facilities near you</string>
+    <string name="hospital">Hospital</string>
+    <string name="police">Police</string>
+    <string name="fire_department">Fire</string>
+    <string name="tutorial_category">Tutorial category:</string>
 </resources>

@@ -16,13 +16,13 @@ class LandingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         createNotificationChannel()
         Configuration.getInstance().userAgentValue = "Garry"
-        Log.d("Notification channel","Created notification channel")
+        Log.d("Notification channel", "Created notification channel")
         setContentView(R.layout.activity_landing)
-        Log.d("Landing","Content view set to landing")
+        Log.d("Landing", "Content view set to landing")
     }
 
     private fun createNotificationChannel() {
-        Configuration.getInstance().userAgentValue="Garry"
+        Configuration.getInstance().userAgentValue = "Garry"
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -52,7 +52,7 @@ class LandingActivity : AppCompatActivity() {
         val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
         val watchedOnboarding = sharedPref.getBoolean("watchedOnboarding", false)
         Log.d("watchedOnboarding", watchedOnboarding.toString())
-        if (!watchedOnboarding){
+        if (!watchedOnboarding) {
             val onboardingActivity = Intent(applicationContext, OnboardingActivity::class.java)
             startActivity(onboardingActivity)
         }

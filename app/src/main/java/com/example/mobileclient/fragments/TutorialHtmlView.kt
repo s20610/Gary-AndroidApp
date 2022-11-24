@@ -49,7 +49,7 @@ class TutorialHtmlView : Fragment() {
         _binding = FragmentTutorialHtmlViewBinding.inflate(inflater, container, false)
         val view = binding.root
         if(WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
-            WebSettingsCompat.setAlgorithmicDarkeningAllowed(binding.tutorialWebView.settings, true);
+            WebSettingsCompat.setAlgorithmicDarkeningAllowed(binding.tutorialWebView.settings, true)
         }
         binding.tutorialWebView.loadUrl("file:///android_asset/RKO.html")
         return view

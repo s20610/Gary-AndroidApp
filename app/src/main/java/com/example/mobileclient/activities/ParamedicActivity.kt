@@ -1,5 +1,6 @@
 package com.example.mobileclient.activities
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,15 +10,18 @@ import com.example.mobileclient.databinding.ActivityParamedicBinding
 
 
 class ParamedicActivity : AppCompatActivity() {
+    companion object {
+        private const val ACCESS_FINE_LOCATION_CODE = 102
+    }
+
     private lateinit var binding: ActivityParamedicBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityParamedicBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
-//        val tp = ThreadPolicy.LAX
-//        StrictMode.setThreadPolicy(tp)
 
         binding.topAppBar.setNavigationOnClickListener {
             binding.drawerLayout.open()
@@ -49,11 +53,32 @@ class ParamedicActivity : AppCompatActivity() {
                 navController.navigate(R.id.addVictimInfo)
             } else if (it.toString() == "Support") {
                 navController.navigate(R.id.paramedicCallForSupport2)
-            }
-            else if (it.toString() == "Map") {
+            } else if (it.toString() == "Map") {
                 navController.navigate(R.id.paramedicScreen)
             }
             true
+        }
+        com.example.mobileclient.util.checkPermission(
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            ACCESS_FINE_LOCATION_CODE,
+            this, this
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            ACCESS_FINE_LOCATION_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Location Permission Granted", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Location Permission Denied", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 }

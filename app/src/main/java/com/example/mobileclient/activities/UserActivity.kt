@@ -91,17 +91,17 @@ class UserActivity : AppCompatActivity() {
         com.example.mobileclient.util.checkPermission(
             android.Manifest.permission.CAMERA,
             CAMERA_PERMISSION_CODE,
-            this,this
+            this, this
         )
         com.example.mobileclient.util.checkPermission(
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             STORAGE_PERMISSION_CODE,
-            this,this
+            this, this
         )
         com.example.mobileclient.util.checkPermission(
             android.Manifest.permission.ACCESS_FINE_LOCATION,
             ACCESS_FINE_LOCATION_CODE,
-            this,this
+            this, this
         )
     }
 

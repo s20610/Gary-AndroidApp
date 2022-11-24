@@ -99,7 +99,7 @@
                     android:id="@+id/current_emergency_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Current emergency assigned to your ambulance"
+                    android:text="@string/current_emergency_label"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -107,61 +107,112 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
-
                 <TextView
                     android:id="@+id/current_emergency_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
                     android:padding="3dp"
-                    android:text="Emergency type: Car accident"
+                    android:text="@string/current_emergency_type"
                     android:textSize="22sp"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/current_emergency_label" />
+
+                <TextView
+                    android:id="@+id/current_emergency_type_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="3dp"
+                    android:text="Car accident"
+                    android:textSize="22sp"
+                    app:layout_constraintStart_toEndOf="@id/current_emergency_type"
                     app:layout_constraintTop_toBottomOf="@id/current_emergency_label" />
 
                 <TextView
                     android:id="@+id/current_emergency_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="3dp"
                     android:layout_marginStart="10dp"
-                    android:text="Time of incident: 13:54"
+                    android:padding="3dp"
+                    android:text="@string/current_emergency_time"
                     android:textSize="22sp"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/current_emergency_type" />
+
+                <TextView
+                    android:id="@+id/current_emergency_time_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:text="00:00"
+                    android:textSize="22sp"
+                    app:layout_constraintStart_toEndOf="@id/current_emergency_time"
                     app:layout_constraintTop_toBottomOf="@id/current_emergency_type" />
 
                 <TextView
                     android:id="@+id/current_emergency_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="3dp"
                     android:layout_marginStart="10dp"
-                    android:text="Address: ul. Złota 42, 00-001 Warszawa"
+                    android:padding="3dp"
+                    android:text="@string/current_emergency_address"
                     android:textSize="22sp"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/current_emergency_time" />
+
+                <TextView
+                    android:id="@+id/current_emergency_address_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:text="ul. Złota 42, 00-001 Warszawa"
+                    android:textSize="22sp"
+                    app:layout_constraintStart_toEndOf="@id/current_emergency_address"
                     app:layout_constraintTop_toBottomOf="@id/current_emergency_time" />
 
                 <TextView
                     android:id="@+id/current_emergency_victims"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="3dp"
                     android:layout_marginStart="10dp"
-                    android:text="Victims: 3 People"
+                    android:padding="3dp"
+                    android:text="@string/current_emergency_victims"
                     android:textSize="22sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/current_emergency_address" />
+
+                <TextView
+                    android:id="@+id/current_emergency_victims_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:text="3 People"
+                    android:textSize="22sp"
+                    app:layout_constraintStart_toEndOf="@id/current_emergency_victims"
+                    app:layout_constraintTop_toBottomOf="@id/current_emergency_address_text" />
+
                 <TextView
                     android:id="@+id/current_emergency_victim_state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="3dp"
                     android:layout_marginStart="10dp"
-                    android:text="Victim state: Breathing, Not concsious"
+                    android:padding="3dp"
+                    android:text="@string/current_emergency_victim_state"
                     android:textSize="22sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/current_emergency_victims" />
+
+                <TextView
+                    android:id="@+id/current_emergency_victims_state_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:text="Breathing, Not concsious"
+                    android:textSize="22sp"
+                    app:layout_constraintStart_toEndOf="@id/current_emergency_victim_state"
+                    app:layout_constraintTop_toBottomOf="@id/current_emergency_victims_text" />
 
                 <Button
                     android:id="@+id/show_victim_info_button"
@@ -173,7 +224,7 @@
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
                     app:layout_constraintBottom_toBottomOf="@+id/current_emergency_address"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/current_emergency_address"
+                    app:layout_constraintStart_toEndOf="@+id/current_emergency_address_text"
                     app:layout_constraintTop_toTopOf="@+id/current_emergency_type" />
 
                 <Button
@@ -186,7 +237,7 @@
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
                     app:layout_constraintBottom_toBottomOf="@+id/current_emergency_victim_state"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/current_emergency_address"
+                    app:layout_constraintStart_toEndOf="@+id/current_emergency_address_text"
                     app:layout_constraintTop_toBottomOf="@id/show_victim_info_button" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

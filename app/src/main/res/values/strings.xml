@@ -147,4 +147,10 @@
     <string name="phonenumber_hint">Phone Number</string>
     <string name="trusted_person_hint">Who should be informed in case of emergency?</string>
     <string name="guest">Guest</string>
+    <string name="current_emergency_label">Current emergency assigned to you</string>
+    <string name="current_emergency_type">Emergency type:</string>
+    <string name="current_emergency_time">Time of incident:</string>
+    <string name="current_emergency_address">Address:</string>
+    <string name="current_emergency_victims">Victims:</string>
+    <string name="current_emergency_victim_state">Victim state:</string>
 </resources>

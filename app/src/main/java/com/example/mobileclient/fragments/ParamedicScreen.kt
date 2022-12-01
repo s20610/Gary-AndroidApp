@@ -44,6 +44,7 @@ class ParamedicScreen : Fragment() {
     ): View {
         _binding = FragmentParamedicScreenBinding.inflate(inflater, container, false)
         val view = binding.root
+        binding.shiftButton!!.visibility = View.GONE
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val formatted = current.format(formatter)
@@ -51,36 +52,60 @@ class ParamedicScreen : Fragment() {
         binding.checkinButton.setOnClickListener {
             when (binding.checkinButton.text) {
                 getString(R.string.ParamedicScreen_CheckIn) -> {
-                    paramedicViewModel.startEmployeeShift()
-                    paramedicViewModel.employeeShiftResponse.observe(viewLifecycleOwner) { response ->
-                        if (response.isSuccessful) {
-                            binding.checkinButton.text =
-                                getString(R.string.ParamedicScreen_FinishShift)
-                            binding.checkinButton.setBackgroundColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.red
-                                )
-                            )
-                        }
-                    }
+//                    paramedicViewModel.startEmployeeShift()
+//                    paramedicViewModel.employeeShiftResponse.observe(viewLifecycleOwner) { response ->
+//                        if (response.isSuccessful) {
+//                            binding.checkinButton.text =
+//                                getString(R.string.ParamedicScreen_FinishShift)
+//                            binding.checkinButton.setBackgroundColor(
+//                                ContextCompat.getColor(
+//                                    requireContext(),
+//                                    R.color.red
+//                                )
+//                            )
+//                        }
+//                    }
+                    binding.checkinButton.text =
+                        getString(R.string.ParamedicScreen_FinishShift)
+                    binding.checkinButton.setBackgroundColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.red
+                        )
+                    )
+                    binding.shiftButton!!.visibility = View.VISIBLE
+                    binding.cardView.visibility = View.GONE
                 }
                 else -> {
-                    paramedicViewModel.endEmployeeShift()
-                    //Add message box to confirm end of shift
-                    paramedicViewModel.employeeShiftResponse.observe(viewLifecycleOwner) { response ->
-                        if (response.isSuccessful) {
-                            binding.checkinButton.text = getString(R.string.ParamedicScreen_CheckIn)
-                            binding.checkinButton.setBackgroundColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.green_dark
-                                )
-                            )
-                        }
-                    }
+//                    paramedicViewModel.endEmployeeShift()
+//                    //Add message box to confirm end of shift
+//                    paramedicViewModel.employeeShiftResponse.observe(viewLifecycleOwner) { response ->
+//                        if (response.isSuccessful) {
+//                            binding.checkinButton.text = getString(R.string.ParamedicScreen_CheckIn)
+//                            binding.checkinButton.setBackgroundColor(
+//                                ContextCompat.getColor(
+//                                    requireContext(),
+//                                    R.color.green_dark
+//                                )
+//                            )
+//                        }
+//                    }
+                    binding.checkinButton.text = getString(R.string.ParamedicScreen_CheckIn)
+                    binding.checkinButton.setBackgroundColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.green_dark
+                        )
+                    )
+                    binding.shiftButton!!.visibility = View.VISIBLE
+                    binding.cardView.visibility = View.GONE
                 }
             }
+        }
+
+        binding.shiftButton!!.setOnClickListener {
+            binding.cardView.visibility = View.VISIBLE
+            it.visibility = View.GONE
         }
 
         binding.bottomNavigation.setOnItemSelectedListener {

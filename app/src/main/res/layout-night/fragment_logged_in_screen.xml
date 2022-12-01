@@ -37,7 +37,7 @@
                 android:id="@+id/filterMenu"
                 android:layout_width="150dp"
                 android:layout_height="35dp"
-                android:background="@color/white"
+                android:background="@color/light_grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

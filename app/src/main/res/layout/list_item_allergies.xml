@@ -17,11 +17,11 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TableRow
-            android:id="@+id/alergy_row"
+            android:id="@+id/allergy_row"
             android:layout_marginVertical="5dp">
 
             <TextView
-                android:id="@+id/alergy_text"
+                android:id="@+id/allergy_text"
                 android:layout_width="0dip"
                 android:layout_column="0"
                 android:layout_weight="1"
@@ -30,7 +30,7 @@
                 android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/alergy_type"
+                android:id="@+id/allergy_type"
                 android:layout_width="0dip"
                 android:layout_column="1"
                 android:layout_weight="1"

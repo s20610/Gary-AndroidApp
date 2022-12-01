@@ -67,9 +67,9 @@ class UserSettings : Fragment() {
         }else{
             conf.setLocale(Locale(language))
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                conf.setLocale(Locale(language.toLowerCase()));
+                conf.setLocale(Locale(language.lowercase(Locale.getDefault())))
             } else {
-                conf.locale = Locale(language.toLowerCase());
+                conf.locale = Locale(language.lowercase(Locale.getDefault()))
             }
         }
         res.updateConfiguration(conf,dm)

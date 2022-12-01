@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Garry</string>
+    <string name="app_name" translatable="false">Gary</string>
     <string name="register">Register</string>
     <string name="service_agreement">I agree to the terms of service</string>
     <string name="sign_up">Sign up</string>
@@ -106,13 +106,13 @@
     <string name="our_tutorials_will_quickly_teach_you_basic_medical_skill_you_need_in_critical_situations">Our tutorials will quickly teach you basic medical skill you need in critical situations</string>
     <string name="see_nearby_emergency_services_facilities_near_you">See nearby emergency services facilities near you</string>
     <string name="interactive_map_will_show_you_nearby_hospitals_police_stations_and_fire_departments">Interactive map will show you nearby hospitals, police stations and fire departments</string>
-    <string name="go_to_app" translatable="false">Go to app</string>
+    <string name="go_to_app">Go to app</string>
     <string name="settings">Settings</string>
     <string name="language">Language</string>
     <string name="select_language">Select language</string>
     <string name="notifications">Notifications</string>
     <string name="create_incident">Create incident</string>
-    <string name="barcode_scanning_cancelled" translatable="false">Cancelled</string>
+    <string name="barcode_scanning_cancelled">Cancelled</string>
     <string name="barcode_scanning_successful">Scanned band code: </string>
     <string name="create_incident_popup_title">Create Incident?</string>
     <string name="create_incident_popup_alert">Unjustified ambulance call may result in a fine. Are you sure?</string>
@@ -134,7 +134,7 @@
     <string name="about_us">About us</string>
     <string name="disease">Diseases</string>
     <string name="bloodType">Blood type</string>
-    <string name="rhType">Rh</string>
+    <string name="rhType" translatable="false">Rh</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="update">Update</string>
@@ -147,4 +147,18 @@
     <string name="phonenumber_hint">Phone Number</string>
     <string name="trusted_person_hint">Who should be informed in case of emergency?</string>
     <string name="guest">Guest</string>
+    <string name="current_emergency_label">Current emergency assigned to you</string>
+    <string name="current_emergency_type">Emergency type:</string>
+    <string name="current_emergency_time">Time of incident:</string>
+    <string name="current_emergency_address">Address:</string>
+    <string name="current_emergency_victims">Victims:</string>
+    <string name="current_emergency_victim_state">Victim state:</string>
+    <string name="this_is_a_map_of_facilities_near_you">This is a map of facilities near you</string>
+    <string name="hospital">Hospital</string>
+    <string name="police">Police</string>
+    <string name="fire_department">Fire</string>
+    <string name="tutorial_category">Tutorial category:</string>
+    <string name="description">Description</string>
+    <string name="victim_info">Victim info</string>
+    <string name="open_navigation">Navigation</string>
 </resources>

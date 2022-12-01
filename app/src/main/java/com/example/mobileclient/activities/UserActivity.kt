@@ -1,12 +1,15 @@
 package com.example.mobileclient.activities
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.ActivityUserBinding
+import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
 
 class UserActivity : AppCompatActivity() {
     companion object {
@@ -37,7 +40,10 @@ class UserActivity : AppCompatActivity() {
             it.isChecked = true
             when {
                 it.toString() == "Log out" -> {
-                    TODO("Go from UserActivity to LandingActivity")
+                    getSharedPreferences(USER_INFO_PREFS , MODE_PRIVATE).edit().clear().apply()
+                    val intent = Intent(this, LandingActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
                 it.toString() == "Settings" -> {
                     binding.navigationView.setCheckedItem(R.id.nav_settings)
@@ -61,7 +67,10 @@ class UserActivity : AppCompatActivity() {
                 }
 
                 it.toString() == "Wyloguj się" -> {
-                    TODO("Go from UserActivity to LandingActivity")
+                    getSharedPreferences(USER_INFO_PREFS , MODE_PRIVATE).edit().clear().apply()
+                    val intent = Intent(this, LandingActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
                 it.toString() == "Ustawienia" -> {
                     binding.navigationView.setCheckedItem(R.id.nav_settings)
@@ -91,17 +100,17 @@ class UserActivity : AppCompatActivity() {
         com.example.mobileclient.util.checkPermission(
             android.Manifest.permission.CAMERA,
             CAMERA_PERMISSION_CODE,
-            this,this
+            this, this
         )
         com.example.mobileclient.util.checkPermission(
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             STORAGE_PERMISSION_CODE,
-            this,this
+            this, this
         )
         com.example.mobileclient.util.checkPermission(
             android.Manifest.permission.ACCESS_FINE_LOCATION,
             ACCESS_FINE_LOCATION_CODE,
-            this,this
+            this, this
         )
     }
 
@@ -109,6 +118,14 @@ class UserActivity : AppCompatActivity() {
         super.recreate()
         binding.navigationView.setCheckedItem(R.id.nav_tutorials)
 
+    }
+
+    override fun onBackPressed() {
+        if (binding.drawerLayout.isOpen) {
+            binding.drawerLayout.close()
+        } else {
+            findNavController(R.id.fragmentContainerView).navigateUp()
+        }
     }
 
     override fun onRequestPermissionsResult(

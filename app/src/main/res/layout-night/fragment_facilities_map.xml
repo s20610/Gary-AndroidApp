@@ -14,33 +14,34 @@
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:background="@color/white"
+            android:background="@color/lighter_grey"
             app:layout_constraintBottom_toBottomOf="@id/hospital_checkbox"/>
 
         <TextView
             android:id="@+id/facilities_headline"
             android:layout_width="match_parent"
-            android:textAlignment="center"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:text="This is a map of facilities near you"
+            android:background="@color/lighter_grey"
+            android:text="@string/this_is_a_map_of_facilities_near_you"
+            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <CheckBox
             android:id="@+id/hospital_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/lighter_grey"
+            android:buttonTint="@color/white"
             android:drawableStart="@drawable/ic_baseline_local_hospital_40"
             android:padding="5dp"
-            android:text="Hospital"
+            android:text="@string/hospital"
             android:textSize="15sp"
             app:layout_constraintEnd_toStartOf="@id/police_checkbox"
             app:layout_constraintTop_toBottomOf="@id/facilities_headline" />
@@ -49,10 +50,11 @@
             android:id="@+id/police_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/lighter_grey"
+            android:buttonTint="@color/white"
             android:drawableStart="@drawable/ic_baseline_local_police_40"
             android:padding="5dp"
-            android:text="Police"
+            android:text="@string/police"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,10 +64,11 @@
             android:id="@+id/fire_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/lighter_grey"
+            android:buttonTint="@color/white"
             android:drawableStart="@drawable/ic_baseline_local_fire_department_40"
             android:padding="5dp"
-            android:text="Fire"
+            android:text="@string/fire_department"
             android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@id/police_checkbox"
             app:layout_constraintTop_toBottomOf="@id/facilities_headline" />

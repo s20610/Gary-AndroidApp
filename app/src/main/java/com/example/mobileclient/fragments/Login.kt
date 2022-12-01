@@ -9,14 +9,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.mobileclient.activities.ParamedicActivity
 import com.example.mobileclient.R
 import com.example.mobileclient.activities.UserActivity
 import com.example.mobileclient.databinding.FragmentLoginBinding
 import com.example.mobileclient.model.Credentials
+import com.example.mobileclient.util.Constants.Companion.USER_EMAIL_TO_PREFS
+import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
+import com.example.mobileclient.util.Constants.Companion.USER_TOKEN_TO_PREFS
 import com.example.mobileclient.viewmodels.UserViewModel
 
 class Login : Fragment() {
@@ -70,6 +76,7 @@ class Login : Fragment() {
             val paramedicActivity = Intent(context, ParamedicActivity::class.java)
             //Here we should apply putExtra method with auth token from login response
             startActivity(paramedicActivity)
+            requireActivity().finish()
         }
         return view
     }
@@ -91,6 +98,7 @@ class Login : Fragment() {
                     addEmailAndTokenToSharedPref(email, response.body()!!.token)
                     val userActivity = Intent(context, UserActivity::class.java)
                     startActivity(userActivity)
+                    requireActivity().finish()
                 } else {
                     Toast.makeText(context, "Login error" + response.code(), LENGTH_LONG).show()
                     Log.d("Login Response", response.body().toString())
@@ -108,10 +116,10 @@ class Login : Fragment() {
     }
 
     private fun addEmailAndTokenToSharedPref(email: String, token: String) {
-        val sharedPref = activity?.getSharedPreferences("userInfo",Context.MODE_PRIVATE) ?: return
+        val sharedPref = activity?.getSharedPreferences(USER_INFO_PREFS,Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {
-            putString("email", email)
-            putString("token", token)
+            putString(USER_EMAIL_TO_PREFS, email)
+            putString(USER_TOKEN_TO_PREFS, token)
             apply()
         }
     }

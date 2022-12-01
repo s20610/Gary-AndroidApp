@@ -19,8 +19,8 @@ import com.example.mobileclient.viewmodels.UserViewModel
 
 class AllergyForm : Fragment() {
     private var _binding: FragmentAllergyFormBinding? = null
-    private val userViewModel : UserViewModel by activityViewModels()
-    private val typesViewModel : TypesViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
+    private val typesViewModel: TypesViewModel by activityViewModels()
     private val binding get() = _binding!!
 
     @SuppressLint("ResourceType")
@@ -45,7 +45,9 @@ class AllergyForm : Fragment() {
             Navigation.findNavController(view).navigate(R.id.action_allergyForm_to_medicalInfoMain)
         }
         binding.button.setOnClickListener {
-            val userEmail: String =requireActivity().getSharedPreferences("userInfo",Context.MODE_PRIVATE).getString("email", "")!!
+            val userEmail: String =
+                requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+                    .getString("email", "")!!
             val allergy = Allergy(
                 userEmail,
                 binding.autoCompleteTextView.text.toString(),
@@ -55,7 +57,8 @@ class AllergyForm : Fragment() {
             userViewModel.postUserAllergy(allergy)
             userViewModel.postCallResponseBody.observe(viewLifecycleOwner) { response ->
                 if (response.isSuccessful) {
-                    Navigation.findNavController(view).navigate(R.id.action_allergyForm_to_medicalInfoMain)
+                    Navigation.findNavController(view)
+                        .navigate(R.id.action_allergyForm_to_medicalInfoMain)
                     Toast.makeText(
                         context,
                         "OK",

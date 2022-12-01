@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
     private val retrofit by lazy {
-        Retrofit.Builder().baseUrl(PJATK).addConverterFactory(GsonConverterFactory.create(gson))
+        Retrofit.Builder().baseUrl(LOCAL).addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 

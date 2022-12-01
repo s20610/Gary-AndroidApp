@@ -33,11 +33,11 @@ class GuestScreen : Fragment(),
         _binding = FragmentGuestScreenBinding.inflate(inflater, container, false)
         val view = binding.root
         val tutorialsEmpty: List<Tutorial> = mutableListOf(
-            Tutorial("1", "Tutorial 1", "COURSE", 0.2f),
-            Tutorial("2", "Tutorial 2", "FILE_EMERGENCE", 0.5f),
-            Tutorial("3", "Tutorial 3", "GUIDE", 0.2f),
-            Tutorial("4", "Tutorial 4", "FILE_EMERGENCE", 0.7f),
-            Tutorial("5", "Tutorial 5", "COURSE", 0.25f),
+            Tutorial("1", "Tutorial 1", "COURSE", 0.2f,""),
+            Tutorial("2", "Tutorial 2", "FILE_EMERGENCE", 0.5f,""),
+            Tutorial("3", "Tutorial 3", "GUIDE", 0.2f,""),
+            Tutorial("4", "Tutorial 4", "FILE_EMERGENCE", 0.7f,""),
+            Tutorial("5", "Tutorial 5", "COURSE", 0.25f,""),
         )
         var tutorialsAdapter = TutorialsAdapter(tutorialsEmpty, this, ratingBarChangeListener)
         tutorialsAdapter.setTutorials(tutorialsEmpty)
@@ -113,7 +113,7 @@ class GuestScreen : Fragment(),
             }
             "FILE_EMERGENCE" -> {
                 val filteredEmergenceTutorials =
-                    tutorialsFromAPI?.filter { it.tutorialKind == "FILE_EMERGENCE" }
+                    tutorialsFromAPI?.filter { it.tutorialType == "FILE_EMERGENCE" }
                 currentlyDisplayedTutorials = filteredEmergenceTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(
@@ -123,7 +123,7 @@ class GuestScreen : Fragment(),
             }
             "COURSE" -> {
                 val filteredCourseTutorials =
-                    tutorialsFromAPI?.filter { it.tutorialKind == "COURSE" }
+                    tutorialsFromAPI?.filter { it.tutorialType == "COURSE" }
                 currentlyDisplayedTutorials = filteredCourseTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(
@@ -133,7 +133,7 @@ class GuestScreen : Fragment(),
             }
             "GUIDE" -> {
                 val filteredGuideTutorials =
-                    tutorialsFromAPI?.filter { it.tutorialKind == "GUIDE" }
+                    tutorialsFromAPI?.filter { it.tutorialType == "GUIDE" }
                 currentlyDisplayedTutorials = filteredGuideTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(

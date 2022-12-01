@@ -127,4 +127,31 @@
     <string name="you_can_easily_report_various_incidents_and_get_help_from_medical_professionals">Możesz łatwo zgłaszać różne incydenty i uzyskać pomoc od lekarzy</string>
     <string name="get_help_everywhere_you_go">Uzyskaj pomoc, gdziekolwiek jesteś</string>
     <string name="guest">Gość</string>
+    <string name="go_to_app" translatable="false">Przejdź do aplikacji</string>
+    <string name="barcode_scanning_cancelled" translatable="false">Skanowanie anulowane</string>
+    <string name="edit">Edytuj</string>
+    <string name="delete">Usuń</string>
+    <string name="update">Zaktualizuj</string>
+    <string name="isVictimBreathing">Czy ofiara oddycha?</string>
+    <string name="optional_band_code">Opcjonalny kod opaski ofiary</string>
+    <string name="isVictimConscious">Czy ofiara jest przytomna?</string>
+    <string name="addedAccidentReport">Zgłoszenie zostało utworzone</string>
+    <string name="trusted_person">Zaufana Osoba</string>
+    <string name="trusted_person_info">Informacje kontaktowe</string>
+    <string name="phonenumber_hint">Numer telefonu</string>
+    <string name="trusted_person_hint">Kto powinien zostać powiadomiony w razie potrzeby?</string>
+    <string name="current_emergency_label">Aktualnie przypisane zdarzenie</string>
+    <string name="current_emergency_type">Rodzaj zdarzenia:</string>
+    <string name="current_emergency_time">Godzina zdarzenia:</string>
+    <string name="current_emergency_address">Adres:</string>
+    <string name="current_emergency_victims">Ofiary:</string>
+    <string name="current_emergency_victim_state">Stan ofiar:</string>
+    <string name="this_is_a_map_of_facilities_near_you">Mapa placówek w twojej okolicy</string>
+    <string name="hospital">Szpital</string>
+    <string name="police">Komisariat</string>
+    <string name="fire_department">Straż pożarna</string>
+    <string name="tutorial_category">Kategoria poradników:</string>
+    <string name="description">Opis</string>
+    <string name="victim_info">Informacje z opaski</string>
+    <string name="open_navigation">Nawigacja</string>
 </resources>

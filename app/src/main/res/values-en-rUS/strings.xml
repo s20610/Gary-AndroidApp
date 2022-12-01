@@ -18,7 +18,7 @@
     <string name="guest_button">Click here</string>
     <string name="guest_appbar_text">Guest View</string>
     <string name="user_appbar_text">User View</string>
-    <string name="create_incident_text">Create Incident</string>
+    <string name="create_incident_text">Turn off creating incidents</string>
     <string name="type_of_incident">Type</string>
     <string name="incident_localisation">Localisation</string>
     <string name="incident_description">Description</string>
@@ -158,4 +158,5 @@
     <string name="description">Description</string>
     <string name="victim_info">Victim info</string>
     <string name="open_navigation">Navigation</string>
+    <string name="birthday">Birth date</string>
 </resources>

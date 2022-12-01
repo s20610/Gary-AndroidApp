@@ -56,10 +56,15 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/old_password_field"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:hint="@string/old_password"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
                 app:endIconMode="password_toggle"
                 app:helperText="Required*"
                 app:helperTextEnabled="true"
@@ -74,10 +79,15 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/new_password_field"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:hint="@string/new_password"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
                 app:endIconMode="password_toggle"
                 app:helperText="Required*"
                 app:helperTextEnabled="true"
@@ -92,10 +102,15 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/new_password_confirm_field"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:hint="@string/new_password_confirm"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
                 app:endIconMode="password_toggle"
                 app:helperText="Required*"
                 app:helperTextEnabled="true"
@@ -110,10 +125,15 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/birthday_field"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:hint="@string/birthday_hint"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
                 app:endIconMode="clear_text"
                 app:helperText="Required*"
                 app:helperTextEnabled="true"
@@ -125,6 +145,17 @@
                     android:layout_height="wrap_content"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/openCalendarButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/ic_baseline_calendar_month_24"
+                app:layout_constraintBottom_toBottomOf="@+id/birthday_field"
+                app:layout_constraintEnd_toEndOf="@+id/birthday_field"
+                app:layout_constraintTop_toTopOf="@+id/birthday_field" />
 
             <Button
                 android:id="@+id/save_changes_button"

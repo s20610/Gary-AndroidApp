@@ -2,7 +2,7 @@
 <resources>
     <string name="register">Zarejestruj się</string>
     <string name="sign_up">Rejestracja</string>
-    <string name="create_incident">Tworzenie zgłoszenia</string>
+    <string name="create_incident">Wyłącz tworzenie zgłoszenia</string>
     <string name="bloodType">Grupa krwi</string>
     <string name="disease">Choroby</string>
     <string name="about_us">O nas</string>
@@ -24,7 +24,7 @@
     <string name="send">Wyślij</string>
     <string name="forgot_password">Zapomniałem hasła</string>
     <string name="forgot_passwordq">Zapomniałeś hasła?</string>
-    <string name="guest_text">Nie chcę tworzyć konta</string>
+    <string name="guest_text">Nie chcesz tworzyć konta?</string>
     <string name="guest_button">Kliknij tutaj</string>
     <string name="guest_appbar_text">Widok gościa</string>
     <string name="user_appbar_text">Widok użytkownika</string>
@@ -154,4 +154,5 @@
     <string name="description">Opis</string>
     <string name="victim_info">Informacje z opaski</string>
     <string name="open_navigation">Nawigacja</string>
+    <string name="birthday">Data urodzenia</string>
 </resources>

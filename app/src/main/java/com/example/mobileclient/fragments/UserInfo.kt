@@ -10,35 +10,17 @@ import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentUserInfoBinding
 import com.example.mobileclient.viewmodels.UserViewModel
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointBackward
+import com.google.android.material.datepicker.MaterialDatePicker
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [UserInfo.newInstance] factory method to
- * create an instance of this fragment.
- */
 class UserInfo : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var _binding: FragmentUserInfoBinding? = null
     private val sharedViewModel: UserViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and
 // onDestroyView.
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,28 +34,22 @@ class UserInfo : Fragment() {
             Navigation.findNavController(view)
                 .navigate(R.id.action_userInfo_to_loggedInScreen)
         }
+        val constraintBuilder =
+            CalendarConstraints.Builder().setValidator(DateValidatorPointBackward.now())
+        val birthdayString = resources.getString(R.string.birthday)
+        val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText(birthdayString)
+            .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT).setNegativeButtonText(R.string.cancel)
+            .setCalendarConstraints(constraintBuilder.build()).build()
+        datePicker.addOnPositiveButtonClickListener {
+            binding.birthdayInput.setText(datePicker.headerText)
+        }
+        datePicker.addOnCancelListener {
+            datePicker.dismiss()
+        }
+        binding.openCalendarButton.setOnClickListener {
+            datePicker.show(parentFragmentManager, "birthdate_picker")
+        }
 
         return view
-    }
-
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoggedInScreen.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoggedInScreen().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

@@ -161,4 +161,5 @@
     <string name="description">Description</string>
     <string name="victim_info">Victim info</string>
     <string name="open_navigation">Navigation</string>
+    <string name="birthday">Birth date</string>
 </resources>

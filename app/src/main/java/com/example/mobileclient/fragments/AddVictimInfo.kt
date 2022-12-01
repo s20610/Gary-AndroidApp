@@ -19,7 +19,7 @@ class AddVictimInfo : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddVictimInfoBinding.inflate(inflater, container, false)
-
+        //TODO("Add enum options from api")
         val incidents = arrayOf("Zadławienie", "Rana kłuta", "Wypadek samochodowy", "Inne")
         val victimState = arrayOf("Przytomna", "Nieprzytomna", "Nieoddychająca", "Inne")
         val arrayAdapter1 =

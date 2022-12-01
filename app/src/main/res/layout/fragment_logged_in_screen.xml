@@ -38,7 +38,6 @@
                 android:layout_width="150dp"
                 android:layout_height="35dp"
                 android:background="@color/white"
-                android:prompt="Select category"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

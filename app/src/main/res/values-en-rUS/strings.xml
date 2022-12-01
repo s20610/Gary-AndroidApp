@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Garry</string>
     <string name="register">Register</string>
     <string name="service_agreement">I agree to the terms of service</string>
     <string name="sign_up">Sign up</string>
     <string name="first_name_hint">First Name</string>
     <string name="last_name_hint">Last Name</string>
-    <string name="email_hint">E-mail</string>
     <string name="password_hint">Password</string>
     <string name="birthday_hint">Your birth date</string>
     <string name="register_button_text">Create account</string>
@@ -97,7 +95,6 @@
     <string name="new_password">New password</string>
     <string name="save">Save</string>
     <string name="username">Username</string>
-    <string name="placeholder" translatable="false">Placeholder</string>
     <string name="title">Title</string>
     <string name="short_description">Short description</string>
     <string name="get_help_everywhere_you_go">Get help everywhere you go</string>
@@ -112,7 +109,7 @@
     <string name="select_language">Select language</string>
     <string name="notifications">Notifications</string>
     <string name="create_incident">Create incident</string>
-    <string name="barcode_scanning_cancelled" translatable="false">Cancelled</string>
+    <string name="barcode_scanning_cancelled" translatable="false">Scan was cancelled</string>
     <string name="barcode_scanning_successful">Scanned band code: </string>
     <string name="create_incident_popup_title">Create Incident?</string>
     <string name="create_incident_popup_alert">Unjustified ambulance call may result in a fine. Are you sure?</string>
@@ -134,7 +131,31 @@
     <string name="about_us">About us</string>
     <string name="disease">Diseases</string>
     <string name="bloodType">Blood type</string>
-    <string name="rhType" translatable="false">Rh</string>
     <string name="register_hint">I agree to the terms and conditions of service</string>
     <string name="guest">Guest</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
+    <string name="isVictimBreathing">Is victim breathing?</string>
+    <string name="optional_band_code">Optional victim band code</string>
+    <string name="isVictimConscious">Is victim conscious?</string>
+    <string name="addedAccidentReport">Accident report created succesfully</string>
+    <string name="trusted_person">Trusted Person</string>
+    <string name="trusted_person_info">Contact information</string>
+    <string name="phonenumber_hint">Phone Number</string>
+    <string name="trusted_person_hint">Who should be informed in case of emergency?</string>
+    <string name="current_emergency_label">Current emergency assigned to you</string>
+    <string name="current_emergency_type">Emergency type:</string>
+    <string name="current_emergency_time">Time of incident:</string>
+    <string name="current_emergency_address">Address:</string>
+    <string name="current_emergency_victims">Victims:</string>
+    <string name="current_emergency_victim_state">Victim state:</string>
+    <string name="this_is_a_map_of_facilities_near_you">This is a map of facilities near you</string>
+    <string name="hospital">Hospital</string>
+    <string name="police">Police</string>
+    <string name="fire_department">Fire</string>
+    <string name="tutorial_category">Tutorial category:</string>
+    <string name="description">Description</string>
+    <string name="victim_info">Victim info</string>
+    <string name="open_navigation">Navigation</string>
 </resources>

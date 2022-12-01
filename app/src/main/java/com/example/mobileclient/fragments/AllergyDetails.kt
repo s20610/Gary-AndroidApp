@@ -29,7 +29,9 @@ class AllergyDetails : Fragment() {
         _binding = FragmentAllergyDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
         allergy = userViewModel.getChosenAllergy()
-        val userEmail: String =requireActivity().getSharedPreferences("userInfo",Context.MODE_PRIVATE).getString("email", "")!!
+        val userEmail: String =
+            requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+                .getString("email", "")!!
         if (allergy != null) {
             allergy?.userEmail = userEmail
             binding.autoCompleteTextView.setText(allergy?.allergyType)

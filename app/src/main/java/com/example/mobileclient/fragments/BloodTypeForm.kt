@@ -48,42 +48,7 @@ class BloodTypeForm : Fragment() {
             when {
                 response.isSuccessful -> {
                     medicalInfo = response.body()
-
-//                    when (medicalInfo!!.bloodType) {
-//                        "A_PLUS" -> {
-//                            binding.rhGroup.check(R.id.rh_plus)
-//                            binding.bloodGroup.check(R.id.blood_A)
-//                        }
-//                        "A_MINUS" -> {
-//                            binding.rhGroup.check(R.id.rh_minus)
-//                            binding.bloodGroup.check(R.id.blood_A)
-//                        }
-//                        "AB_PLUS" -> {
-//                            binding.rhGroup.check(R.id.rh_plus)
-//                            binding.bloodGroup.check(R.id.blood_AB)
-//                        }
-//                        "AB_MINUS" -> {
-//                            binding.rhGroup.check(R.id.rh_minus)
-//                            binding.bloodGroup.check(R.id.blood_AB)
-//                        }
-//                        "B_PLUS" -> {
-//                            binding.rhGroup.check(R.id.rh_plus)
-//                            binding.bloodGroup.check(R.id.blood_B)
-//                        }
-//                        "B_MINUS" -> {
-//                            binding.rhGroup.check(R.id.rh_minus)
-//                            binding.bloodGroup.check(R.id.blood_B)
-//                        }
-//                        "O_PLUS" -> {
-//                            binding.rhGroup.check(R.id.rh_plus)
-//                            binding.bloodGroup.check(R.id.blood_0)
-//                        }
-//                        "O_MINUS" -> {
-//                            binding.rhGroup.check(R.id.rh_minus)
-//                            binding.bloodGroup.check(R.id.blood_0)
-//                        }
-//                    }
-
+                    //Check currently set blood type
                 }
                 else -> {
                     Toast.makeText(context, "Server error" + response.code(), Toast.LENGTH_LONG)

@@ -72,7 +72,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:numStars="5"
-                android:rating="@{tutorial.average*5}"
+                android:rating="@{tutorial.averageRating*5}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/name" />
 
@@ -80,7 +80,7 @@
                 android:id="@+id/kind"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{tutorial.tutorialKind}"
+                android:text="@{tutorial.tutorialType}"
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

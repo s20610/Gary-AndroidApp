@@ -14,6 +14,11 @@
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/hospital_checkbox"/>
 
         <TextView
             android:id="@+id/facilities_headline"
@@ -27,9 +32,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <CheckBox
             android:id="@+id/hospital_checkbox"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:drawableStart="@drawable/ic_baseline_local_hospital_40"

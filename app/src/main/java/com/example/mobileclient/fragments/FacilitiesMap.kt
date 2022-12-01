@@ -1,7 +1,5 @@
 package com.example.mobileclient.fragments
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,13 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.mobileclient.databinding.FragmentFacilitiesMapBinding
 import com.example.mobileclient.model.CustomMarker
+import com.example.mobileclient.util.MarkerWindow
 import com.example.mobileclient.viewmodels.FacilitiesViewModel
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.Marker
-import org.osmdroid.views.overlay.Overlay
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
+import org.osmdroid.views.overlay.infowindow.InfoWindow.closeAllInfoWindowsOn
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
@@ -51,15 +49,12 @@ class FacilitiesMap : Fragment() {
                 ) as ArrayList<CustomMarker>
                 Log.d("FacilitiesMap", "Markers: $markers")
                 markers.forEach {
-                    it.setOnMarkerClickListener { _, _ ->
-                        val gmmIntentUri =
-                            Uri.parse("google.navigation:q=${it.position.latitude},${it.position.longitude}")
-                        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-                        startActivity(mapIntent)
-                        true
-                    }
+                    val infoWindow = MarkerWindow(map, it)
+                    it.infoWindow = infoWindow
                 }
                 map.overlayManager.addAll(markers)
+                Log.d("Facilities added", "overlay add All")
+                map.invalidate()
             }
         }
         setupMap(map)
@@ -90,6 +85,9 @@ class FacilitiesMap : Fragment() {
         map.setBuiltInZoomControls(true)
         map.setMultiTouchControls(true)
         map.controller.setZoom(15)
+        map.setOnClickListener {
+            closeAllInfoWindowsOn(map)
+        }
         map.invalidate()
     }
 }

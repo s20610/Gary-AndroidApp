@@ -8,8 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
@@ -41,11 +42,11 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
 
         val view = binding.root
         val tutorialsEmpty: List<Tutorial> = mutableListOf(
-            Tutorial("1", "Tutorial 1", "COURSE", 5.0f),
-            Tutorial("2", "Tutorial 2", "FILE_EMERGENCE", 5.0f),
-            Tutorial("3", "Tutorial 3", "GUIDE", 5.0f),
-            Tutorial("4", "Tutorial 4", "FILE_EMERGENCE", 5.0f),
-            Tutorial("5", "Tutorial 5", "COURSE", 5.0f),
+            Tutorial("1", "Tutorial 1", "COURSE", 5.0f, ""),
+            Tutorial("2", "Tutorial 2", "FILE_EMERGENCE", 5.0f, ""),
+            Tutorial("3", "Tutorial 3", "GUIDE", 5.0f, ""),
+            Tutorial("4", "Tutorial 4", "FILE_EMERGENCE", 5.0f, ""),
+            Tutorial("5", "Tutorial 5", "COURSE", 5.0f, ""),
         )
         binding.tutorialsGrid.adapter =
             TutorialsAdapter(tutorialsEmpty, this, ratingBarChangeListener)
@@ -53,11 +54,11 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
             requireContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
         val token: String = sharedPreferences.getString("token", "")!!
         Toast.makeText(context, "Jwt token: $token", Toast.LENGTH_LONG).show()
-//        getTutorialsFromAPI()
-//        binding.refresh.setOnRefreshListener {
-//            getTutorialsFromAPI()
-//            binding.refresh.isRefreshing = false
-//        }
+        getTutorialsFromAPI()
+        binding.refresh.setOnRefreshListener {
+            getTutorialsFromAPI()
+            binding.refresh.isRefreshing = false
+        }
         if (requireActivity().getPreferences(Context.MODE_PRIVATE)
                 .getBoolean("createIncidentON", false)
         ) {
@@ -103,16 +104,16 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
         p0?.getItemAtPosition(p2).toString()
         when (p0?.getItemAtPosition(p2).toString()) {
             "All Tutorials" -> {
-//                currentlyDisplayedTutorials = tutorialsFromAPI
-//                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-//                    TutorialsAdapter(
-//                        it, this, ratingBarChangeListener
-//                    )
-//                }
+                currentlyDisplayedTutorials = tutorialsFromAPI
+                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
+                    TutorialsAdapter(
+                        it, this, ratingBarChangeListener
+                    )
+                }
             }
             "FILE_EMERGENCE" -> {
                 val filteredEmergenceTutorials =
-                    tutorialsFromAPI?.filter { it.tutorialKind == "FILE_EMERGENCE" }
+                    tutorialsFromAPI?.filter { it.tutorialType == "FILE_EMERGENCE" }
                 currentlyDisplayedTutorials = filteredEmergenceTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(
@@ -122,7 +123,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
             }
             "COURSE" -> {
                 val filteredCourseTutorials =
-                    tutorialsFromAPI?.filter { it.tutorialKind == "COURSE" }
+                    tutorialsFromAPI?.filter { it.tutorialType == "COURSE" }
                 currentlyDisplayedTutorials = filteredCourseTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(
@@ -132,7 +133,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
             }
             "GUIDE" -> {
                 val filteredGuideTutorials =
-                    tutorialsFromAPI?.filter { it.tutorialKind == "GUIDE" }
+                    tutorialsFromAPI?.filter { it.tutorialType == "GUIDE" }
                 currentlyDisplayedTutorials = filteredGuideTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(
@@ -192,6 +193,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
             if (fromUser) {
                 Toast.makeText(context, "Thanks for rating our tutorial!", Toast.LENGTH_SHORT)
                     .show()
+                ratingBar.rating = rating
             }
         }
 }

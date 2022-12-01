@@ -3,12 +3,14 @@ package com.example.mobileclient.model
 import com.google.gson.annotations.SerializedName
 
 data class Tutorial(
-    @SerializedName("id")
+    @SerializedName("tutorialId")
     val id: String,
     @SerializedName("name")
     val name: String,
-    @SerializedName("tutorialKind")
-    val tutorialKind: String,
-    @SerializedName("average")
-    val average: Float
+    @SerializedName("tutorialType")
+    val tutorialType: String,
+    @SerializedName("averageRating")
+    val averageRating: Float,
+    @SerializedName("tutorialHTML")
+    val tutorialHTML: String
 )

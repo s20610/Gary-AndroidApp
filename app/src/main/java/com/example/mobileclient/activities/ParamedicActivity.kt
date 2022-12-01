@@ -1,12 +1,15 @@
 package com.example.mobileclient.activities
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.ActivityParamedicBinding
+import com.example.mobileclient.util.Constants.Companion.PARAMEDIC_INFO_PREFS
 
 
 class ParamedicActivity : AppCompatActivity() {
@@ -39,8 +42,10 @@ class ParamedicActivity : AppCompatActivity() {
                 }
                 "Log out" -> {
                     it.isChecked = true
-                    Toast.makeText(this, "Logout not yet implemented", Toast.LENGTH_SHORT).show()
-                    navController.navigate(R.id.paramedicScreen)
+                    getSharedPreferences(PARAMEDIC_INFO_PREFS, MODE_PRIVATE).edit().clear().apply()
+                    val intent = Intent(this, LandingActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
             }
             true
@@ -63,6 +68,15 @@ class ParamedicActivity : AppCompatActivity() {
             ACCESS_FINE_LOCATION_CODE,
             this, this
         )
+
+    }
+
+    override fun onBackPressed() {
+        if (binding.drawerLayout.isOpen) {
+            binding.drawerLayout.close()
+        } else {
+            findNavController(R.id.fragmentContainerView).navigateUp()
+        }
     }
 
     override fun onRequestPermissionsResult(

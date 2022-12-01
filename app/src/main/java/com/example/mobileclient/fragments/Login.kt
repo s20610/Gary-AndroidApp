@@ -76,6 +76,7 @@ class Login : Fragment() {
             val paramedicActivity = Intent(context, ParamedicActivity::class.java)
             //Here we should apply putExtra method with auth token from login response
             startActivity(paramedicActivity)
+            requireActivity().finish()
         }
         return view
     }

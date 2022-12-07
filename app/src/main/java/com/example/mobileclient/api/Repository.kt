@@ -138,17 +138,41 @@ object Repository {
     }
 
     //Employee shift
-    suspend fun startEmployeeShift():Response<ResponseBody> {
-        return RetrofitInstance.api.startShift()
+    suspend fun startEmployeeShift(token: String): Response<ResponseBody> {
+        return RetrofitInstance.api.startShift(token)
     }
 
-    suspend fun endEmployeeShift():Response<ResponseBody> {
-        return RetrofitInstance.api.endShift()
+    suspend fun endEmployeeShift(token: String): Response<ResponseBody> {
+        return RetrofitInstance.api.endShift(token)
     }
 
     //Facilities
-    suspend fun getFacilities():Response<List<Facility>> {
+    suspend fun getFacilities(): Response<List<Facility>> {
         return RetrofitInstance.api.getFacilities()
+    }
+
+    //Ambulance
+    suspend fun getAmbulanceEquipment(licensePlate: String): Response<List<AmbulanceEquipment>> {
+        return RetrofitInstance.api.getAmbulanceEquipment(licensePlate)
+    }
+
+    suspend fun changeAmbulanceState(licensePlate: String, state: String): Response<ResponseBody> {
+        return RetrofitInstance.api.changeAmbulanceState(licensePlate, state)
+    }
+
+    suspend fun updateAmbulanceLocation(
+        licensePlate: String,
+        location: Location
+    ): Response<ResponseBody> {
+        return RetrofitInstance.api.updateAmbulanceLocation(licensePlate, location)
+    }
+
+    suspend fun addAmbulanceItem(licensePlate: String, itemId: Int): Response<ResponseBody> {
+        return RetrofitInstance.api.addAmbulanceItem(licensePlate, itemId)
+    }
+
+    suspend fun removeAmbulanceItem(licensePlate: String, itemId: Int): Response<ResponseBody> {
+        return RetrofitInstance.api.removeAmbulanceItem(licensePlate, itemId)
     }
 
 }

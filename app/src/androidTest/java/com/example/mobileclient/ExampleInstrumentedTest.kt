@@ -16,9 +16,9 @@ import org.junit.Assert.*
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
     @Test
-    fun useAppContext() {
+    fun testLogin() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.mobileclient", appContext.packageName)
+        appContext.assets.list("")?.contains("style.css")?.let { assertTrue(it) }
     }
 }

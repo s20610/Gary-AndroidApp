@@ -2,6 +2,7 @@ package com.example.mobileclient.activities
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,7 +10,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.ActivityParamedicBinding
-import com.example.mobileclient.util.Constants.Companion.PARAMEDIC_INFO_PREFS
+import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
 
 
 class ParamedicActivity : AppCompatActivity() {
@@ -25,6 +26,7 @@ class ParamedicActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
+        val resources = Resources.getSystem()
 
         binding.topAppBar.setNavigationOnClickListener {
             binding.drawerLayout.open()
@@ -36,13 +38,13 @@ class ParamedicActivity : AppCompatActivity() {
                     it.isChecked = true
                     navController.navigate(R.id.paramedicScreen)
                 }
-                "Break" -> {
+                 resources.getString(R.string.ambulance_break)-> {
                     it.isChecked = true
                     navController.navigate(R.id.ambulanceBreak)
                 }
-                "Log out" -> {
+                resources.getString(R.string.log_out) -> {
                     it.isChecked = true
-                    getSharedPreferences(PARAMEDIC_INFO_PREFS, MODE_PRIVATE).edit().clear().apply()
+                    getSharedPreferences(USER_INFO_PREFS, MODE_PRIVATE).edit().clear().apply()
                     val intent = Intent(this, LandingActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -52,14 +54,23 @@ class ParamedicActivity : AppCompatActivity() {
         }
         binding.bottomNavigation?.setOnItemSelectedListener {
             it.isChecked = true
-            if (it.toString() == "Equipment") {
-                navController.navigate(R.id.checkEquipment)
-            } else if (it.toString() == "Victim") {
-                navController.navigate(R.id.addVictimInfo)
-            } else if (it.toString() == "Support") {
-                navController.navigate(R.id.paramedicCallForSupport2)
-            } else if (it.toString() == "Map") {
-                navController.navigate(R.id.paramedicScreen)
+            when (it.toString()) {
+                resources.getString(R.string.menu_equipment) -> {
+                    it.isChecked = true
+                    navController.navigate(R.id.checkEquipment)
+                }
+                resources.getString(R.string.menu_victim) -> {
+                    it.isChecked = true
+                    navController.navigate(R.id.addVictimInfo)
+                }
+                resources.getString(R.string.menu_support) -> {
+                    it.isChecked = true
+                    navController.navigate(R.id.paramedicCallForSupport2)
+                }
+                else -> {
+                    it.isChecked = true
+                    navController.navigate(R.id.paramedicScreen)
+                }
             }
             true
         }

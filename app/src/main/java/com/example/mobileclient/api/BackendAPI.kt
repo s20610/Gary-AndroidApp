@@ -163,4 +163,7 @@ interface BackendAPI {
     //Facilities
     @GET("facility")
     suspend fun getFacilities(): Response<List<Facility>>
+
+    //Ambulance
+    
 }

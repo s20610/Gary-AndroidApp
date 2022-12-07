@@ -8,13 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
+import android.widget.Toast.LENGTH_SHORT
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.example.mobileclient.activities.ParamedicActivity
 import com.example.mobileclient.R
 import com.example.mobileclient.activities.UserActivity
@@ -22,6 +19,7 @@ import com.example.mobileclient.databinding.FragmentLoginBinding
 import com.example.mobileclient.model.Credentials
 import com.example.mobileclient.util.Constants.Companion.USER_EMAIL_TO_PREFS
 import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
+import com.example.mobileclient.util.Constants.Companion.USER_ROLE_TO_PREFS
 import com.example.mobileclient.util.Constants.Companion.USER_TOKEN_TO_PREFS
 import com.example.mobileclient.viewmodels.UserViewModel
 
@@ -44,39 +42,9 @@ class Login : Fragment() {
         }
         binding.loginButton.setOnClickListener {
             loginUser()
-//            val userActivity = Intent(context, UserActivity::class.java)
-//            startActivity(userActivity)
         }
         binding.paramedicButton.setOnClickListener {
-//            Log.d("Email", binding.emailFieldText.text.toString())
-//            Log.d("Password", binding.passwordFieldText.text.toString())
-//            val credentials = Credentials(
-//                binding.emailFieldText.text.toString().trim(),
-//                binding.passwordFieldText.text.toString().trim()
-//            )
-//            Log.d("Credentials", credentials.toString())
-//            if (credentials.username.isNotEmpty()) {
-//                sharedViewModel.getLoginResponse(credentials)
-//                sharedViewModel.loginResponse.observe(viewLifecycleOwner) { response ->
-//                    if (response.isSuccessful) {
-//                        Log.d("Login Response", response.body().toString())
-//                        Log.d("Response Code", response.code().toString())
-//                        Toast.makeText(context, "Login successful", LENGTH_LONG).show()
-//
-//                        Navigation.findNavController(view).navigate(R.id.action_login_to_paramedicScreen)
-//                    } else {
-//                        Toast.makeText(context, "Login error" + response.code(), LENGTH_LONG).show()
-//                        Log.d("Login Response", response.body().toString())
-//                        Log.d("Response Code: ", response.code().toString())
-//                    }
-//                }
-//            }else{
-//                Toast.makeText(context, "No connection", LENGTH_SHORT).show()
-//            }
-            val paramedicActivity = Intent(context, ParamedicActivity::class.java)
-            //Here we should apply putExtra method with auth token from login response
-            startActivity(paramedicActivity)
-            requireActivity().finish()
+            loginUser()
         }
         return view
     }
@@ -94,13 +62,26 @@ class Login : Fragment() {
                 if (response.isSuccessful) {
                     Log.d("Login Response", response.body().toString())
                     Log.d("Response Code", response.code().toString())
-                    Toast.makeText(context, "Login successful", LENGTH_LONG).show()
-                    addEmailAndTokenToSharedPref(email, response.body()!!.token)
-                    val userActivity = Intent(context, UserActivity::class.java)
-                    startActivity(userActivity)
-                    requireActivity().finish()
+                    addUserInfoToSharedPref(
+                        email, response.body()!!.token,
+                        response.body()!!.roles[0]
+                    )
+                    when {
+                        response.body()!!.roles.contains("ROLE_MEDIC") -> {
+                            val paramedicActivity = Intent(context, ParamedicActivity::class.java)
+                            startActivity(paramedicActivity)
+                            requireActivity().finish()
+                        }
+                        else -> {
+                            val userActivity = Intent(context, UserActivity::class.java)
+                            startActivity(userActivity)
+                            requireActivity().finish()
+                        }
+                    }
                 } else {
-                    Toast.makeText(context, "Login error" + response.code(), LENGTH_LONG).show()
+                    if (response.code() == 401) {
+                        Toast.makeText(context, "Wrong email or password", LENGTH_SHORT).show()
+                    }
                     Log.d("Login Response", response.body().toString())
                     Log.d("Response Code: ", response.code().toString())
                 }
@@ -115,11 +96,13 @@ class Login : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    private fun addEmailAndTokenToSharedPref(email: String, token: String) {
-        val sharedPref = activity?.getSharedPreferences(USER_INFO_PREFS,Context.MODE_PRIVATE) ?: return
+    private fun addUserInfoToSharedPref(email: String, token: String, role: String) {
+        val sharedPref =
+            activity?.getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {
             putString(USER_EMAIL_TO_PREFS, email)
             putString(USER_TOKEN_TO_PREFS, token)
+            putString(USER_ROLE_TO_PREFS, role)
             apply()
         }
     }

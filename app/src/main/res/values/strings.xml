@@ -111,7 +111,7 @@
     <string name="language">Language</string>
     <string name="select_language">Select language</string>
     <string name="notifications">Notifications</string>
-    <string name="create_incident">Create incident</string>
+    <string name="create_incident">Turn off creating incidents</string>
     <string name="barcode_scanning_cancelled">Cancelled</string>
     <string name="barcode_scanning_successful">Scanned band code: </string>
     <string name="create_incident_popup_title">Create Incident?</string>

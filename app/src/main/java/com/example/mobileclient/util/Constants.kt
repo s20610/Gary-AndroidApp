@@ -11,6 +11,6 @@ class Constants {
         const val USER_INFO_PREFS = "userInfo"
         const val USER_EMAIL_TO_PREFS = "email"
         const val USER_TOKEN_TO_PREFS = "token"
-        const val PARAMEDIC_INFO_PREFS = "paramedicInfo"
+        const val USER_ROLE_TO_PREFS = "role"
     }
 }

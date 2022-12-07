@@ -19,7 +19,7 @@ class ParamedicViewModel : ViewModel() {
     fun startEmployeeShift(token: String) {
         viewModelScope.launch {
             try {
-                val response = Repository.startEmployeeShift()
+                val response = Repository.startEmployeeShift(token)
                 employeeShiftResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -30,7 +30,7 @@ class ParamedicViewModel : ViewModel() {
     fun endEmployeeShift(token: String) {
         viewModelScope.launch {
             try {
-                val response = Repository.endEmployeeShift()
+                val response = Repository.endEmployeeShift(token)
                 employeeShiftResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()

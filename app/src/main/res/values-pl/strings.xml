@@ -155,4 +155,7 @@
     <string name="victim_info">Informacje z opaski</string>
     <string name="open_navigation">Nawigacja</string>
     <string name="birthday">Data urodzenia</string>
+    <string name="ambulance">Ambulans</string>
+    <string name="options">Opcje</string>
+    <string name="breakText">Przerwa</string>
 </resources>

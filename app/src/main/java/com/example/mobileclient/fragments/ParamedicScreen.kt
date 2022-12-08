@@ -108,7 +108,7 @@ class ParamedicScreen : Fragment() {
             binding.cardView.visibility = View.VISIBLE
             it.visibility = View.GONE
         }
-        val navController: NavController = Navigation.findNavController(view)
+        val navController: NavController = Navigation.findNavController(requireActivity(), R.id.fragmentContainerView)
         binding.bottomNavigation.setOnItemSelectedListener {
             it.isChecked = true
             when (it.toString()) {

@@ -109,17 +109,6 @@
                     app:layout_constraintEnd_toEndOf="@+id/password_field"
                     app:layout_constraintStart_toStartOf="@+id/password_field"
                     app:layout_constraintTop_toBottomOf="@+id/forgot_password" />
-                <Button
-                    android:id="@+id/paramedic_button"
-                    style="@style/Widget.Material3.Button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/paramedic_login_button"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                    app:layout_constraintEnd_toEndOf="@+id/password_field"
-                    app:layout_constraintStart_toStartOf="@+id/password_field"
-                    app:layout_constraintTop_toBottomOf="@+id/login_button" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </LinearLayout>

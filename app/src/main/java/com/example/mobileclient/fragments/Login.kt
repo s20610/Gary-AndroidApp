@@ -43,9 +43,6 @@ class Login : Fragment() {
         binding.loginButton.setOnClickListener {
             loginUser()
         }
-        binding.paramedicButton.setOnClickListener {
-            loginUser()
-        }
         return view
     }
 

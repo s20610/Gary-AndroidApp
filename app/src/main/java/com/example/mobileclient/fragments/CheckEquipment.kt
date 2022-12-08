@@ -1,39 +1,27 @@
 package com.example.mobileclient.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.view.doOnLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentCheckEquipmentBinding
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.example.mobileclient.viewmodels.ParamedicViewModel
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CheckEquipment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CheckEquipment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var _binding: FragmentCheckEquipmentBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val paramedicViewModel: ParamedicViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,112 +31,134 @@ class CheckEquipment : Fragment() {
         _binding = FragmentCheckEquipmentBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        var x1 = 0
-        var x2 = 0
-        var x3 = 0
-        var x4 = 0
-        var x5 = 0
-        var x6 = 0
-        var x7 = 0
-
-
-        binding.btnLess.setOnClickListener{
-            if(x1!=0){
-                x1--
-                binding.etNumber.setText(x1.toString())
-            }
-        }
-        binding.btnMore.setOnClickListener{
-            x1++
-            binding.etNumber.setText(x1.toString())
-        }
-        binding.btn1Less.setOnClickListener{
-            if(x2!=0){
-                x2--
-                binding.et1Number.setText(x2.toString())
-            }
-        }
-        binding.btn1More.setOnClickListener{
-            x2++
-            binding.et1Number.setText(x2.toString())
-        }
-        binding.btn2Less.setOnClickListener{
-            if(x3!=0){
-                x3--
-                binding.et2Number.setText(x3.toString())
-            }
-        }
-        binding.btn2More.setOnClickListener{
-            x3++
-            binding.et2Number.setText(x3.toString())
-        }
-        binding.btn3Less.setOnClickListener{
-            if(x4!=0){
-                x4--
-                binding.et3Number.setText(x4.toString())
-            }
-        }
-        binding.btn3More.setOnClickListener{
-            x4++
-            binding.et3Number.setText(x4.toString())
-        }
-        binding.btn4Less.setOnClickListener{
-            if(x5!=0){
-                x5--
-                binding.et4Number.setText(x5.toString())
-            }
-        }
-        binding.btn4More.setOnClickListener{
-            x5++
-            binding.et4Number.setText(x5.toString())
-        }
-        binding.btn5Less.setOnClickListener{
-            if(x6!=0){
-                x6--
-                binding.et5Number.setText(x6.toString())
-            }
-        }
-        binding.btn5More.setOnClickListener{
-            x6++
-            binding.et5Number.setText(x6.toString())
-        }
-        binding.btn6Less.setOnClickListener{
-            if(x7!=0){
-                x7--
-                binding.et6Number.setText(x7.toString())
-            }
-        }
-        binding.btn6More.setOnClickListener{
-            x7++
-            binding.et6Number.setText(x7.toString())
-        }
-
-
-        binding.button2.setOnClickListener{
+        binding.cancelButton.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.paramedicScreen)
         }
+        val licensePlate = "WWL5A688"
+        paramedicViewModel.getAmbulanceEquipment(licensePlate)
+        binding.ambulanceTextApi.setText(licensePlate)
+        val heightDp =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50F, resources.displayMetrics)
+        val marginStartDp =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20F, resources.displayMetrics)
+        val marginTopDp =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10F, resources.displayMetrics)
+        paramedicViewModel.ambulanceEquipmentResponse.observe(viewLifecycleOwner) { response ->
+            if (response.isSuccessful) {
+                response.body()?.forEach { equipment ->
+                    Log.d("Equipment Response", equipment.toString())
+                    val linearLayout = LinearLayout(context)
+                    linearLayout.doOnLayout {
+                        val params = LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            heightDp.toInt()
+                        )
+                        params.setMargins(
+                            marginStartDp.toInt(),
+                            marginTopDp.toInt(),
+                            marginStartDp.toInt(),
+                            0
+                        )
+                        linearLayout.layoutParams = params
+                        linearLayout.orientation = LinearLayout.HORIZONTAL
+                        val itemName = TextView(context).apply {
+                            text = equipment.item.name
+                            textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+                            setTextAppearance(com.google.android.material.R.style.TextAppearance_MaterialComponents_Headline6)
+                            this.doOnLayout {
+                                val params = LinearLayout.LayoutParams(
+                                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT
+                                )
+                                params.weight = 1F
+                                this.layoutParams = params
+                            }
+                        }
 
+                        val itemCount = TextView(context).apply {
+                            text = equipment.itemData.count.toString()
+                            textAlignment = View.TEXT_ALIGNMENT_CENTER
+                            setTextAppearance(com.google.android.material.R.style.TextAppearance_MaterialComponents_Headline6)
+                            this.doOnLayout {
+                                val params = LinearLayout.LayoutParams(
+                                    0,
+                                    ViewGroup.LayoutParams.MATCH_PARENT
+                                )
+                                params.weight = 1F
+                                params.gravity = View.TEXT_ALIGNMENT_CENTER
+                                this.layoutParams = params
+                            }
+                        }
+
+                        val minusButton = Button(context).apply {
+                            text = "-"
+                            setTextAppearance(com.google.android.material.R.style.TextAppearance_MaterialComponents_Headline6)
+                            setOnClickListener {
+                                paramedicViewModel.removeAmbulanceItem(
+                                    licensePlate,
+                                    equipment.item.itemId
+                                )
+                                paramedicViewModel.ambulanceEquipmentResponse.observe(
+                                    viewLifecycleOwner
+                                ) { response ->
+                                    if (response.isSuccessful) {
+                                        itemCount.text =
+                                            itemCount.text.toString().toInt().minus(1).toString()
+                                        paramedicViewModel.ambulanceEquipmentResponse.value?.body()
+                                            ?.find { it.item.itemId == equipment.item.itemId }?.itemData?.count =
+                                            itemCount.text.toString().toInt()
+                                    }
+                                }
+                            }
+                            this.doOnLayout {
+                                val params = LinearLayout.LayoutParams(
+                                    0,
+                                    heightDp.toInt()
+                                )
+                                params.weight = 1F
+                                this.layoutParams = params
+                            }
+                        }
+
+                        val plusButton = Button(context).apply {
+                            text = "+"
+                            setTextAppearance(com.google.android.material.R.style.TextAppearance_MaterialComponents_Headline6)
+                            setOnClickListener {
+                                paramedicViewModel.addAmbulanceItem(
+                                    licensePlate,
+                                    equipment.item.itemId
+                                )
+                                paramedicViewModel.ambulanceEquipmentResponse.observe(
+                                    viewLifecycleOwner
+                                ) { response ->
+                                    if (response.isSuccessful) {
+                                        itemCount.text =
+                                            itemCount.text.toString().toInt().plus(1).toString()
+                                        paramedicViewModel.ambulanceEquipmentResponse.value?.body()
+                                            ?.find { it.item.itemId == equipment.item.itemId }?.itemData?.count =
+                                            itemCount.text.toString().toInt()
+                                    }
+                                }
+                            }
+                            this.doOnLayout {
+                                val params = LinearLayout.LayoutParams(
+                                    0,
+                                    heightDp.toInt()
+                                )
+                                params.weight = 1F
+                                this.layoutParams = params
+                            }
+                        }
+                        linearLayout.addView(itemName)
+                        linearLayout.addView(minusButton)
+                        linearLayout.addView(itemCount)
+                        linearLayout.addView(plusButton)
+                    }
+                    binding.equipmentList.addView(linearLayout)
+                }
+            }
+        }
         return view
     }
 
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CheckEquipment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CheckEquipment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

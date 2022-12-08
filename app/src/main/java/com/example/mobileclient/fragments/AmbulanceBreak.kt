@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.navigation.Navigation
+import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentAmbulanceBreakBinding
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_KEYBOARD
@@ -62,6 +64,9 @@ class AmbulanceBreak : Fragment() {
                     timePicker1.hour.toString() + ":" + timePicker1.minute.toString()
                 binding.endDateInput.setText(endTimeInputValue)
             }
+        }
+        binding.button2.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.paramedicScreen)
         }
         return view
     }

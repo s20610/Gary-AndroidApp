@@ -12,7 +12,7 @@ data class Item(
 )
 
 data class ItemData(
-    val count: Int,
+    var count: Int,
     val unit: String,
-    val updatedAt: Date
+    val updatedAt: String
 )

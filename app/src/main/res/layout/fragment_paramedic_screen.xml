@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <org.osmdroid.views.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="610dp"
+            app:layout_constraintBottom_toTopOf="@+id/current_emergency_card"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
+            android:elevation="10dp"
             android:padding="10dp"
-            app:cardCornerRadius="4dp"
+            app:cardCornerRadius="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -29,8 +38,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/ambulance_shifts"
-                    android:textAppearance="?attr/textAppearanceHeadline5"
+                    android:text="@string/paramedic_ambulance_shift_label"
+                    android:textAppearance="?attr/textAppearanceHeadline4"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -40,9 +49,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="@string/day_label"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/paramedic_day_label"
+                    android:textAppearance="?attr/textAppearanceHeadline5"
+                    app:layout_constraintEnd_toStartOf="@id/day_field"
+                    app:layout_constraintStart_toStartOf="@+id/shift_title"
                     app:layout_constraintTop_toBottomOf="@id/shift_title" />
 
                 <TextView
@@ -50,11 +60,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:textSize="16dp"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
                     app:layout_constraintBottom_toBottomOf="@id/day_label"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/shift_title"
                     app:layout_constraintStart_toEndOf="@id/day_label"
-                    app:layout_constraintTop_toBottomOf="@id/shift_title" />
+                    app:layout_constraintTop_toTopOf="@id/day_label" />
 
                 <Button
                     android:id="@+id/checkin_button"
@@ -63,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:backgroundTint="?attr/colorPrimaryVariant"
-                    android:text="@string/check_in_button"
+                    android:text="Check In"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -72,16 +82,174 @@
 
         </androidx.cardview.widget.CardView>
 
-        <org.osmdroid.views.MapView
-            android:id="@+id/map"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:padding="5dp"
-            android:layout_width="340dp"
-            android:layout_height="400dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/current_emergency_card"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout9"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/current_emergency_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/current_emergency_label"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/current_emergency_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:padding="3dp"
+                    android:text="@string/current_emergency_type"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/current_emergency_label" />
+
+                <TextView
+                    android:id="@+id/current_emergency_type_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="3dp"
+                    android:text="Car accident"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@id/current_emergency_type"
+                    app:layout_constraintTop_toBottomOf="@id/current_emergency_label" />
+
+                <TextView
+                    android:id="@+id/current_emergency_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:padding="3dp"
+                    android:text="@string/current_emergency_time"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/current_emergency_type" />
+
+                <TextView
+                    android:id="@+id/current_emergency_time_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:text="00:00"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@id/current_emergency_time"
+                    app:layout_constraintTop_toBottomOf="@id/current_emergency_type" />
+
+                <TextView
+                    android:id="@+id/current_emergency_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:padding="3dp"
+                    android:text="@string/current_emergency_address"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/current_emergency_time" />
+
+                <TextView
+                    android:id="@+id/current_emergency_address_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:text="ul. Złota 42, 00-001 Warszawa"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@id/current_emergency_address"
+                    app:layout_constraintTop_toBottomOf="@id/current_emergency_time" />
+
+                <TextView
+                    android:id="@+id/current_emergency_victims"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:padding="3dp"
+                    android:text="@string/current_emergency_victims"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/current_emergency_address" />
+
+                <TextView
+                    android:id="@+id/current_emergency_victims_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:text="3 People"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@id/current_emergency_victims"
+                    app:layout_constraintTop_toBottomOf="@id/current_emergency_address_text" />
+
+                <TextView
+                    android:id="@+id/current_emergency_victim_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:padding="3dp"
+                    android:text="@string/current_emergency_victim_state"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/current_emergency_victims" />
+
+                <TextView
+                    android:id="@+id/current_emergency_victims_state_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:text="Breathing, Not conscious"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@id/current_emergency_victim_state"
+                    app:layout_constraintTop_toBottomOf="@id/current_emergency_victims_text" />
+
+                <Button
+                    android:id="@+id/show_victim_info_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="?attr/colorPrimaryVariant"
+                    android:text="@string/victim_info"
+                    android:textSize="18sp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="30dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/current_emergency_victim_state" />
+
+                <Button
+                    android:id="@+id/show_incident_description_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="?attr/colorPrimaryVariant"
+                    android:text="@string/description"
+                    android:textSize="18sp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/show_victim_info_button"
+                    app:layout_constraintTop_toBottomOf="@+id/current_emergency_victims_state_text" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/shift_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="18sp"
+            android:text="Shift"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/linearLayout9"
@@ -98,6 +266,6 @@
                 android:layout_height="wrap_content"
                 app:menu="@menu/bottom_paramedic_navigation" />
 
-        </LinearLayout> />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

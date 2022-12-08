@@ -243,6 +243,17 @@
 
         </androidx.cardview.widget.CardView>
 
+        <Button
+            android:id="@+id/shift_button"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="18sp"
+            android:text="Shift"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <LinearLayout
             android:id="@+id/linearLayout9"
             android:layout_width="match_parent"

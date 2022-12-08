@@ -39,13 +39,13 @@ class UserActivity : AppCompatActivity() {
         binding.navigationView.setNavigationItemSelectedListener {
             it.isChecked = true
             when {
-                it.toString() == "Log out" -> {
+                it.toString() == getString(R.string.log_out) -> {
                     getSharedPreferences(USER_INFO_PREFS , MODE_PRIVATE).edit().clear().apply()
                     val intent = Intent(this, LandingActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
-                it.toString() == "Settings" -> {
+                it.toString() == getString(R.string.settings) -> {
                     binding.navigationView.setCheckedItem(R.id.nav_settings)
                     navController.navigate(R.id.user_settings)
                 }
@@ -64,17 +64,6 @@ class UserActivity : AppCompatActivity() {
                 it.toString() == "Tutorials" -> {
                     binding.navigationView.setCheckedItem(R.id.nav_tutorials)
                     navController.navigate((R.id.loggedInScreen))
-                }
-
-                it.toString() == "Wyloguj się" -> {
-                    getSharedPreferences(USER_INFO_PREFS , MODE_PRIVATE).edit().clear().apply()
-                    val intent = Intent(this, LandingActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-                it.toString() == "Ustawienia" -> {
-                    binding.navigationView.setCheckedItem(R.id.nav_settings)
-                    navController.navigate(R.id.user_settings)
                 }
                 it.toString() == "Szczegóły użytkownika" -> {
                     binding.navigationView.setCheckedItem(R.id.nav_user_details)

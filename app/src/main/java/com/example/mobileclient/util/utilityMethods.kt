@@ -8,6 +8,7 @@ import android.net.NetworkCapabilities
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
 
 fun checkPermission(permission: String, requestCode: Int, context: Context, activity: Activity) {
     if (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_DENIED) {

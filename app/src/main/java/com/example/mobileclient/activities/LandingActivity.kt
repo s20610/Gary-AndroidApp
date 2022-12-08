@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mobileclient.R
+import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
+import com.example.mobileclient.util.Constants.Companion.USER_ROLE_TO_PREFS
 import org.osmdroid.config.Configuration
 
 class LandingActivity : AppCompatActivity() {
@@ -17,8 +19,21 @@ class LandingActivity : AppCompatActivity() {
         createNotificationChannel()
         Configuration.getInstance().userAgentValue = "Garry"
         Log.d("Notification channel", "Created notification channel")
-        setContentView(R.layout.activity_landing)
-        Log.d("Landing", "Content view set to landing")
+        val sharedPreferences = getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE)
+        if(sharedPreferences != null && sharedPreferences.contains(USER_ROLE_TO_PREFS)) {
+            val role = sharedPreferences.getString(USER_ROLE_TO_PREFS, "")
+            Log.d("Role", role.toString())
+            if (role == "ROLE_USER") {
+                val intent = Intent(this, UserActivity::class.java)
+                startActivity(intent)
+            } else if (role == "ROLE_MEDIC") {
+                val intent = Intent(this, ParamedicActivity::class.java)
+                startActivity(intent)
+            }
+        } else {
+            setContentView(R.layout.activity_landing)
+            Log.d("Landing", "Content view set to landing")
+        }
     }
 
     private fun createNotificationChannel() {

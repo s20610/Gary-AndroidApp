@@ -1,15 +1,20 @@
 package com.example.mobileclient.activities
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.ActivityParamedicBinding
-import com.example.mobileclient.util.Constants.Companion.PARAMEDIC_INFO_PREFS
+import com.example.mobileclient.util.Constants.Companion.USER_EMAIL_TO_PREFS
+import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
+import com.example.mobileclient.util.Constants.Companion.USER_ROLE_TO_PREFS
+import com.example.mobileclient.util.Constants.Companion.USER_TOKEN_TO_PREFS
 
 
 class ParamedicActivity : AppCompatActivity() {
@@ -36,13 +41,21 @@ class ParamedicActivity : AppCompatActivity() {
                     it.isChecked = true
                     navController.navigate(R.id.paramedicScreen)
                 }
-                "Break" -> {
+                getString(R.string.breakText) -> {
                     it.isChecked = true
                     navController.navigate(R.id.ambulanceBreak)
                 }
-                "Log out" -> {
+                getString(R.string.log_out) -> {
                     it.isChecked = true
-                    getSharedPreferences(PARAMEDIC_INFO_PREFS, MODE_PRIVATE).edit().clear().apply()
+                    val sharedPreferences =
+                        getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE)
+                    sharedPreferences.edit().remove(USER_ROLE_TO_PREFS).commit()
+                    sharedPreferences.edit().remove(USER_TOKEN_TO_PREFS).commit()
+                    sharedPreferences.edit().remove(USER_EMAIL_TO_PREFS).commit()
+                    Log.d(
+                        "User prefs",
+                        getSharedPreferences(USER_INFO_PREFS, MODE_PRIVATE).all.toString()
+                    )
                     val intent = Intent(this, LandingActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -52,14 +65,26 @@ class ParamedicActivity : AppCompatActivity() {
         }
         binding.bottomNavigation?.setOnItemSelectedListener {
             it.isChecked = true
-            if (it.toString() == "Equipment") {
-                navController.navigate(R.id.checkEquipment)
-            } else if (it.toString() == "Victim") {
-                navController.navigate(R.id.addVictimInfo)
-            } else if (it.toString() == "Support") {
-                navController.navigate(R.id.paramedicCallForSupport2)
-            } else if (it.toString() == "Map") {
-                navController.navigate(R.id.paramedicScreen)
+            val menuString = getString(R.string.menu_equipment)
+            val victimString = getString(R.string.menu_victim)
+            val supportString = getString(R.string.menu_support)
+            when (it.toString()) {
+                menuString -> {
+                    it.isChecked = true
+                    navController.navigate(R.id.checkEquipment)
+                }
+                victimString -> {
+                    it.isChecked = true
+                    navController.navigate(R.id.addVictimInfo)
+                }
+                supportString -> {
+                    it.isChecked = true
+                    navController.navigate(R.id.paramedicCallForSupport2)
+                }
+                else -> {
+                    it.isChecked = true
+                    navController.navigate(R.id.paramedicScreen)
+                }
             }
             true
         }

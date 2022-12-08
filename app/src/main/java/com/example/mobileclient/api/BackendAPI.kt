@@ -155,12 +155,42 @@ interface BackendAPI {
 
     //Employee shifts
     @GET("employee/shift/start")
-    suspend fun startShift(): Response<ResponseBody>
+    suspend fun startShift(@Header("Authorization") token: String): Response<ResponseBody>
 
     @GET("employee/shift/end")
-    suspend fun endShift(): Response<ResponseBody>
+    suspend fun endShift(@Header("Authorization") token: String): Response<ResponseBody>
 
     //Facilities
     @GET("facility")
     suspend fun getFacilities(): Response<List<Facility>>
+
+    //Ambulance
+    @GET("ambulance/{licensePlate}/equipment")
+    suspend fun getAmbulanceEquipment(
+        @Path("licensePlate") licensePlate: String,
+    ): Response<List<AmbulanceEquipment>>
+
+    @POST("ambulance/{licensePlate}/state/{state}")
+    suspend fun changeAmbulanceState(
+        @Path("licensePlate") licensePlate: String,
+        @Path("state") state: String
+    ): Response<ResponseBody>
+
+    @POST("ambulance/{licensePlate}/location")
+    suspend fun updateAmbulanceLocation(
+        @Path("licensePlate") licensePlate: String,
+        @Body location: Location
+    ): Response<ResponseBody>
+
+    @POST("ambulance/{licensePlate}/items/add/{itemId}")
+    suspend fun addAmbulanceItem(
+        @Path("licensePlate") licensePlate: String,
+        @Path("itemId") itemId: Int
+    ): Response<ResponseBody>
+
+    @POST("ambulance/{licensePlate}/items/remove/{itemId}")
+    suspend fun removeAmbulanceItem(
+        @Path("licensePlate") licensePlate: String,
+        @Path("itemId") itemId: Int
+    ): Response<ResponseBody>
 }

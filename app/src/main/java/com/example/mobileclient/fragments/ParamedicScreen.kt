@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentParamedicScreenBinding
@@ -44,7 +45,7 @@ class ParamedicScreen : Fragment() {
     ): View {
         _binding = FragmentParamedicScreenBinding.inflate(inflater, container, false)
         val view = binding.root
-        binding.shiftButton!!.visibility = View.GONE
+        binding.shiftButton.visibility = View.GONE
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val formatted = current.format(formatter)
@@ -97,27 +98,36 @@ class ParamedicScreen : Fragment() {
                             R.color.green_dark
                         )
                     )
-                    binding.shiftButton!!.visibility = View.VISIBLE
+                    binding.shiftButton.visibility = View.VISIBLE
                     binding.cardView.visibility = View.GONE
                 }
             }
         }
 
-        binding.shiftButton!!.setOnClickListener {
+        binding.shiftButton.setOnClickListener {
             binding.cardView.visibility = View.VISIBLE
             it.visibility = View.GONE
         }
-
+        val navController: NavController = Navigation.findNavController(requireActivity(), R.id.fragmentContainerView)
         binding.bottomNavigation.setOnItemSelectedListener {
             it.isChecked = true
-            if (it.toString() == "Equipment") {
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_paramedicScreen_to_equipment)
-            } else if (it.toString() == "Victim") {
-                Navigation.findNavController(view).navigate(R.id.addVictimInfo)
-            } else if (it.toString() == "Support") {
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_paramedicScreen_to_paramedicCallForSupport2)
+            when (it.toString()) {
+                resources.getString(R.string.menu_equipment) -> {
+                    it.isChecked = true
+                    navController.navigate(R.id.checkEquipment)
+                }
+                resources.getString(R.string.menu_victim) -> {
+                    it.isChecked = true
+                    navController.navigate(R.id.addVictimInfo)
+                }
+                resources.getString(R.string.menu_support) -> {
+                    it.isChecked = true
+                    navController.navigate(R.id.paramedicCallForSupport2)
+                }
+                else -> {
+                    it.isChecked = true
+                    navController.navigate(R.id.paramedicScreen)
+                }
             }
             true
         }

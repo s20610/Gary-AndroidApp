@@ -18,7 +18,7 @@
     <string name="guest_button">Click here</string>
     <string name="guest_appbar_text">Guest View</string>
     <string name="user_appbar_text">User View</string>
-    <string name="create_incident_text">Create Incident</string>
+    <string name="create_incident_text">Create incident</string>
     <string name="type_of_incident">Type</string>
     <string name="incident_localisation">Localisation</string>
     <string name="incident_description">Description</string>
@@ -78,7 +78,7 @@
     <string name="menu_victim">Victim</string>
     <string name="menu_support">Support</string>
     <string name="menu_equipment">Equipment</string>
-    <string name="ambulance_break">Ambulance Break</string>
+    <string name="ambulance_break">Break</string>
     <string name="break_type">Break type</string>
     <string name="start_time">Start time</string>
     <string name="end_time">End time</string>
@@ -108,7 +108,7 @@
     <string name="language">Language</string>
     <string name="select_language">Select language</string>
     <string name="notifications">Notifications</string>
-    <string name="create_incident">Create incident</string>
+    <string name="create_incident">Turn off creating incidents</string>
     <string name="barcode_scanning_cancelled" translatable="false">Scan was cancelled</string>
     <string name="barcode_scanning_successful">Scanned band code: </string>
     <string name="create_incident_popup_title">Create Incident?</string>
@@ -158,4 +158,8 @@
     <string name="description">Description</string>
     <string name="victim_info">Victim info</string>
     <string name="open_navigation">Navigation</string>
+    <string name="birthday">Birth date</string>
+    <string name="ambulance">Ambulance</string>
+    <string name="options">Options</string>
+    <string name="breakText">Break Time</string>
 </resources>

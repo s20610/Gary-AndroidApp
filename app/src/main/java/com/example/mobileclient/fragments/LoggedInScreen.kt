@@ -53,7 +53,6 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
         val sharedPreferences: SharedPreferences =
             requireContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
         val token: String = sharedPreferences.getString("token", "")!!
-        Toast.makeText(context, "Jwt token: $token", Toast.LENGTH_LONG).show()
         getTutorialsFromAPI()
         binding.refresh.setOnRefreshListener {
             getTutorialsFromAPI()

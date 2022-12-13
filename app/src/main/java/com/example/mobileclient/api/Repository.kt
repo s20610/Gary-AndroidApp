@@ -175,4 +175,8 @@ object Repository {
         return RetrofitInstance.api.removeAmbulanceItem(licensePlate, itemId)
     }
 
+    suspend fun getAssignedAmbulance(token: String): Response<Ambulance> {
+        return RetrofitInstance.api.getAssignedAmbulance(token)
+    }
+
 }

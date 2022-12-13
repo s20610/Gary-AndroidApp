@@ -1,5 +1,8 @@
 package com.example.mobileclient.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +16,8 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentParamedicScreenBinding
+import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
+import com.example.mobileclient.util.Constants.Companion.USER_TOKEN_TO_PREFS
 import com.example.mobileclient.viewmodels.ParamedicViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -38,6 +43,7 @@ class ParamedicScreen : Fragment() {
     private val paramedicViewModel: ParamedicViewModel by activityViewModels()
     private lateinit var map: MapView
     private val binding get() = _binding!!
+    private var ambulance: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,22 +56,33 @@ class ParamedicScreen : Fragment() {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val formatted = current.format(formatter)
         binding.dayField.text = formatted
+        //get token from shared preferences
+        val token = requireActivity().getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE)
+            .getString(USER_TOKEN_TO_PREFS,"")
+        paramedicViewModel.getCurrentAmbulance(token?:"")
+        paramedicViewModel.currentAmbulanceResponse.observe(viewLifecycleOwner) {
+            if (it.isSuccessful) {
+                ambulance = it.body()?.licensePlate
+            }
+        }
+
+
         binding.checkinButton.setOnClickListener {
             when (binding.checkinButton.text) {
                 getString(R.string.ParamedicScreen_CheckIn) -> {
-//                    paramedicViewModel.startEmployeeShift()
-//                    paramedicViewModel.employeeShiftResponse.observe(viewLifecycleOwner) { response ->
-//                        if (response.isSuccessful) {
-//                            binding.checkinButton.text =
-//                                getString(R.string.ParamedicScreen_FinishShift)
-//                            binding.checkinButton.setBackgroundColor(
-//                                ContextCompat.getColor(
-//                                    requireContext(),
-//                                    R.color.red
-//                                )
-//                            )
-//                        }
-//                    }
+                    paramedicViewModel.startEmployeeShift(token?:"")
+                    paramedicViewModel.employeeShiftResponse.observe(viewLifecycleOwner) { response ->
+                        if (response.isSuccessful) {
+                            binding.checkinButton.text =
+                                getString(R.string.ParamedicScreen_FinishShift)
+                            binding.checkinButton.setBackgroundColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.red
+                                )
+                            )
+                        }
+                    }
                     binding.checkinButton.text =
                         getString(R.string.ParamedicScreen_FinishShift)
                     binding.checkinButton.setBackgroundColor(
@@ -74,23 +91,23 @@ class ParamedicScreen : Fragment() {
                             R.color.red
                         )
                     )
-                    binding.shiftButton!!.visibility = View.VISIBLE
+                    binding.shiftButton.visibility = View.VISIBLE
                     binding.cardView.visibility = View.GONE
                 }
                 else -> {
-//                    paramedicViewModel.endEmployeeShift()
-//                    //Add message box to confirm end of shift
-//                    paramedicViewModel.employeeShiftResponse.observe(viewLifecycleOwner) { response ->
-//                        if (response.isSuccessful) {
-//                            binding.checkinButton.text = getString(R.string.ParamedicScreen_CheckIn)
-//                            binding.checkinButton.setBackgroundColor(
-//                                ContextCompat.getColor(
-//                                    requireContext(),
-//                                    R.color.green_dark
-//                                )
-//                            )
-//                        }
-//                    }
+                    paramedicViewModel.endEmployeeShift(token?:"")
+                    //Add message box to confirm end of shift
+                    paramedicViewModel.employeeShiftResponse.observe(viewLifecycleOwner) { response ->
+                        if (response.isSuccessful) {
+                            binding.checkinButton.text = getString(R.string.ParamedicScreen_CheckIn)
+                            binding.checkinButton.setBackgroundColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.green_dark
+                                )
+                            )
+                        }
+                    }
                     binding.checkinButton.text = getString(R.string.ParamedicScreen_CheckIn)
                     binding.checkinButton.setBackgroundColor(
                         ContextCompat.getColor(
@@ -146,7 +163,7 @@ class ParamedicScreen : Fragment() {
         val (marker: Marker, marker2: Marker, palacKultury: GeoPoint) = markerSetup()
         val roadManager: RoadManager = OSRMRoadManager(context, "Garry")
         val gpsProvider = GpsMyLocationProvider(context)
-        gpsProvider.locationUpdateMinTime = 6000
+        gpsProvider.locationUpdateMinTime = 15000
         val waypoints: ArrayList<GeoPoint> = ArrayList()
         val color: Int = ContextCompat.getColor(requireContext(), R.color.green_light)
         mLocationOverlay = MyLocationNewOverlay(gpsProvider, map)
@@ -169,6 +186,7 @@ class ParamedicScreen : Fragment() {
                     map.overlayManager.add(marker)
                     map.overlayManager.add(marker2)
                     map.invalidate()
+                    cancel("End of coroutine")
                 }
             }
             mLocationOverlay!!.myLocationProvider.startLocationProvider { location, _ ->
@@ -185,6 +203,9 @@ class ParamedicScreen : Fragment() {
                         Log.d("Road creation", "Road created for $waypoints")
                         map.overlayManager.add(roadOverlay)
                         map.invalidate()
+                        val currentLocation = com.example.mobileclient.model.Location(location.latitude, location.longitude)
+                        paramedicViewModel.updateAmbulanceLocation(ambulance?:"", currentLocation)
+
                     }
                 }
                 map.controller.animateTo(marker2.position)

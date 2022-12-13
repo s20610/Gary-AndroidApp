@@ -160,6 +160,11 @@ interface BackendAPI {
     @GET("employee/shift/end")
     suspend fun endShift(@Header("Authorization") token: String): Response<ResponseBody>
 
+    //Get current assigned ambulance
+    @GET("employee/ambulance")
+    suspend fun getAssignedAmbulance(@Header("Authorization") token: String): Response<Ambulance>
+
+
     //Facilities
     @GET("facility")
     suspend fun getFacilities(): Response<List<Facility>>
@@ -193,4 +198,5 @@ interface BackendAPI {
         @Path("licensePlate") licensePlate: String,
         @Path("itemId") itemId: Int
     ): Response<ResponseBody>
+
 }

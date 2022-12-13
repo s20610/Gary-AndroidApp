@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobileclient.api.Repository
+import com.example.mobileclient.model.Ambulance
 import com.example.mobileclient.model.AmbulanceEquipment
 import com.example.mobileclient.model.Location
 import kotlinx.coroutines.launch
@@ -15,6 +16,7 @@ class ParamedicViewModel : ViewModel() {
     var ambulanceEquipmentResponse: MutableLiveData<Response<List<AmbulanceEquipment>>> =
         MutableLiveData()
     var updateAmbulanceInfoResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
+    var currentAmbulanceResponse: MutableLiveData<Response<Ambulance>> = MutableLiveData()
 
     fun startEmployeeShift(token: String) {
         viewModelScope.launch {
@@ -87,6 +89,17 @@ class ParamedicViewModel : ViewModel() {
             try {
                 val response = Repository.removeAmbulanceItem(licensePlate, itemId)
                 updateAmbulanceInfoResponse.value = response
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun getCurrentAmbulance(token: String) {
+        viewModelScope.launch {
+            try {
+                val response = Repository.getAssignedAmbulance(token)
+                currentAmbulanceResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()
             }

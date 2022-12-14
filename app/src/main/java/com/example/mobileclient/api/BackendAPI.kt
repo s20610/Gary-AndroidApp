@@ -161,7 +161,7 @@ interface BackendAPI {
     suspend fun endShift(@Header("Authorization") token: String): Response<ResponseBody>
 
     //Get current assigned ambulance
-    @GET("employee/ambulance")
+    @GET("employee/medic/assigned-to")
     suspend fun getAssignedAmbulance(@Header("Authorization") token: String): Response<Ambulance>
 
 

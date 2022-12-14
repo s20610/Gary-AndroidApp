@@ -58,8 +58,8 @@ class ParamedicScreen : Fragment() {
         binding.dayField.text = formatted
         //get token from shared preferences
         val token = requireActivity().getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE)
-            .getString(USER_TOKEN_TO_PREFS,"")
-        paramedicViewModel.getCurrentAmbulance(token?:"")
+            .getString(USER_TOKEN_TO_PREFS, "")
+        paramedicViewModel.getCurrentAmbulance(token ?: "")
         paramedicViewModel.currentAmbulanceResponse.observe(viewLifecycleOwner) {
             if (it.isSuccessful) {
                 ambulance = it.body()?.licensePlate
@@ -70,7 +70,7 @@ class ParamedicScreen : Fragment() {
         binding.checkinButton.setOnClickListener {
             when (binding.checkinButton.text) {
                 getString(R.string.ParamedicScreen_CheckIn) -> {
-                    paramedicViewModel.startEmployeeShift(token?:"")
+                    paramedicViewModel.startEmployeeShift(token ?: "")
                     paramedicViewModel.employeeShiftResponse.observe(viewLifecycleOwner) { response ->
                         if (response.isSuccessful) {
                             binding.checkinButton.text =
@@ -95,7 +95,7 @@ class ParamedicScreen : Fragment() {
                     binding.cardView.visibility = View.GONE
                 }
                 else -> {
-                    paramedicViewModel.endEmployeeShift(token?:"")
+                    paramedicViewModel.endEmployeeShift(token ?: "")
                     //Add message box to confirm end of shift
                     paramedicViewModel.employeeShiftResponse.observe(viewLifecycleOwner) { response ->
                         if (response.isSuccessful) {
@@ -125,7 +125,8 @@ class ParamedicScreen : Fragment() {
             binding.cardView.visibility = View.VISIBLE
             it.visibility = View.GONE
         }
-        val navController: NavController = Navigation.findNavController(requireActivity(), R.id.fragmentContainerView)
+        val navController: NavController =
+            Navigation.findNavController(requireActivity(), R.id.fragmentContainerView)
         binding.bottomNavigation.setOnItemSelectedListener {
             it.isChecked = true
             when (it.toString()) {
@@ -203,9 +204,16 @@ class ParamedicScreen : Fragment() {
                         Log.d("Road creation", "Road created for $waypoints")
                         map.overlayManager.add(roadOverlay)
                         map.invalidate()
-                        val currentLocation = com.example.mobileclient.model.Location(location.latitude, location.longitude)
-                        paramedicViewModel.updateAmbulanceLocation(ambulance?:"", currentLocation)
-
+                        val currentLocation = com.example.mobileclient.model.Location(
+                            location.latitude,
+                            location.longitude
+                        )
+                        paramedicViewModel.updateAmbulanceLocation(ambulance ?: "", currentLocation)
+                        paramedicViewModel.updateAmbulanceInfoResponse.observe(viewLifecycleOwner) { response ->
+                            if (response.isSuccessful) {
+                                Log.d("Location update", "Location updated")
+                            }
+                        }
                     }
                 }
                 map.controller.animateTo(marker2.position)

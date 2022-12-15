@@ -154,9 +154,8 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
 
     override fun onItemClick(position: Int) {
         Log.d("Tutorial clicked", "User clicked tutorial $position")
-//        Toast.makeText(requireContext(), "Tutorial $position", Toast.LENGTH_SHORT).show()
-        val fragment: Fragment = TutorialHtmlView.newInstance("", "")
-        Log.d("Fragment created", fragment.toString())
+        val tutorial = currentlyDisplayedTutorials?.get(position)
+        tutorialsViewModel.pickedTutorial = tutorial
         //navigate to tutorial html view
         Navigation.findNavController(binding.root)
             .navigate(R.id.action_loggedInScreen_to_tutorialHtmlView)
@@ -190,8 +189,9 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
     private val ratingBarChangeListener =
         RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser ->
             if (fromUser) {
-                Toast.makeText(context, "Thanks for rating our tutorial!", Toast.LENGTH_SHORT)
-                    .show()
+                val tutorial = currentlyDisplayedTutorials?.get(ratingBar.tag as Int)
+                val tutorialId = tutorial?.id
+
                 ratingBar.rating = rating
             }
         }

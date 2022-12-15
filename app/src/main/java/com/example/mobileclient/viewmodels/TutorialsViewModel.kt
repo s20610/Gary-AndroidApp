@@ -10,32 +10,45 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.net.ConnectException
 
-class TutorialsViewModel: ViewModel() {
+class TutorialsViewModel : ViewModel() {
     private var repository: Repository = Repository
     var getTutorialsResponse: MutableLiveData<Response<List<Tutorial>>> = MutableLiveData()
     var getTutorialResponse: MutableLiveData<Response<Tutorial>> = MutableLiveData()
+    var pickedTutorial: Tutorial? = null
 
-    fun getTutorials(){
+    fun getTutorials() {
         viewModelScope.launch {
-            try{
+            try {
                 val response = repository.getTutorials()
                 getTutorialsResponse.value = response
             } catch (e: ConnectException) {
                 Log.d("Connection exception", e.stackTraceToString())
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.d("Exception", e.stackTraceToString())
             }
         }
     }
 
-    fun getTutorial(id:Int){
+    fun getTutorial(id: Int) {
         viewModelScope.launch {
-            try{
+            try {
                 val response = repository.getTutorial(id)
                 getTutorialResponse.value = response
             } catch (e: ConnectException) {
                 Log.d("Connection exception", e.stackTraceToString())
-            }catch (e: Exception){
+            } catch (e: Exception) {
+                Log.d("Exception", e.stackTraceToString())
+            }
+        }
+    }
+
+    fun addTutorialRating(tutorialId: Int, email: String) {
+        viewModelScope.launch {
+            try {
+                repository.addTutorialRating(tutorialId, email)
+            } catch (e: ConnectException) {
+                Log.d("Connection exception", e.stackTraceToString())
+            } catch (e: Exception) {
                 Log.d("Exception", e.stackTraceToString())
             }
         }

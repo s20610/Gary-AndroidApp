@@ -25,6 +25,12 @@ interface BackendAPI {
     @GET("tutorial/{id}")
     suspend fun getTutorial(@Path("id") tutorialId: Int): Response<Tutorial>
 
+    @POST("tutorial/{tutorialId}/{email}")
+    suspend fun addTutorialRating(
+        @Path("tutorialId") tutorialId: Int,
+        @Path("email") email: String
+    ): Response<ResponseBody>
+
     //Medical info api calls
     @GET("medical_info/user/{email}")
     suspend fun getUserMedicalInfo(
@@ -159,6 +165,9 @@ interface BackendAPI {
 
     @GET("employee/shift/end")
     suspend fun endShift(@Header("Authorization") token: String): Response<ResponseBody>
+
+    @GET("employee/schedule")
+    suspend fun getSchedule(@Header("Authorization") token: String): Response<WholeSchedule>
 
     //Get current assigned ambulance
     @GET("employee/medic/assigned-to")

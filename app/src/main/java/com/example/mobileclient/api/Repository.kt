@@ -22,6 +22,10 @@ object Repository {
         return RetrofitInstance.api.getTutorial(id)
     }
 
+    suspend fun addTutorialRating(tutorialId: Int, email: String): Response<ResponseBody> {
+        return RetrofitInstance.api.addTutorialRating(tutorialId, email)
+    }
+
     suspend fun getUserMedicalInfo(userEmail: String): Response<MedicalInfo> {
         return RetrofitInstance.api.getUserMedicalInfo(userEmail)
     }
@@ -144,6 +148,10 @@ object Repository {
 
     suspend fun endEmployeeShift(token: String): Response<ResponseBody> {
         return RetrofitInstance.api.endShift(token)
+    }
+
+    suspend fun getEmployeeShifts(token: String): Response<WholeSchedule> {
+        return RetrofitInstance.api.getSchedule(token)
     }
 
     //Facilities

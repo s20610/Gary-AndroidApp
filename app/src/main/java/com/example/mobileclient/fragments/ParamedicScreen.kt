@@ -43,7 +43,7 @@ class ParamedicScreen : Fragment() {
     private val paramedicViewModel: ParamedicViewModel by activityViewModels()
     private lateinit var map: MapView
     private val binding get() = _binding!!
-    private var ambulance: String? = null
+    private var ambulance: String? =  "AAA000"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +65,10 @@ class ParamedicScreen : Fragment() {
                 ambulance = it.body()?.licensePlate
             }
         }
-
+        paramedicViewModel.getSchedule(token ?: "")
+        paramedicViewModel.scheduleResponse.observe(viewLifecycleOwner) {
+            Log.d("Schedule", it.body().toString())
+        }
 
         binding.checkinButton.setOnClickListener {
             when (binding.checkinButton.text) {
@@ -193,6 +196,12 @@ class ParamedicScreen : Fragment() {
             mLocationOverlay!!.myLocationProvider.startLocationProvider { location, _ ->
                 lifecycleScope.launch {
                     withContext(Dispatchers.IO) {
+                        val currentLocation = com.example.mobileclient.model.Location(
+                            location.latitude,
+                            location.longitude
+                        )
+                        paramedicViewModel.updateAmbulanceLocation(ambulance!!, currentLocation)
+                        Log.d("Location update", paramedicViewModel.updateAmbulanceInfoResponse.value.toString())
                         waypoints.remove(marker2.position)
                         Log.d("waypoints after remove", waypoints.toString())
                         marker2.position = GeoPoint(location.latitude, location.longitude)
@@ -204,16 +213,6 @@ class ParamedicScreen : Fragment() {
                         Log.d("Road creation", "Road created for $waypoints")
                         map.overlayManager.add(roadOverlay)
                         map.invalidate()
-                        val currentLocation = com.example.mobileclient.model.Location(
-                            location.latitude,
-                            location.longitude
-                        )
-                        paramedicViewModel.updateAmbulanceLocation(ambulance ?: "", currentLocation)
-                        paramedicViewModel.updateAmbulanceInfoResponse.observe(viewLifecycleOwner) { response ->
-                            if (response.isSuccessful) {
-                                Log.d("Location update", "Location updated")
-                            }
-                        }
                     }
                 }
                 map.controller.animateTo(marker2.position)

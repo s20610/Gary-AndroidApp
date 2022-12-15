@@ -4,9 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobileclient.api.Repository
-import com.example.mobileclient.model.Ambulance
-import com.example.mobileclient.model.AmbulanceEquipment
-import com.example.mobileclient.model.Location
+import com.example.mobileclient.model.*
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -17,11 +15,12 @@ class ParamedicViewModel : ViewModel() {
         MutableLiveData()
     var updateAmbulanceInfoResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var currentAmbulanceResponse: MutableLiveData<Response<Ambulance>> = MutableLiveData()
+    var scheduleResponse: MutableLiveData<Response<WholeSchedule>> = MutableLiveData()
 
     fun startEmployeeShift(token: String) {
         viewModelScope.launch {
             try {
-                val response = Repository.startEmployeeShift(token)
+                val response = Repository.startEmployeeShift("Bearer $token")
                 employeeShiftResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -32,8 +31,19 @@ class ParamedicViewModel : ViewModel() {
     fun endEmployeeShift(token: String) {
         viewModelScope.launch {
             try {
-                val response = Repository.endEmployeeShift(token)
+                val response = Repository.endEmployeeShift("Bearer $token")
                 employeeShiftResponse.value = response
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun getSchedule(token: String) {
+        viewModelScope.launch {
+            try {
+                val response = Repository.getEmployeeShifts("Bearer $token")
+                scheduleResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -98,7 +108,7 @@ class ParamedicViewModel : ViewModel() {
     fun getCurrentAmbulance(token: String) {
         viewModelScope.launch {
             try {
-                val response = Repository.getAssignedAmbulance(token)
+                val response = Repository.getAssignedAmbulance("Bearer $token")
                 currentAmbulanceResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()

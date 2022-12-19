@@ -33,13 +33,49 @@ class GuestScreen : Fragment(),
         _binding = FragmentGuestScreenBinding.inflate(inflater, container, false)
         val view = binding.root
         val tutorialsEmpty: List<Tutorial> = mutableListOf(
-            Tutorial("1", "Tutorial 1", "COURSE", 0.2f,""),
-            Tutorial("2", "Tutorial 2", "FILE_EMERGENCE", 0.5f,""),
-            Tutorial("3", "Tutorial 3", "GUIDE", 0.2f,""),
-            Tutorial("4", "Tutorial 4", "FILE_EMERGENCE", 0.7f,""),
-            Tutorial("5", "Tutorial 5", "COURSE", 0.25f,""),
+            Tutorial(
+                "1",
+                "Tutorial 1",
+                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
+                "COURSE",
+                0.2f,
+                ""
+            ),
+            Tutorial(
+                "2",
+                "Tutorial 2",
+                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
+                "FILE_EMERGENCE",
+                0.5f,
+                ""
+            ),
+            Tutorial(
+                "3",
+                "Tutorial 3",
+                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
+                "GUIDE",
+                0.2f,
+                ""
+            ),
+            Tutorial(
+                "4",
+                "Tutorial 4",
+                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
+                "FILE_EMERGENCE",
+                0.7f,
+                ""
+            ),
+            Tutorial(
+                "5",
+                "Tutorial 5",
+                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
+                "COURSE",
+                0.25f,
+                ""
+            ),
         )
-        var tutorialsAdapter = TutorialsAdapter(tutorialsEmpty, this, ratingBarChangeListener)
+        var tutorialsAdapter =
+            TutorialsAdapter(requireContext(), tutorialsEmpty, this, ratingBarChangeListener)
         tutorialsAdapter.setTutorials(tutorialsEmpty)
         binding.tutorialsGrid.adapter = tutorialsAdapter
         getTutorialsFromAPI()
@@ -80,6 +116,7 @@ class GuestScreen : Fragment(),
                 binding.tutorialsGrid.adapter =
                     currentlyDisplayedTutorials?.let {
                         TutorialsAdapter(
+                            requireContext(),
                             it,
                             this,
                             ratingBarChangeListener
@@ -107,6 +144,7 @@ class GuestScreen : Fragment(),
                 currentlyDisplayedTutorials = tutorialsFromAPI
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(
+                        requireContext(),
                         it, this, ratingBarChangeListener
                     )
                 }
@@ -117,6 +155,7 @@ class GuestScreen : Fragment(),
                 currentlyDisplayedTutorials = filteredEmergenceTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(
+                        requireContext(),
                         it, this, ratingBarChangeListener
                     )
                 }
@@ -127,6 +166,7 @@ class GuestScreen : Fragment(),
                 currentlyDisplayedTutorials = filteredCourseTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(
+                        requireContext(),
                         it, this, ratingBarChangeListener
                     )
                 }
@@ -137,6 +177,7 @@ class GuestScreen : Fragment(),
                 currentlyDisplayedTutorials = filteredGuideTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
                     TutorialsAdapter(
+                        requireContext(),
                         it, this, ratingBarChangeListener
                     )
                 }
@@ -148,6 +189,7 @@ class GuestScreen : Fragment(),
         currentlyDisplayedTutorials = tutorialsFromAPI
         binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
             TutorialsAdapter(
+                requireContext(),
                 it, this, ratingBarChangeListener
             )
         }

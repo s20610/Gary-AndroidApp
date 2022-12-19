@@ -8,8 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
@@ -42,14 +40,49 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
 
         val view = binding.root
         val tutorialsEmpty: List<Tutorial> = mutableListOf(
-            Tutorial("1", "Tutorial 1", "COURSE", 5.0f, ""),
-            Tutorial("2", "Tutorial 2", "FILE_EMERGENCE", 5.0f, ""),
-            Tutorial("3", "Tutorial 3", "GUIDE", 5.0f, ""),
-            Tutorial("4", "Tutorial 4", "FILE_EMERGENCE", 5.0f, ""),
-            Tutorial("5", "Tutorial 5", "COURSE", 5.0f, ""),
+            Tutorial(
+                "1",
+                "Tutorial 1",
+                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
+                "COURSE",
+                0.2f,
+                ""
+            ),
+            Tutorial(
+                "2",
+                "Tutorial 2",
+                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
+                "FILE_EMERGENCE",
+                0.5f,
+                ""
+            ),
+            Tutorial(
+                "3",
+                "Tutorial 3",
+                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
+                "GUIDE",
+                0.2f,
+                ""
+            ),
+            Tutorial(
+                "4",
+                "Tutorial 4",
+                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
+                "FILE_EMERGENCE",
+                0.7f,
+                ""
+            ),
+            Tutorial(
+                "5",
+                "Tutorial 5",
+                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
+                "COURSE",
+                0.25f,
+                ""
+            ),
         )
         binding.tutorialsGrid.adapter =
-            TutorialsAdapter(tutorialsEmpty, this, ratingBarChangeListener)
+            TutorialsAdapter(requireContext(),tutorialsEmpty, this, ratingBarChangeListener)
         val sharedPreferences: SharedPreferences =
             requireContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
         val token: String = sharedPreferences.getString("token", "")!!
@@ -105,7 +138,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
             "All Tutorials" -> {
                 currentlyDisplayedTutorials = tutorialsFromAPI
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                    TutorialsAdapter(
+                    TutorialsAdapter(requireContext(),
                         it, this, ratingBarChangeListener
                     )
                 }
@@ -115,7 +148,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
                     tutorialsFromAPI?.filter { it.tutorialType == "FILE_EMERGENCE" }
                 currentlyDisplayedTutorials = filteredEmergenceTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                    TutorialsAdapter(
+                    TutorialsAdapter(requireContext(),
                         it, this, ratingBarChangeListener
                     )
                 }
@@ -125,7 +158,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
                     tutorialsFromAPI?.filter { it.tutorialType == "COURSE" }
                 currentlyDisplayedTutorials = filteredCourseTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                    TutorialsAdapter(
+                    TutorialsAdapter(requireContext(),
                         it, this, ratingBarChangeListener
                     )
                 }
@@ -135,7 +168,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
                     tutorialsFromAPI?.filter { it.tutorialType == "GUIDE" }
                 currentlyDisplayedTutorials = filteredGuideTutorials
                 binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                    TutorialsAdapter(
+                    TutorialsAdapter(requireContext(),
                         it, this, ratingBarChangeListener
                     )
                 }
@@ -146,7 +179,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
     override fun onNothingSelected(p0: AdapterView<*>?) {
         currentlyDisplayedTutorials = tutorialsFromAPI
         binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-            TutorialsAdapter(
+            TutorialsAdapter(requireContext(),
                 it, this, ratingBarChangeListener
             )
         }
@@ -167,10 +200,11 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
             if (response.isSuccessful) {
                 tutorialsFromAPI = response.body()
                 currentlyDisplayedTutorials = tutorialsFromAPI
-                Log.d("getTutorialsResponseBody", response.body().toString())
+                Log.d("getTutorialsResponse", response.code().toString())
                 binding.tutorialsGrid.adapter =
                     currentlyDisplayedTutorials?.let {
                         TutorialsAdapter(
+                            requireContext(),
                             it,
                             this,
                             ratingBarChangeListener

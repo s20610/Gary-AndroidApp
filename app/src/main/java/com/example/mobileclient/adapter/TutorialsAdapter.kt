@@ -1,15 +1,20 @@
 package com.example.mobileclient.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.RatingBar
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
+import com.example.mobileclient.R
 import com.example.mobileclient.databinding.TutorialViewItemBinding
 import com.example.mobileclient.model.Tutorial
 
 class TutorialsAdapter(
+    private val context: Context,
     private var tutorials: List<Tutorial>,
     private var onItemClickListener: OnItemClickListener,
     private var onRatingBarChangeListener: RatingBar.OnRatingBarChangeListener
@@ -21,8 +26,9 @@ class TutorialsAdapter(
         private var itemClickListener: OnItemClickListener,
         private var onRatingBarChangeListener: RatingBar.OnRatingBarChangeListener
     ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
-        fun bind(tutorial: Tutorial) {
+        fun bind(tutorial: Tutorial, context: Context) {
             binding.tutorial = tutorial
+            setPicture(context, tutorial.thumbnail)
             binding.ratingBar.onRatingBarChangeListener = onRatingBarChangeListener
             binding.root.setOnClickListener(this)
             binding.executePendingBindings()
@@ -30,6 +36,10 @@ class TutorialsAdapter(
 
         override fun onClick(p0: View?) {
             itemClickListener.onItemClick(adapterPosition)
+        }
+
+        private fun setPicture(context: Context, url: String) {
+            Glide.with(context).load(url).override(200,200).placeholder(R.drawable.ic_placeholder).centerCrop().into(binding.thumbnail)
         }
     }
 
@@ -42,7 +52,7 @@ class TutorialsAdapter(
 
     override fun onBindViewHolder(holder: TutorialViewHolder, position: Int) {
         val tutorial = tutorials[position]
-        holder.bind(tutorial)
+        holder.bind(tutorial, context)
     }
 
     override fun getItemCount(): Int {

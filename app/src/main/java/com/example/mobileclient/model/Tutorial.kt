@@ -7,6 +7,8 @@ data class Tutorial(
     val id: String,
     @SerializedName("name")
     val name: String,
+    @SerializedName("thumbnail")
+    val thumbnail: String,
     @SerializedName("tutorialType")
     val tutorialType: String,
     @SerializedName("averageRating")

@@ -35,8 +35,12 @@ class TutorialHtmlView : Fragment() {
         if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
             WebSettingsCompat.setAlgorithmicDarkeningAllowed(binding.tutorialWebView.settings, true)
         }
+        val cssFile = requireContext().assets.open("style.css")
+        val cssString = cssFile.bufferedReader().use { it.readText() }
+        val htmlString = tutorialsViewModel.pickedTutorial!!.tutorialHTML
+        val html = "<html><head><style>$cssString</style></head><body>$htmlString</body></html>"
         binding.tutorialWebView.loadData(
-            tutorialsViewModel.pickedTutorial!!.tutorialHTML,
+            html,
             "text/html",
             "UTF-8"
         )

@@ -22,8 +22,8 @@ object Repository {
         return RetrofitInstance.api.getTutorial(id)
     }
 
-    suspend fun addTutorialRating(tutorialId: Int, email: String): Response<ResponseBody> {
-        return RetrofitInstance.api.addTutorialRating(tutorialId, email)
+    suspend fun addTutorialRating(tutorialId: Int, email: String, rating: Review): Response<ResponseBody> {
+        return RetrofitInstance.api.addTutorialRating(tutorialId, email, rating)
     }
 
     suspend fun getUserMedicalInfo(userEmail: String): Response<MedicalInfo> {

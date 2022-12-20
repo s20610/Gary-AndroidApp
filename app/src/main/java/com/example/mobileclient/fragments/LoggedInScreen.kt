@@ -14,7 +14,11 @@ import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.adapter.TutorialsAdapter
 import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
+import com.example.mobileclient.model.Review
 import com.example.mobileclient.model.Tutorial
+import com.example.mobileclient.util.Constants.Companion.USER_EMAIL_TO_PREFS
+import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
+import com.example.mobileclient.util.Constants.Companion.USER_TOKEN_TO_PREFS
 import com.example.mobileclient.viewmodels.TutorialsViewModel
 import com.example.mobileclient.viewmodels.UserViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -26,6 +30,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
     private val tutorialsViewModel: TutorialsViewModel by activityViewModels()
     private var tutorialsFromAPI: List<Tutorial>? = null
     private var currentlyDisplayedTutorials: List<Tutorial>? = null
+    private var userEmail = ""
 
     // This property is only valid between onCreateView and
 // onDestroyView.
@@ -84,8 +89,9 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
         binding.tutorialsGrid.adapter =
             TutorialsAdapter(requireContext(),tutorialsEmpty, this, ratingBarChangeListener)
         val sharedPreferences: SharedPreferences =
-            requireContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
-        val token: String = sharedPreferences.getString("token", "")!!
+            requireContext().getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE)
+        val token: String = sharedPreferences.getString(USER_TOKEN_TO_PREFS, "")!!
+        userEmail = sharedPreferences.getString(USER_EMAIL_TO_PREFS, "")!!
         getTutorialsFromAPI()
         binding.refresh.setOnRefreshListener {
             getTutorialsFromAPI()
@@ -223,10 +229,17 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
     private val ratingBarChangeListener =
         RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser ->
             if (fromUser) {
-                val tutorial = currentlyDisplayedTutorials?.get(ratingBar.tag as Int)
-                val tutorialId = tutorial?.id
-
-                ratingBar.rating = rating
+                val tag = ratingBar.tag.toString().toInt()
+                val ratingForAPI = Review(rating.toDouble(),"")
+                tutorialsViewModel.addTutorialRating(tag,userEmail, ratingForAPI)
+                tutorialsViewModel.addTutorialRatingResponse.observe(viewLifecycleOwner) { response ->
+                    if (response.isSuccessful) {
+                        Log.d("addTutorialRatingResponse", response.code().toString())
+                        ratingBar.rating = rating
+                    } else {
+                        Log.d("addTutorialRatingResponse", response.code().toString())
+                    }
+                }
             }
         }
 }

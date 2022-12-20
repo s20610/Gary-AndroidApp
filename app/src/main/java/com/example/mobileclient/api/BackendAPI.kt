@@ -28,7 +28,8 @@ interface BackendAPI {
     @POST("tutorial/{tutorialId}/{email}")
     suspend fun addTutorialRating(
         @Path("tutorialId") tutorialId: Int,
-        @Path("email") email: String
+        @Path("email") email: String,
+        @Body rating: Review
     ): Response<ResponseBody>
 
     //Medical info api calls

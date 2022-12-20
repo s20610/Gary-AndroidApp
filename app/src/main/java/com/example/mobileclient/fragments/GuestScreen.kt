@@ -11,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.mobileclient.R
 import com.example.mobileclient.adapter.TutorialsAdapter
 import com.example.mobileclient.databinding.FragmentGuestScreenBinding
-import com.example.mobileclient.model.Tutorial
+import com.example.mobileclient.model.Tutorial import com.example.mobileclient.util.Constants.Companion.tutorialsEmpty
 import com.example.mobileclient.viewmodels.TutorialsViewModel
 
 class GuestScreen : Fragment(),
@@ -32,49 +32,7 @@ class GuestScreen : Fragment(),
         // Inflate the layout for this fragment
         _binding = FragmentGuestScreenBinding.inflate(inflater, container, false)
         val view = binding.root
-        val tutorialsEmpty: List<Tutorial> = mutableListOf(
-            Tutorial(
-                "1",
-                "Tutorial 1",
-                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
-                "COURSE",
-                0.2f,
-                ""
-            ),
-            Tutorial(
-                "2",
-                "Tutorial 2",
-                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
-                "FILE_EMERGENCE",
-                0.5f,
-                ""
-            ),
-            Tutorial(
-                "3",
-                "Tutorial 3",
-                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
-                "GUIDE",
-                0.2f,
-                ""
-            ),
-            Tutorial(
-                "4",
-                "Tutorial 4",
-                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
-                "FILE_EMERGENCE",
-                0.7f,
-                ""
-            ),
-            Tutorial(
-                "5",
-                "Tutorial 5",
-                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
-                "COURSE",
-                0.25f,
-                ""
-            ),
-        )
-        var tutorialsAdapter =
+        val tutorialsAdapter =
             TutorialsAdapter(requireContext(), tutorialsEmpty, this, ratingBarChangeListener)
         tutorialsAdapter.setTutorials(tutorialsEmpty)
         binding.tutorialsGrid.adapter = tutorialsAdapter
@@ -130,68 +88,73 @@ class GuestScreen : Fragment(),
     }
 
     private val ratingBarChangeListener =
-        RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser ->
+        RatingBar.OnRatingBarChangeListener { _, _, fromUser ->
             if (fromUser) {
                 Toast.makeText(context, "You can't rate tutorials as guest", Toast.LENGTH_SHORT)
                     .show()
             }
         }
 
+    //Methods for filterMenu from AdapterView.OnItemSelectedListener
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        p0?.getItemAtPosition(p2).toString()
+        val stringArray = resources.getStringArray(R.array.filterTutorialsArray)
+        val allTutorials = stringArray[0]
+        val general = stringArray[1]
+        val inCaseOfDeath = stringArray[2]
+        val course = stringArray[3]
         when (p0?.getItemAtPosition(p2).toString()) {
-            "All Tutorials" -> {
+            allTutorials -> {
                 currentlyDisplayedTutorials = tutorialsFromAPI
-                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                    TutorialsAdapter(
-                        requireContext(),
-                        it, this, ratingBarChangeListener
-                    )
-                }
+                binding.tutorialsGrid.adapter = TutorialsAdapter(
+                    requireContext(),
+                    currentlyDisplayedTutorials!!,
+                    this,
+                    ratingBarChangeListener
+                )
             }
-            "FILE_EMERGENCE" -> {
+            general -> {
                 val filteredEmergenceTutorials =
-                    tutorialsFromAPI?.filter { it.tutorialType == "FILE_EMERGENCE" }
+                    tutorialsFromAPI?.filter { it.tutorialType == "IN_CASE_OF_DEATH_EMERGENCY" }
                 currentlyDisplayedTutorials = filteredEmergenceTutorials
-                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                    TutorialsAdapter(
-                        requireContext(),
-                        it, this, ratingBarChangeListener
-                    )
-                }
+                binding.tutorialsGrid.adapter = TutorialsAdapter(
+                    requireContext(),
+                    currentlyDisplayedTutorials!!,
+                    this,
+                    ratingBarChangeListener
+                )
             }
-            "COURSE" -> {
+            inCaseOfDeath -> {
+                val filteredInCaseOfDeathTutorials =
+                    tutorialsFromAPI?.filter { it.tutorialType == "GENERAL" }
+                currentlyDisplayedTutorials = filteredInCaseOfDeathTutorials
+                binding.tutorialsGrid.adapter = TutorialsAdapter(
+                    requireContext(),
+                    currentlyDisplayedTutorials!!,
+                    this,
+                    ratingBarChangeListener
+                )
+            }
+            course -> {
                 val filteredCourseTutorials =
                     tutorialsFromAPI?.filter { it.tutorialType == "COURSE" }
                 currentlyDisplayedTutorials = filteredCourseTutorials
-                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                    TutorialsAdapter(
-                        requireContext(),
-                        it, this, ratingBarChangeListener
-                    )
-                }
-            }
-            "GUIDE" -> {
-                val filteredGuideTutorials =
-                    tutorialsFromAPI?.filter { it.tutorialType == "GUIDE" }
-                currentlyDisplayedTutorials = filteredGuideTutorials
-                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                    TutorialsAdapter(
-                        requireContext(),
-                        it, this, ratingBarChangeListener
-                    )
-                }
+                binding.tutorialsGrid.adapter = TutorialsAdapter(
+                    requireContext(),
+                    currentlyDisplayedTutorials!!,
+                    this,
+                    ratingBarChangeListener
+                )
             }
         }
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>?) {
+    override fun onNothingSelected(p0: AdapterView<*>?) {
         currentlyDisplayedTutorials = tutorialsFromAPI
-        binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-            TutorialsAdapter(
-                requireContext(),
-                it, this, ratingBarChangeListener
-            )
-        }
+        binding.tutorialsGrid.adapter = TutorialsAdapter(
+            requireContext(),
+            currentlyDisplayedTutorials!!,
+            this,
+            ratingBarChangeListener
+        )
     }
 }

@@ -16,7 +16,6 @@ import java.net.ConnectException
 class TutorialsViewModel : ViewModel() {
     private var repository: Repository = Repository
     var getTutorialsResponse: MutableLiveData<Response<List<Tutorial>>> = MutableLiveData()
-    var getTutorialResponse: MutableLiveData<Response<Tutorial>> = MutableLiveData()
     var addTutorialRatingResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var pickedTutorial: Tutorial? = null
 
@@ -25,19 +24,6 @@ class TutorialsViewModel : ViewModel() {
             try {
                 val response = repository.getTutorials()
                 getTutorialsResponse.value = response
-            } catch (e: ConnectException) {
-                Log.d("Connection exception", e.stackTraceToString())
-            } catch (e: Exception) {
-                Log.d("Exception", e.stackTraceToString())
-            }
-        }
-    }
-
-    fun getTutorial(id: Int) {
-        viewModelScope.launch {
-            try {
-                val response = repository.getTutorial(id)
-                getTutorialResponse.value = response
             } catch (e: ConnectException) {
                 Log.d("Connection exception", e.stackTraceToString())
             } catch (e: Exception) {

@@ -18,10 +18,6 @@ object Repository {
         return RetrofitInstance.api.getTutorials()
     }
 
-    suspend fun getTutorial(id: Int): Response<Tutorial> {
-        return RetrofitInstance.api.getTutorial(id)
-    }
-
     suspend fun addTutorialRating(tutorialId: Int, email: String, rating: Review): Response<ResponseBody> {
         return RetrofitInstance.api.addTutorialRating(tutorialId, email, rating)
     }
@@ -42,10 +38,6 @@ object Repository {
         return RetrofitInstance.api.postUserBlood(blood)
     }
 
-    suspend fun getUserDisease(id: Int): Response<Disease> {
-        return RetrofitInstance.api.getDisease(id)
-    }
-
     suspend fun putUserDisease(id: Int, disease: Disease): Response<ResponseBody> {
         return RetrofitInstance.api.putUserDisease(id, disease)
     }
@@ -56,10 +48,6 @@ object Repository {
 
     suspend fun postUserDisease(disease: Disease): Response<ResponseBody> {
         return RetrofitInstance.api.postUserDisease(disease)
-    }
-
-    suspend fun getUserAllergy(id: Int): Response<Allergy> {
-        return RetrofitInstance.api.getAllergy(id)
     }
 
     suspend fun putUserAllergy(id: Int, allergy: Allergy): Response<ResponseBody> {

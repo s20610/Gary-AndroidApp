@@ -8,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
+import com.bumptech.glide.Glide
 import com.example.mobileclient.R
 import com.example.mobileclient.adapter.TutorialsAdapter
 import com.example.mobileclient.databinding.FragmentLoggedInScreenBinding
@@ -19,6 +21,7 @@ import com.example.mobileclient.model.Tutorial
 import com.example.mobileclient.util.Constants.Companion.USER_EMAIL_TO_PREFS
 import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
 import com.example.mobileclient.util.Constants.Companion.USER_TOKEN_TO_PREFS
+import com.example.mobileclient.util.Constants.Companion.tutorialsEmpty
 import com.example.mobileclient.viewmodels.TutorialsViewModel
 import com.example.mobileclient.viewmodels.UserViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -26,7 +29,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
     TutorialsAdapter.OnItemClickListener {
     private var _binding: FragmentLoggedInScreenBinding? = null
-    private val userViewModel: UserViewModel by activityViewModels()
     private val tutorialsViewModel: TutorialsViewModel by activityViewModels()
     private var tutorialsFromAPI: List<Tutorial>? = null
     private var currentlyDisplayedTutorials: List<Tutorial>? = null
@@ -44,50 +46,8 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
         _binding = FragmentLoggedInScreenBinding.inflate(inflater, container, false)
 
         val view = binding.root
-        val tutorialsEmpty: List<Tutorial> = mutableListOf(
-            Tutorial(
-                "1",
-                "Tutorial 1",
-                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
-                "COURSE",
-                0.2f,
-                ""
-            ),
-            Tutorial(
-                "2",
-                "Tutorial 2",
-                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
-                "FILE_EMERGENCE",
-                0.5f,
-                ""
-            ),
-            Tutorial(
-                "3",
-                "Tutorial 3",
-                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
-                "GUIDE",
-                0.2f,
-                ""
-            ),
-            Tutorial(
-                "4",
-                "Tutorial 4",
-                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
-                "FILE_EMERGENCE",
-                0.7f,
-                ""
-            ),
-            Tutorial(
-                "5",
-                "Tutorial 5",
-                "https://miro.medium.com/max/480/1*QiE4-0MPslYPvx2Fit1NIQ.jpeg",
-                "COURSE",
-                0.25f,
-                ""
-            ),
-        )
         binding.tutorialsGrid.adapter =
-            TutorialsAdapter(requireContext(),tutorialsEmpty, this, ratingBarChangeListener)
+            TutorialsAdapter(requireContext(), tutorialsEmpty, this, ratingBarChangeListener)
         val sharedPreferences: SharedPreferences =
             requireContext().getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE)
         val token: String = sharedPreferences.getString(USER_TOKEN_TO_PREFS, "")!!
@@ -130,65 +90,67 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.apply {
-            viewModel = userViewModel
-        }
-        super.onViewCreated(view, savedInstanceState)
-    }
-
     //Methods for filterMenu from AdapterView.OnItemSelectedListener
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        p0?.getItemAtPosition(p2).toString()
+        val stringArray = resources.getStringArray(R.array.filterTutorialsArray)
+        val allTutorials = stringArray[0]
+        val general = stringArray[1]
+        val inCaseOfDeath = stringArray[2]
+        val course = stringArray[3]
         when (p0?.getItemAtPosition(p2).toString()) {
-            "All Tutorials" -> {
+            allTutorials -> {
                 currentlyDisplayedTutorials = tutorialsFromAPI
-                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                    TutorialsAdapter(requireContext(),
-                        it, this, ratingBarChangeListener
-                    )
-                }
+                binding.tutorialsGrid.adapter = TutorialsAdapter(
+                    requireContext(),
+                    currentlyDisplayedTutorials!!,
+                    this,
+                    ratingBarChangeListener
+                )
             }
-            "FILE_EMERGENCE" -> {
+            general -> {
                 val filteredEmergenceTutorials =
-                    tutorialsFromAPI?.filter { it.tutorialType == "FILE_EMERGENCE" }
+                    tutorialsFromAPI?.filter { it.tutorialType == "IN_CASE_OF_DEATH_EMERGENCY" }
                 currentlyDisplayedTutorials = filteredEmergenceTutorials
-                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                    TutorialsAdapter(requireContext(),
-                        it, this, ratingBarChangeListener
-                    )
-                }
+                binding.tutorialsGrid.adapter = TutorialsAdapter(
+                    requireContext(),
+                    currentlyDisplayedTutorials!!,
+                    this,
+                    ratingBarChangeListener
+                )
             }
-            "COURSE" -> {
+            inCaseOfDeath -> {
+                val filteredInCaseOfDeathTutorials =
+                    tutorialsFromAPI?.filter { it.tutorialType == "GENERAL" }
+                currentlyDisplayedTutorials = filteredInCaseOfDeathTutorials
+                binding.tutorialsGrid.adapter = TutorialsAdapter(
+                    requireContext(),
+                    currentlyDisplayedTutorials!!,
+                    this,
+                    ratingBarChangeListener
+                )
+            }
+            course -> {
                 val filteredCourseTutorials =
                     tutorialsFromAPI?.filter { it.tutorialType == "COURSE" }
                 currentlyDisplayedTutorials = filteredCourseTutorials
-                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                    TutorialsAdapter(requireContext(),
-                        it, this, ratingBarChangeListener
-                    )
-                }
-            }
-            "GUIDE" -> {
-                val filteredGuideTutorials =
-                    tutorialsFromAPI?.filter { it.tutorialType == "GUIDE" }
-                currentlyDisplayedTutorials = filteredGuideTutorials
-                binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-                    TutorialsAdapter(requireContext(),
-                        it, this, ratingBarChangeListener
-                    )
-                }
+                binding.tutorialsGrid.adapter = TutorialsAdapter(
+                    requireContext(),
+                    currentlyDisplayedTutorials!!,
+                    this,
+                    ratingBarChangeListener
+                )
             }
         }
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
         currentlyDisplayedTutorials = tutorialsFromAPI
-        binding.tutorialsGrid.adapter = currentlyDisplayedTutorials?.let {
-            TutorialsAdapter(requireContext(),
-                it, this, ratingBarChangeListener
-            )
-        }
+        binding.tutorialsGrid.adapter = TutorialsAdapter(
+            requireContext(),
+            currentlyDisplayedTutorials!!,
+            this,
+            ratingBarChangeListener
+        )
     }
 
     override fun onItemClick(position: Int) {
@@ -203,24 +165,17 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
     private fun getTutorialsFromAPI() {
         tutorialsViewModel.getTutorials()
         tutorialsViewModel.getTutorialsResponse.observe(viewLifecycleOwner) { response ->
-            if (response.isSuccessful) {
+            if (response.code() == 200) {
                 tutorialsFromAPI = response.body()
                 currentlyDisplayedTutorials = tutorialsFromAPI
-                Log.d("getTutorialsResponse", response.code().toString())
-                binding.tutorialsGrid.adapter =
-                    currentlyDisplayedTutorials?.let {
-                        TutorialsAdapter(
-                            requireContext(),
-                            it,
-                            this,
-                            ratingBarChangeListener
-                        )
-                    }
+                binding.tutorialsGrid.adapter = TutorialsAdapter(
+                    requireContext(),
+                    currentlyDisplayedTutorials!!,
+                    this,
+                    ratingBarChangeListener
+                )
                 binding.filterMenu.setSelection(0)
             } else {
-                Toast.makeText(context, "Tutorials error ${response.code()}", Toast.LENGTH_SHORT)
-                    .show()
-                Log.d("getTutorialsResponseBody", response.body().toString())
                 Log.d("getTutorialsResponseCode", response.code().toString())
             }
         }
@@ -230,10 +185,10 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
         RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser ->
             if (fromUser) {
                 val tag = ratingBar.tag.toString().toInt()
-                val ratingForAPI = Review(rating.toDouble(),"")
-                tutorialsViewModel.addTutorialRating(tag,userEmail, ratingForAPI)
+                val ratingForAPI = Review(rating.toDouble(), "")
+                tutorialsViewModel.addTutorialRating(tag, userEmail, ratingForAPI)
                 tutorialsViewModel.addTutorialRatingResponse.observe(viewLifecycleOwner) { response ->
-                    if (response.isSuccessful) {
+                    if (response.code() == 200) {
                         Log.d("addTutorialRatingResponse", response.code().toString())
                         ratingBar.rating = rating
                     } else {

@@ -16,13 +16,11 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentParamedicScreenBinding
+import com.example.mobileclient.model.Schedule
 import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
 import com.example.mobileclient.util.Constants.Companion.USER_TOKEN_TO_PREFS
 import com.example.mobileclient.viewmodels.ParamedicViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.osmdroid.bonuspack.routing.OSRMRoadManager
 import org.osmdroid.bonuspack.routing.Road
 import org.osmdroid.bonuspack.routing.RoadManager
@@ -33,6 +31,7 @@ import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -43,11 +42,10 @@ class ParamedicScreen : Fragment() {
     private val paramedicViewModel: ParamedicViewModel by activityViewModels()
     private lateinit var map: MapView
     private val binding get() = _binding!!
-    private var ambulance: String? =  "AAA000"
+    private var ambulance: String? = "AAA000"
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentParamedicScreenBinding.inflate(inflater, container, false)
         val view = binding.root
@@ -66,8 +64,13 @@ class ParamedicScreen : Fragment() {
             }
         }
         paramedicViewModel.getSchedule(token ?: "")
-        paramedicViewModel.scheduleResponse.observe(viewLifecycleOwner) {
-            Log.d("Schedule", it.body().toString())
+        paramedicViewModel.scheduleResponse.observe(viewLifecycleOwner) { response ->
+            if (response.code() == 200) {
+                Log.d("Schedule", response.body().toString())
+                if (response.body()?.schedule != null) {
+                    val scheduleForToday = findNextShift(response.body()!!.schedule!!)
+                }
+            }
         }
 
         binding.checkinButton.setOnClickListener {
@@ -80,18 +83,15 @@ class ParamedicScreen : Fragment() {
                                 getString(R.string.ParamedicScreen_FinishShift)
                             binding.checkinButton.setBackgroundColor(
                                 ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.red
+                                    requireContext(), R.color.red
                                 )
                             )
                         }
                     }
-                    binding.checkinButton.text =
-                        getString(R.string.ParamedicScreen_FinishShift)
+                    binding.checkinButton.text = getString(R.string.ParamedicScreen_FinishShift)
                     binding.checkinButton.setBackgroundColor(
                         ContextCompat.getColor(
-                            requireContext(),
-                            R.color.red
+                            requireContext(), R.color.red
                         )
                     )
                     binding.shiftButton.visibility = View.VISIBLE
@@ -105,8 +105,7 @@ class ParamedicScreen : Fragment() {
                             binding.checkinButton.text = getString(R.string.ParamedicScreen_CheckIn)
                             binding.checkinButton.setBackgroundColor(
                                 ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.green_dark
+                                    requireContext(), R.color.green_dark
                                 )
                             )
                         }
@@ -114,8 +113,7 @@ class ParamedicScreen : Fragment() {
                     binding.checkinButton.text = getString(R.string.ParamedicScreen_CheckIn)
                     binding.checkinButton.setBackgroundColor(
                         ContextCompat.getColor(
-                            requireContext(),
-                            R.color.green_dark
+                            requireContext(), R.color.green_dark
                         )
                     )
                     binding.shiftButton.visibility = View.VISIBLE
@@ -196,12 +194,15 @@ class ParamedicScreen : Fragment() {
             mLocationOverlay!!.myLocationProvider.startLocationProvider { location, _ ->
                 lifecycleScope.launch {
                     withContext(Dispatchers.IO) {
+                        delay(5000)
                         val currentLocation = com.example.mobileclient.model.Location(
-                            location.latitude,
-                            location.longitude
+                            location.latitude, location.longitude
                         )
                         paramedicViewModel.updateAmbulanceLocation(ambulance!!, currentLocation)
-                        Log.d("Location update", paramedicViewModel.updateAmbulanceInfoResponse.value.toString())
+                        Log.d(
+                            "Location update",
+                            paramedicViewModel.updateAmbulanceInfoResponse.value.toString()
+                        )
                         waypoints.remove(marker2.position)
                         Log.d("waypoints after remove", waypoints.toString())
                         marker2.position = GeoPoint(location.latitude, location.longitude)
@@ -213,6 +214,7 @@ class ParamedicScreen : Fragment() {
                         Log.d("Road creation", "Road created for $waypoints")
                         map.overlayManager.add(roadOverlay)
                         map.invalidate()
+                        cancel("End of coroutine")
                     }
                 }
                 map.controller.animateTo(marker2.position)
@@ -243,5 +245,33 @@ class ParamedicScreen : Fragment() {
         marker.title = "Location of incident"
         marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_warning_24)
         return Triple(marker, marker2, palacKultury)
+    }
+
+    private fun findNextShift(schedule: Schedule): List<String> {
+        val today = LocalDate.now().dayOfWeek.toString()
+        val nearestShift: List<String> = mutableListOf()
+        when {
+            schedule.MONDAY?.javaClass?.name == today -> {
+                nearestShift.plus(schedule.MONDAY!!.start)
+                nearestShift.plus(schedule.MONDAY!!.end)
+            }
+            schedule.TUESDAY?.javaClass?.name == today -> {
+                nearestShift.plus(schedule.TUESDAY!!.start)
+                nearestShift.plus(schedule.TUESDAY!!.end)
+            }
+            schedule.WEDNESDAY?.javaClass?.name == today -> {
+                nearestShift.plus(schedule.WEDNESDAY!!.start)
+                nearestShift.plus(schedule.WEDNESDAY!!.end)
+            }
+            schedule.THURSDAY?.javaClass?.name == today -> {
+                nearestShift.plus(schedule.THURSDAY!!.start)
+                nearestShift.plus(schedule.THURSDAY!!.end)
+            }
+            schedule.FRIDAY?.javaClass?.name == today -> {
+                nearestShift.plus(schedule.FRIDAY!!.start)
+                nearestShift.plus(schedule.FRIDAY!!.end)
+            }
+        }
+        return nearestShift.toList()
     }
 }

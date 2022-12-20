@@ -1,6 +1,7 @@
 package com.example.mobileclient.adapter
 
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +40,7 @@ class TutorialsAdapter(
         }
 
         private fun setPicture(context: Context, url: String) {
-            Glide.with(context).load(url).override(200,200).placeholder(R.drawable.ic_placeholder).centerCrop().into(binding.thumbnail)
+            Glide.with(context).load(Uri.parse(url)).override(200,200).placeholder(R.drawable.ic_placeholder).centerCrop().into(binding.thumbnail)
         }
     }
 

@@ -122,9 +122,9 @@
     <string name="paramedic_ambulance_shift_label">Ambulance shift</string>
     <string-array name="filterTutorialsArray">
         <item>All Tutorials</item>
-        <item>FILE_EMERGENCE</item>
-        <item>COURSE</item>
-        <item>GUIDE</item>
+        <item>General</item>
+        <item>In case of death emergency</item>
+        <item>Course</item>
     </string-array>
     <string name="log_in_to_see_tutorial">Log in to read tutorials</string>
     <string name="log_in_to_see_tutorial_message">Tutorials are available only for logged in users</string>

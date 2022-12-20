@@ -34,9 +34,16 @@ class CheckEquipment : Fragment() {
         binding.cancelButton.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.paramedicScreen)
         }
-        val licensePlate = "WWL5A688"
+        var licensePlate = ""
+        paramedicViewModel.currentAmbulanceResponse.observe(viewLifecycleOwner) { response ->
+                if (response.isSuccessful) {
+                    licensePlate = response.body()?.licensePlate.toString()
+                }else{
+                    Log.d("CheckEquipment", "Error: ${response.code()}")
+                }
+            }
         paramedicViewModel.getAmbulanceEquipment(licensePlate)
-        binding.ambulanceTextApi.setText(licensePlate)
+        binding.ambulanceTextApi.text = licensePlate
         val heightDp =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50F, resources.displayMetrics)
         val marginStartDp =

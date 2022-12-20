@@ -56,7 +56,12 @@
     <string name="UserNavigation_ReportedIncidents">Historia zgłoszeń</string>
     <string name="UserNavigation_Map">Mapa</string>
     <string name="UserNavigation_LogOut">Wyloguj się</string>
-
+    <string-array name="filterTutorialsArray">
+        <item>Wszystkie poradniki</item>
+        <item>Ogólne</item>
+        <item>W sytuacji zagrożenia życia</item>
+        <item>Kurs</item>
+    </string-array>
     <string name="incident_scan">Skan</string>
     <string name="scan_prompt">Scan opaski poszkodowanego</string>
     <string name="choose_your_location">Dotknij aby wybrać lokalizacje zdarzenia</string>

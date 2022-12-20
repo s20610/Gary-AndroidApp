@@ -18,8 +18,8 @@ object Repository {
         return RetrofitInstance.api.getTutorials()
     }
 
-    suspend fun getTutorial(id: Int): Response<Tutorial> {
-        return RetrofitInstance.api.getTutorial(id)
+    suspend fun addTutorialRating(tutorialId: Int, email: String, rating: Review): Response<ResponseBody> {
+        return RetrofitInstance.api.addTutorialRating(tutorialId, email, rating)
     }
 
     suspend fun getUserMedicalInfo(userEmail: String): Response<MedicalInfo> {
@@ -38,10 +38,6 @@ object Repository {
         return RetrofitInstance.api.postUserBlood(blood)
     }
 
-    suspend fun getUserDisease(id: Int): Response<Disease> {
-        return RetrofitInstance.api.getDisease(id)
-    }
-
     suspend fun putUserDisease(id: Int, disease: Disease): Response<ResponseBody> {
         return RetrofitInstance.api.putUserDisease(id, disease)
     }
@@ -52,10 +48,6 @@ object Repository {
 
     suspend fun postUserDisease(disease: Disease): Response<ResponseBody> {
         return RetrofitInstance.api.postUserDisease(disease)
-    }
-
-    suspend fun getUserAllergy(id: Int): Response<Allergy> {
-        return RetrofitInstance.api.getAllergy(id)
     }
 
     suspend fun putUserAllergy(id: Int, allergy: Allergy): Response<ResponseBody> {
@@ -146,6 +138,10 @@ object Repository {
         return RetrofitInstance.api.endShift(token)
     }
 
+    suspend fun getEmployeeShifts(token: String): Response<WholeSchedule> {
+        return RetrofitInstance.api.getSchedule(token)
+    }
+
     //Facilities
     suspend fun getFacilities(): Response<List<Facility>> {
         return RetrofitInstance.api.getFacilities()
@@ -173,6 +169,10 @@ object Repository {
 
     suspend fun removeAmbulanceItem(licensePlate: String, itemId: Int): Response<ResponseBody> {
         return RetrofitInstance.api.removeAmbulanceItem(licensePlate, itemId)
+    }
+
+    suspend fun getAssignedAmbulance(token: String): Response<Ambulance> {
+        return RetrofitInstance.api.getAssignedAmbulance(token)
     }
 
 }

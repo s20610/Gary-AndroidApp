@@ -55,7 +55,7 @@
     <string name="select">Select</string>
     <string name="choose">Choose</string>
     <string name="confirm">Confirm</string>
-    <string name="add">Add information</string>
+    <string name="add">Start break</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="call">Call</string>
@@ -125,9 +125,9 @@
     <string name="paramedic_ambulance_shift_label">Ambulance shifts</string>
     <string-array name="filterTutorialsArray">
         <item>All Tutorials</item>
-        <item>FILE_EMERGENCE</item>
-        <item>COURSE</item>
-        <item>GUIDE</item>
+        <item>General</item>
+        <item>In case of death emergency</item>
+        <item>Course</item>
     </string-array>
     <string name="log_in_to_see_tutorial">Log in to read tutorials</string>
     <string name="log_in_to_see_tutorial_message">Tutorials are available only for logged in users</string>
@@ -160,7 +160,7 @@
     <string name="tutorial_category">Tutorial category:</string>
     <string name="description">Description</string>
     <string name="victim_info">Victim info</string>
-    <string name="open_navigation">Navigation</string>
+    <string name="open_navigation">Navigate</string>
     <string name="birthday">Birth date</string>
     <string name="ambulance">Ambulance</string>
     <string name="options">Options</string>

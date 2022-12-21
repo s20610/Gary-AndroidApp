@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:text="@string/paramedic_day_label"
-                    android:textAppearance="?attr/textAppearanceHeadline5"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
                     app:layout_constraintEnd_toStartOf="@id/day_field"
                     app:layout_constraintStart_toStartOf="@+id/shift_title"
                     app:layout_constraintTop_toBottomOf="@id/shift_title" />
@@ -66,6 +66,14 @@
                     app:layout_constraintStart_toEndOf="@id/day_label"
                     app:layout_constraintTop_toTopOf="@id/day_label" />
 
+                <TextView
+                    android:id="@+id/nearest_shift_field"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    app:layout_constraintStart_toStartOf="@id/day_label"
+                    app:layout_constraintTop_toBottomOf="@id/day_label" />
+
                 <Button
                     android:id="@+id/checkin_button"
                     style="@style/Widget.Material3.Button"
@@ -73,11 +81,11 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:backgroundTint="?attr/colorPrimaryVariant"
-                    android:text="Check In"
+                    android:text="@string/check_in_button"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/day_label" />
+                    app:layout_constraintTop_toBottomOf="@id/nearest_shift_field" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
@@ -249,8 +257,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textSize="18sp"
             android:text="Shift"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

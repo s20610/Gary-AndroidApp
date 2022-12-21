@@ -19,6 +19,7 @@ import com.example.mobileclient.databinding.FragmentParamedicScreenBinding
 import com.example.mobileclient.model.Schedule
 import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
 import com.example.mobileclient.util.Constants.Companion.USER_TOKEN_TO_PREFS
+import com.example.mobileclient.util.findNextShift
 import com.example.mobileclient.viewmodels.ParamedicViewModel
 import kotlinx.coroutines.*
 import org.osmdroid.bonuspack.routing.OSRMRoadManager
@@ -66,9 +67,12 @@ class ParamedicScreen : Fragment() {
         paramedicViewModel.getSchedule(token ?: "")
         paramedicViewModel.scheduleResponse.observe(viewLifecycleOwner) { response ->
             if (response.code() == 200) {
-                Log.d("Schedule", response.body().toString())
+                Log.d("Schedule", response.body()!!.schedule.toString())
                 if (response.body()?.schedule != null) {
                     val scheduleForToday = findNextShift(response.body()!!.schedule!!)
+                    val textToDisplay =
+                        "Start - ${scheduleForToday[0]} End - ${scheduleForToday[1]}"
+                    binding.nearestShiftField.text = textToDisplay
                 }
             }
         }
@@ -171,6 +175,7 @@ class ParamedicScreen : Fragment() {
         mLocationOverlay = MyLocationNewOverlay(gpsProvider, map)
         mLocationOverlay!!.enableMyLocation()
         mLocationOverlay!!.enableFollowLocation()
+        map.overlayManager.add(mLocationOverlay)
         mLocationOverlay!!.runOnFirstFix {
             marker2.position = mLocationOverlay!!.myLocation
             marker2.title = "Medic location"
@@ -188,7 +193,6 @@ class ParamedicScreen : Fragment() {
                     map.overlayManager.add(marker)
                     map.overlayManager.add(marker2)
                     map.invalidate()
-                    cancel("End of coroutine")
                 }
             }
             mLocationOverlay!!.myLocationProvider.startLocationProvider { location, _ ->
@@ -214,7 +218,6 @@ class ParamedicScreen : Fragment() {
                         Log.d("Road creation", "Road created for $waypoints")
                         map.overlayManager.add(roadOverlay)
                         map.invalidate()
-                        cancel("End of coroutine")
                     }
                 }
                 map.controller.animateTo(marker2.position)
@@ -245,33 +248,5 @@ class ParamedicScreen : Fragment() {
         marker.title = "Location of incident"
         marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_warning_24)
         return Triple(marker, marker2, palacKultury)
-    }
-
-    private fun findNextShift(schedule: Schedule): List<String> {
-        val today = LocalDate.now().dayOfWeek.toString()
-        val nearestShift: List<String> = mutableListOf()
-        when {
-            schedule.MONDAY?.javaClass?.name == today -> {
-                nearestShift.plus(schedule.MONDAY!!.start)
-                nearestShift.plus(schedule.MONDAY!!.end)
-            }
-            schedule.TUESDAY?.javaClass?.name == today -> {
-                nearestShift.plus(schedule.TUESDAY!!.start)
-                nearestShift.plus(schedule.TUESDAY!!.end)
-            }
-            schedule.WEDNESDAY?.javaClass?.name == today -> {
-                nearestShift.plus(schedule.WEDNESDAY!!.start)
-                nearestShift.plus(schedule.WEDNESDAY!!.end)
-            }
-            schedule.THURSDAY?.javaClass?.name == today -> {
-                nearestShift.plus(schedule.THURSDAY!!.start)
-                nearestShift.plus(schedule.THURSDAY!!.end)
-            }
-            schedule.FRIDAY?.javaClass?.name == today -> {
-                nearestShift.plus(schedule.FRIDAY!!.start)
-                nearestShift.plus(schedule.FRIDAY!!.end)
-            }
-        }
-        return nearestShift.toList()
     }
 }

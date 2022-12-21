@@ -177,4 +177,5 @@
     <string name="ambulance">Ambulance</string>
     <string name="options">Options</string>
     <string name="breakText">Break Time</string>
+    <string name="nearest_shift">Shift:</string>
 </resources>

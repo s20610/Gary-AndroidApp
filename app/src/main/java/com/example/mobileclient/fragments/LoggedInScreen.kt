@@ -99,7 +99,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
         val course = stringArray[3]
         when (p0?.getItemAtPosition(p2).toString()) {
             allTutorials -> {
-                currentlyDisplayedTutorials = tutorialsFromAPI
+                currentlyDisplayedTutorials = checkIfTutorialsAvailable()
                 binding.tutorialsGrid.adapter = TutorialsAdapter(
                     requireContext(),
                     currentlyDisplayedTutorials!!,
@@ -109,7 +109,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
             }
             general -> {
                 val filteredEmergenceTutorials =
-                    tutorialsFromAPI?.filter { it.tutorialType == "IN_CASE_OF_DEATH_EMERGENCY" }
+                    checkIfTutorialsAvailable().filter { it.tutorialType == "IN_CASE_OF_DEATH_EMERGENCY" }
                 currentlyDisplayedTutorials = filteredEmergenceTutorials
                 binding.tutorialsGrid.adapter = TutorialsAdapter(
                     requireContext(),
@@ -120,7 +120,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
             }
             inCaseOfDeath -> {
                 val filteredInCaseOfDeathTutorials =
-                    tutorialsFromAPI?.filter { it.tutorialType == "GENERAL" }
+                    checkIfTutorialsAvailable().filter { it.tutorialType == "GENERAL" }
                 currentlyDisplayedTutorials = filteredInCaseOfDeathTutorials
                 binding.tutorialsGrid.adapter = TutorialsAdapter(
                     requireContext(),
@@ -131,7 +131,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
             }
             course -> {
                 val filteredCourseTutorials =
-                    tutorialsFromAPI?.filter { it.tutorialType == "COURSE" }
+                    checkIfTutorialsAvailable().filter { it.tutorialType == "COURSE" }
                 currentlyDisplayedTutorials = filteredCourseTutorials
                 binding.tutorialsGrid.adapter = TutorialsAdapter(
                     requireContext(),
@@ -144,7 +144,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
-        currentlyDisplayedTutorials = tutorialsFromAPI
+        currentlyDisplayedTutorials = checkIfTutorialsAvailable()
         binding.tutorialsGrid.adapter = TutorialsAdapter(
             requireContext(),
             currentlyDisplayedTutorials!!,
@@ -167,7 +167,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
         tutorialsViewModel.getTutorialsResponse.observe(viewLifecycleOwner) { response ->
             if (response.code() == 200) {
                 tutorialsFromAPI = response.body()
-                currentlyDisplayedTutorials = tutorialsFromAPI
+                currentlyDisplayedTutorials = checkIfTutorialsAvailable()
                 binding.tutorialsGrid.adapter = TutorialsAdapter(
                     requireContext(),
                     currentlyDisplayedTutorials!!,
@@ -197,4 +197,11 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
                 }
             }
         }
+
+    private fun checkIfTutorialsAvailable(): List<Tutorial> {
+        if (tutorialsFromAPI.isNullOrEmpty()) {
+            return tutorialsEmpty
+        }
+        return tutorialsFromAPI!!
+    }
 }

@@ -1,8 +1,8 @@
 package com.example.mobileclient.fragments
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,32 +14,28 @@ import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentAllergyFormBinding
 import com.example.mobileclient.model.Allergy
-import com.example.mobileclient.viewmodels.TypesViewModel
+import com.example.mobileclient.util.setAllergyTypeToApi
 import com.example.mobileclient.viewmodels.UserViewModel
 
 class AllergyForm : Fragment() {
     private var _binding: FragmentAllergyFormBinding? = null
     private val userViewModel: UserViewModel by activityViewModels()
-    private val typesViewModel: TypesViewModel by activityViewModels()
     private val binding get() = _binding!!
 
-    @SuppressLint("ResourceType")
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
+        val allergyTypes: Array<String> =
+            requireContext().resources.getStringArray(R.array.allergyTypes)
         // Inflate the layout for this fragment
         _binding = FragmentAllergyFormBinding.inflate(inflater, container, false)
         val view = binding.root
-        typesViewModel.getAllergyTypes()
-        typesViewModel.allergyTypes.observe(viewLifecycleOwner) {
-            val arrayAdapter = ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_dropdown_item_1line,
-                it,
-            )
-            binding.autoCompleteTextView.setAdapter(arrayAdapter)
-        }
+        val arrayAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_dropdown_item_1line,
+            allergyTypes,
+        )
+        binding.autoCompleteTextView.setAdapter(arrayAdapter)
 
         binding.button2.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_allergyForm_to_medicalInfoMain)
@@ -48,27 +44,26 @@ class AllergyForm : Fragment() {
             val userEmail: String =
                 requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
                     .getString("email", "")!!
+            val type =
+                setAllergyTypeToApi(binding.autoCompleteTextView.text.toString(), allergyTypes)
             val allergy = Allergy(
                 userEmail,
-                binding.autoCompleteTextView.text.toString(),
+                type,
                 binding.allergyName.text.toString(),
                 binding.additionalInfoInput.text.toString(),
             )
+            Log.d("Allergy", allergy.toString())
             userViewModel.postUserAllergy(allergy)
             userViewModel.postCallResponseBody.observe(viewLifecycleOwner) { response ->
-                if (response.isSuccessful) {
+                if (response.code() == 200) {
                     Navigation.findNavController(view)
                         .navigate(R.id.action_allergyForm_to_medicalInfoMain)
                     Toast.makeText(
-                        context,
-                        "OK",
-                        Toast.LENGTH_SHORT
+                        context, "OK", Toast.LENGTH_SHORT
                     ).show()
                 } else {
                     Toast.makeText(
-                        context,
-                        "Update error " + response.code(),
-                        Toast.LENGTH_LONG
+                        context, "error ${response.code()}", Toast.LENGTH_SHORT
                     ).show()
                 }
             }

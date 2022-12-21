@@ -126,6 +126,18 @@
         <item>In case of death emergency</item>
         <item>Course</item>
     </string-array>
+    <string-array name="medicalInfoArray" >
+        <item name="Blood Type">Blood Type</item>
+        <item name="Allergy">Allergy</item>
+        <item name="Disease">Disease</item>
+        <item name="TrustedPerson">Trusted Person</item>
+    </string-array>
+    <string-array name="allergyTypes" >
+        <item>Skin contact</item>
+        <item>Ingestion</item>
+        <item>Injection/Venom</item>
+        <item>Inhalation</item>
+    </string-array>
     <string name="log_in_to_see_tutorial">Log in to read tutorials</string>
     <string name="log_in_to_see_tutorial_message">Tutorials are available only for logged in users</string>
     <string name="about_us">About us</string>

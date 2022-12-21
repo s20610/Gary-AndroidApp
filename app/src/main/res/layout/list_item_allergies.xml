@@ -35,7 +35,7 @@
                 android:layout_column="1"
                 android:layout_weight="1"
                 android:paddingLeft="10dp"
-                android:text="@{allergy.allergyType}"
+                android:text=""
                 android:textSize="18dp"
                 app:layout_constraintEnd_toEndOf="parent" />
         </TableRow>

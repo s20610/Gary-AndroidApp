@@ -174,4 +174,5 @@
     <string name="ambulance">Ambulance</string>
     <string name="options">Options</string>
     <string name="breakText">Break Time</string>
+    <string name="break_explaining_text">When you start a break your ambulance shows up in dispatchers view as \"Currently on break\"</string>
 </resources>

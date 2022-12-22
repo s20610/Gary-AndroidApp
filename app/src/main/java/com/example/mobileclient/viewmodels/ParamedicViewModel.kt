@@ -16,6 +16,7 @@ class ParamedicViewModel : ViewModel() {
     var updateAmbulanceInfoResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var currentAmbulanceResponse: MutableLiveData<Response<Ambulance>> = MutableLiveData()
     var scheduleResponse: MutableLiveData<Response<WholeSchedule>> = MutableLiveData()
+    var isOnBreak: Boolean = false
 
     fun startEmployeeShift(token: String) {
         viewModelScope.launch {

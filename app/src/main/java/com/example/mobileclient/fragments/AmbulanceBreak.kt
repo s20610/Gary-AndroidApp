@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentAmbulanceBreakBinding
+import com.example.mobileclient.viewmodels.ParamedicViewModel
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_KEYBOARD
 import com.google.android.material.timepicker.TimeFormat
@@ -17,6 +19,7 @@ import com.google.android.material.timepicker.TimeFormat
 class AmbulanceBreak : Fragment() {
     private var _binding: FragmentAmbulanceBreakBinding? = null
     private val binding get() = _binding!!
+    private val paramedicViewModel: ParamedicViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,48 +27,51 @@ class AmbulanceBreak : Fragment() {
     ): View {
         _binding = FragmentAmbulanceBreakBinding.inflate(inflater, container, false)
         val view = binding.root
-        val breakTypes = arrayOf("Refuel", "Food break", "5 min break", "Breakdown", "Others")
-        val arrayAdapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, breakTypes)
-        binding.autoCompleteTextView.setAdapter(arrayAdapter)
-        val calendar = Calendar.getInstance()
-        val timePicker = MaterialTimePicker.Builder()
-            .setTimeFormat(TimeFormat.CLOCK_12H)
-            .setHour(calendar.get(Calendar.HOUR_OF_DAY))
-            .setMinute(calendar.get(Calendar.MINUTE))
-            .setInputMode(INPUT_MODE_KEYBOARD)
-            .build()
-        timePicker.addOnCancelListener {
-            timePicker.dismiss()
+        if (!paramedicViewModel.isOnBreak) {
+            binding.breakButton.text = getString(R.string.add)
+            binding.breakButton.setBackgroundColor(resources.getColor(R.color.green_light, null))
+        } else {
+            binding.breakButton.text = getString(R.string.end)
+            binding.breakButton.setBackgroundColor(resources.getColor(R.color.red, null))
         }
-        val timePicker1 = MaterialTimePicker.Builder()
-            .setTimeFormat(TimeFormat.CLOCK_12H)
-            .setHour(calendar.get(Calendar.HOUR_OF_DAY))
-            .setMinute(calendar.get(Calendar.MINUTE))
-            .setInputMode(INPUT_MODE_KEYBOARD)
-            .build()
-        timePicker1.addOnCancelListener {
-            timePicker1.dismiss()
-        }
-        binding.startDateInput
-            .setOnClickListener {
-                binding.autoCompleteTextView.setAdapter(arrayAdapter)
-                timePicker.show(parentFragmentManager, "start_time_picker")
-                timePicker.addOnPositiveButtonClickListener {
-                    val startTimeInputValue =
-                        timePicker.hour.toString() + ":" + timePicker.minute.toString()
-                    binding.startDateInput.setText(startTimeInputValue)
+        binding.breakButton.setOnClickListener {
+            if (!paramedicViewModel.isOnBreak) {
+                paramedicViewModel.changeAmbulanceState(
+                    paramedicViewModel.currentAmbulanceResponse.value!!.body()!!.licensePlate,
+                    "CREW_BRAKE"
+                )
+                paramedicViewModel.updateAmbulanceInfoResponse.observe(viewLifecycleOwner) { response ->
+                    if (response.isSuccessful) {
+                        paramedicViewModel.isOnBreak = true
+                        binding.breakButton.text = getString(R.string.end)
+                        binding.breakButton.setBackgroundColor(
+                            resources.getColor(
+                                R.color.red,
+                                null
+                            )
+                        )
+                    }
+                }
+            } else {
+                paramedicViewModel.changeAmbulanceState(
+                    paramedicViewModel.currentAmbulanceResponse.value!!.body()!!.licensePlate,
+                    "AVAILABLE"
+                )
+                paramedicViewModel.updateAmbulanceInfoResponse.observe(viewLifecycleOwner) { response ->
+                    if (response.isSuccessful) {
+                        paramedicViewModel.isOnBreak = false
+                        binding.breakButton.text = getString(R.string.add)
+                        binding.breakButton.setBackgroundColor(
+                            resources.getColor(
+                                R.color.green_light,
+                                null
+                            )
+                        )
+                    }
                 }
             }
-        binding.endDateInput.setOnClickListener {
-            timePicker1.show(parentFragmentManager, "end_time_picker")
-            timePicker1.addOnPositiveButtonClickListener {
-                val endTimeInputValue =
-                    timePicker1.hour.toString() + ":" + timePicker1.minute.toString()
-                binding.endDateInput.setText(endTimeInputValue)
-            }
         }
-        binding.button2.setOnClickListener {
+        binding.cancelButton.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.paramedicScreen)
         }
         return view

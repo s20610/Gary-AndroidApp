@@ -2,6 +2,7 @@ package com.example.mobileclient.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,19 +13,21 @@ import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentAllergyDetailsBinding
 import com.example.mobileclient.model.Allergy
+import com.example.mobileclient.util.setAllergyTypeFromApi
+import com.example.mobileclient.util.setAllergyTypeToApi
 import com.example.mobileclient.viewmodels.UserViewModel
 
 class AllergyDetails : Fragment() {
     private var allergy: Allergy? = null
     private var _binding: FragmentAllergyDetailsBinding? = null
     private val userViewModel: UserViewModel by activityViewModels()
-
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+        val allergyTypes: Array<String> =
+            requireContext().resources.getStringArray(R.array.allergyTypes)
         // Inflate the layout for this fragment
         _binding = FragmentAllergyDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
@@ -34,17 +37,23 @@ class AllergyDetails : Fragment() {
                 .getString("email", "")!!
         if (allergy != null) {
             allergy?.userEmail = userEmail
-            binding.autoCompleteTextView.setText(allergy?.allergyType)
+            binding.autoCompleteTextView.setText(
+                setAllergyTypeFromApi(
+                    allergy!!.allergyType, allergyTypes
+                )
+            )
             binding.allergyName.setText(allergy?.allergyName)
             binding.additionalInfoInput.setText(allergy?.other)
         } else {
-            Toast.makeText(context, "No allergy selected", Toast.LENGTH_SHORT).show()
+            Log.d("AllergyDetails", "Allergy is null")
         }
 
         binding.button.setOnClickListener {
+            val allergyType: String =
+                setAllergyTypeToApi(binding.autoCompleteTextView.text.toString(), allergyTypes)
             val updatedAllergy = Allergy(
                 allergy!!.userEmail,
-                binding.autoCompleteTextView.text.toString(),
+                allergyType,
                 binding.allergyName.text.toString(),
                 binding.additionalInfoInput.text.toString(),
             )
@@ -60,7 +69,6 @@ class AllergyDetails : Fragment() {
             userViewModel.deleteUserAllergy(allergy!!.allergyId)
             userViewModel.deleteCallResponseBody.observe(viewLifecycleOwner) {
                 if (it.isSuccessful) {
-                    Toast.makeText(context, "Allergy deleted", Toast.LENGTH_SHORT).show()
                     Navigation.findNavController(view)
                         .navigate(R.id.action_allergyDetails_to_medicalInfoMain)
                 }

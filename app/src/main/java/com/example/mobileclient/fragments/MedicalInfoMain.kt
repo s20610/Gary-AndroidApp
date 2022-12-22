@@ -30,8 +30,7 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentMedicalInfoMainBinding.inflate(inflater, container, false)
@@ -44,29 +43,20 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
             Disease("", "", "", true),
         )
         binding.allergyView.adapter = AllergyAdapter(allergiesEmpty, this)
-//        binding.allergyView.setHasFixedSize(true)
         binding.diseaseView.adapter = ChronicDiseasesAdapter(chronicDiseasesEmpty, this)
-//        binding.diseaseView.setHasFixedSize(true)
-        var userEmail: String =
+        val userEmail: String =
             requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
                 .getString("email", "")!!
         userViewModel.getUserMedicalInfo(userEmail)
         userViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
-            Log.d("Medical Info", response.toString())
             Log.d("Medical Info", response.body().toString())
-            if (response.isSuccessful) {
+            if (response.code() == 200) {
 //TODO("Handle changing picture based on blood type")
                 val allergiesFromApi: List<Allergy> = response.body()!!.allergies
                 val chronicDiseasesFromApi: List<Disease> = response.body()!!.diseases
                 binding.allergyView.adapter = AllergyAdapter(allergiesFromApi, this)
                 binding.diseaseView.adapter = ChronicDiseasesAdapter(chronicDiseasesFromApi, this)
-            } else {
-                Toast.makeText(context, "Server error" + response.code(), LENGTH_LONG).show()
-                Log.d("getUserMedicalInfoResponseBody", response.body().toString())
-                Log.d("getUserMedicalInfoResponseCode", response.code().toString())
             }
-
-
         }
         binding.imageView.setOnClickListener {
             Navigation.findNavController(view)
@@ -84,10 +74,9 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
     private fun addMedicalInfo(view: View) {
         context?.let { it1 ->
             MaterialAlertDialogBuilder(it1).setTitle("Add medical info?")
-                .setNegativeButton("Cancel") { dialog, which ->
+                .setNegativeButton(getString(R.string.cancel)) { dialog, which ->
                     dialog.cancel()
-                }
-                .setItems(
+                }.setItems(
                     R.array.medicalInfoArray
                 ) { _, which ->
                     when (which) {
@@ -110,15 +99,12 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
                     }
                     // The 'which' argument contains the index position
                     // of the selected item
-                }.create()
-                .show()
+                }.create().show()
         }
     }
 
     override fun onAllergyClick(position: Int) {
-        val allergy =
-            (binding.allergyView.adapter as AllergyAdapter).getAllergy(position)
-//        val allergy = Allergy("test@test.pl", "INGESTION", "Testowa", "Testowa alergia")
+        val allergy = (binding.allergyView.adapter as AllergyAdapter).getAllergy(position)
         Log.d("Allergy", allergy.toString())
         userViewModel.setChosenAllergy(allergy)
         Navigation.findNavController(binding.root)
@@ -126,8 +112,7 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
     }
 
     override fun onDiseaseClick(position: Int) {
-        val disease =
-            (binding.diseaseView.adapter as ChronicDiseasesAdapter).getDisease(position)
+        val disease = (binding.diseaseView.adapter as ChronicDiseasesAdapter).getDisease(position)
         Log.d("Disease", disease.toString())
         userViewModel.setChosenDisease(disease)
         Navigation.findNavController(binding.root)

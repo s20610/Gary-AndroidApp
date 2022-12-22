@@ -40,7 +40,13 @@ class TutorialsAdapter(
         }
 
         private fun setPicture(context: Context, url: String) {
-            Glide.with(context).load(Uri.parse(url)).override(200,200).placeholder(R.drawable.ic_placeholder).centerCrop().into(binding.thumbnail)
+            if (url.isNullOrEmpty()) {
+                binding.thumbnail.setImageResource(R.drawable.tutorials_placeholder)
+            } else {
+                Glide.with(context).load(url).override(300, 200)
+                    .placeholder(R.drawable.ic_downloading).error(R.drawable.tutorials_placeholder)
+                    .centerCrop().into(binding.thumbnail)
+            }
         }
     }
 

@@ -62,7 +62,20 @@
         <item>W sytuacji zagrożenia życia</item>
         <item>Kurs</item>
     </string-array>
+    <string-array name="medicalInfoArray" >
+        <item name="Blood Type">Grupa krwi</item>
+        <item name="Allergy">Alergia</item>
+        <item name="Disease">Choroba</item>
+        <item name="TrustedPerson">Zaufana osoba</item>
+    </string-array>
+    <string-array name="allergyTypes" >
+        <item>Kontaktowa</item>
+        <item>Pokarmowa</item>
+        <item>Dożylna/Jad</item>
+        <item>Wziewna</item>
+    </string-array>
     <string name="incident_scan">Skan</string>
+    <string name="startBreak">Rozpocznij przerwę</string>
     <string name="scan_prompt">Scan opaski poszkodowanego</string>
     <string name="choose_your_location">Dotknij aby wybrać lokalizacje zdarzenia</string>
     <string name="add_victim_info">Dodaj informacje o poszkodowanym</string>

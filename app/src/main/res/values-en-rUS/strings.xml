@@ -119,6 +119,7 @@
     <string name="UserNavigation_Settings">Settings</string>
     <string name="new_password_confirm">Confirm new password</string>
     <string name="paramedic_day_label">Day:</string>
+    <string name="startBreak">Start Break</string>
     <string name="paramedic_ambulance_shift_label">Ambulance shift</string>
     <string-array name="filterTutorialsArray">
         <item>All Tutorials</item>

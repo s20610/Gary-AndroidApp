@@ -28,7 +28,7 @@ class AmbulanceBreak : Fragment() {
         _binding = FragmentAmbulanceBreakBinding.inflate(inflater, container, false)
         val view = binding.root
         if (!paramedicViewModel.isOnBreak) {
-            binding.breakButton.text = getString(R.string.add)
+            binding.breakButton.text = getString(R.string.startBreak)
             binding.breakButton.setBackgroundColor(resources.getColor(R.color.green_light, null))
         } else {
             binding.breakButton.text = getString(R.string.end)
@@ -60,7 +60,7 @@ class AmbulanceBreak : Fragment() {
                 paramedicViewModel.updateAmbulanceInfoResponse.observe(viewLifecycleOwner) { response ->
                     if (response.isSuccessful) {
                         paramedicViewModel.isOnBreak = false
-                        binding.breakButton.text = getString(R.string.add)
+                        binding.breakButton.text = getString(R.string.startBreak)
                         binding.breakButton.setBackgroundColor(
                             resources.getColor(
                                 R.color.green_light,

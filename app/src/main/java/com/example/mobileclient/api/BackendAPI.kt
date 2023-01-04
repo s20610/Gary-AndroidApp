@@ -209,4 +209,10 @@ interface BackendAPI {
         @Path("itemId") itemId: Int
     ): Response<ResponseBody>
 
+    @POST("backup")
+    suspend fun callForBackup(@Body backup: Backup): Response<ResponseBody>
+
+    @GET("backup/{id}")
+    suspend fun getSentBackup(@Path("id") id: Int): Response<Backup>
+
 }

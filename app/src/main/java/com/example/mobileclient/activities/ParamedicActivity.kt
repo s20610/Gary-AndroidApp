@@ -15,6 +15,7 @@ import com.example.mobileclient.util.Constants.Companion.USER_EMAIL_TO_PREFS
 import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
 import com.example.mobileclient.util.Constants.Companion.USER_ROLE_TO_PREFS
 import com.example.mobileclient.util.Constants.Companion.USER_TOKEN_TO_PREFS
+import com.google.android.material.appbar.MaterialToolbar
 
 
 class ParamedicActivity : AppCompatActivity() {
@@ -49,9 +50,8 @@ class ParamedicActivity : AppCompatActivity() {
                     it.isChecked = true
                     val sharedPreferences =
                         getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE)
-                    sharedPreferences.edit().remove(USER_ROLE_TO_PREFS).commit()
-                    sharedPreferences.edit().remove(USER_TOKEN_TO_PREFS).commit()
-                    sharedPreferences.edit().remove(USER_EMAIL_TO_PREFS).commit()
+                    sharedPreferences.edit().remove(USER_ROLE_TO_PREFS).remove(USER_TOKEN_TO_PREFS)
+                        .remove(USER_EMAIL_TO_PREFS).commit()
                     Log.d(
                         "User prefs",
                         getSharedPreferences(USER_INFO_PREFS, MODE_PRIVATE).all.toString()

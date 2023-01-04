@@ -176,4 +176,6 @@
     <string name="options">Options</string>
     <string name="breakText">Break Time</string>
     <string name="break_explaining_text">When you start a break your ambulance shows up in dispatchers view as \"Currently on break\"</string>
+    <string name="currentlyOnBreak">Currently on Break</string>
+    <string name="no_backup_type_selected">Please select at least one type of backup</string>
 </resources>

@@ -175,4 +175,13 @@ object Repository {
         return RetrofitInstance.api.getAssignedAmbulance(token)
     }
 
+    //Backup
+    suspend fun getSentBackup(id: Int): Response<Backup> {
+        return RetrofitInstance.api.getSentBackup(id)
+    }
+
+    suspend fun callForBackup(backup: Backup): Response<ResponseBody> {
+        return RetrofitInstance.api.callForBackup(backup)
+    }
+
 }

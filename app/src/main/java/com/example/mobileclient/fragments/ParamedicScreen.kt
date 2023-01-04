@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
+import com.example.mobileclient.databinding.ActivityParamedicBinding
 import com.example.mobileclient.databinding.FragmentParamedicScreenBinding
 import com.example.mobileclient.model.Schedule
 import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS

@@ -9,13 +9,6 @@ data class Backup(
 ) {
    companion object {
        enum class BackupType(val type: String) {
-           //"POLICE",
-           //  "FIRE_FIGHTERS",
-           //  "AMBULANCE",
-           //  "POLICE_AMBULANCE",
-           //  "POLICE_FIRE",
-           //  "AMBULANCE_FIRE",
-           //  "POLICE_AMBULANCE_FIRE"
               POLICE("POLICE"),
                 FIRE_FIGHTERS("FIRE_FIGHTERS"),
                 AMBULANCE("AMBULANCE"),

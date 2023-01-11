@@ -41,9 +41,9 @@
         tools:layout="@layout/fragment_add_victim_info" />
     <fragment
         android:id="@+id/equipment"
-        android:name="com.example.mobileclient.fragments.Equipment"
+        android:name="com.example.mobileclient.fragments.CheckEquipment"
         android:label="fragment_equipment"
-        tools:layout="@layout/fragment_equipment" >
+        tools:layout="@layout/fragment_check_equipment" >
         <action
             android:id="@+id/action_equipment_to_checkEquipment"
             app:destination="@id/checkEquipment" />
@@ -55,7 +55,7 @@
         tools:layout="@layout/fragment_check_equipment" />
     <fragment
         android:id="@+id/paramedicSettings"
-        android:name="com.example.mobileclient.ParamedicSettings"
+        android:name="com.example.mobileclient.fragments.ParamedicSettings"
         android:label="fragment_paramedic_settings"
         tools:layout="@layout/fragment_paramedic_settings" />
 </navigation>

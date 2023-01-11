@@ -38,9 +38,9 @@ class ParamedicActivity : AppCompatActivity() {
         binding.navigationView.setNavigationItemSelectedListener {
             it.isChecked = true
             when (it.toString()) {
-                "Map" -> {
+                getString(R.string.options) -> {
                     it.isChecked = true
-                    navController.navigate(R.id.paramedicScreen)
+                    navController.navigate(R.id.paramedicSettings)
                 }
                 getString(R.string.breakText) -> {
                     it.isChecked = true

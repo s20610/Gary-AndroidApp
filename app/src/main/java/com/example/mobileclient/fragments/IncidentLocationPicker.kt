@@ -40,12 +40,12 @@ class IncidentLocationPicker : DialogFragment() {
         map = binding.map
         var address: List<Address>
         val geocoder = Geocoder(requireContext(), Locale("pol"))
+        var resultAddress: String = ""
         val mReceive: MapEventsReceiver = object : MapEventsReceiver {
             override fun singleTapConfirmedHelper(p: GeoPoint?): Boolean {
                 marker.position = p
                 address =
                     geocoder.getFromLocation(marker.position.latitude, marker.position.longitude, 1)!!
-                var resultAddress: String = ""
                 for (i in 0..address[0].maxAddressLineIndex) {
                     resultAddress += address[0].getAddressLine(i)
                 }
@@ -78,7 +78,8 @@ class IncidentLocationPicker : DialogFragment() {
         binding.dialogAccept.setOnClickListener {
 //            val result = marker.position.toString()
             val result = marker.position
-            setFragmentResult("incidentLocation", bundleOf("bundleKey" to result))
+            val address = resultAddress
+            setFragmentResult("incidentLocation", bundleOf("bundleKey" to result, "bundleKey2" to resultAddress))
             dismiss()
         }
         return view

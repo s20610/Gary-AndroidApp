@@ -8,7 +8,7 @@ data class AccidentReport(
     val victimCount: Int,
     val longitude: Double,
     val latitude: Double,
-    val conscious: Boolean,
+    val concious: Boolean,
     val breathing: Boolean,
     val description: String,
 ){

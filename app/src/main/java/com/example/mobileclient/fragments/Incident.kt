@@ -47,9 +47,14 @@ class Incident : Fragment() {
         }
 
         val view = binding.root
+        val incidentLocationPicker = IncidentLocationPicker.newInstance()
         var pickedLocation = GeoPoint(0.0, 0.0)
+        var pickedAddress = ""
         binding.button2.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_incident_to_loggedInScreen)
+        }
+        binding.locationInputText.setOnClickListener {
+            incidentLocationPicker.show(childFragmentManager, "incident_location_picker")
         }
         binding.button.setOnClickListener {
             if (validateForm()) {
@@ -59,8 +64,8 @@ class Incident : Fragment() {
                 val victimCount: Int = binding.victimsEdit?.text.toString().toInt()
                 val barcode: String = binding.barcodeInputText.text.toString()
                 val accidentType: String = binding.autoCompleteTextView2.text.toString()
-                val isConscious = binding.consciousYes?.isChecked == true
-                val isBreathing = binding.breathingYes?.isChecked == true
+                val isConscious = binding.consciousYes?.isChecked
+                val isBreathing = binding.breathingYes?.isChecked
                 val accidentReport = AccidentReport(
                     date = "",
                     userEmail,
@@ -69,8 +74,8 @@ class Incident : Fragment() {
                     victimCount,
                     pickedLocation.longitude,
                     pickedLocation.latitude,
-                    isConscious,
-                    isBreathing,
+                    isConscious!!,
+                    isBreathing!!,
                     description = ""
                 )
                 accidentReportViewModel.postAccidentReport(accidentReport)
@@ -89,13 +94,13 @@ class Incident : Fragment() {
                 }
             }
         }
-        val incidentLocationPicker = IncidentLocationPicker.newInstance()
         binding.openMapButton!!.setOnClickListener {
             incidentLocationPicker.show(childFragmentManager, "incident_location_picker")
         }
         childFragmentManager.setFragmentResultListener("incidentLocation", this) { _, bundle ->
             pickedLocation = bundle.getSerializable("bundleKey") as GeoPoint
-            binding.locationInputText.setText(pickedLocation.toString())
+            pickedAddress = bundle.getSerializable("bundleKey2") as String
+            binding.locationInputText.setText(pickedAddress)
         }
         val barcodeLauncher = registerForActivityResult(
             ScanContract()

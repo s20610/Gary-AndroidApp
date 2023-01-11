@@ -50,8 +50,11 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
         userViewModel.getUserMedicalInfo(userEmail)
         userViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
             Log.d("Medical Info", response.body().toString())
-            if (response.code() == 200) {
+            if (response.isSuccessful) {
 //TODO("Handle changing picture based on blood type")
+                val bloodType = response.body()?.bloodType.toString()
+                val rhType = response.body()?.rhType.toString()
+                binding.imageView.setImageResource(getImageResourceForBloodType(bloodType, rhType))
                 val allergiesFromApi: List<Allergy> = response.body()!!.allergies
                 val chronicDiseasesFromApi: List<Disease> = response.body()!!.diseases
                 binding.allergyView.adapter = AllergyAdapter(allergiesFromApi, this)
@@ -117,5 +120,41 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
         userViewModel.setChosenDisease(disease)
         Navigation.findNavController(binding.root)
             .navigate(R.id.action_medicalInfoMain_to_diseaseDetails)
+    }
+
+    private fun getImageResourceForBloodType(bloodType: String, rhType: String): Int {
+        return when (bloodType) {
+            "A" -> {
+                if (rhType == "+") {
+                    R.drawable.blood_type_a_plus
+                } else {
+                    R.drawable.blood_type_a_minus
+                }
+            }
+            "B" -> {
+                if (rhType == "+") {
+                    R.drawable.blood_type_b_plus
+                } else {
+                    R.drawable.blood_type_b_minus
+                }
+            }
+            "AB" -> {
+                if (rhType == "+") {
+                    R.drawable.blood_type_ab__plus
+                } else {
+                    R.drawable.blood_type_ab_minus
+                }
+            }
+            "0" -> {
+                if (rhType == "+") {
+                    R.drawable.blood_type_0_plus
+                } else {
+                    R.drawable.blood_type_0_minus
+                }
+            }
+            else -> {
+                R.drawable.ic_placeholder
+            }
+        }
     }
 }

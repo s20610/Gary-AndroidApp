@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_paramedicScreen_to_equipment"
             app:destination="@id/checkEquipment" />
+        <action
+            android:id="@+id/action_paramedicScreen_to_paramedicSettings"
+            app:destination="@id/paramedicSettings" />
     </fragment>
     <fragment
         android:id="@+id/ambulanceBreak"
@@ -50,4 +53,9 @@
         android:name="com.example.mobileclient.fragments.CheckEquipment"
         android:label="fragment_check_equipment"
         tools:layout="@layout/fragment_check_equipment" />
+    <fragment
+        android:id="@+id/paramedicSettings"
+        android:name="com.example.mobileclient.ParamedicSettings"
+        android:label="fragment_paramedic_settings"
+        tools:layout="@layout/fragment_paramedic_settings" />
 </navigation>

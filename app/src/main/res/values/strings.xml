@@ -130,13 +130,13 @@
         <item>In case of death emergency</item>
         <item>Course</item>
     </string-array>
-    <string-array name="medicalInfoArray" >
+    <string-array name="medicalInfoArray">
         <item name="Blood Type">Blood Type</item>
         <item name="Allergy">Allergy</item>
         <item name="Disease">Disease</item>
         <item name="TrustedPerson">Trusted Person</item>
     </string-array>
-    <string-array name="allergyTypes" >
+    <string-array name="allergyTypes">
         <item>Skin contact</item>
         <item>Ingestion</item>
         <item>Injection/Venom</item>
@@ -186,4 +186,6 @@
     <string name="cantRateTutorials">You can\'t rate tutorials as guest</string>
     <string name="no_internet">Internet connection not available</string>
     <string name="cantWatchTutorials">You can\'t watch tutorials as guest</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -14,6 +14,14 @@ object Repository {
         return RetrofitInstance.api.registerNewUser(newUser)
     }
 
+    suspend fun getUserInfo(token: String): Response<UserInfoResponse> {
+        return RetrofitInstance.api.getUserInfo(token)
+    }
+
+    suspend fun changePassword(token: String, passwordChange: passwordChange): Response<ResponseBody> {
+        return RetrofitInstance.api.changePassword(token, passwordChange)
+    }
+
     suspend fun getTutorials(): Response<List<Tutorial>> {
         return RetrofitInstance.api.getTutorials()
     }

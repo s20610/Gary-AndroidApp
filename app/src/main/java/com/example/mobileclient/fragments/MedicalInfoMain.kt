@@ -17,6 +17,8 @@ import com.example.mobileclient.adapter.ChronicDiseasesAdapter
 import com.example.mobileclient.databinding.FragmentMedicalInfoMainBinding
 import com.example.mobileclient.model.Allergy
 import com.example.mobileclient.model.Disease
+import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
+import com.example.mobileclient.util.Constants.Companion.USER_TOKEN_TO_PREFS
 import com.example.mobileclient.viewmodels.UserViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -47,6 +49,17 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
         val userEmail: String =
             requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
                 .getString("email", "")!!
+        val token = requireActivity().getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE)
+            .getString(USER_TOKEN_TO_PREFS, "")
+        if (token != null) {
+            userViewModel.getUserInfo(token)
+            userViewModel.getUserInfoResponse.observe(viewLifecycleOwner) { response ->
+                if (response.isSuccessful){
+                    val fullName = response.body()?.name + " " + response.body()?.lastname
+                    binding.userName.text = fullName
+                }
+            }
+        }
         userViewModel.getUserMedicalInfo(userEmail)
         userViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
             Log.d("Medical Info", response.body().toString())

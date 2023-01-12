@@ -15,7 +15,9 @@ class UserViewModel : ViewModel() {
     private var repository: Repository = Repository
     var loginResponse: MutableLiveData<Response<AuthResponse>> = MutableLiveData()
     var registerResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
+    var changePasswordResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var getUserMedicalInfoResponse: MutableLiveData<Response<MedicalInfo>> = MutableLiveData()
+    var getUserInfoResponse: MutableLiveData<Response<UserInfoResponse>> = MutableLiveData()
     var updateCallResponseBody: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var postCallResponseBody: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var deleteCallResponseBody: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
@@ -44,6 +46,32 @@ class UserViewModel : ViewModel() {
                 Log.d("Connection exception", e.stackTraceToString())
             } catch (e: Exception) {
                 Log.d("registerNewUser exception", e.stackTraceToString())
+            }
+        }
+    }
+
+    fun getUserInfo(token: String){
+        viewModelScope.launch {
+            try {
+                val response = repository.getUserInfo(token)
+                getUserInfoResponse.value = response
+            } catch (e: ConnectException) {
+                Log.d("Connection exception", e.stackTraceToString())
+            } catch (e: Exception) {
+                Log.d("getUserInfo exception", e.stackTraceToString())
+            }
+        }
+    }
+
+    fun changePassword(token: String, passwordChange: passwordChange){
+        viewModelScope.launch {
+            try {
+                val response = repository.changePassword(token, passwordChange)
+                changePasswordResponse.value = response
+            } catch (e: ConnectException) {
+                Log.d("Connection exception", e.stackTraceToString())
+            } catch (e: Exception) {
+                Log.d("changePassword exception", e.stackTraceToString())
             }
         }
     }

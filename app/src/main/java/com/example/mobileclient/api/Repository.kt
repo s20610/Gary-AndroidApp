@@ -14,6 +14,14 @@ object Repository {
         return RetrofitInstance.api.registerNewUser(newUser)
     }
 
+    suspend fun getUserInfo(token: String): Response<UserInfoResponse> {
+        return RetrofitInstance.api.getUserInfo(token)
+    }
+
+    suspend fun changePassword(token: String, passwordChange: passwordChange): Response<ResponseBody> {
+        return RetrofitInstance.api.changePassword(token, passwordChange)
+    }
+
     suspend fun getTutorials(): Response<List<Tutorial>> {
         return RetrofitInstance.api.getTutorials()
     }
@@ -148,8 +156,8 @@ object Repository {
     }
 
     //Ambulance
-    suspend fun getAmbulanceEquipment(licensePlate: String): Response<List<AmbulanceEquipment>> {
-        return RetrofitInstance.api.getAmbulanceEquipment(licensePlate)
+    suspend fun getAmbulanceEquipment(licensePlate: String, token: String): Response<List<AmbulanceEquipment>> {
+        return RetrofitInstance.api.getAmbulanceEquipment(licensePlate, token)
     }
 
     suspend fun changeAmbulanceState(licensePlate: String, state: String): Response<ResponseBody> {
@@ -173,6 +181,15 @@ object Repository {
 
     suspend fun getAssignedAmbulance(token: String): Response<Ambulance> {
         return RetrofitInstance.api.getAssignedAmbulance(token)
+    }
+
+    //Backup
+    suspend fun getSentBackup(id: Int): Response<Backup> {
+        return RetrofitInstance.api.getSentBackup(id)
+    }
+
+    suspend fun callForBackup(backup: Backup): Response<ResponseBody> {
+        return RetrofitInstance.api.callForBackup(backup)
     }
 
 }

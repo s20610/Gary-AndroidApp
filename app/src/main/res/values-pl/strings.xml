@@ -176,4 +176,10 @@
     <string name="ambulance">Ambulans</string>
     <string name="options">Opcje</string>
     <string name="breakText">Przerwa</string>
+    <string name="currentlyOnBreak">Currently on Break</string>
+    <string name="no_backup_type_selected">Please select at least one type of backup</string>
+    <string name="cantRateTutorials">You can\'t rate tutorials as guest</string>
+    <string name="no_internet">Internet connection not available</string>
+    <string name="cantWatchTutorials">You can\'t watch tutorials as guest</string>
+    <string name="password_not_matching">Passwords do not match</string>
 </resources>

@@ -3,6 +3,8 @@ package com.example.mobileclient.util
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -75,4 +77,24 @@ fun findNextShift(schedule: Schedule): List<String> {
     }
     Log.d("Schedule", nearestShift.toString())
     return nearestShift.toList()
+}
+
+// check internet connection
+fun checkIfInternetAvailable(context: Context): Boolean{
+    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val networkCapabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+    return if (networkCapabilities != null){
+        if (networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+            networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED) &&
+            networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED)
+        ) {
+            Log.d("Internet check", "Connected to Internet")
+            true
+        } else {
+            Log.d("Internet check", "Not connected to Internet")
+            false
+        }
+    }else{
+        false
+    }
 }

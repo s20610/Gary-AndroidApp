@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentAmbulanceBreakBinding
 import com.example.mobileclient.viewmodels.ParamedicViewModel
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_KEYBOARD
 import com.google.android.material.timepicker.TimeFormat
@@ -27,12 +28,17 @@ class AmbulanceBreak : Fragment() {
     ): View {
         _binding = FragmentAmbulanceBreakBinding.inflate(inflater, container, false)
         val view = binding.root
+        val topAppBar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
         if (!paramedicViewModel.isOnBreak) {
             binding.breakButton.text = getString(R.string.startBreak)
             binding.breakButton.setBackgroundColor(resources.getColor(R.color.green_light, null))
+            topAppBar.setBackgroundColor(resources.getColor(R.color.green_dark, null))
+            topAppBar.title = ""
         } else {
             binding.breakButton.text = getString(R.string.end)
             binding.breakButton.setBackgroundColor(resources.getColor(R.color.red, null))
+            topAppBar.setBackgroundColor(resources.getColor(R.color.red, null))
+            topAppBar.title = getString(R.string.currentlyOnBreak)
         }
         binding.breakButton.setOnClickListener {
             if (!paramedicViewModel.isOnBreak) {
@@ -50,6 +56,8 @@ class AmbulanceBreak : Fragment() {
                                 null
                             )
                         )
+                        topAppBar.setBackgroundColor(resources.getColor(R.color.red, null))
+                        topAppBar.title = getString(R.string.currentlyOnBreak)
                     }
                 }
             } else {
@@ -67,6 +75,8 @@ class AmbulanceBreak : Fragment() {
                                 null
                             )
                         )
+                        topAppBar.setBackgroundColor(resources.getColor(R.color.green_dark, null))
+                        topAppBar.title = ""
                     }
                 }
             }

@@ -1,7 +1,6 @@
 package com.example.mobileclient.api
 
 import com.example.mobileclient.model.*
-import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -16,6 +15,17 @@ interface BackendAPI {
     @POST("auth/signup")
     suspend fun registerNewUser(
         @Body newUser: NewUser
+    ): Response<ResponseBody>
+
+    @GET("auth/user/info")
+    suspend fun getUserInfo(
+        @Header("Authorization") token: String
+    ): Response<UserInfoResponse>
+
+    @PUT("auth/password/change")
+    suspend fun changePassword(
+        @Header("Authorization") token: String,
+        @Body passwordChange: passwordChange
     ): Response<ResponseBody>
 
     //Tutorial api calls
@@ -182,7 +192,7 @@ interface BackendAPI {
     //Ambulance
     @GET("ambulance/{licensePlate}/equipment")
     suspend fun getAmbulanceEquipment(
-        @Path("licensePlate") licensePlate: String,
+        @Path("licensePlate") licensePlate: String, @Header("Authorization") token: String
     ): Response<List<AmbulanceEquipment>>
 
     @POST("ambulance/{licensePlate}/state/{state}")
@@ -203,10 +213,16 @@ interface BackendAPI {
         @Path("itemId") itemId: Int
     ): Response<ResponseBody>
 
-    @POST("ambulance/{licensePlate}/items/remove/{itemId}")
+    @DELETE("ambulance/{licensePlate}/items/remove/{itemId}")
     suspend fun removeAmbulanceItem(
         @Path("licensePlate") licensePlate: String,
         @Path("itemId") itemId: Int
     ): Response<ResponseBody>
+
+    @POST("backup")
+    suspend fun callForBackup(@Body backup: Backup): Response<ResponseBody>
+
+    @GET("backup/{id}")
+    suspend fun getSentBackup(@Path("id") id: Int): Response<Backup>
 
 }

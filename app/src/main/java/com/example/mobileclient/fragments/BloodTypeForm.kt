@@ -86,14 +86,13 @@ class BloodTypeForm : Fragment() {
                 userViewModel.putUserMedicalInfoBlood(medicalInfo!!.medicalInfoId, blood)
                 userViewModel.updateCallResponseBody.observe(viewLifecycleOwner) { response ->
                     if (response.isSuccessful) {
-                        Toast.makeText(context, "Update successful", Toast.LENGTH_SHORT).show()
                         Navigation.findNavController(view)
                             .navigate(R.id.action_bloodTypeForm_to_medicalInfoMain)
                     } else {
                         Log.d("Blood type update", response.body().toString())
                         Toast.makeText(
                             context,
-                            "Update error " + response.code(),
+                            "Error: " + response.code(),
                             Toast.LENGTH_LONG
                         ).show()
                     }

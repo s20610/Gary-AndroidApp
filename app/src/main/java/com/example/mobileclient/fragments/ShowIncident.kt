@@ -31,7 +31,7 @@ class ShowIncident : Fragment() {
             pickedAccidentReport?.latitude.toString() + ", " + pickedAccidentReport?.longitude.toString()
         binding.locationInputText.setText(locationString)
         binding.locationInputText.isEnabled = false
-        if (pickedAccidentReport?.conscious == true) {
+        if (pickedAccidentReport?.concious == true) {
             binding.consciousYes.isChecked = true
         } else {
             binding.consciousNo.isChecked = true

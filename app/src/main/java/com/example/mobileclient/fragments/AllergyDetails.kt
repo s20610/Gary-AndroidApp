@@ -58,6 +58,14 @@ class AllergyDetails : Fragment() {
                 binding.additionalInfoInput.text.toString(),
             )
             userViewModel.putUserAllergy(allergy?.allergyId!!, updatedAllergy)
+            userViewModel.updateCallResponseBody.observe(viewLifecycleOwner) { response ->
+                if (response.isSuccessful) {
+                    Navigation.findNavController(view)
+                        .navigate(R.id.action_allergyDetails_to_medicalInfoMain)
+                } else {
+                    Toast.makeText(context, "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         binding.button2.setOnClickListener {

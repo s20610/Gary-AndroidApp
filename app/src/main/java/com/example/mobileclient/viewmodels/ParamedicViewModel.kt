@@ -17,6 +17,8 @@ class ParamedicViewModel : ViewModel() {
     var currentAmbulanceResponse: MutableLiveData<Response<Ambulance>> = MutableLiveData()
     var scheduleResponse: MutableLiveData<Response<WholeSchedule>> = MutableLiveData()
     var isOnBreak: Boolean = false
+    var callForBackupResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
+var sentBackupResponse: MutableLiveData<Response<Backup>> = MutableLiveData()
 
     fun startEmployeeShift(token: String) {
         viewModelScope.launch {
@@ -51,10 +53,10 @@ class ParamedicViewModel : ViewModel() {
         }
     }
 
-    fun getAmbulanceEquipment(licensePlate: String) {
+    fun getAmbulanceEquipment(licensePlate: String, token: String) {
         viewModelScope.launch {
             try {
-                val response = Repository.getAmbulanceEquipment(licensePlate)
+                val response = Repository.getAmbulanceEquipment(licensePlate,token)
                 ambulanceEquipmentResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -111,6 +113,28 @@ class ParamedicViewModel : ViewModel() {
             try {
                 val response = Repository.getAssignedAmbulance("Bearer $token")
                 currentAmbulanceResponse.value = response
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun callForBackup(backup: Backup){
+        viewModelScope.launch {
+            try {
+                val response = Repository.callForBackup(backup)
+                callForBackupResponse.value = response
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun getSentBackup(id: Int){
+        viewModelScope.launch {
+            try {
+                val response = Repository.getSentBackup(id)
+                sentBackupResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()
             }

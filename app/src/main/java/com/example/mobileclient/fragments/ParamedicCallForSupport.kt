@@ -2,40 +2,23 @@ package com.example.mobileclient.fragments
 
 //import android.app.Fragment
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentParamedicCallForSupportBinding
+import com.example.mobileclient.model.Backup
+import com.example.mobileclient.viewmodels.ParamedicViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ParamedicCallForSupport.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ParamedicCallForSupport : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var _binding: FragmentParamedicCallForSupportBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val paramedicViewModel: ParamedicViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,60 +26,50 @@ class ParamedicCallForSupport : Fragment() {
     ): View {
         _binding = FragmentParamedicCallForSupportBinding.inflate(inflater, container, false)
 
-        val check1 = binding.checkBoxA
-        val check2 = binding.checkBoxB
-        val check3 = binding.checkBoxC
+        val ambulanceCheck = binding.checkBoxA
+        val fireTruckCheck = binding.checkBoxB
+        val policeCheck = binding.checkBoxC
 
-        binding.button.setOnClickListener{
-            var s: String = ""
-            if (check1.isChecked){
-                if(s.isNotEmpty()){
-                    s+=", "
-                }
-                s += "Ambulance"
-
+        binding.callButton?.setOnClickListener {
+            val isAmbulanceChecked = ambulanceCheck.isChecked
+            val isFireTruckChecked = fireTruckCheck.isChecked
+            val isPoliceChecked = policeCheck.isChecked
+            var backupType: Backup.Companion.BackupType? = null
+            when {
+                isAmbulanceChecked && isFireTruckChecked && isPoliceChecked -> backupType =
+                    Backup.Companion.BackupType.POLICE_AMBULANCE_FIRE
+                isAmbulanceChecked && isFireTruckChecked -> backupType =
+                    Backup.Companion.BackupType.AMBULANCE_FIRE
+                isAmbulanceChecked && isPoliceChecked -> backupType =
+                    Backup.Companion.BackupType.POLICE_AMBULANCE
+                isFireTruckChecked && isPoliceChecked -> backupType =
+                    Backup.Companion.BackupType.POLICE_FIRE
+                isAmbulanceChecked -> backupType = Backup.Companion.BackupType.AMBULANCE
+                isFireTruckChecked -> backupType = Backup.Companion.BackupType.FIRE_FIGHTERS
+                isPoliceChecked -> backupType = Backup.Companion.BackupType.POLICE
+                else -> Toast.makeText(
+                    context,
+                    getString(R.string.no_backup_type_selected),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            if (check2.isChecked){
-                if(s.isNotEmpty()){
-                    s+=", "
+            if (backupType != null) {
+                val backup = Backup(1,"",1,false,"",backupType)
+                paramedicViewModel.callForBackup(backup)
+                paramedicViewModel.callForBackupResponse.observe(viewLifecycleOwner) { response ->
+                    if(response.isSuccessful){
+                        Log.d("CallForBackup", "Call for backup successful")
+                    }
                 }
-                s+= "Fire Truck"
             }
-            if (check3.isChecked){
-                if(s.isNotEmpty()){
-                    s+=", "
-                }
-                s+= "Police"
-            }
-            Toast.makeText(context, s, Toast.LENGTH_LONG).show()
         }
 
         val view = binding.root
 
-        binding.button2.setOnClickListener{
+        binding.cancelButton?.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.paramedicScreen)
         }
 
         return view
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ParamedicCallForSupport.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ParamedicCallForSupport().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

@@ -49,6 +49,14 @@ class DiseaseDetails : Fragment() {
                 binding.shareSwitch.isChecked
             )
             userViewModel.putUserDisease(disease?.diseaseId!!, updatedDisease)
+            userViewModel.updateCallResponseBody.observe(viewLifecycleOwner) { response ->
+                if (response.isSuccessful) {
+                    Navigation.findNavController(view)
+                        .navigate(R.id.action_diseaseDetails_to_medicalInfoMain)
+                }else{
+                    Toast.makeText(context, "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         binding.button2.setOnClickListener {

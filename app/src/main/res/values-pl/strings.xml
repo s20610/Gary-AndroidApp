@@ -181,4 +181,5 @@
     <string name="cantRateTutorials">You can\'t rate tutorials as guest</string>
     <string name="no_internet">Internet connection not available</string>
     <string name="cantWatchTutorials">You can\'t watch tutorials as guest</string>
+    <string name="password_not_matching">Passwords do not match</string>
 </resources>

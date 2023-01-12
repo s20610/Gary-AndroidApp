@@ -54,8 +54,8 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
         if (token != null) {
             userViewModel.getUserInfo(token)
             userViewModel.getUserInfoResponse.observe(viewLifecycleOwner) { response ->
-                if (response.isSuccessful){
-                    val fullName = response.body()?.name + " " + response.body()?.lastname
+                if (response.isSuccessful) {
+                    val fullName = response.body()?.name + " " + response.body()?.lastName
                     binding.userName.text = fullName
                 }
             }
@@ -64,7 +64,6 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
         userViewModel.getUserMedicalInfoResponse.observe(viewLifecycleOwner) { response ->
             Log.d("Medical Info", response.body().toString())
             if (response.isSuccessful) {
-//TODO("Handle changing picture based on blood type")
                 val bloodType = response.body()?.bloodType.toString()
                 val rhType = response.body()?.rhType.toString()
                 binding.imageView.setImageResource(getImageResourceForBloodType(bloodType, rhType))

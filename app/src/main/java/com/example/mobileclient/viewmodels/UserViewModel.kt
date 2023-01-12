@@ -53,7 +53,7 @@ class UserViewModel : ViewModel() {
     fun getUserInfo(token: String){
         viewModelScope.launch {
             try {
-                val response = repository.getUserInfo(token)
+                val response = repository.getUserInfo("Bearer $token")
                 getUserInfoResponse.value = response
             } catch (e: ConnectException) {
                 Log.d("Connection exception", e.stackTraceToString())
@@ -66,7 +66,7 @@ class UserViewModel : ViewModel() {
     fun changePassword(token: String, passwordChange: passwordChange){
         viewModelScope.launch {
             try {
-                val response = repository.changePassword(token, passwordChange)
+                val response = repository.changePassword("Bearer $token", passwordChange)
                 changePasswordResponse.value = response
             } catch (e: ConnectException) {
                 Log.d("Connection exception", e.stackTraceToString())

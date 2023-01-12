@@ -3,7 +3,7 @@ package com.example.mobileclient.model
 data class UserInfoResponse(
     val id: Int,
     val name: String,
-    val lastname: String,
+    val lastName: String,
     val email: String,
     val phone: String,
     val birthDate: String,

@@ -29,6 +29,14 @@ data class passwordChange(
     val newPassword: String
 )
 
+data class Email(
+    val email: String
+)
+
+data class newPassword(
+    val newPassword: String
+)
+
 data class AuthResponse(
     val token: String,
     val email: String,

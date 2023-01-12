@@ -28,6 +28,17 @@ interface BackendAPI {
         @Body passwordChange: passwordChange
     ): Response<ResponseBody>
 
+    @POST("auth/password/reset")
+    suspend fun resetPassword(
+        @Body email: Email
+    ): Response<ResponseBody>
+
+    @PUT("auth/password/reset")
+    suspend fun confirmResetPassword(
+        @Query("token") token: String,
+    @Body newPassword: newPassword
+    ): Response<ResponseBody>
+
     //Tutorial api calls
     @GET("tutorial")
     suspend fun getTutorials(): Response<List<Tutorial>>

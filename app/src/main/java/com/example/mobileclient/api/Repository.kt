@@ -22,6 +22,14 @@ object Repository {
         return RetrofitInstance.api.changePassword(token, passwordChange)
     }
 
+    suspend fun resetPassword(email: String): Response<ResponseBody> {
+        return RetrofitInstance.api.resetPassword(Email(email))
+    }
+
+    suspend fun confirmResetPassword(password: String, token: String): Response<ResponseBody> {
+        return RetrofitInstance.api.confirmResetPassword(token, newPassword(password))
+    }
+
     suspend fun getTutorials(): Response<List<Tutorial>> {
         return RetrofitInstance.api.getTutorials()
     }

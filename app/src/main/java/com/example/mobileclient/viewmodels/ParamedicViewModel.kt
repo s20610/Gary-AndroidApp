@@ -53,10 +53,10 @@ var sentBackupResponse: MutableLiveData<Response<Backup>> = MutableLiveData()
         }
     }
 
-    fun getAmbulanceEquipment(licensePlate: String) {
+    fun getAmbulanceEquipment(licensePlate: String, token: String) {
         viewModelScope.launch {
             try {
-                val response = Repository.getAmbulanceEquipment(licensePlate)
+                val response = Repository.getAmbulanceEquipment(licensePlate,token)
                 ambulanceEquipmentResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()

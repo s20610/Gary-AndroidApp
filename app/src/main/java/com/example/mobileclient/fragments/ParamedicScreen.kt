@@ -60,9 +60,11 @@ class ParamedicScreen : Fragment() {
         val token = requireActivity().getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE)
             .getString(USER_TOKEN_TO_PREFS, "")
         paramedicViewModel.getCurrentAmbulance(token ?: "")
+
         paramedicViewModel.currentAmbulanceResponse.observe(viewLifecycleOwner) {
             if (it.isSuccessful) {
                 ambulance = it.body()?.licensePlate
+                paramedicViewModel.getAmbulanceEquipment(ambulance!!, token?: "")
             }
         }
         paramedicViewModel.getSchedule(token ?: "")

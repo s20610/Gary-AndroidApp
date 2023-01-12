@@ -182,7 +182,7 @@ interface BackendAPI {
     //Ambulance
     @GET("ambulance/{licensePlate}/equipment")
     suspend fun getAmbulanceEquipment(
-        @Path("licensePlate") licensePlate: String,
+        @Path("licensePlate") licensePlate: String, @Header("Authorization") token: String
     ): Response<List<AmbulanceEquipment>>
 
     @POST("ambulance/{licensePlate}/state/{state}")

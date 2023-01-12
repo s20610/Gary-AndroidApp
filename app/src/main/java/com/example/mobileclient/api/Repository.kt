@@ -148,8 +148,8 @@ object Repository {
     }
 
     //Ambulance
-    suspend fun getAmbulanceEquipment(licensePlate: String): Response<List<AmbulanceEquipment>> {
-        return RetrofitInstance.api.getAmbulanceEquipment(licensePlate)
+    suspend fun getAmbulanceEquipment(licensePlate: String, token: String): Response<List<AmbulanceEquipment>> {
+        return RetrofitInstance.api.getAmbulanceEquipment(licensePlate, token)
     }
 
     suspend fun changeAmbulanceState(licensePlate: String, state: String): Response<ResponseBody> {

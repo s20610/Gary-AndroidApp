@@ -40,19 +40,14 @@
         android:label="fragment_add_victim_info"
         tools:layout="@layout/fragment_add_victim_info" />
     <fragment
-        android:id="@+id/equipment"
-        android:name="com.example.mobileclient.fragments.CheckEquipment"
-        android:label="fragment_equipment"
-        tools:layout="@layout/fragment_check_equipment" >
-        <action
-            android:id="@+id/action_equipment_to_checkEquipment"
-            app:destination="@id/checkEquipment" />
-    </fragment>
-    <fragment
         android:id="@+id/checkEquipment"
         android:name="com.example.mobileclient.fragments.CheckEquipment"
         android:label="fragment_check_equipment"
-        tools:layout="@layout/fragment_check_equipment" />
+        tools:layout="@layout/fragment_check_equipment" >
+        <action
+            android:id="@+id/action_checkEquipment_self"
+            app:destination="@id/checkEquipment" />
+    </fragment>
     <fragment
         android:id="@+id/paramedicSettings"
         android:name="com.example.mobileclient.fragments.ParamedicSettings"

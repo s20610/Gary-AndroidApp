@@ -76,6 +76,32 @@ class UserViewModel : ViewModel() {
         }
     }
 
+    fun resetPassword(email: String){
+        viewModelScope.launch {
+            try {
+                val response = repository.resetPassword(email)
+                changePasswordResponse.value = response
+            } catch (e: ConnectException) {
+                Log.d("Connection exception", e.stackTraceToString())
+            } catch (e: Exception) {
+                Log.d("resetPassword exception", e.stackTraceToString())
+            }
+        }
+    }
+
+    fun confirmPasswordReset(token: String,newPassword:String){
+        viewModelScope.launch {
+            try {
+                val response = repository.confirmResetPassword(newPassword, token)
+                changePasswordResponse.value = response
+            } catch (e: ConnectException) {
+                Log.d("Connection exception", e.stackTraceToString())
+            } catch (e: Exception) {
+                Log.d("confirmPasswordReset exception", e.stackTraceToString())
+            }
+        }
+    }
+
     fun getUserMedicalInfo(userEmail: String) {
         viewModelScope.launch {
             try {

@@ -48,5 +48,9 @@
     <fragment
         android:id="@+id/forgotPassword"
         android:name="com.example.mobileclient.fragments.ForgotPassword"
-        android:label="ForgotPassword" />
+        android:label="ForgotPassword" >
+        <action
+            android:id="@+id/action_forgotPassword_to_login"
+            app:destination="@id/login" />
+    </fragment>
 </navigation>

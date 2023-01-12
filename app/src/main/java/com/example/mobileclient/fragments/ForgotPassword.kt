@@ -1,60 +1,59 @@
 package com.example.mobileclient.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation
 import com.example.mobileclient.R
+import com.example.mobileclient.databinding.FragmentFacilitiesMapBinding
+import com.example.mobileclient.databinding.FragmentForgotPasswordBinding
+import com.example.mobileclient.viewmodels.FacilitiesViewModel
+import com.example.mobileclient.viewmodels.UserViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ForgotPassword.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ForgotPassword : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentForgotPasswordBinding? = null
+    private val binding get() = _binding!!
+    private val userViewModel: UserViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_forgot_password, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ForgotPassword.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ForgotPassword().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        _binding = FragmentForgotPasswordBinding.inflate(inflater, container, false)
+        val view = binding.root
+        binding.passwordButton.setOnClickListener {
+            Log.d("ForgotPassword", "Forgot password button clicked")
+            val email = binding.emailInput.text.toString()
+            userViewModel.resetPassword(email)
+            userViewModel.changePasswordResponse.observe(viewLifecycleOwner) { response ->
+                if (response.isSuccessful) {
+                    binding.emailFieldForg.visibility = View.GONE
+                    binding.tokenField?.visibility = View.VISIBLE
+                    binding.newPasswordField?.visibility = View.VISIBLE
+                    binding.passwordButton.visibility = View.GONE
+                    binding.tokenButton?.visibility = View.VISIBLE
+                } else {
+                    binding.emailFieldForg.error = "Error"
                 }
             }
+        }
+        binding.tokenButton?.setOnClickListener {
+
+            val token = binding.tokenFieldInput?.text.toString()
+            val newPassword = binding.newPasswordInput?.text.toString()
+            userViewModel.confirmPasswordReset(token, newPassword)
+            userViewModel.changePasswordResponse.observe(viewLifecycleOwner) { response ->
+                if (response.isSuccessful) {
+                    Toast.makeText(requireContext(), getString(R.string.password_changed), Toast.LENGTH_SHORT).show()
+                    Navigation.findNavController(view).navigate(R.id.action_forgotPassword_to_login)
+                }
+            }
+        }
+        return view
     }
 }

@@ -203,7 +203,7 @@ interface BackendAPI {
         @Path("itemId") itemId: Int
     ): Response<ResponseBody>
 
-    @POST("ambulance/{licensePlate}/items/remove/{itemId}")
+    @DELETE("ambulance/{licensePlate}/items/remove/{itemId}")
     suspend fun removeAmbulanceItem(
         @Path("licensePlate") licensePlate: String,
         @Path("itemId") itemId: Int

@@ -21,10 +21,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:paddingBottom="30dp"
+            android:layout_marginBottom="20dp"
             android:text="@string/blood_type_question"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
             android:textColor="@color/green_dark"
+            android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

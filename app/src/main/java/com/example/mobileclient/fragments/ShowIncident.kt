@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentIncidentsBrowseBinding
 import com.example.mobileclient.databinding.FragmentShowIncidentBinding
+import com.example.mobileclient.util.setIncidentTypeFromApi
 import com.example.mobileclient.viewmodels.AccidentReportViewModel
 
 class ShowIncident : Fragment() {
@@ -23,7 +24,10 @@ class ShowIncident : Fragment() {
         _binding = FragmentShowIncidentBinding.inflate(inflater, container, false)
         val view = binding.root
         val pickedAccidentReport = accidentReportViewModel.pickedAccidentReport
-        binding.autoCompleteTextView2.setText(pickedAccidentReport?.emergencyType)
+        val incidentTypes: Array<String> =
+            requireContext().resources.getStringArray(R.array.incidentTypes)
+        val incidentType = setIncidentTypeFromApi(pickedAccidentReport?.emergencyType?: "",incidentTypes)
+        binding.autoCompleteTextView2.setText(incidentType)
         binding.autoCompleteTextView2.isEnabled = false
         binding.victimsEdit.setText(pickedAccidentReport?.victimCount.toString())
         binding.victimsEdit.isEnabled = false

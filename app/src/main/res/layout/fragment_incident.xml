@@ -116,6 +116,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
+        android:clickable="false"
+        android:editable="false"
         android:hint="@string/incident_address_hint"
         app:boxCornerRadiusBottomEnd="20dp"
         app:boxCornerRadiusBottomStart="20dp"
@@ -129,6 +131,8 @@
             android:id="@+id/locationInputText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="false"
+            android:editable="false"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -252,8 +256,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="32dp"
         android:layout_marginTop="5dp"
+        android:layout_marginRight="32dp"
         android:hint="@string/victim_band_code"
         app:boxCornerRadiusBottomEnd="20dp"
         app:boxCornerRadiusBottomStart="20dp"

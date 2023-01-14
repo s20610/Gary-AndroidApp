@@ -93,7 +93,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/adittional_info_field"
         android:layout_margin="15dp"
-        android:text="Share with band scanning?">
+        android:text="@string/share_with_band_scanning">
     </com.google.android.material.switchmaterial.SwitchMaterial>
     <RelativeLayout
         android:id="@+id/parentRelative"

@@ -77,7 +77,7 @@ class UserActivity : AppCompatActivity() {
                     binding.navigationView.setCheckedItem(R.id.nav_map)
                     navController.navigate((R.id.facilitiesMap))
                 }
-                it.toString() == "Tutoriale" -> {
+                it.toString() == "Poradniki" -> {
                     binding.navigationView.setCheckedItem(R.id.nav_tutorials)
                     navController.navigate((R.id.loggedInScreen))
                 }

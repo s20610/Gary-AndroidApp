@@ -31,6 +31,7 @@
             android:layout_marginTop="15dp"
             android:text="Jan Kowalski"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent" />

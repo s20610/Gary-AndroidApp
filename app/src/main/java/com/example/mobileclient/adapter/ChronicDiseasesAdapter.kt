@@ -8,7 +8,7 @@ import com.example.mobileclient.databinding.ListItemDiseasesBinding
 import com.example.mobileclient.model.Disease
 
 class ChronicDiseasesAdapter(
-    private val dataset: List<Disease>,
+    private var dataset: List<Disease>,
     private var onItemClickListener: OnItemClickListener
 ) :
     RecyclerView.Adapter<ChronicDiseasesAdapter.ItemViewHolder>() {
@@ -54,5 +54,9 @@ class ChronicDiseasesAdapter(
 
     fun getDisease(position: Int): Disease {
         return dataset[position]
+    }
+
+    fun setDiseases(diseases: List<Disease>){
+        dataset = diseases
     }
 }

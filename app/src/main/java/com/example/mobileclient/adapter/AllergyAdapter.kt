@@ -11,7 +11,7 @@ import com.example.mobileclient.model.Allergy
 import com.example.mobileclient.util.setAllergyTypeFromApi
 
 class AllergyAdapter(
-    private val allergies: List<Allergy>,
+    private var allergies: List<Allergy>,
     private var onItemClickListener: OnItemClickListener,
 ) : RecyclerView.Adapter<AllergyAdapter.ItemViewHolder>() {
 
@@ -58,5 +58,9 @@ class AllergyAdapter(
 
     fun getAllergy(position: Int): Allergy {
         return allergies[position]
+    }
+
+    fun setAllergies(allergies: List<Allergy>){
+        this.allergies = allergies
     }
 }

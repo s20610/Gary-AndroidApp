@@ -1,6 +1,7 @@
 package com.example.mobileclient.fragments
 
 //import android.app.Fragment
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +14,8 @@ import androidx.navigation.Navigation
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentParamedicCallForSupportBinding
 import com.example.mobileclient.model.Backup
+import com.example.mobileclient.util.Constants.Companion.USER_EMAIL_TO_PREFS
+import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
 import com.example.mobileclient.viewmodels.ParamedicViewModel
 
 class ParamedicCallForSupport : Fragment() {
@@ -29,6 +32,8 @@ class ParamedicCallForSupport : Fragment() {
         val ambulanceCheck = binding.checkBoxA
         val fireTruckCheck = binding.checkBoxB
         val policeCheck = binding.checkBoxC
+        val userEmail = requireActivity().getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE).getString(
+            USER_EMAIL_TO_PREFS, "")
 
         binding.callButton?.setOnClickListener {
             val isAmbulanceChecked = ambulanceCheck.isChecked
@@ -54,7 +59,7 @@ class ParamedicCallForSupport : Fragment() {
                 ).show()
             }
             if (backupType != null) {
-                val backup = Backup(1,"",1,false,"",backupType)
+                val backup = Backup(0,userEmail,1,true,"",backupType)
                 paramedicViewModel.callForBackup(backup)
                 paramedicViewModel.callForBackupResponse.observe(viewLifecycleOwner) { response ->
                     if(response.isSuccessful){

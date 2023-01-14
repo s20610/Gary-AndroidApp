@@ -18,14 +18,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:background="@color/lighter_grey"
             app:layout_constraintBottom_toBottomOf="@id/hospital_checkbox"/>
 
         <TextView
             android:id="@+id/facilities_headline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/lighter_grey"
             android:text="@string/this_is_a_map_of_facilities_near_you"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
@@ -37,7 +35,6 @@
             android:id="@+id/hospital_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/lighter_grey"
             android:buttonTint="@color/white"
             android:drawableStart="@drawable/ic_baseline_local_hospital_40"
             android:padding="5dp"
@@ -50,7 +47,6 @@
             android:id="@+id/police_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/lighter_grey"
             android:buttonTint="@color/white"
             android:drawableStart="@drawable/ic_baseline_local_police_40"
             android:padding="5dp"
@@ -64,7 +60,6 @@
             android:id="@+id/fire_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/lighter_grey"
             android:buttonTint="@color/white"
             android:drawableStart="@drawable/ic_baseline_local_fire_department_40"
             android:padding="5dp"

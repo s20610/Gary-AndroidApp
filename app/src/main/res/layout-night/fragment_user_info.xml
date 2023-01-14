@@ -130,6 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="@string/save"
+                android:textColor="@color/white"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                 app:layout_constraintEnd_toEndOf="@+id/new_password_confirm_field"
                 app:layout_constraintStart_toStartOf="@+id/new_password_confirm_field"

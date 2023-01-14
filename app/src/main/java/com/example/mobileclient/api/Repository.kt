@@ -191,6 +191,10 @@ object Repository {
         return RetrofitInstance.api.getAssignedAmbulance(token)
     }
 
+    suspend fun getAssignedIncident(licensePlate: String): Response<Incident> {
+        return RetrofitInstance.api.getAmbulanceIncident(licensePlate)
+    }
+
     //Backup
     suspend fun getSentBackup(id: Int): Response<Backup> {
         return RetrofitInstance.api.getSentBackup(id)

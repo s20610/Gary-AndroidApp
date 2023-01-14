@@ -44,7 +44,7 @@ class ParamedicScreen : Fragment() {
     private val paramedicViewModel: ParamedicViewModel by activityViewModels()
     private lateinit var map: MapView
     private val binding get() = _binding!!
-    private var ambulance: String? = "AAA000"
+    private lateinit var ambulance: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -63,13 +63,17 @@ class ParamedicScreen : Fragment() {
 
         paramedicViewModel.currentAmbulanceResponse.observe(viewLifecycleOwner) {
             if (it.isSuccessful) {
-                ambulance = it.body()?.licensePlate
-                paramedicViewModel.getAmbulanceEquipment(ambulance!!, token?: "")
+                val licensePlate = it.body()?.licensePlate
+                if (licensePlate != null) {
+                    ambulance = licensePlate
+                    paramedicViewModel.getAmbulanceEquipment(ambulance, token?: "")
+                    paramedicViewModel.getAssignedIncident(ambulance)
+                }
             }
         }
         paramedicViewModel.getSchedule(token ?: "")
         paramedicViewModel.scheduleResponse.observe(viewLifecycleOwner) { response ->
-            if (response.code() == 200) {
+            if (response.isSuccessful) {
                 Log.d("Schedule", response.body()!!.schedule.toString())
                 if (response.body()?.schedule != null) {
                     val scheduleForToday = findNextShift(response.body()!!.schedule!!)
@@ -79,6 +83,7 @@ class ParamedicScreen : Fragment() {
                 }
             }
         }
+
 
         binding.checkinButton.setOnClickListener {
             when (binding.checkinButton.text) {

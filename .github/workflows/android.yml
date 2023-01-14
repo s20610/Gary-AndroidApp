@@ -1,9 +1,10 @@
 name: Build & Publish Debug APK
 
 on:
+ workflow_dispatch:
  push:
   branches:
-   - master
+   - main
    
 jobs:
   build:

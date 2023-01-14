@@ -57,21 +57,6 @@ class UserInfo : Fragment() {
                 binding.newPasswordConfirmInput.error = getString(R.string.password_not_matching)
             }
         }
-        val constraintBuilder =
-            CalendarConstraints.Builder().setValidator(DateValidatorPointBackward.now())
-        val birthdayString = resources.getString(R.string.birthday)
-        val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText(birthdayString)
-            .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT).setNegativeButtonText(R.string.cancel)
-            .setCalendarConstraints(constraintBuilder.build()).build()
-        datePicker.addOnPositiveButtonClickListener {
-            binding.birthdayInput.setText(datePicker.headerText)
-        }
-        datePicker.addOnCancelListener {
-            datePicker.dismiss()
-        }
-        binding.openCalendarButton.setOnClickListener {
-            datePicker.show(parentFragmentManager, "birthdate_picker")
-        }
 
         return view
     }

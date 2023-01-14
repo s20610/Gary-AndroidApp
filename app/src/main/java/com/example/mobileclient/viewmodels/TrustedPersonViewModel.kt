@@ -10,7 +10,7 @@ import okhttp3.ResponseBody
 import retrofit2.Response
 
 class TrustedPersonViewModel : ViewModel() {
-    val getTrustedPersonResponse: MutableLiveData<Response<TrustedPerson>> = MutableLiveData()
+    val getTrustedPersonResponse: MutableLiveData<TrustedPerson> = MutableLiveData()
     val postCallResponseBody: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     val deleteCallResponseBody: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     val updateCallResponseBody: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
@@ -19,7 +19,9 @@ class TrustedPersonViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val response = Repository.getTrustedPerson(userEmail)
-                getTrustedPersonResponse.value = response
+                if(response.isSuccessful){
+                    getTrustedPersonResponse.value = response.body()
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }

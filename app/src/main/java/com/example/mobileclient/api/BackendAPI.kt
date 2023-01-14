@@ -230,6 +230,11 @@ interface BackendAPI {
         @Path("itemId") itemId: Int
     ): Response<ResponseBody>
 
+    @GET("ambulance/{licensePlate}/incident")
+    suspend fun getAmbulanceIncident(
+        @Path("licensePlate") licensePlate: String
+    ): Response<Incident>
+
     @POST("backup")
     suspend fun callForBackup(@Body backup: Backup): Response<ResponseBody>
 

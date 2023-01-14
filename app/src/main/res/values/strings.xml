@@ -142,6 +142,15 @@
         <item>Injection/Venom</item>
         <item>Inhalation</item>
     </string-array>
+    <string-array name="incidentTypes">
+        <item>Car accident</item>
+        <item>Flood</item>
+        <item>Fire</item>
+        <item>Unknown</item>
+        <item>Heart attack</item>
+        <item>Suicide</item>
+        <item>COVID</item>
+    </string-array>
     <string name="log_in_to_see_tutorial">Log in to read tutorials</string>
     <string name="log_in_to_see_tutorial_message">Tutorials are available only for logged in users</string>
     <string name="about_us">About us</string>
@@ -191,4 +200,5 @@
     <string name="password_not_matching">Passwords do not match</string>
     <string name="forgot_password_info">You will receive an email with token, input that token and a new password after clicking the send button</string>
     <string name="password_changed">Your password has been changed</string>
+    <string name="share_with_band_scanning">Share with band scanning?</string>
 </resources>

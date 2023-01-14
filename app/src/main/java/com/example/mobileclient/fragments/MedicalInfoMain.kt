@@ -69,8 +69,14 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
                 binding.imageView.setImageResource(getImageResourceForBloodType(bloodType, rhType))
                 val allergiesFromApi: List<Allergy> = response.body()!!.allergies
                 val chronicDiseasesFromApi: List<Disease> = response.body()!!.diseases
-                binding.allergyView.adapter = AllergyAdapter(allergiesFromApi, this)
-                binding.diseaseView.adapter = ChronicDiseasesAdapter(chronicDiseasesFromApi, this)
+                val allergyAdapter = binding.allergyView.adapter as AllergyAdapter
+                val diseaseAdapter = binding.diseaseView.adapter as ChronicDiseasesAdapter
+                allergyAdapter.setAllergies(allergiesFromApi)
+                diseaseAdapter.setDiseases(chronicDiseasesFromApi)
+                allergyAdapter.notifyDataSetChanged()
+                diseaseAdapter.notifyDataSetChanged()
+//                binding.allergyView.adapter = AllergyAdapter(allergiesFromApi, this)
+//                binding.diseaseView.adapter = ChronicDiseasesAdapter(chronicDiseasesFromApi, this)
             }
         }
         binding.imageView.setOnClickListener {

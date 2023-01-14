@@ -18,3 +18,14 @@ data class ItemData(
     val unit: String,
     val updatedAt: String
 )
+
+//TODO: Adjust to match backend
+data class Incident(
+    val incidentId: Int,
+    val location: Location,
+    val description: String,
+    val type: String,
+    val status: String,
+    val createdAt: String,
+    val updatedAt: String
+)

@@ -46,6 +46,35 @@ fun setAllergyTypeToApi(allergyType: String, allergyTypesArray: Array<String>): 
     }
 }
 
+fun setIncidentTypeFromApi(incidentType: String, incidentTypesArray: Array<String>): String {
+    return when (incidentType) {
+        "CAR_ACCIDENT" -> incidentTypesArray[0]
+        "FLOOD" -> incidentTypesArray[1]
+        "FIRE" -> incidentTypesArray[2]
+        "UNKNOWN" -> incidentTypesArray[3]
+        "HEART_ATTACK" -> incidentTypesArray[4]
+        "SUICIDE" -> incidentTypesArray[5]
+        "COVID" -> incidentTypesArray[6]
+        else -> {
+            ""
+        }
+    }
+}
+fun setIncidentTypeToApi(incidentType: String, incidentTypesArray: Array<String>): String {
+    return when (incidentType) {
+        incidentTypesArray[0] -> "CAR_ACCIDENT"
+        incidentTypesArray[1] -> "FLOOD"
+        incidentTypesArray[2] -> "FIRE"
+        incidentTypesArray[3] -> "UNKNOWN"
+        incidentTypesArray[4] -> "HEART_ATTACK"
+        incidentTypesArray[5] -> "SUICIDE"
+        incidentTypesArray[6] -> "COVID"
+        else -> {
+            ""
+        }
+    }
+}
+
 fun findNextShift(schedule: Schedule): List<String> {
     val today = LocalDate.now().dayOfWeek.toString()
     val nearestShift: ArrayList<String> = ArrayList()

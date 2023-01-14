@@ -14,6 +14,7 @@ import com.example.mobileclient.R
 import com.example.mobileclient.activities.ScanBandCodeActivity
 import com.example.mobileclient.databinding.FragmentIncidentBinding
 import com.example.mobileclient.model.AccidentReport
+import com.example.mobileclient.util.setIncidentTypeToApi
 import com.example.mobileclient.viewmodels.AccidentReportViewModel
 import com.example.mobileclient.viewmodels.TypesViewModel
 import com.journeyapps.barcodescanner.ScanContract
@@ -32,19 +33,21 @@ class Incident : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
 
         // Inflate the layout for this fragment
         _binding = FragmentIncidentBinding.inflate(inflater, container, false)
-
-        typesViewModel.getEmergencyTypes()
-        typesViewModel.emergencyTypes.observe(viewLifecycleOwner) {
-            val arrayAdapter =
-                ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, it)
-            binding.autoCompleteTextView2.setAdapter(arrayAdapter)
-        }
+        val incidentTypes: Array<String> =
+            requireContext().resources.getStringArray(R.array.incidentTypes)
+        binding.autoCompleteTextView2.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, incidentTypes))
+//        typesViewModel.getEmergencyTypes()
+//        typesViewModel.emergencyTypes.observe(viewLifecycleOwner) {
+//
+//            val arrayAdapter =
+//                ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, it)
+//            binding.autoCompleteTextView2.setAdapter(arrayAdapter)
+//        }
 
         val view = binding.root
         val incidentLocationPicker = IncidentLocationPicker.newInstance()
@@ -61,11 +64,11 @@ class Incident : Fragment() {
                 val userEmail: String =
                     requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
                         .getString("email", "")!!
-                val victimCount: Int = binding.victimsEdit?.text.toString().toInt()
+                val victimCount: Int = binding.victimsEdit.text.toString().toInt()
                 val barcode: String = binding.barcodeInputText.text.toString()
-                val accidentType: String = binding.autoCompleteTextView2.text.toString()
-                val isConscious = binding.consciousYes?.isChecked
-                val isBreathing = binding.breathingYes?.isChecked
+                val accidentType: String = setIncidentTypeToApi(binding.autoCompleteTextView2.text.toString(), incidentTypes)
+                val isConscious = binding.consciousYes.isChecked
+                val isBreathing = binding.breathingYes.isChecked
                 val accidentReport = AccidentReport(
                     date = "",
                     userEmail,
@@ -74,17 +77,15 @@ class Incident : Fragment() {
                     victimCount,
                     pickedLocation.longitude,
                     pickedLocation.latitude,
-                    isConscious!!,
-                    isBreathing!!,
+                    isConscious,
+                    isBreathing,
                     description = ""
                 )
                 accidentReportViewModel.postAccidentReport(accidentReport)
                 accidentReportViewModel.postCallResponseBody.observe(viewLifecycleOwner) {
                     if (it.isSuccessful) {
                         Toast.makeText(
-                            requireContext(),
-                            R.string.addedAccidentReport,
-                            Toast.LENGTH_SHORT
+                            requireContext(), R.string.addedAccidentReport, Toast.LENGTH_SHORT
                         ).show()
                         Navigation.findNavController(view)
                             .navigate(R.id.action_incident_to_loggedInScreen)
@@ -94,13 +95,15 @@ class Incident : Fragment() {
                 }
             }
         }
-        binding.openMapButton!!.setOnClickListener {
+        binding.openMapButton.setOnClickListener {
             incidentLocationPicker.show(childFragmentManager, "incident_location_picker")
         }
         childFragmentManager.setFragmentResultListener("incidentLocation", this) { _, bundle ->
             pickedLocation = bundle.getSerializable("bundleKey") as GeoPoint
             pickedAddress = bundle.getSerializable("bundleKey2") as String
-            binding.locationInputText.setText(pickedAddress)
+            val splitAddress = pickedAddress.split(", ")
+            val displayAddress = splitAddress[0] + ", " + splitAddress[1]
+            binding.locationInputText.setText(displayAddress)
         }
         val barcodeLauncher = registerForActivityResult(
             ScanContract()
@@ -110,8 +113,7 @@ class Incident : Fragment() {
                     context,
                     resources.getString(R.string.barcode_scanning_cancelled),
                     Toast.LENGTH_LONG
-                )
-                    .show()
+                ).show()
             } else {
                 Toast.makeText(
                     context,
@@ -138,12 +140,12 @@ class Incident : Fragment() {
     private fun validateForm(): Boolean {
         var valid = true
 
-        val victimCount = binding.victimsEdit?.text.toString()
+        val victimCount = binding.victimsEdit.text.toString()
         if (victimCount.isEmpty()) {
-            binding.victimsEdit?.error = "Required."
+            binding.victimsEdit.error = "Required."
             valid = false
         } else {
-            binding.victimsEdit?.error = null
+            binding.victimsEdit.error = null
         }
 
         val location = binding.locationInputText.text.toString()

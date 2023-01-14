@@ -18,7 +18,8 @@ class ParamedicViewModel : ViewModel() {
     var scheduleResponse: MutableLiveData<Response<WholeSchedule>> = MutableLiveData()
     var isOnBreak: Boolean = false
     var callForBackupResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
-var sentBackupResponse: MutableLiveData<Response<Backup>> = MutableLiveData()
+    var sentBackupResponse: MutableLiveData<Response<Backup>> = MutableLiveData()
+    var assignedIncidentResponse: MutableLiveData<Response<Incident>> = MutableLiveData()
 
     fun startEmployeeShift(token: String) {
         viewModelScope.launch {
@@ -56,7 +57,7 @@ var sentBackupResponse: MutableLiveData<Response<Backup>> = MutableLiveData()
     fun getAmbulanceEquipment(licensePlate: String, token: String) {
         viewModelScope.launch {
             try {
-                val response = Repository.getAmbulanceEquipment(licensePlate,token)
+                val response = Repository.getAmbulanceEquipment(licensePlate, token)
                 ambulanceEquipmentResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -119,7 +120,7 @@ var sentBackupResponse: MutableLiveData<Response<Backup>> = MutableLiveData()
         }
     }
 
-    fun callForBackup(backup: Backup){
+    fun callForBackup(backup: Backup) {
         viewModelScope.launch {
             try {
                 val response = Repository.callForBackup(backup)
@@ -130,11 +131,22 @@ var sentBackupResponse: MutableLiveData<Response<Backup>> = MutableLiveData()
         }
     }
 
-    fun getSentBackup(id: Int){
+    fun getSentBackup(id: Int) {
         viewModelScope.launch {
             try {
                 val response = Repository.getSentBackup(id)
                 sentBackupResponse.value = response
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun getAssignedIncident(licensePlate: String) {
+        viewModelScope.launch {
+            try {
+                val response = Repository.getAssignedIncident(licensePlate)
+                assignedIncidentResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()
             }

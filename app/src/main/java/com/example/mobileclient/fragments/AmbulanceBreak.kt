@@ -37,7 +37,7 @@ class AmbulanceBreak : Fragment() {
         } else {
             binding.breakButton.text = getString(R.string.end)
             binding.breakButton.setBackgroundColor(resources.getColor(R.color.red, null))
-            topAppBar.setBackgroundColor(resources.getColor(R.color.red, null))
+            topAppBar.setBackgroundColor(resources.getColor(R.color.mustard, null))
             topAppBar.title = getString(R.string.currentlyOnBreak)
         }
         binding.breakButton.setOnClickListener {
@@ -56,7 +56,7 @@ class AmbulanceBreak : Fragment() {
                                 null
                             )
                         )
-                        topAppBar.setBackgroundColor(resources.getColor(R.color.red, null))
+                        topAppBar.setBackgroundColor(resources.getColor(R.color.mustard, null))
                         topAppBar.title = getString(R.string.currentlyOnBreak)
                     }
                 }

@@ -67,7 +67,6 @@ class ParamedicScreen : Fragment() {
                 val licensePlate = it.body()?.licensePlate
                 if (licensePlate != null) {
                     ambulance = licensePlate
-                    setupMap()
                     paramedicViewModel.getAmbulanceEquipment(ambulance, token?: "")
                     paramedicViewModel.getAssignedIncident(ambulance)
                 }
@@ -140,6 +139,10 @@ class ParamedicScreen : Fragment() {
             binding.cardView.visibility = View.VISIBLE
             it.visibility = View.GONE
         }
+        binding.cardView.setOnClickListener {
+            binding.cardView.visibility = View.GONE
+            binding.shiftButton.visibility = View.VISIBLE
+        }
         val navController: NavController =
             Navigation.findNavController(requireActivity(), R.id.fragmentContainerView)
         binding.bottomNavigation.setOnItemSelectedListener {
@@ -164,6 +167,8 @@ class ParamedicScreen : Fragment() {
             }
             true
         }
+
+        setupMap()
         return view
     }
 

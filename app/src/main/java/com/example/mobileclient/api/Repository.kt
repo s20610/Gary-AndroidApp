@@ -179,12 +179,12 @@ object Repository {
         return RetrofitInstance.api.updateAmbulanceLocation(licensePlate, location)
     }
 
-    suspend fun addAmbulanceItem(licensePlate: String, itemId: Int): Response<ResponseBody> {
-        return RetrofitInstance.api.addAmbulanceItem(licensePlate, itemId)
+    suspend fun addAmbulanceItem(licensePlate: String, itemId: Int, count: Int): Response<ResponseBody> {
+        return RetrofitInstance.api.addAmbulanceItem(licensePlate, itemId, count)
     }
 
-    suspend fun removeAmbulanceItem(licensePlate: String, itemId: Int): Response<ResponseBody> {
-        return RetrofitInstance.api.removeAmbulanceItem(licensePlate, itemId)
+    suspend fun removeAmbulanceItem(licensePlate: String, itemId: Int, count: Int): Response<ResponseBody> {
+        return RetrofitInstance.api.removeAmbulanceItem(licensePlate, itemId, count)
     }
 
     suspend fun getAssignedAmbulance(token: String): Response<Ambulance> {

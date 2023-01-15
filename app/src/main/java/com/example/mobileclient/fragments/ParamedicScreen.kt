@@ -44,13 +44,14 @@ class ParamedicScreen : Fragment() {
     private val paramedicViewModel: ParamedicViewModel by activityViewModels()
     private lateinit var map: MapView
     private val binding get() = _binding!!
-    private lateinit var ambulance: String
+    private var ambulance: String = "AAA000"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentParamedicScreenBinding.inflate(inflater, container, false)
         val view = binding.root
+        map = binding.map
         binding.shiftButton.visibility = View.GONE
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
@@ -66,6 +67,7 @@ class ParamedicScreen : Fragment() {
                 val licensePlate = it.body()?.licensePlate
                 if (licensePlate != null) {
                     ambulance = licensePlate
+                    setupMap()
                     paramedicViewModel.getAmbulanceEquipment(ambulance, token?: "")
                     paramedicViewModel.getAssignedIncident(ambulance)
                 }
@@ -162,10 +164,6 @@ class ParamedicScreen : Fragment() {
             }
             true
         }
-
-
-        map = binding.map
-        setupMap()
         return view
     }
 
@@ -210,7 +208,7 @@ class ParamedicScreen : Fragment() {
                         val currentLocation = com.example.mobileclient.model.Location(
                             location.latitude, location.longitude
                         )
-                        paramedicViewModel.updateAmbulanceLocation(ambulance!!, currentLocation)
+                        paramedicViewModel.updateAmbulanceLocation(ambulance, currentLocation)
                         Log.d(
                             "Location update",
                             paramedicViewModel.updateAmbulanceInfoResponse.value.toString()

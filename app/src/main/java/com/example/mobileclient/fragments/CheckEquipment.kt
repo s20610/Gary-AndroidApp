@@ -34,7 +34,11 @@ class CheckEquipment : Fragment(), EquipmentAdapter.OnItemClickListener {
 
         _binding = FragmentCheckEquipmentBinding.inflate(inflater, container, false)
         val view = binding.root
-
+        val token = requireActivity().getSharedPreferences(
+            Constants.USER_INFO_PREFS,
+            Context.MODE_PRIVATE
+        )
+            .getString(Constants.USER_TOKEN_TO_PREFS, "")
         binding.cancelButton.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.paramedicScreen)
         }
@@ -42,11 +46,6 @@ class CheckEquipment : Fragment(), EquipmentAdapter.OnItemClickListener {
             if (response.isSuccessful) {
                 licensePlate = response.body()?.licensePlate.toString()
                 binding.ambulanceTextApi.text = licensePlate
-                val token = requireActivity().getSharedPreferences(
-                    Constants.USER_INFO_PREFS,
-                    Context.MODE_PRIVATE
-                )
-                    .getString(Constants.USER_TOKEN_TO_PREFS, "")
                 binding.refresh.setOnRefreshListener {
                     paramedicViewModel.getAmbulanceEquipment(licensePlate, token ?: "")
                     binding.equipmentRecycler.adapter = EquipmentAdapter(
@@ -66,6 +65,21 @@ class CheckEquipment : Fragment(), EquipmentAdapter.OnItemClickListener {
                 val adapter = binding.equipmentRecycler.adapter as EquipmentAdapter
             }
         }
+
+        binding.saveButton.setOnClickListener {
+            paramedicViewModel.updateEquipment(licensePlate)
+            paramedicViewModel.updateAmbulanceInfoResponse.observe(viewLifecycleOwner) { response ->
+                if (response.isSuccessful) {
+                    paramedicViewModel.getAmbulanceEquipment(licensePlate, token ?: "")
+                    binding.equipmentRecycler.adapter = EquipmentAdapter(
+                        paramedicViewModel.ambulanceEquipmentResponse.value?.body()!!,
+                        this
+                    )
+                } else {
+                    Log.d("CheckEquipment", "Error: ${response.code()}")
+                }
+            }
+        }
         return view
     }
 
@@ -78,39 +92,49 @@ class CheckEquipment : Fragment(), EquipmentAdapter.OnItemClickListener {
     override fun onPlusClick(position: Int) {
         val adapter = binding.equipmentRecycler.adapter as EquipmentAdapter
         val equipment = adapter.getEquipment(position)
-        paramedicViewModel.addAmbulanceItem(
-            licensePlate,
-            equipment.item.itemId
-        )
-        paramedicViewModel.updateAmbulanceInfoResponse.observe(
-            viewLifecycleOwner
-        ) { response ->
-            if (response.isSuccessful) {
-                paramedicViewModel.ambulanceEquipmentResponse.value?.body()
+//        paramedicViewModel.addAmbulanceItem(
+//            licensePlate,
+//            equipment.item.itemId
+//        )
+//        paramedicViewModel.updateAmbulanceInfoResponse.observe(
+//            viewLifecycleOwner
+//        ) { response ->
+//            if (response.isSuccessful) {
+//                paramedicViewModel.ambulanceEquipmentResponse.value?.body()
+//                    ?.find { it.item.itemId == equipment.item.itemId }?.itemData?.count =
+//                    equipment.itemData.count.plus(1)
+//                adapter.notifyItemChanged(position)
+//            }
+//        }
+        paramedicViewModel.addEquipmentUpdate(equipment.item.itemId)
+        paramedicViewModel.ambulanceEquipmentResponse.value?.body()
                     ?.find { it.item.itemId == equipment.item.itemId }?.itemData?.count =
                     equipment.itemData.count.plus(1)
                 adapter.notifyItemChanged(position)
-            }
-        }
     }
 
     override fun onMinusClick(position: Int) {
         val adapter = binding.equipmentRecycler.adapter as EquipmentAdapter
         val equipment = adapter.getEquipment(position)
-        paramedicViewModel.removeAmbulanceItem(
-            licensePlate,
-            equipment.item.itemId
-        )
-        paramedicViewModel.updateAmbulanceInfoResponse.observe(
-            viewLifecycleOwner
-        ) { response ->
-            if (response.isSuccessful) {
-                paramedicViewModel.ambulanceEquipmentResponse.value?.body()
+//        paramedicViewModel.removeAmbulanceItem(
+//            licensePlate,
+//            equipment.item.itemId
+//        )
+//        paramedicViewModel.updateAmbulanceInfoResponse.observe(
+//            viewLifecycleOwner
+//        ) { response ->
+//            if (response.isSuccessful) {
+//                paramedicViewModel.ambulanceEquipmentResponse.value?.body()
+//                    ?.find { it.item.itemId == equipment.item.itemId }?.itemData?.count =
+//                    equipment.itemData.count.minus(1)
+//                adapter.notifyItemChanged(position)
+//            }
+//        }
+        paramedicViewModel.removeEquipmentUpdate(equipment.item.itemId)
+        paramedicViewModel.ambulanceEquipmentResponse.value?.body()
                     ?.find { it.item.itemId == equipment.item.itemId }?.itemData?.count =
                     equipment.itemData.count.minus(1)
                 adapter.notifyItemChanged(position)
-            }
-        }
     }
 
 }

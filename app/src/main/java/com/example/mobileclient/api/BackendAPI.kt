@@ -6,7 +6,6 @@ import retrofit2.Response
 import retrofit2.http.*
 
 
-//test
 interface BackendAPI {
     //Login api calls
     @POST("auth/login")
@@ -38,7 +37,7 @@ interface BackendAPI {
     @PUT("auth/password/reset")
     suspend fun confirmResetPassword(
         @Query("token") token: String,
-    @Body newPassword: newPassword
+        @Body newPassword: newPassword
     ): Response<ResponseBody>
 
     //Tutorial api calls
@@ -223,13 +222,14 @@ interface BackendAPI {
     @POST("ambulance/{licensePlate}/items/add/{itemId}")
     suspend fun addAmbulanceItem(
         @Path("licensePlate") licensePlate: String,
-        @Path("itemId") itemId: Int
+        @Path("itemId") itemId: Int,
+        @Query("count") type: Int
     ): Response<ResponseBody>
 
     @DELETE("ambulance/{licensePlate}/items/remove/{itemId}")
     suspend fun removeAmbulanceItem(
         @Path("licensePlate") licensePlate: String,
-        @Path("itemId") itemId: Int
+        @Path("itemId") itemId: Int, @Query("count") type: Int
     ): Response<ResponseBody>
 
     @GET("ambulance/{licensePlate}/incident")

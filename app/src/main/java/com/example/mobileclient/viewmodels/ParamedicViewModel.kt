@@ -8,6 +8,7 @@ import com.example.mobileclient.model.*
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import retrofit2.Response
+import kotlin.math.absoluteValue
 
 class ParamedicViewModel : ViewModel() {
     var employeeShiftResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
@@ -20,6 +21,7 @@ class ParamedicViewModel : ViewModel() {
     var callForBackupResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var sentBackupResponse: MutableLiveData<Response<Backup>> = MutableLiveData()
     var assignedIncidentResponse: MutableLiveData<Response<Incident>> = MutableLiveData()
+    private var equipmentUpdateMap: HashMap<Int, Int> = HashMap()
 
     fun startEmployeeShift(token: String) {
         viewModelScope.launch {
@@ -87,10 +89,10 @@ class ParamedicViewModel : ViewModel() {
         }
     }
 
-    fun addAmbulanceItem(licensePlate: String, itemId: Int) {
+    private fun addAmbulanceItem(licensePlate: String, itemId: Int, count: Int) {
         viewModelScope.launch {
             try {
-                val response = Repository.addAmbulanceItem(licensePlate, itemId)
+                val response = Repository.addAmbulanceItem(licensePlate, itemId, count)
                 updateAmbulanceInfoResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -98,10 +100,10 @@ class ParamedicViewModel : ViewModel() {
         }
     }
 
-    fun removeAmbulanceItem(licensePlate: String, itemId: Int) {
+    private fun removeAmbulanceItem(licensePlate: String, itemId: Int, count: Int) {
         viewModelScope.launch {
             try {
-                val response = Repository.removeAmbulanceItem(licensePlate, itemId)
+                val response = Repository.removeAmbulanceItem(licensePlate, itemId, count)
                 updateAmbulanceInfoResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -151,6 +153,29 @@ class ParamedicViewModel : ViewModel() {
                 e.printStackTrace()
             }
         }
+    }
+
+    fun addEquipmentUpdate(itemId: Int) {
+        equipmentUpdateMap[itemId] = equipmentUpdateMap[itemId]?.plus(1) ?: 1
+    }
+
+    fun removeEquipmentUpdate(itemId: Int) {
+        equipmentUpdateMap[itemId] = equipmentUpdateMap[itemId]?.minus(1) ?: -1
+    }
+
+    private fun clearEquipmentUpdateMap() {
+        equipmentUpdateMap.clear()
+    }
+
+    fun updateEquipment(licensePlate: String) {
+        equipmentUpdateMap.forEach { (itemId, count) ->
+            if (count > 0) {
+                addAmbulanceItem(licensePlate, itemId, count)
+            } else if (count < 0) {
+                removeAmbulanceItem(licensePlate, itemId, count.absoluteValue)
+            }
+        }
+        clearEquipmentUpdateMap()
     }
 
 }

@@ -1,8 +1,6 @@
 package com.example.mobileclient.fragments
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,13 +13,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.mobileclient.R
-import com.example.mobileclient.databinding.ActivityParamedicBinding
 import com.example.mobileclient.databinding.FragmentParamedicScreenBinding
-import com.example.mobileclient.model.Schedule
+import com.example.mobileclient.model.Incident
 import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
 import com.example.mobileclient.util.Constants.Companion.USER_TOKEN_TO_PREFS
 import com.example.mobileclient.util.findNextShift
+import com.example.mobileclient.util.setIncidentTypeFromApi
 import com.example.mobileclient.viewmodels.ParamedicViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.*
 import org.osmdroid.bonuspack.routing.OSRMRoadManager
 import org.osmdroid.bonuspack.routing.Road
@@ -33,7 +32,7 @@ import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
-import java.time.LocalDate
+import retrofit2.Response
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -45,6 +44,7 @@ class ParamedicScreen : Fragment() {
     private lateinit var map: MapView
     private val binding get() = _binding!!
     private var ambulance: String = "AAA000"
+    val waypoints: ArrayList<GeoPoint> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -67,7 +67,7 @@ class ParamedicScreen : Fragment() {
                 val licensePlate = it.body()?.licensePlate
                 if (licensePlate != null) {
                     ambulance = licensePlate
-                    paramedicViewModel.getAmbulanceEquipment(ambulance, token?: "")
+                    paramedicViewModel.getAmbulanceEquipment(ambulance, token ?: "")
                     paramedicViewModel.getAssignedIncident(ambulance)
                 }
             }
@@ -172,40 +172,126 @@ class ParamedicScreen : Fragment() {
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        paramedicViewModel.assignedIncidentResponse.observe(viewLifecycleOwner) { response ->
+            Log.d("AssignedIncident", response.body().toString())
+            if (response.isSuccessful) {
+                setIncidentFields(response)
+                val incidentMarker = Marker(map)
+                incidentMarker.position = GeoPoint(
+                    response.body()!!.accidentReport.location.latitude,
+                    response.body()!!.accidentReport.location.longitude
+                )
+                incidentMarker.title = "Incident"
+                incidentMarker.icon = ContextCompat.getDrawable(
+                    requireContext(), R.drawable.ic_baseline_warning_24
+                )
+                waypoints.add(incidentMarker.position)
+                map.overlayManager.add(incidentMarker)
+                var road: Road
+                var roadOverlay: Polyline
+                lifecycleScope.launch {
+                    withContext(Dispatchers.IO) {
+                        val roadManager: RoadManager = OSRMRoadManager(requireContext(), "Garry")
+                        val color: Int = ContextCompat.getColor(requireContext(), R.color.green_light)
+                        road = roadManager.getRoad(waypoints)
+                        roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
+                        map.overlayManager.add(roadOverlay)
+                        map.invalidate()
+                    }
+                }
+            }
+        }
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun setIncidentFields(response: Response<Incident>) {
+        val incidentTypes: Array<String> =
+            requireContext().resources.getStringArray(R.array.incidentTypes)
+        val incident = response.body()
+        val accidentReport = incident!!.accidentReport
+        Log.d("AccidentReport", accidentReport.toString())
+        binding.currentEmergencyTypeText.text =
+            setIncidentTypeFromApi(accidentReport.emergencyType, incidentTypes)
+        Log.d("AccidentReport", "emergency text updated")
+        val accidentTime = LocalDateTime.parse(accidentReport.date)
+        val formattedTime = accidentTime.hour.toString() + ":" + accidentTime.minute.toString()
+        binding.currentEmergencyTimeText.text = formattedTime
+        binding.currentEmergencyTimeText.invalidate()
+        Log.d("AccidentReport", "emergency text updated")
+        val accidentAddress = accidentReport.address
+        val splitAddress = accidentAddress.split(", ")
+        val formattedAddress = splitAddress[0] + ", " + splitAddress[1] + ", " + splitAddress[2]
+        binding.currentEmergencyAddressText.text = formattedAddress
+        binding.currentEmergencyVictimsText.text = accidentReport.victimCount.toString()
+        var victimState = ""
+        if (accidentReport.breathing) {
+            victimState+=(getString(R.string.breathingVictim))
+        } else {
+            victimState+=(getString(R.string.notBreathingVictim))
+            victimState+=(", ")
+        }
+        if (accidentReport.consciousness) {
+            victimState+=(getString(R.string.conciousVictim))
+        } else {
+            victimState+=(getString(R.string.unconciousVictim))
+        }
+        binding.currentEmergencyVictimsStateText.text = victimState
+        if (accidentReport.description == "") {
+            binding.showIncidentDescriptionButton.visibility = View.GONE
+        } else {
+            binding.showIncidentDescriptionButton.setOnClickListener {
+                MaterialAlertDialogBuilder(requireContext()).setTitle(getString(R.string.description))
+                    .setMessage(accidentReport.description)
+                    .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                        dialog.cancel()
+                    }.setPositiveButton("Ok") { dialog, _ ->
+                        dialog.cancel()
+                    }.show()
+            }
+        }
+        if (accidentReport.bandCode == "") {
+            binding.showVictimInfoButton.visibility = View.GONE
+        } else {
+            //TODO("Show victim info from bandcode API")
+        }
+        binding.linearLayout9.invalidate()
+    }
+
     private fun setupMap() {
         map.setTileSource(TileSourceFactory.MAPNIK)
         map.controller.setZoom(15)
         map.setMultiTouchControls(true)
         map.setBuiltInZoomControls(true)
-        val (marker: Marker, marker2: Marker, palacKultury: GeoPoint) = markerSetup()
-        val roadManager: RoadManager = OSRMRoadManager(context, "Garry")
-        val gpsProvider = GpsMyLocationProvider(context)
+        val ambulanceMarker = Marker(map)
+        ambulanceMarker.title = "Ambulance"
+        ambulanceMarker.icon =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ambulance_icon)
+//        val (marker: Marker, marker2: Marker, palacKultury: GeoPoint) = markerSetup()
+        val gpsProvider = GpsMyLocationProvider(requireContext())
         gpsProvider.locationUpdateMinTime = 15000
-        val waypoints: ArrayList<GeoPoint> = ArrayList()
-        val color: Int = ContextCompat.getColor(requireContext(), R.color.green_light)
         mLocationOverlay = MyLocationNewOverlay(gpsProvider, map)
         mLocationOverlay!!.enableMyLocation()
         mLocationOverlay!!.enableFollowLocation()
         map.overlayManager.add(mLocationOverlay)
         mLocationOverlay!!.runOnFirstFix {
-            marker2.position = mLocationOverlay!!.myLocation
-            marker2.title = "Medic location"
-            marker2.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ambulance_icon)
-            waypoints.add(palacKultury)
-            waypoints.add(marker2.position)
+            ambulanceMarker.position = mLocationOverlay!!.myLocation
+//            waypoints.add(palacKultury)
+            waypoints.add(ambulanceMarker.position)
+            map.overlayManager.add(ambulanceMarker)
             Log.d("waypoints", waypoints.toString())
-            var road: Road
-            var roadOverlay = Polyline()
-            lifecycleScope.launch {
-                withContext(Dispatchers.IO) {
-                    road = roadManager.getRoad(waypoints)
-                    roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
-                    map.overlayManager.add(roadOverlay)
-                    map.overlayManager.add(marker)
-                    map.overlayManager.add(marker2)
-                    map.invalidate()
-                }
-            }
+//            var road: Road
+//            var roadOverlay = Polyline()
+//            lifecycleScope.launch {
+//                withContext(Dispatchers.IO) {
+//                    road = roadManager.getRoad(waypoints)
+//                    roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
+//                    map.overlayManager.add(roadOverlay)
+//                    map.overlayManager.add(marker)
+//                    map.overlayManager.add(marker2)
+//                    map.invalidate()
+//                }
+//            }
             mLocationOverlay!!.myLocationProvider.startLocationProvider { location, _ ->
                 lifecycleScope.launch {
                     withContext(Dispatchers.IO) {
@@ -218,20 +304,20 @@ class ParamedicScreen : Fragment() {
                             "Location update",
                             paramedicViewModel.updateAmbulanceInfoResponse.value.toString()
                         )
-                        waypoints.remove(marker2.position)
-                        Log.d("waypoints after remove", waypoints.toString())
-                        marker2.position = GeoPoint(location.latitude, location.longitude)
-                        waypoints.add(marker2.position)
-                        Log.d("waypoints after add", waypoints.toString())
-                        map.overlayManager.remove(roadOverlay)
-                        road = roadManager.getRoad(waypoints)
-                        roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
-                        Log.d("Road creation", "Road created for $waypoints")
-                        map.overlayManager.add(roadOverlay)
-                        map.invalidate()
+//                        waypoints.remove(marker2.position)
+//                        Log.d("waypoints after remove", waypoints.toString())
+//                        marker2.position = GeoPoint(location.latitude, location.longitude)
+//                        waypoints.add(marker2.position)
+//                        Log.d("waypoints after add", waypoints.toString())
+//                        map.overlayManager.remove(roadOverlay)
+//                        road = roadManager.getRoad(waypoints)
+//                        roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
+//                        Log.d("Road creation", "Road created for $waypoints")
+//                        map.overlayManager.add(roadOverlay)
+//                        map.invalidate()
                     }
                 }
-                map.controller.animateTo(marker2.position)
+                map.controller.animateTo(ambulanceMarker.position)
             }
         }
     }
@@ -251,13 +337,13 @@ class ParamedicScreen : Fragment() {
         map.onPause()
     }
 
-    private fun markerSetup(): Triple<Marker, Marker, GeoPoint> {
-        val marker = Marker(map)
-        val marker2 = Marker(map)
-        val palacKultury = GeoPoint(52.231888, 21.005967)
-        marker.position = palacKultury
-        marker.title = "Location of incident"
-        marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_warning_24)
-        return Triple(marker, marker2, palacKultury)
-    }
+//    private fun markerSetup(): Triple<Marker, Marker, GeoPoint> {
+//        val marker = Marker(map)
+//        val marker2 = Marker(map)
+//        val palacKultury = GeoPoint(52.231888, 21.005967)
+//        marker.position = palacKultury
+//        marker.title = "Location of incident"
+//        marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_warning_24)
+//        return Triple(marker, marker2, palacKultury)
+//    }
 }

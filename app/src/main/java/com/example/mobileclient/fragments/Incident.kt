@@ -56,7 +56,7 @@ class Incident : Fragment() {
         binding.button2.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_incident_to_loggedInScreen)
         }
-        binding.locationInputText.setOnClickListener {
+        binding.locationInput.setOnClickListener {
             incidentLocationPicker.show(childFragmentManager, "incident_location_picker")
         }
         binding.button.setOnClickListener {

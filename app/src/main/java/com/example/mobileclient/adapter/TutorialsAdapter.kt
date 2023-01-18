@@ -18,18 +18,23 @@ class TutorialsAdapter(
     private val context: Context,
     private var tutorials: List<Tutorial>,
     private var onItemClickListener: OnItemClickListener,
-    private var onRatingBarChangeListener: RatingBar.OnRatingBarChangeListener
+    private var onRatingBarChangeListener: RatingBar.OnRatingBarChangeListener,
+    private var isGuest: Boolean
 ) :
     RecyclerView.Adapter<TutorialsAdapter.TutorialViewHolder>() {
 
     class TutorialViewHolder(
         private var binding: TutorialViewItemBinding,
         private var itemClickListener: OnItemClickListener,
-        private var onRatingBarChangeListener: RatingBar.OnRatingBarChangeListener
+        private var onRatingBarChangeListener: RatingBar.OnRatingBarChangeListener,
+        private var isGuest: Boolean
     ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         fun bind(tutorial: Tutorial, context: Context) {
             binding.tutorial = tutorial
             setPicture(context, tutorial.thumbnail)
+            if (isGuest){
+                binding.ratingBar.isClickable = false
+            }
             binding.ratingBar.onRatingBarChangeListener = onRatingBarChangeListener
             binding.root.setOnClickListener(this)
             binding.executePendingBindings()
@@ -53,7 +58,7 @@ class TutorialsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TutorialViewHolder {
         return TutorialViewHolder(
             TutorialViewItemBinding.inflate(LayoutInflater.from(parent.context)),
-            onItemClickListener, onRatingBarChangeListener
+            onItemClickListener, onRatingBarChangeListener, isGuest
         )
     }
 

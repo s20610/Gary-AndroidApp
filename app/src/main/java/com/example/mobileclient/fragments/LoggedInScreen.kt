@@ -44,7 +44,7 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
 
         val view = binding.root
         binding.tutorialsGrid.adapter =
-            TutorialsAdapter(requireContext(), tutorialsEmpty, this, ratingBarChangeListener)
+            TutorialsAdapter(requireContext(), tutorialsEmpty, this, ratingBarChangeListener,false)
         val sharedPreferences: SharedPreferences =
             requireContext().getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE)
         val token: String = sharedPreferences.getString(USER_TOKEN_TO_PREFS, "")!!
@@ -97,57 +97,37 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
         when (p0?.getItemAtPosition(p2).toString()) {
             allTutorials -> {
                 currentlyDisplayedTutorials = checkIfTutorialsAvailable()
-                binding.tutorialsGrid.adapter = TutorialsAdapter(
-                    requireContext(),
-                    currentlyDisplayedTutorials!!,
-                    this,
-                    ratingBarChangeListener
-                )
+                (binding.tutorialsGrid.adapter as TutorialsAdapter).setTutorials(currentlyDisplayedTutorials!!)
+                binding.tutorialsGrid.adapter?.notifyDataSetChanged()
             }
             general -> {
                 val filteredEmergenceTutorials =
                     checkIfTutorialsAvailable().filter { it.tutorialType == "IN_CASE_OF_DEATH_EMERGENCY" }
                 currentlyDisplayedTutorials = filteredEmergenceTutorials
-                binding.tutorialsGrid.adapter = TutorialsAdapter(
-                    requireContext(),
-                    currentlyDisplayedTutorials!!,
-                    this,
-                    ratingBarChangeListener
-                )
+                (binding.tutorialsGrid.adapter as TutorialsAdapter).setTutorials(currentlyDisplayedTutorials!!)
+                binding.tutorialsGrid.adapter?.notifyDataSetChanged()
             }
             inCaseOfDeath -> {
                 val filteredInCaseOfDeathTutorials =
                     checkIfTutorialsAvailable().filter { it.tutorialType == "GENERAL" }
                 currentlyDisplayedTutorials = filteredInCaseOfDeathTutorials
-                binding.tutorialsGrid.adapter = TutorialsAdapter(
-                    requireContext(),
-                    currentlyDisplayedTutorials!!,
-                    this,
-                    ratingBarChangeListener
-                )
+                (binding.tutorialsGrid.adapter as TutorialsAdapter).setTutorials(currentlyDisplayedTutorials!!)
+                binding.tutorialsGrid.adapter?.notifyDataSetChanged()
             }
             course -> {
                 val filteredCourseTutorials =
                     checkIfTutorialsAvailable().filter { it.tutorialType == "COURSE" }
                 currentlyDisplayedTutorials = filteredCourseTutorials
-                binding.tutorialsGrid.adapter = TutorialsAdapter(
-                    requireContext(),
-                    currentlyDisplayedTutorials!!,
-                    this,
-                    ratingBarChangeListener
-                )
+                (binding.tutorialsGrid.adapter as TutorialsAdapter).setTutorials(currentlyDisplayedTutorials!!)
+                binding.tutorialsGrid.adapter?.notifyDataSetChanged()
             }
         }
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
         currentlyDisplayedTutorials = checkIfTutorialsAvailable()
-        binding.tutorialsGrid.adapter = TutorialsAdapter(
-            requireContext(),
-            currentlyDisplayedTutorials!!,
-            this,
-            ratingBarChangeListener
-        )
+        (binding.tutorialsGrid.adapter as TutorialsAdapter).setTutorials(currentlyDisplayedTutorials!!)
+        binding.tutorialsGrid.adapter?.notifyDataSetChanged()
     }
 
     override fun onItemClick(position: Int) {
@@ -165,12 +145,8 @@ class LoggedInScreen : Fragment(), AdapterView.OnItemSelectedListener,
             if (response.code() == 200) {
                 tutorialsFromAPI = response.body()
                 currentlyDisplayedTutorials = checkIfTutorialsAvailable()
-                binding.tutorialsGrid.adapter = TutorialsAdapter(
-                    requireContext(),
-                    currentlyDisplayedTutorials!!,
-                    this,
-                    ratingBarChangeListener
-                )
+                (binding.tutorialsGrid.adapter as TutorialsAdapter).setTutorials(currentlyDisplayedTutorials!!)
+                binding.tutorialsGrid.adapter?.notifyDataSetChanged()
                 binding.filterMenu.setSelection(0)
             } else {
                 Log.d("getTutorialsResponseCode", response.code().toString())

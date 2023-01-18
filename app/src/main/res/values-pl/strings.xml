@@ -185,4 +185,11 @@
     <string name="forgot_password_info">You will receive an email with token, input that token and a new password after clicking the send button</string>
     <string name="password_changed">Your password has been changed</string>
     <string name="share_with_band_scanning">Share with band scanning?</string>
+    <string name="already_have_token">I already have a token</string>
+    <string name="new_password_repeat">New password confirmation</string>
+    <string name="click_ok_to_confirm">Click ok button</string>
+    <string name="breathingVictim">"Breathing, "</string>
+    <string name="notBreathingVictim">Not breathing</string>
+    <string name="conciousVictim">concious</string>
+    <string name="unconciousVictim">unconcious</string>
 </resources>

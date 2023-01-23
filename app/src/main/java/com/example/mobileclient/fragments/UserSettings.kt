@@ -51,7 +51,7 @@ class UserSettings : Fragment() {
         binding.languageSelection.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, listOf("en", "pl")))
         val selectedLanguage: String = sharedPref.getString("language", "")!!
         binding.languageSelection.setOnItemClickListener { adapterView, view, i, l ->
-            if (selectedLanguage !=binding.languageSelection.text.toString()){
+//            if (selectedLanguage !=binding.languageSelection.text.toString()){
                 if(binding.languageSelection.text.toString() == "en"){
                     editor.putString("language", "en")
                     setAppLocale("en-rUS")
@@ -64,7 +64,7 @@ class UserSettings : Fragment() {
                 requireActivity().finish()
                 startActivity(requireActivity().intent)
                 requireActivity().overridePendingTransition(0, 0)
-            }
+//            }
         }
 
         return view

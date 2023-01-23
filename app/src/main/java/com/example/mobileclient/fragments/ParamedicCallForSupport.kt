@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
@@ -30,6 +31,14 @@ class ParamedicCallForSupport : Fragment() {
     ): View {
         _binding = FragmentParamedicCallForSupportBinding.inflate(inflater, container, false)
 
+        paramedicViewModel.callForBackupResponse.observe(viewLifecycleOwner) { response ->
+            if(response.isSuccessful){
+                binding.textView7.text = getString(R.string.call_for_support_success)
+                binding.textView7.setTextColor(getColor(requireContext(), R.color.red))
+                binding.callButton.isEnabled = false
+                binding.callButton.setBackgroundColor(getColor(requireContext(), R.color.light_grey))
+            }
+        }
         val ambulanceCheck = binding.checkBoxA
         val fireTruckCheck = binding.checkBoxB
         val policeCheck = binding.checkBoxC
@@ -43,7 +52,7 @@ class ParamedicCallForSupport : Fragment() {
                 assignedIncidentId = response.body()!!.incidentId
             }
         }
-        binding.callButton?.setOnClickListener {
+        binding.callButton.setOnClickListener {
             val isAmbulanceChecked = ambulanceCheck.isChecked
             val isFireTruckChecked = fireTruckCheck.isChecked
             val isPoliceChecked = policeCheck.isChecked
@@ -66,8 +75,10 @@ class ParamedicCallForSupport : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+            Log.d("CallForBackup", "Backup type: $backupType")
+            Log.d("CallForBackup", "Assigned incident id: $assignedIncidentId")
             if (backupType != null && assignedIncidentId != 0) {
-                val backup = Backup(null,userEmail,assignedIncidentId,null,"Agresywny kolo",backupType)
+                val backup = Backup(null,userEmail,assignedIncidentId,true,"Agresywny kolo",backupType)
                 paramedicViewModel.callForBackup(backup, token?:"")
                 paramedicViewModel.callForBackupResponse.observe(viewLifecycleOwner) { response ->
                     if(response.isSuccessful){

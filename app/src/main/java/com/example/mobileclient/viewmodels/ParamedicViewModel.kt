@@ -137,7 +137,7 @@ class ParamedicViewModel : ViewModel() {
     fun callForBackup(backup: Backup, token: String) {
         viewModelScope.launch {
             try {
-                val response = Repository.callForBackup(backup, token)
+                val response = Repository.callForBackup(backup, "Bearer $token")
                 callForBackupResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()

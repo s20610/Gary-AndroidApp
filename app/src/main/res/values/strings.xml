@@ -223,4 +223,5 @@
     <string name="about_us_message">This app has been created as part of an engineering thesis project</string>
     <string name="end_shift">End</string>
     <string name="shift">Shift</string>
+    <string name="call_for_support_success">Backup has been already called</string>
 </resources>

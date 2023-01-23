@@ -1,10 +1,12 @@
 package com.example.mobileclient.model
 
+import com.example.mobileclient.util.setIncidentTypeFromApi
+
 data class AccidentReport(
     var date: String,
     val email: String,
     val bandCode: String,
-    val emergencyType: String,
+    var emergencyType: String,
     val victimCount: Int,
     val longitude: Double,
     val latitude: Double,

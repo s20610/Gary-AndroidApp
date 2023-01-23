@@ -209,6 +209,17 @@
     <string name="no_emergency">Nie jesteś przypisany do wypadku</string>
     <string name="no_ambulance">Nie jesteś przypisany do ambulansu</string>
     <string name="ambulance_equipment_empty">Lista wyposażenia jest pusta</string>
-    <string name="end_shift">End</string>
+    <string name="end_shift">Koniec</string>
     <string name="shift">Zmiana</string>
+    <string name="call_for_support_success">Backup has been already called</string>
+
+    <string-array name="incidentTypes">
+        <item>Wypadek samochodowy</item>
+        <item>Powódź</item>
+        <item>Pożar</item>
+        <item>Inne</item>
+        <item>Zawał serca</item>
+        <item>Samobójstwo</item>
+        <item>COVID</item>
+    </string-array>
 </resources>

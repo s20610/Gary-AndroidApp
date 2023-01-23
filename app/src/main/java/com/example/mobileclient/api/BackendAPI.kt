@@ -244,7 +244,7 @@ interface BackendAPI {
     ): Response<Incident>
 
     @POST("backup")
-    suspend fun callForBackup(@Query("token") token: String,@Body backup: Backup): Response<ResponseBody>
+    suspend fun callForBackup(@Header("Authorization") token: String,@Body backup: Backup): Response<ResponseBody>
 
     @GET("backup/{id}")
     suspend fun getSentBackup(@Query("token") token: String,@Path("id") id: Int): Response<Backup>

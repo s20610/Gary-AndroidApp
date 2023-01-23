@@ -210,4 +210,5 @@
     <string name="we_need_this_data_to_provide_our_services_with_high_quality">We need this data to provide our services with high quality</string>
     <string name="end_shift">End</string>
     <string name="shift">Shift</string>
+    <string name="call_for_support_success">Backup has been already called</string>
 </resources>

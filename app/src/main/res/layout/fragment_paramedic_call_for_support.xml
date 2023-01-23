@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/call_for_support_text"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
         android:textColor="@color/green_dark"
         android:layout_marginTop="10dp"
@@ -121,7 +122,7 @@
         app:layout_constraintTop_toBottomOf="@+id/locationInput">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/callButton"
             style="@style/Widget.Material3.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -137,7 +138,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/button"
+            android:layout_toRightOf="@id/callButton"
             android:text="@string/incident_cancel_button"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             app:layout_constraintEnd_toEndOf="parent"

@@ -28,8 +28,8 @@
                 android:background="@android:color/transparent"
                 android:elevation="0dp"
                 app:navigationIcon="@drawable/ic_menu_24"
-                app:title="@string/guest_appbar_text"
-                app:popupTheme="@style/AppTheme.popUpOverlay"/>
+                app:popupTheme="@style/AppTheme.popUpOverlay"
+                app:title="@string/guest_appbar_text" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -58,7 +58,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:text="   "
-                    app:layout_constraintBottom_toTopOf="@+id/tutorials_grid"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -73,7 +72,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/text"
+                    app:layout_constraintTop_toBottomOf="@id/filterMenu"
                     tools:itemCount="2"
                     tools:listitem="@layout/tutorial_view_item" />
             </androidx.constraintlayout.widget.ConstraintLayout>

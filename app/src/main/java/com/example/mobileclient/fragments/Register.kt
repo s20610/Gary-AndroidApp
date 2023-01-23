@@ -25,6 +25,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 class Register : Fragment() {
@@ -74,6 +75,9 @@ class Register : Fragment() {
         openCalendarButton.setOnClickListener {
             datePicker.show(parentFragmentManager, "birthdate_picker")
         }
+        birthdayInput.setOnClickListener {
+            datePicker.show(parentFragmentManager, "birthdate_picker")
+        }
         firstNameInput.doAfterTextChanged {
             buttonEnable()
         }
@@ -92,12 +96,12 @@ class Register : Fragment() {
 
         binding.collectDataButton.setOnClickListener {
             context?.let { it1 ->
-                MaterialAlertDialogBuilder(it1).setTitle("Why do we collect data?")
-                    .setMessage("We need this data to provide our services with high quality")
-                    .setNegativeButton("Cancel") { dialog, _ ->
+                MaterialAlertDialogBuilder(it1).setTitle(getString(R.string.why_do_we_collect_data))
+                    .setMessage(getString(R.string.we_need_this_data_to_provide_our_services_with_high_quality))
+                    .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
                         dialog.cancel()
                     }
-                    .setPositiveButton("Accept") { dialog, _ ->
+                    .setPositiveButton(getString(R.string.accept)) { dialog, _ ->
                         dialog.cancel()
                     }
                     .show()
@@ -110,8 +114,7 @@ class Register : Fragment() {
             utc.timeInMillis = datePicker.selection!!
             val format = SimpleDateFormat("yyyy-MM-dd", Locale.GERMAN)
             val birthdate = format.format(utc.time)
-
-            Log.d("Birthdate", birthdate.toString())
+            Log.d("Birthdate", birthdate)
             val newUser = NewUser(
                 firstNameInput.text.toString(),
                 lastNameInput.text.toString(),
@@ -154,9 +157,11 @@ class Register : Fragment() {
                 emailInput.error = "This field is required"
                 false
             }
+
             android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text.toString()).matches() -> {
                 true
             }
+
             else -> {
                 emailInput.error = "Enter valid e-mail"
                 false

@@ -39,7 +39,7 @@
 
         <Button
             android:id="@+id/bandButton"
-            android:layout_width="130dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:background="@drawable/rounded_corners"
@@ -47,7 +47,7 @@
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="@+id/userName"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="@+id/userName"
             app:layout_constraintTop_toBottomOf="@+id/userName" />
 
         <TableLayout

@@ -156,7 +156,7 @@
     <string name="about_us">About us</string>
     <string name="disease">Diseases</string>
     <string name="bloodType">Blood type</string>
-    <string name="rhType" translatable="false">Rh</string>
+    <string name="rhType">Rh</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="update">Update</string>
@@ -216,4 +216,11 @@
     <string name="no_emergency">You aren\'t assigned to an incident</string>
     <string name="no_ambulance">You are not assigned to an ambulance</string>
     <string name="ambulance_equipment_empty">Equipment list is empty</string>
+    <string name="dispatcher_not_available_error">There are no dispatchers available at this moment. Try again later.</string>
+    <string name="victim_count_error">Victims number can\'t be smaller than 1</string>
+    <string name="why_do_we_collect_data">Why do we collect data?</string>
+    <string name="we_need_this_data_to_provide_our_services_with_high_quality">We need this data to provide our services with high quality</string>
+    <string name="about_us_message">This app has been created as part of an engineering thesis project</string>
+    <string name="end_shift">End</string>
+    <string name="shift">Shift</string>
 </resources>

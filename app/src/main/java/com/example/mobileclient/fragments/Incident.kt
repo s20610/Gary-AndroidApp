@@ -89,8 +89,12 @@ class Incident : Fragment() {
                         ).show()
                         Navigation.findNavController(view)
                             .navigate(R.id.action_incident_to_loggedInScreen)
-                    } else {
-                        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                    } else if(it.code() == 400 && it.errorBody()?.string()?.contains("victimCount") == true){
+                        binding.victimsEdit.error = getString(R.string.victim_count_error)
+                    } else if (it.code() == 406){
+                        Toast.makeText(
+                            requireContext(), getString(R.string.dispatcher_not_available_error), Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
             }

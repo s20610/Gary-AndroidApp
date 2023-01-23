@@ -7,7 +7,7 @@ data class UserInfoResponse(
     val email: String,
     val phone: String,
     val birthDate: String,
-    val bandcode: String,
+    val bandCode: String,
 )
 
 data class NewUser(

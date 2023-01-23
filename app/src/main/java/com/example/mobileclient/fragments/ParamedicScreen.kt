@@ -82,8 +82,9 @@ class ParamedicScreen : Fragment() {
                 Log.d("Schedule", response.body()!!.schedule.toString())
                 if (response.body()?.schedule != null) {
                     val scheduleForToday = findNextShift(response.body()!!.schedule!!)
+                    val endString = getString(R.string.end_shift)
                     val textToDisplay =
-                        "Start - ${scheduleForToday[0]} End - ${scheduleForToday[1]}"
+                        "Start - ${scheduleForToday[0]} $endString - ${scheduleForToday[1]}"
                     binding.nearestShiftField.text = textToDisplay
                 }else{
                     binding.nearestShiftField.text = getString(R.string.no_shifts)
@@ -181,7 +182,7 @@ class ParamedicScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         paramedicViewModel.assignedIncidentResponse.observe(viewLifecycleOwner) { response ->
             Log.d("AssignedIncident", response.body().toString())
-            if (response.isSuccessful) {
+            if (response.code() == 200) {
                 setIncidentFields(response)
                 val incidentMarker = Marker(map)
                 incidentMarker.position = GeoPoint(

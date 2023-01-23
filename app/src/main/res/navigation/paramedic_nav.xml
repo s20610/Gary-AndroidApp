@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_paramedicScreen_to_victimScanBandCode"
             app:destination="@id/victimScanBandCode" />
+        <action
+            android:id="@+id/action_paramedicScreen_to_userInfo2"
+            app:destination="@id/userInfo2" />
     </fragment>
     <fragment
         android:id="@+id/ambulanceBreak"
@@ -61,4 +64,12 @@
         android:name="com.example.mobileclient.VictimScanBandCode"
         android:label="fragment_victim_scan_band_code"
         tools:layout="@layout/fragment_victim_scan_band_code" />
+    <fragment
+        android:id="@+id/userInfo2"
+        android:name="com.example.mobileclient.fragments.UserInfo"
+        android:label="UserInfo" >
+        <action
+            android:id="@+id/action_userInfo2_to_paramedicScreen"
+            app:destination="@id/paramedicScreen" />
+    </fragment>
 </navigation>

@@ -61,14 +61,14 @@
                 style="@style/Widget.Material3.Button"
                 android:layout_width="178dp"
                 android:layout_height="49dp"
-                android:layout_marginTop="240dp"
+                android:layout_marginTop="10dp"
                 android:elevation="8dp"
                 android:text="@string/guest"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                app:layout_constraintEnd_toEndOf="@+id/splash_screen_login"
+                app:layout_constraintEnd_toEndOf="@+id/splash_screen_signin"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/splash_screen_login"
-                app:layout_constraintTop_toBottomOf="@+id/splash_screen_login" />
+                app:layout_constraintStart_toStartOf="@+id/splash_screen_signin"
+                app:layout_constraintTop_toBottomOf="@+id/splash_screen_signin" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

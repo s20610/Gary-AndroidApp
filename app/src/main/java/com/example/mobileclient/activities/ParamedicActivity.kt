@@ -41,10 +41,12 @@ class ParamedicActivity : AppCompatActivity() {
                 getString(R.string.options) -> {
                     it.isChecked = true
                     navController.navigate(R.id.paramedicSettings)
+                    binding.drawerLayout.close()
                 }
                 getString(R.string.breakText) -> {
                     it.isChecked = true
                     navController.navigate(R.id.ambulanceBreak)
+                    binding.drawerLayout.close()
                 }
                 getString(R.string.log_out) -> {
                     it.isChecked = true
@@ -62,6 +64,11 @@ class ParamedicActivity : AppCompatActivity() {
                 }
             }
             true
+        }
+        binding.navigationView.getHeaderView(0).setOnClickListener {
+            navController
+                .navigate((R.id.userInfo2))
+            binding.drawerLayout.close()
         }
         binding.bottomNavigation?.setOnItemSelectedListener {
             it.isChecked = true

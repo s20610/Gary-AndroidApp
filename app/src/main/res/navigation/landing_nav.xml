@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/landing_nav"
     app:startDestination="@id/splashScreen">
 
@@ -44,6 +45,9 @@
         <action
             android:id="@+id/action_guestScreen_to_login"
             app:destination="@id/login" />
+        <action
+            android:id="@+id/action_guestScreen_to_tutorialHtmlView2"
+            app:destination="@id/tutorialHtmlView2" />
     </fragment>
     <fragment
         android:id="@+id/forgotPassword"
@@ -53,4 +57,9 @@
             android:id="@+id/action_forgotPassword_to_login"
             app:destination="@id/login" />
     </fragment>
+    <fragment
+        android:id="@+id/tutorialHtmlView2"
+        android:name="com.example.mobileclient.fragments.TutorialHtmlView"
+        android:label="fragment_tutorial_html_view"
+        tools:layout="@layout/fragment_tutorial_html_view" />
 </navigation>

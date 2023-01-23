@@ -39,7 +39,7 @@ class ParamedicCallForSupport : Fragment() {
             USER_TOKEN_TO_PREFS, "")
         var assignedIncidentId = 0
         paramedicViewModel.assignedIncidentResponse.observe(viewLifecycleOwner) { response ->
-            if (response.isSuccessful) {
+            if (response.code() == 200) {
                 assignedIncidentId = response.body()!!.incidentId
             }
         }
@@ -80,7 +80,7 @@ class ParamedicCallForSupport : Fragment() {
 
         val view = binding.root
 
-        binding.cancelButton?.setOnClickListener {
+        binding.cancelButton.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.paramedicScreen)
         }
 

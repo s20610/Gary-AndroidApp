@@ -80,9 +80,12 @@ class GuestScreen : Fragment(),
     }
 
     override fun onItemClick(position: Int) {
-        Toast.makeText(context, getString(R.string.cantWatchTutorials), Toast.LENGTH_SHORT)
-            .show()
-        Log.d("Tutorial clicked", "Guest clicked tutorial $position")
+            Log.d("Tutorial clicked", "User clicked tutorial $position")
+            val tutorial = currentlyDisplayedTutorials?.get(position)
+            tutorialsViewModel.pickedTutorial = tutorial
+            //navigate to tutorial html view
+            Navigation.findNavController(binding.root)
+                .navigate(R.id.action_guestScreen_to_tutorialHtmlView2)
     }
 
     private fun getTutorialsFromAPI() {

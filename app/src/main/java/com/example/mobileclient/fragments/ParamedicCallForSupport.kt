@@ -16,6 +16,7 @@ import com.example.mobileclient.databinding.FragmentParamedicCallForSupportBindi
 import com.example.mobileclient.model.Backup
 import com.example.mobileclient.util.Constants.Companion.USER_EMAIL_TO_PREFS
 import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
+import com.example.mobileclient.util.Constants.Companion.USER_TOKEN_TO_PREFS
 import com.example.mobileclient.viewmodels.ParamedicViewModel
 
 class ParamedicCallForSupport : Fragment() {
@@ -34,7 +35,14 @@ class ParamedicCallForSupport : Fragment() {
         val policeCheck = binding.checkBoxC
         val userEmail = requireActivity().getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE).getString(
             USER_EMAIL_TO_PREFS, "")
-
+        val token = requireActivity().getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE).getString(
+            USER_TOKEN_TO_PREFS, "")
+        var assignedIncidentId = 0
+        paramedicViewModel.assignedIncidentResponse.observe(viewLifecycleOwner) { response ->
+            if (response.isSuccessful) {
+                assignedIncidentId = response.body()!!.incidentId
+            }
+        }
         binding.callButton?.setOnClickListener {
             val isAmbulanceChecked = ambulanceCheck.isChecked
             val isFireTruckChecked = fireTruckCheck.isChecked
@@ -58,12 +66,13 @@ class ParamedicCallForSupport : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            if (backupType != null) {
-                val backup = Backup(0,userEmail,1,true,"",backupType)
-                paramedicViewModel.callForBackup(backup)
+            if (backupType != null && assignedIncidentId != 0) {
+                val backup = Backup(null,userEmail,assignedIncidentId,null,"Agresywny kolo",backupType)
+                paramedicViewModel.callForBackup(backup, token?:"")
                 paramedicViewModel.callForBackupResponse.observe(viewLifecycleOwner) { response ->
                     if(response.isSuccessful){
                         Log.d("CallForBackup", "Call for backup successful")
+                        Toast.makeText(context, getString(R.string.call_for_backup_successful), Toast.LENGTH_LONG).show()
                     }
                 }
             }

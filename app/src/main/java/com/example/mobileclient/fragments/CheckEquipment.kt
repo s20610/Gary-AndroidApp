@@ -28,17 +28,14 @@ class CheckEquipment : Fragment(), EquipmentAdapter.OnItemClickListener {
     private var licensePlate = ""
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
 
         _binding = FragmentCheckEquipmentBinding.inflate(inflater, container, false)
         val view = binding.root
         val token = requireActivity().getSharedPreferences(
-            Constants.USER_INFO_PREFS,
-            Context.MODE_PRIVATE
-        )
-            .getString(Constants.USER_TOKEN_TO_PREFS, "")
+            Constants.USER_INFO_PREFS, Context.MODE_PRIVATE
+        ).getString(Constants.USER_TOKEN_TO_PREFS, "")
         binding.cancelButton.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.paramedicScreen)
         }
@@ -49,20 +46,24 @@ class CheckEquipment : Fragment(), EquipmentAdapter.OnItemClickListener {
                 binding.refresh.setOnRefreshListener {
                     paramedicViewModel.getAmbulanceEquipment(licensePlate, token ?: "")
                     binding.equipmentRecycler.adapter = EquipmentAdapter(
-                        paramedicViewModel.ambulanceEquipmentResponse.value?.body()!!,
-                        this
+                        paramedicViewModel.ambulanceEquipmentResponse.value?.body()!!, this
                     )
                     binding.refresh.isRefreshing = false
                 }
             } else {
+                binding.ambulanceTextApi.text = resources.getString(R.string.no_ambulance)
                 Log.d("CheckEquipment", "Error: ${response.code()}")
             }
         }
 
         paramedicViewModel.ambulanceEquipmentResponse.observe(viewLifecycleOwner) { response ->
             if (response.isSuccessful) {
-                binding.equipmentRecycler.adapter = EquipmentAdapter(response.body()!!, this)
-                val adapter = binding.equipmentRecycler.adapter as EquipmentAdapter
+                if (response.body()!!.isEmpty()) {
+                    binding.noEquipment?.visibility = View.VISIBLE
+                } else {
+                    binding.equipmentRecycler.adapter = EquipmentAdapter(response.body()!!, this)
+                    val adapter = binding.equipmentRecycler.adapter as EquipmentAdapter
+                }
             }
         }
 
@@ -72,8 +73,7 @@ class CheckEquipment : Fragment(), EquipmentAdapter.OnItemClickListener {
                 if (response.isSuccessful) {
                     paramedicViewModel.getAmbulanceEquipment(licensePlate, token ?: "")
                     binding.equipmentRecycler.adapter = EquipmentAdapter(
-                        paramedicViewModel.ambulanceEquipmentResponse.value?.body()!!,
-                        this
+                        paramedicViewModel.ambulanceEquipmentResponse.value?.body()!!, this
                     )
                 } else {
                     Log.d("CheckEquipment", "Error: ${response.code()}")
@@ -108,9 +108,9 @@ class CheckEquipment : Fragment(), EquipmentAdapter.OnItemClickListener {
 //        }
         paramedicViewModel.addEquipmentUpdate(equipment.item.itemId)
         paramedicViewModel.ambulanceEquipmentResponse.value?.body()
-                    ?.find { it.item.itemId == equipment.item.itemId }?.itemData?.count =
-                    equipment.itemData.count.plus(1)
-                adapter.notifyItemChanged(position)
+            ?.find { it.item.itemId == equipment.item.itemId }?.itemData?.count =
+            equipment.itemData.count.plus(1)
+        adapter.notifyItemChanged(position)
     }
 
     override fun onMinusClick(position: Int) {
@@ -132,9 +132,9 @@ class CheckEquipment : Fragment(), EquipmentAdapter.OnItemClickListener {
 //        }
         paramedicViewModel.removeEquipmentUpdate(equipment.item.itemId)
         paramedicViewModel.ambulanceEquipmentResponse.value?.body()
-                    ?.find { it.item.itemId == equipment.item.itemId }?.itemData?.count =
-                    equipment.itemData.count.minus(1)
-                adapter.notifyItemChanged(position)
+            ?.find { it.item.itemId == equipment.item.itemId }?.itemData?.count =
+            equipment.itemData.count.minus(1)
+        adapter.notifyItemChanged(position)
     }
 
 }

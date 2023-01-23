@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VictimScanBandCode">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/scan_victim_bandcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/scan_victim_bandcode"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+            android:textColor="@color/green_dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/scan_victim_bandcode_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/scan_victim_bandcode_text"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textColor="@color/light_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scan_victim_bandcode" />
+
+        <Button
+            android:id="@+id/scanButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_baseline_qr_code_scanner_24"
+            android:drawableTint="@color/white"
+            android:text="@string/incident_scan"
+            app:layout_constraintBottom_toBottomOf="@+id/barcodeInput"
+            app:layout_constraintStart_toStartOf="@+id/allergies"
+            app:layout_constraintTop_toTopOf="@+id/barcodeInput" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/barcodeInput"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="30dp"
+            android:hint="@string/victim_band_code"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/allergies"
+            app:layout_constraintStart_toEndOf="@+id/scanButton"
+            app:layout_constraintTop_toBottomOf="@+id/scan_victim_bandcode_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/barcodeInputText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TableLayout
+            android:id="@+id/allergies"
+            android:layout_width="500dp"
+            android:layout_height="200dp"
+            android:layout_margin="10dp"
+            android:isScrollContainer="true"
+            android:scrollbars="vertical"
+            android:shrinkColumns="*"
+            android:stretchColumns="*"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barcodeInput">
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corners"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_column="0"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:text="@string/allergy"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/allergy_type_header"
+                    android:layout_width="0dip"
+                    android:layout_column="1"
+                    android:layout_weight="1"
+                    android:text="@string/allergy_type_info"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textColor="@color/white" />
+            </TableRow>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/allergy_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/list_item_allergies">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/diseases"
+            android:layout_width="500dp"
+            android:layout_height="200dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="30dp"
+            android:isScrollContainer="true"
+            android:scrollbars="vertical"
+            android:shrinkColumns="*"
+            android:stretchColumns="*"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/allergies">
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corners"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_column="0"
+                    android:paddingLeft="5dp"
+                    android:text="@string/disease"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textColor="@color/white" />
+            </TableRow>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/disease_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/list_item_diseases" />
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/bloodType"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/bloodType"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintStart_toStartOf="@+id/diseases"
+            app:layout_constraintTop_toBottomOf="@+id/diseases" />
+
+        <TextView
+            android:id="@+id/bloodTypeText"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintBottom_toBottomOf="@+id/bloodType"
+            app:layout_constraintStart_toEndOf="@+id/bloodType"
+            app:layout_constraintTop_toTopOf="@+id/bloodType" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

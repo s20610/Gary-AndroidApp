@@ -60,9 +60,11 @@ class ParamedicScreen : Fragment() {
         //get token from shared preferences
         val token = requireActivity().getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE)
             .getString(USER_TOKEN_TO_PREFS, "")
+        Log.d("token", token.toString())
         paramedicViewModel.getCurrentAmbulance(token ?: "")
 
         paramedicViewModel.currentAmbulanceResponse.observe(viewLifecycleOwner) {
+            Log.d("AMBULANCE", it.toString())
             if (it.isSuccessful) {
                 val licensePlate = it.body()?.licensePlate
                 if (licensePlate != null) {
@@ -70,6 +72,8 @@ class ParamedicScreen : Fragment() {
                     paramedicViewModel.getAmbulanceEquipment(ambulance, token ?: "")
                     paramedicViewModel.getAssignedIncident(ambulance)
                 }
+            }else{
+                binding.currentEmergencyLabel.text = getString(R.string.no_ambulance)
             }
         }
         paramedicViewModel.getSchedule(token ?: "")
@@ -81,6 +85,8 @@ class ParamedicScreen : Fragment() {
                     val textToDisplay =
                         "Start - ${scheduleForToday[0]} End - ${scheduleForToday[1]}"
                     binding.nearestShiftField.text = textToDisplay
+                }else{
+                    binding.nearestShiftField.text = getString(R.string.no_shifts)
                 }
             }
         }
@@ -200,6 +206,8 @@ class ParamedicScreen : Fragment() {
                         map.invalidate()
                     }
                 }
+            }else{
+                binding.currentEmergencyLabel.text = getString(R.string.no_emergency)
             }
         }
         super.onViewCreated(view, savedInstanceState)
@@ -250,10 +258,11 @@ class ParamedicScreen : Fragment() {
                     }.show()
             }
         }
-        if (accidentReport.bandCode == "") {
+        if (accidentReport.bandCode == "" || accidentReport.bandCode == null) {
             binding.showVictimInfoButton.visibility = View.GONE
         } else {
             //TODO("Show victim info from bandcode API")
+            paramedicViewModel.getMedicalInfoWithBandCode(accidentReport.bandCode)
         }
         binding.linearLayout9.invalidate()
     }

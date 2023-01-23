@@ -68,6 +68,7 @@ class ParamedicActivity : AppCompatActivity() {
             val menuString = getString(R.string.menu_equipment)
             val victimString = getString(R.string.menu_victim)
             val supportString = getString(R.string.menu_support)
+            val scanBandCodeString = getString(R.string.menu_scan)
             when (it.toString()) {
                 menuString -> {
                     it.isChecked = true
@@ -80,6 +81,10 @@ class ParamedicActivity : AppCompatActivity() {
                 supportString -> {
                     it.isChecked = true
                     navController.navigate(R.id.paramedicCallForSupport2)
+                }
+                scanBandCodeString -> {
+                    it.isChecked = true
+                    navController.navigate(R.id.victimScanBandCode)
                 }
                 else -> {
                     it.isChecked = true

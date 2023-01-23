@@ -55,6 +55,12 @@ interface BackendAPI {
     ): Response<ResponseBody>
 
     //Medical info api calls
+
+    @GET("medical_info/user/bandcode/{bandCode}")
+    suspend fun getMedicalInfoByBandCode(
+        @Path("bandCode") bandCode: String
+    ): Response<MedicalInfo>
+
     @GET("medical_info/user/{email}")
     suspend fun getUserMedicalInfo(
         @Path("email") userEmail: String
@@ -238,9 +244,9 @@ interface BackendAPI {
     ): Response<Incident>
 
     @POST("backup")
-    suspend fun callForBackup(@Body backup: Backup): Response<ResponseBody>
+    suspend fun callForBackup(@Query("token") token: String,@Body backup: Backup): Response<ResponseBody>
 
     @GET("backup/{id}")
-    suspend fun getSentBackup(@Path("id") id: Int): Response<Backup>
+    suspend fun getSentBackup(@Query("token") token: String,@Path("id") id: Int): Response<Backup>
 
 }

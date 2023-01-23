@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
@@ -16,6 +17,7 @@ import com.example.mobileclient.databinding.FragmentParamedicCallForSupportBindi
 import com.example.mobileclient.model.Backup
 import com.example.mobileclient.util.Constants.Companion.USER_EMAIL_TO_PREFS
 import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
+import com.example.mobileclient.util.Constants.Companion.USER_TOKEN_TO_PREFS
 import com.example.mobileclient.viewmodels.ParamedicViewModel
 
 class ParamedicCallForSupport : Fragment() {
@@ -29,13 +31,28 @@ class ParamedicCallForSupport : Fragment() {
     ): View {
         _binding = FragmentParamedicCallForSupportBinding.inflate(inflater, container, false)
 
+        paramedicViewModel.callForBackupResponse.observe(viewLifecycleOwner) { response ->
+            if(response.isSuccessful){
+                binding.textView7.text = getString(R.string.call_for_support_success)
+                binding.textView7.setTextColor(getColor(requireContext(), R.color.red))
+                binding.callButton.isEnabled = false
+                binding.callButton.setBackgroundColor(getColor(requireContext(), R.color.light_grey))
+            }
+        }
         val ambulanceCheck = binding.checkBoxA
         val fireTruckCheck = binding.checkBoxB
         val policeCheck = binding.checkBoxC
         val userEmail = requireActivity().getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE).getString(
             USER_EMAIL_TO_PREFS, "")
-
-        binding.callButton?.setOnClickListener {
+        val token = requireActivity().getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE).getString(
+            USER_TOKEN_TO_PREFS, "")
+        var assignedIncidentId = 0
+        paramedicViewModel.assignedIncidentResponse.observe(viewLifecycleOwner) { response ->
+            if (response.code() == 200) {
+                assignedIncidentId = response.body()!!.incidentId
+            }
+        }
+        binding.callButton.setOnClickListener {
             val isAmbulanceChecked = ambulanceCheck.isChecked
             val isFireTruckChecked = fireTruckCheck.isChecked
             val isPoliceChecked = policeCheck.isChecked
@@ -58,12 +75,15 @@ class ParamedicCallForSupport : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            if (backupType != null) {
-                val backup = Backup(0,userEmail,1,true,"",backupType)
-                paramedicViewModel.callForBackup(backup)
+            Log.d("CallForBackup", "Backup type: $backupType")
+            Log.d("CallForBackup", "Assigned incident id: $assignedIncidentId")
+            if (backupType != null && assignedIncidentId != 0) {
+                val backup = Backup(null,userEmail,assignedIncidentId,true,"Agresywny kolo",backupType)
+                paramedicViewModel.callForBackup(backup, token?:"")
                 paramedicViewModel.callForBackupResponse.observe(viewLifecycleOwner) { response ->
                     if(response.isSuccessful){
                         Log.d("CallForBackup", "Call for backup successful")
+                        Toast.makeText(context, getString(R.string.call_for_backup_successful), Toast.LENGTH_LONG).show()
                     }
                 }
             }
@@ -71,7 +91,7 @@ class ParamedicCallForSupport : Fragment() {
 
         val view = binding.root
 
-        binding.cancelButton?.setOnClickListener {
+        binding.cancelButton.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.paramedicScreen)
         }
 

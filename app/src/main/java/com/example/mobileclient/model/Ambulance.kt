@@ -22,10 +22,21 @@ data class ItemData(
 //TODO: Adjust to match backend
 data class Incident(
     val incidentId: Int,
+    val dangerScale: String,
+    val incidentStatusType: String,
+    val reactionJustification: String,
+    val accidentReport: AccidentReportFromApi
+)
+
+data class AccidentReportFromApi(
+    val accidentId: Int,
+    val date: String,
     val location: Location,
-    val description: String,
-    val type: String,
-    val status: String,
-    val createdAt: String,
-    val updatedAt: String
+    val address: String,
+    val bandCode: String,
+    val emergencyType: String,
+    val victimCount: Int,
+    val consciousness: Boolean,
+    val breathing: Boolean,
+    val description: String
 )

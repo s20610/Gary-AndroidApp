@@ -1,15 +1,19 @@
 package com.example.mobileclient.activities
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.mobileclient.R
 import com.example.mobileclient.databinding.ActivityUserBinding
 import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
+import com.example.mobileclient.util.hasPermissions
+
 
 class UserActivity : AppCompatActivity() {
     companion object {
@@ -86,21 +90,16 @@ class UserActivity : AppCompatActivity() {
             binding.drawerLayout.close()
             true
         }
-        com.example.mobileclient.util.checkPermission(
-            android.Manifest.permission.CAMERA,
-            CAMERA_PERMISSION_CODE,
-            this, this
+        val PERMISSION_ALL = 1
+        val PERMISSIONS = arrayOf(
+            Manifest.permission.CAMERA,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
         )
-        com.example.mobileclient.util.checkPermission(
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            STORAGE_PERMISSION_CODE,
-            this, this
-        )
-        com.example.mobileclient.util.checkPermission(
-            android.Manifest.permission.ACCESS_FINE_LOCATION,
-            ACCESS_FINE_LOCATION_CODE,
-            this, this
-        )
+
+        if (!hasPermissions(this, *PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL)
+        }
     }
 
     override fun recreate() {

@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/check_equipment"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
             android:textColor="@color/green_dark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,14 +40,39 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/equipment_recycler"
-            android:layout_width="390dp"
-            android:layout_height="450dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/cancelButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ambulance_text_api"
+            app:layout_constraintTop_toBottomOf="@+id/equipment_list"
             tools:itemCount="5"
             tools:listitem="@layout/equipment_item" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="100dp"
+            android:text="@string/incident_cancel_button"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/saveButton"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
+            android:layout_marginEnd="30dp"
+            android:text="@string/confirm"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cancelButton" />
 
         <TextView
             android:id="@+id/ambulance_text"
@@ -56,8 +81,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:text="@string/ambulance"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            android:textSize="20sp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/check_equipment_title" />
 
@@ -65,11 +90,12 @@
             android:id="@+id/ambulance_text_api"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
             android:text="AAAAAA"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@+id/ambulance_text"
-            app:layout_constraintTop_toBottomOf="@+id/ambulance_text" />
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textSize="30sp"
+            app:layout_constraintStart_toEndOf="@+id/ambulance_text"
+            app:layout_constraintTop_toTopOf="@+id/ambulance_text" />
 
         <TextView
             android:id="@+id/no_equipment"
@@ -82,29 +108,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/equipment_recycler" />
-
-        <Button
-            android:id="@+id/cancelButton"
-            style="@style/Widget.Material3.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="50dp"
-            android:layout_marginBottom="50dp"
-            android:text="@string/incident_cancel_button"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <Button
-            android:id="@+id/saveButton"
-            style="@style/Widget.Material3.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
-            android:layout_marginEnd="30dp"
-            android:text="@string/confirm"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/cancelButton" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

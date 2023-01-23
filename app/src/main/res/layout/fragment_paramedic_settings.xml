@@ -69,5 +69,16 @@
         app:layout_constraintStart_toStartOf="@+id/languageSelectField"
         app:layout_constraintTop_toBottomOf="@+id/languageSelectField" />
 
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
+        android:layout_marginTop="20dp"
+        android:text="@string/incident_cancel_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/appInfoButton"
+        app:layout_constraintTop_toBottomOf="@+id/appInfoButton" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

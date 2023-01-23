@@ -57,6 +57,7 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
                 if (response.isSuccessful) {
                     val fullName = response.body()?.name + " " + response.body()?.lastName
                     binding.userName.text = fullName
+                    binding.bandButton.text = response.body()?.bandCode
                 }
             }
         }
@@ -105,14 +106,17 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
                             Navigation.findNavController(view)
                                 .navigate(R.id.action_medicalInfoMain_to_bloodTypeForm)
                         }
+
                         1 -> {
                             Navigation.findNavController(view)
                                 .navigate(R.id.action_medicalInfoMain_to_allergyForm)
                         }
+
                         2 -> {
                             Navigation.findNavController(view)
                                 .navigate(R.id.action_medicalInfoMain_to_diseaseForm)
                         }
+
                         else -> {
                             Navigation.findNavController(view)
                                 .navigate(R.id.action_medicalInfoMain_to_trustedPersonForm)
@@ -143,33 +147,41 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
     private fun getImageResourceForBloodType(bloodType: String, rhType: String): Int {
         return when (bloodType) {
             "A" -> {
-                if (rhType == "+") {
+                Log.d("rhType", rhType)
+                if (rhType == "PLUS") {
                     R.drawable.blood_type_a_plus
                 } else {
                     R.drawable.blood_type_a_minus
                 }
             }
+
             "B" -> {
-                if (rhType == "+") {
+                Log.d("rhType", rhType)
+                if (rhType == "PLUS") {
                     R.drawable.blood_type_b_plus
                 } else {
                     R.drawable.blood_type_b_minus
                 }
             }
+
             "AB" -> {
-                if (rhType == "+") {
+                Log.d("rhType", rhType)
+                if (rhType == "PLUS") {
                     R.drawable.blood_type_ab__plus
                 } else {
                     R.drawable.blood_type_ab_minus
                 }
             }
-            "0" -> {
-                if (rhType == "+") {
+
+            "ZERO" -> {
+                Log.d("rhType", rhType)
+                if (rhType == "PLUS") {
                     R.drawable.blood_type_0_plus
                 } else {
                     R.drawable.blood_type_0_minus
                 }
             }
+
             else -> {
                 R.drawable.ic_placeholder
             }

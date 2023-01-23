@@ -1,6 +1,7 @@
 package com.example.mobileclient.viewmodels
 
 import android.content.Context
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -49,12 +50,13 @@ class FacilitiesViewModel : ViewModel() {
     }
 
     private fun checkTypeOfFacility(facilityType: String): Int {
+        Log.d("FacilitiesMap", "Facility type: $facilityType")
         return when (facilityType) {
             "HOSPITAL" -> R.drawable.ic_baseline_local_hospital_40
             "POLICE_STATION" -> R.drawable.ic_baseline_local_police_40
             "FIRE_UNIT" -> R.drawable.ic_baseline_local_fire_department_40
             "GUARD_UNIT" -> R.drawable.ic_placeholder
-            "AED" -> R.drawable.ic_placeholder
+            "AED" -> R.drawable.ic_heart_flash_24
             else -> R.drawable.ic_placeholder
         }
     }

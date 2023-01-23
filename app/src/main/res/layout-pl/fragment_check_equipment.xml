@@ -40,12 +40,14 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/equipment_recycler"
-            android:layout_width="390dp"
-            android:layout_height="450dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="center"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/cancelButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ambulance_text_api"
+            app:layout_constraintTop_toBottomOf="@+id/equipment_list"
             tools:itemCount="5"
             tools:listitem="@layout/equipment_item" />
 

@@ -33,19 +33,32 @@ class ForgotPassword : Fragment() {
             userViewModel.changePasswordResponse.observe(viewLifecycleOwner) { response ->
                 if (response.isSuccessful) {
                     binding.emailFieldForg.visibility = View.GONE
-                    binding.tokenField?.visibility = View.VISIBLE
-                    binding.newPasswordField?.visibility = View.VISIBLE
+                    binding.tokenField.visibility = View.VISIBLE
+                    binding.newPasswordField.visibility = View.VISIBLE
+                    binding.newPasswordFieldConf.visibility = View.VISIBLE
                     binding.passwordButton.visibility = View.GONE
-                    binding.tokenButton?.visibility = View.VISIBLE
+                    binding.tokenButton.visibility = View.VISIBLE
+                    binding.alreadyHaveAToken.visibility = View.GONE
                 } else {
-                    binding.emailFieldForg.error = "Error"
+                    Toast.makeText(context, "There was a problem with your request", Toast.LENGTH_SHORT).show()
                 }
             }
         }
-        binding.tokenButton?.setOnClickListener {
 
-            val token = binding.tokenFieldInput?.text.toString()
-            val newPassword = binding.newPasswordInput?.text.toString()
+        binding.alreadyHaveAToken.setOnClickListener{
+            binding.emailFieldForg.visibility = View.GONE
+            binding.tokenField.visibility = View.VISIBLE
+            binding.newPasswordField.visibility = View.VISIBLE
+            binding.newPasswordFieldConf.visibility = View.VISIBLE
+            binding.passwordButton.visibility = View.GONE
+            binding.tokenButton.visibility = View.VISIBLE
+            binding.alreadyHaveAToken.visibility = View.GONE
+        }
+
+        binding.tokenButton.setOnClickListener {
+
+            val token = binding.tokenFieldInput.text.toString()
+            val newPassword = binding.newPasswordInput.text.toString()
             userViewModel.confirmPasswordReset(token, newPassword)
             userViewModel.changePasswordResponse.observe(viewLifecycleOwner) { response ->
                 if (response.isSuccessful) {

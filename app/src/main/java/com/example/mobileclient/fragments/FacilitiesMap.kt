@@ -59,13 +59,13 @@ class FacilitiesMap : Fragment() {
         }
         setupMap(map)
         binding.hospitalCheckbox.setOnCheckedChangeListener { _, isChecked ->
-            markers.find { it.type == "HOSPITAL" }?.setVisible(isChecked)
+            markers.filter { it.type == "HOSPITAL"}.forEach { it.setVisible(isChecked) }
         }
         binding.policeCheckbox.setOnCheckedChangeListener { _, isChecked ->
-            markers.find { it.type == "POLICE_STATION" }?.setVisible(isChecked)
+            markers.filter { it.type == "POLICE_STATION"}.forEach { it.setVisible(isChecked) }
         }
         binding.fireCheckbox.setOnCheckedChangeListener { _, isChecked ->
-            markers.find { it.type == "FIRE_UNIT" }?.setVisible(isChecked)
+            markers.filter { it.type == "FIRE_UNIT"}.forEach { it.setVisible(isChecked) }
         }
 
         return view

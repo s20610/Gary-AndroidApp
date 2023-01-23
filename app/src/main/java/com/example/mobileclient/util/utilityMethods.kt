@@ -22,6 +22,10 @@ fun checkPermission(permission: String, requestCode: Int, context: Context, acti
     }
 }
 
+fun hasPermissions(context: Context, vararg permissions: String): Boolean = permissions.all {
+    ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+}
+
 fun setAllergyTypeFromApi(allergyType: String, allergyTypesArray: Array<String>): String {
     return when (allergyType) {
         "SKIN_CONTACT" -> allergyTypesArray[0]

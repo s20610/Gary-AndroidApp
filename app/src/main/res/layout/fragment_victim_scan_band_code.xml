@@ -1,57 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <variable
-            name="viewModel"
-            type="com.example.mobileclient.viewmodels.UserViewModel" />
-    </data>
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VictimScanBandCode">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_margin="1dp"
-            android:src="@drawable/blood_type_a_plus"
+        <TextView
+            android:id="@+id/scan_victim_bandcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/scan_victim_bandcode"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+            android:textColor="@color/green_dark"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/userName"
+            android:id="@+id/scan_victim_bandcode_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="Jan Kowalski"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-            android:textSize="30sp"
+            android:text="@string/scan_victim_bandcode_text"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textColor="@color/light_grey"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scan_victim_bandcode" />
 
         <Button
-            android:id="@+id/bandButton"
+            android:id="@+id/scanButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:background="@drawable/rounded_corners"
-            android:text="@string/band"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintEnd_toEndOf="@+id/userName"
-            app:layout_constraintStart_toStartOf="@+id/userName"
-            app:layout_constraintTop_toBottomOf="@+id/userName" />
+            android:drawableLeft="@drawable/ic_baseline_qr_code_scanner_24"
+            android:drawableTint="@color/white"
+            android:text="@string/incident_scan"
+            app:layout_constraintBottom_toBottomOf="@+id/barcodeInput"
+            app:layout_constraintStart_toStartOf="@+id/allergies"
+            app:layout_constraintTop_toTopOf="@+id/barcodeInput" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/barcodeInput"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="30dp"
+            android:hint="@string/victim_band_code"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/allergies"
+            app:layout_constraintStart_toEndOf="@+id/scanButton"
+            app:layout_constraintTop_toBottomOf="@+id/scan_victim_bandcode_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/barcodeInputText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <TableLayout
             android:id="@+id/allergies"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_width="500dp"
+            android:layout_height="200dp"
             android:layout_margin="10dp"
             android:isScrollContainer="true"
             android:scrollbars="vertical"
@@ -59,7 +81,7 @@
             android:stretchColumns="*"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView">
+            app:layout_constraintTop_toBottomOf="@id/barcodeInput">
 
             <TableRow
                 android:layout_height="wrap_content"
@@ -97,8 +119,8 @@
 
         <TableLayout
             android:id="@+id/diseases"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_width="500dp"
+            android:layout_height="200dp"
             android:layout_marginHorizontal="10dp"
             android:layout_marginVertical="30dp"
             android:isScrollContainer="true"
@@ -130,19 +152,24 @@
                 tools:listitem="@layout/list_item_diseases" />
         </TableLayout>
 
-        <Button
-            android:id="@+id/add_button"
-            style="@style/Widget.Material3.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="100dp"
-            android:padding="10dp"
-            android:text="@string/add"
+        <TextView
+            android:id="@+id/bloodType"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/bloodType"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/diseases" />
+            app:layout_constraintStart_toStartOf="@+id/diseases"
+            app:layout_constraintTop_toBottomOf="@+id/diseases" />
 
+        <TextView
+            android:id="@+id/bloodTypeText"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintBottom_toBottomOf="@+id/bloodType"
+            app:layout_constraintStart_toEndOf="@+id/bloodType"
+            app:layout_constraintTop_toTopOf="@+id/bloodType" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</FrameLayout>

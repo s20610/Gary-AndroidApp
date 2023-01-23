@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentUserSettingsBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
 
 
@@ -35,11 +37,21 @@ class UserSettings : Fragment() {
             editor.apply()
         }
 
+        binding.appInfoButton.setOnClickListener {
+            val dialog = MaterialAlertDialogBuilder(requireContext())
+                .setTitle(getString(R.string.about_us))
+                .setMessage(getString(R.string.about_us_message))
+                .setPositiveButton("OK"){dialog, which ->
+                    dialog.dismiss()
+                }
+                .create()
+            dialog.show()
+        }
 
         binding.languageSelection.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, listOf("en", "pl")))
         val selectedLanguage: String = sharedPref.getString("language", "")!!
         binding.languageSelection.setOnItemClickListener { adapterView, view, i, l ->
-            if (selectedLanguage !=binding.languageSelection.text.toString()){
+//            if (selectedLanguage !=binding.languageSelection.text.toString()){
                 if(binding.languageSelection.text.toString() == "en"){
                     editor.putString("language", "en")
                     setAppLocale("en-rUS")
@@ -52,7 +64,7 @@ class UserSettings : Fragment() {
                 requireActivity().finish()
                 startActivity(requireActivity().intent)
                 requireActivity().overridePendingTransition(0, 0)
-            }
+//            }
         }
 
         return view

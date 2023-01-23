@@ -21,6 +21,7 @@ class ParamedicViewModel : ViewModel() {
     var callForBackupResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var sentBackupResponse: MutableLiveData<Response<Backup>> = MutableLiveData()
     var assignedIncidentResponse: MutableLiveData<Response<Incident>> = MutableLiveData()
+    var victimMedicalInfoResponse: MutableLiveData<Response<MedicalInfo>> = MutableLiveData()
     private var equipmentUpdateMap: HashMap<Int, Int> = HashMap()
 
     fun startEmployeeShift(token: String) {
@@ -28,6 +29,17 @@ class ParamedicViewModel : ViewModel() {
             try {
                 val response = Repository.startEmployeeShift("Bearer $token")
                 employeeShiftResponse.value = response
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun getMedicalInfoWithBandCode(bandCode: String) {
+        viewModelScope.launch {
+            try {
+                val response = Repository.getMedicalInfoByBandCode(bandCode)
+                victimMedicalInfoResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -122,10 +134,10 @@ class ParamedicViewModel : ViewModel() {
         }
     }
 
-    fun callForBackup(backup: Backup) {
+    fun callForBackup(backup: Backup, token: String) {
         viewModelScope.launch {
             try {
-                val response = Repository.callForBackup(backup)
+                val response = Repository.callForBackup(backup, "Bearer $token")
                 callForBackupResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -133,10 +145,10 @@ class ParamedicViewModel : ViewModel() {
         }
     }
 
-    fun getSentBackup(id: Int) {
+    fun getSentBackup(id: Int, token: String) {
         viewModelScope.launch {
             try {
-                val response = Repository.getSentBackup(id)
+                val response = Repository.getSentBackup(id, token)
                 sentBackupResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()

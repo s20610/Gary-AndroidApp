@@ -44,12 +44,18 @@ class IncidentLocationPicker : DialogFragment() {
         val mReceive: MapEventsReceiver = object : MapEventsReceiver {
             override fun singleTapConfirmedHelper(p: GeoPoint?): Boolean {
                 marker.position = p
-                address =
-                    geocoder.getFromLocation(marker.position.latitude, marker.position.longitude, 1)!!
-                for (i in 0..address[0].maxAddressLineIndex) {
-                    resultAddress += address[0].getAddressLine(i)
+                try {
+                    resultAddress = ""
+                    address =
+                        geocoder.getFromLocation(marker.position.latitude, marker.position.longitude, 1)!!
+                    for (i in 0..address[0].maxAddressLineIndex) {
+                        resultAddress += address[0].getAddressLine(i)
+                    }
+                    binding.coordinates.text = resultAddress
+                }catch (e: Exception){
+                    binding.coordinates.text = getString(R.string.click_ok_to_confirm)
                 }
-                binding.coordinates.text = resultAddress
+
                 return false
             }
 

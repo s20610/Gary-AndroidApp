@@ -26,8 +26,7 @@ class ShowIncident : Fragment() {
         val pickedAccidentReport = accidentReportViewModel.pickedAccidentReport
         val incidentTypes: Array<String> =
             requireContext().resources.getStringArray(R.array.incidentTypes)
-        val incidentType = setIncidentTypeFromApi(pickedAccidentReport?.emergencyType?: "",incidentTypes)
-        binding.autoCompleteTextView2.setText(incidentType)
+        binding.autoCompleteTextView2.setText(pickedAccidentReport?.emergencyType)
         binding.autoCompleteTextView2.isEnabled = false
         binding.victimsEdit.setText(pickedAccidentReport?.victimCount.toString())
         binding.victimsEdit.isEnabled = false

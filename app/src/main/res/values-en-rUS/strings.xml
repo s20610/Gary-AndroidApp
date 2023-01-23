@@ -146,6 +146,7 @@
     <string name="bloodType">Blood type</string>
     <string name="register_hint">I agree to the terms and conditions of service</string>
     <string name="guest">Guest</string>
+    <string name="rhType">Rh</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="update">Update</string>
@@ -175,7 +176,9 @@
     <string name="ambulance">Ambulance</string>
     <string name="options">Options</string>
     <string name="breakText">Break Time</string>
+    <string name="nearest_shift">Shift:</string>
     <string name="break_explaining_text">When you start a break your ambulance shows up in dispatchers view as \"Currently on break\"</string>
+    <string name="end">Finish break</string>
     <string name="currentlyOnBreak">Currently on Break</string>
     <string name="no_backup_type_selected">Please select at least one type of backup</string>
     <string name="cantRateTutorials">You can\'t rate tutorials as guest</string>
@@ -185,4 +188,27 @@
     <string name="forgot_password_info">You will receive an email with token, input that token and a new password after clicking the send button</string>
     <string name="password_changed">Your password has been changed</string>
     <string name="share_with_band_scanning">Share with band scanning?</string>
+    <string name="already_have_token">I already have a token</string>
+    <string name="new_password_repeat">New password confirmation</string>
+    <string name="click_ok_to_confirm">Click ok button</string>
+    <string name="breathingVictim">"Breathing, "</string>
+    <string name="notBreathingVictim">Not breathing</string>
+    <string name="conciousVictim">concious</string>
+    <string name="unconciousVictim">unconcious</string>
+    <string name="menu_scan">Scan Bandcode</string>
+    <string name="scan_victim_bandcode">Scan Victim Bandcode</string>
+    <string name="scan_victim_bandcode_text">After scanning someone\'s bandcode the app will display his/her medical information</string>
+    <string name="call_for_backup_successful">Call for backup was successful</string>
+    <string name="no_shifts">Information about schedule not available</string>
+    <string name="no_emergency">You aren\'t assigned to an incident</string>
+    <string name="no_ambulance">You are not assigned to an ambulance</string>
+    <string name="ambulance_equipment_empty">Equipment list is empty</string>
+    <string name="about_us_message">This app has been created as part of an engineering thesis project</string>
+    <string name="victim_count_error">Victims number can\'t be smaller than 1</string>
+    <string name="dispatcher_not_available_error">There are no dispatchers available at this moment. Try again later.</string>
+    <string name="why_do_we_collect_data">Why do we collect data?</string>
+    <string name="we_need_this_data_to_provide_our_services_with_high_quality">We need this data to provide our services with high quality</string>
+    <string name="end_shift">End</string>
+    <string name="shift">Shift</string>
+    <string name="call_for_support_success">Backup has been already called</string>
 </resources>

@@ -76,7 +76,7 @@
     </string-array>
     <string name="incident_scan">Skan</string>
     <string name="startBreak">Rozpocznij przerwę</string>
-    <string name="scan_prompt">Scan opaski poszkodowanego</string>
+    <string name="scan_prompt">Skan opaski poszkodowanego</string>
     <string name="choose_your_location">Dotknij aby wybrać lokalizacje zdarzenia</string>
     <string name="add_victim_info">Dodaj informacje o poszkodowanym</string>
     <string name="victims_condition">Stan poszkodowanego</string>
@@ -147,6 +147,7 @@
     <string name="guest">Gość</string>
     <string name="go_to_app" translatable="false">Przejdź do aplikacji</string>
     <string name="barcode_scanning_cancelled" translatable="false">Skanowanie anulowane</string>
+    <string name="rhType">Rh</string>
     <string name="edit">Edytuj</string>
     <string name="delete">Usuń</string>
     <string name="update">Zaktualizuj</string>
@@ -176,13 +177,49 @@
     <string name="ambulance">Ambulans</string>
     <string name="options">Opcje</string>
     <string name="breakText">Przerwa</string>
-    <string name="currentlyOnBreak">Currently on Break</string>
-    <string name="no_backup_type_selected">Please select at least one type of backup</string>
-    <string name="cantRateTutorials">You can\'t rate tutorials as guest</string>
-    <string name="no_internet">Internet connection not available</string>
-    <string name="cantWatchTutorials">You can\'t watch tutorials as guest</string>
-    <string name="password_not_matching">Passwords do not match</string>
-    <string name="forgot_password_info">You will receive an email with token, input that token and a new password after clicking the send button</string>
-    <string name="password_changed">Your password has been changed</string>
-    <string name="share_with_band_scanning">Share with band scanning?</string>
+    <string name="nearest_shift">Zmiana:</string>
+    <string name="break_explaining_text">Podczas przerwy ambulansu nie można przypisać do żadnego zgłoszenia</string>
+    <string name="end">Zakończ przerwę</string>
+    <string name="currentlyOnBreak">Trwa przerwa</string>
+    <string name="no_backup_type_selected">Wybierz conajmniej jeden rodzaj wsparcia</string>
+    <string name="cantRateTutorials">Nie możesz oceniać poradników jako gość</string>
+    <string name="no_internet">Nie masz dostępu do internetu</string>
+    <string name="cantWatchTutorials">Nie możesz oglądać poradników jako gość</string>
+    <string name="password_not_matching">Hasła nie są takie same</string>
+    <string name="forgot_password_info">Otrzymasz wiadomość email z tokenem, wprowadź go razem z nowym hasłem po kliknięciu przycisku \"Wyślij\"</string>
+    <string name="password_changed">Twoje hasło zostało zmienione</string>
+    <string name="share_with_band_scanning">Udostępnić dla skanowania opaski?</string>
+    <string name="about_us_message">Aplikacja stworzona w ramach pracy inżynierskiej</string>
+    <string name="victim_count_error">Liczba ofiar nie może być mniejsza niż 1</string>
+    <string name="dispatcher_not_available_error">W tym momencie nie da się utworzyć zgloszenia. Spróbuj później</string>
+    <string name="why_do_we_collect_data">Czemu zbieramy te dane?</string>
+    <string name="we_need_this_data_to_provide_our_services_with_high_quality">Potrzebujemy tych danych, aby dostarczać najwyższej jakości usług</string>
+    <string name="already_have_token">Mam już token</string>
+    <string name="new_password_repeat">Potwierdzenie nowego hasła</string>
+    <string name="click_ok_to_confirm">Kliknij ok</string>
+    <string name="breathingVictim">"Oddycha, "</string>
+    <string name="notBreathingVictim">Nie oddycha</string>
+    <string name="conciousVictim">przytomna</string>
+    <string name="unconciousVictim">nieprzytomna</string>
+    <string name="menu_scan">Skanowanie opaski</string>
+    <string name="scan_victim_bandcode">Zeskanuj opaskę ofiary</string>
+    <string name="scan_victim_bandcode_text">Po zeskanowaniu kodu z opaski aplikacja wyświetli historię medyczną ofiary</string>
+    <string name="call_for_backup_successful">Wezwano wsparcie</string>
+    <string name="no_shifts">Informacje o grafiku nie są dostępne</string>
+    <string name="no_emergency">Nie jesteś przypisany do wypadku</string>
+    <string name="no_ambulance">Nie jesteś przypisany do ambulansu</string>
+    <string name="ambulance_equipment_empty">Lista wyposażenia jest pusta</string>
+    <string name="end_shift">Koniec</string>
+    <string name="shift">Zmiana</string>
+    <string name="call_for_support_success">Backup has been already called</string>
+
+    <string-array name="incidentTypes">
+        <item>Wypadek samochodowy</item>
+        <item>Powódź</item>
+        <item>Pożar</item>
+        <item>Inne</item>
+        <item>Zawał serca</item>
+        <item>Samobójstwo</item>
+        <item>COVID</item>
+    </string-array>
 </resources>

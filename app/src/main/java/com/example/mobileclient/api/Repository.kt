@@ -18,7 +18,10 @@ object Repository {
         return RetrofitInstance.api.getUserInfo(token)
     }
 
-    suspend fun changePassword(token: String, passwordChange: passwordChange): Response<ResponseBody> {
+    suspend fun changePassword(
+        token: String,
+        passwordChange: passwordChange
+    ): Response<ResponseBody> {
         return RetrofitInstance.api.changePassword(token, passwordChange)
     }
 
@@ -34,12 +37,20 @@ object Repository {
         return RetrofitInstance.api.getTutorials()
     }
 
-    suspend fun addTutorialRating(tutorialId: Int, email: String, rating: Review): Response<ResponseBody> {
+    suspend fun addTutorialRating(
+        tutorialId: Int,
+        email: String,
+        rating: Review
+    ): Response<ResponseBody> {
         return RetrofitInstance.api.addTutorialRating(tutorialId, email, rating)
     }
 
     suspend fun getUserMedicalInfo(userEmail: String): Response<MedicalInfo> {
         return RetrofitInstance.api.getUserMedicalInfo(userEmail)
+    }
+
+    suspend fun getMedicalInfoByBandCode(bandCode: String): Response<MedicalInfo> {
+        return RetrofitInstance.api.getMedicalInfoByBandCode(bandCode)
     }
 
     suspend fun getUserBlood(id: Int): Response<Blood> {
@@ -164,7 +175,10 @@ object Repository {
     }
 
     //Ambulance
-    suspend fun getAmbulanceEquipment(licensePlate: String, token: String): Response<List<AmbulanceEquipment>> {
+    suspend fun getAmbulanceEquipment(
+        licensePlate: String,
+        token: String
+    ): Response<List<AmbulanceEquipment>> {
         return RetrofitInstance.api.getAmbulanceEquipment(licensePlate, token)
     }
 
@@ -179,11 +193,19 @@ object Repository {
         return RetrofitInstance.api.updateAmbulanceLocation(licensePlate, location)
     }
 
-    suspend fun addAmbulanceItem(licensePlate: String, itemId: Int, count: Int): Response<ResponseBody> {
+    suspend fun addAmbulanceItem(
+        licensePlate: String,
+        itemId: Int,
+        count: Int
+    ): Response<ResponseBody> {
         return RetrofitInstance.api.addAmbulanceItem(licensePlate, itemId, count)
     }
 
-    suspend fun removeAmbulanceItem(licensePlate: String, itemId: Int, count: Int): Response<ResponseBody> {
+    suspend fun removeAmbulanceItem(
+        licensePlate: String,
+        itemId: Int,
+        count: Int
+    ): Response<ResponseBody> {
         return RetrofitInstance.api.removeAmbulanceItem(licensePlate, itemId, count)
     }
 
@@ -196,12 +218,12 @@ object Repository {
     }
 
     //Backup
-    suspend fun getSentBackup(id: Int): Response<Backup> {
-        return RetrofitInstance.api.getSentBackup(id)
+    suspend fun getSentBackup(id: Int, token: String): Response<Backup> {
+        return RetrofitInstance.api.getSentBackup(token, id)
     }
 
-    suspend fun callForBackup(backup: Backup): Response<ResponseBody> {
-        return RetrofitInstance.api.callForBackup(backup)
+    suspend fun callForBackup(backup: Backup, token: String): Response<ResponseBody> {
+        return RetrofitInstance.api.callForBackup(token, backup)
     }
 
 }

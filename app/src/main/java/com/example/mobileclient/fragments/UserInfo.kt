@@ -14,9 +14,6 @@ import com.example.mobileclient.model.passwordChange
 import com.example.mobileclient.util.Constants.Companion.USER_INFO_PREFS
 import com.example.mobileclient.util.Constants.Companion.USER_TOKEN_TO_PREFS
 import com.example.mobileclient.viewmodels.UserViewModel
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.DateValidatorPointBackward
-import com.google.android.material.datepicker.MaterialDatePicker
 
 class UserInfo : Fragment() {
     private var _binding: FragmentUserInfoBinding? = null

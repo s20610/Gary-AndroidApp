@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activities.UserActivity">
@@ -114,20 +115,17 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/locationInput"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:clickable="false"
+            android:clickable="true"
             android:focusable="false"
             android:hint="@string/incident_address_hint"
             app:boxCornerRadiusBottomEnd="20dp"
             app:boxCornerRadiusBottomStart="20dp"
             app:boxCornerRadiusTopEnd="20dp"
             app:boxCornerRadiusTopStart="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/localisation"
             app:layout_constraintTop_toBottomOf="@+id/localisation">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -143,10 +141,10 @@
             android:id="@+id/openMapButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="-45dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/ic_map_24"
             app:layout_constraintBottom_toBottomOf="@+id/locationInput"
+            app:layout_constraintEnd_toEndOf="@+id/localisation"
             app:layout_constraintStart_toEndOf="@+id/locationInput"
             app:layout_constraintTop_toBottomOf="@+id/localisation" />
 

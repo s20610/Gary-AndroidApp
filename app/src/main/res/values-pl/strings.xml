@@ -191,7 +191,7 @@
     <string name="share_with_band_scanning">Udostępnić dla skanowania opaski?</string>
     <string name="about_us_message">Aplikacja stworzona w ramach pracy inżynierskiej</string>
     <string name="victim_count_error">Liczba ofiar nie może być mniejsza niż 1</string>
-    <string name="dispatcher_not_available_error">W tym momencie nie da się utworzyć zgloszenia. Spróbuj później</string>
+    <string name="dispatcher_not_available_error">Brak dostępnych dyspozytorów do obsłużenia zgłoszenia. Spróbuj później</string>
     <string name="why_do_we_collect_data">Czemu zbieramy te dane?</string>
     <string name="we_need_this_data_to_provide_our_services_with_high_quality">Potrzebujemy tych danych, aby dostarczać najwyższej jakości usług</string>
     <string name="already_have_token">Mam już token</string>
@@ -211,7 +211,8 @@
     <string name="ambulance_equipment_empty">Lista wyposażenia jest pusta</string>
     <string name="end_shift">Koniec</string>
     <string name="shift">Zmiana</string>
-    <string name="call_for_support_success">Backup has been already called</string>
+    <string name="call_for_support_success">Wsparcie zostało już wezwane</string>
+    <string name="add_medical_info">Add medical info?</string>
 
     <string-array name="incidentTypes">
         <item>Wypadek samochodowy</item>

@@ -95,7 +95,7 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
 
     private fun addMedicalInfo(view: View) {
         context?.let { it1 ->
-            MaterialAlertDialogBuilder(it1).setTitle("Add medical info?")
+            MaterialAlertDialogBuilder(it1).setTitle(getString(R.string.add_medical_info))
                 .setNegativeButton(getString(R.string.cancel)) { dialog, which ->
                     dialog.cancel()
                 }.setItems(

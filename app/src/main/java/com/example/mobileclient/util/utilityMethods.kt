@@ -8,7 +8,9 @@ import android.net.NetworkCapabilities
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.mobileclient.model.Gender
 import com.example.mobileclient.model.Schedule
+import com.example.mobileclient.model.VictimStatus
 import java.time.LocalDate
 
 fun checkPermission(permission: String, requestCode: Int, context: Context, activity: Activity) {
@@ -75,6 +77,50 @@ fun setIncidentTypeToApi(incidentType: String, incidentTypesArray: Array<String>
         incidentTypesArray[6] -> "COVID"
         else -> {
             ""
+        }
+    }
+}
+
+fun setGenderTypeFromApi(genderType: String, genderTypesArray: Array<String>): String {
+    return when (genderType) {
+        Gender.MALE.toString() -> genderTypesArray[0]
+        Gender.FEMALE.toString() -> genderTypesArray[1]
+        Gender.OTHER.toString() -> genderTypesArray[2]
+        else -> {
+            ""
+        }
+    }
+}
+
+fun setGenderTypeToApi(genderType: String, genderTypesArray: Array<String>): Gender {
+    return when (genderType) {
+        genderTypesArray[0] -> Gender.MALE
+        genderTypesArray[1] -> Gender.FEMALE
+        genderTypesArray[2] -> Gender.OTHER
+        else -> {
+            Gender.OTHER
+        }
+    }
+}
+
+fun setVictimStatusTypeFromApi(victimStatusType: String, victimStatusTypesArray: Array<String>): String {
+    return when (victimStatusType) {
+        VictimStatus.STABLE.toString() -> victimStatusTypesArray[0]
+        VictimStatus.UNSTABLE.toString() -> victimStatusTypesArray[1]
+        VictimStatus.DECEASED.toString() -> victimStatusTypesArray[2]
+        else -> {
+            ""
+        }
+    }
+}
+
+fun setVictimStatusTypeToApi(victimStatusType: String, victimStatusTypesArray: Array<String>): VictimStatus {
+    return when (victimStatusType) {
+        victimStatusTypesArray[0] -> VictimStatus.STABLE
+        victimStatusTypesArray[1] -> VictimStatus.UNSTABLE
+        victimStatusTypesArray[2] -> VictimStatus.DECEASED
+        else -> {
+            VictimStatus.STABLE
         }
     }
 }

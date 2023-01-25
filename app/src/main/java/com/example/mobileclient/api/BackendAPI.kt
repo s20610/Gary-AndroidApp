@@ -25,8 +25,7 @@ interface BackendAPI {
 
     @PUT("auth/password/change")
     suspend fun changePassword(
-        @Header("Authorization") token: String,
-        @Body passwordChange: passwordChange
+        @Header("Authorization") token: String, @Body passwordChange: passwordChange
     ): Response<ResponseBody>
 
     @POST("auth/password/reset")
@@ -36,8 +35,7 @@ interface BackendAPI {
 
     @PUT("auth/password/reset")
     suspend fun confirmResetPassword(
-        @Query("token") token: String,
-        @Body newPassword: newPassword
+        @Query("token") token: String, @Body newPassword: newPassword
     ): Response<ResponseBody>
 
     //Tutorial api calls
@@ -49,9 +47,7 @@ interface BackendAPI {
 
     @POST("tutorial/{tutorialId}/{email}")
     suspend fun addTutorialRating(
-        @Path("tutorialId") tutorialId: Int,
-        @Path("email") email: String,
-        @Body rating: Review
+        @Path("tutorialId") tutorialId: Int, @Path("email") email: String, @Body rating: Review
     ): Response<ResponseBody>
 
     //Medical info api calls
@@ -73,8 +69,7 @@ interface BackendAPI {
 
     @PUT("medical_info/blood/{id}")
     suspend fun putUserBlood(
-        @Path("id") id: Int,
-        @Body blood: Blood
+        @Path("id") id: Int, @Body blood: Blood
     ): Response<ResponseBody>
 
     @POST("medical_info/blood")
@@ -89,8 +84,7 @@ interface BackendAPI {
 
     @PUT("disease/{id}")
     suspend fun putUserDisease(
-        @Path("id") id: Int,
-        @Body disease: Disease
+        @Path("id") id: Int, @Body disease: Disease
     ): Response<ResponseBody>
 
     @DELETE("disease/{id}")
@@ -110,8 +104,7 @@ interface BackendAPI {
 
     @PUT("allergy/{id}")
     suspend fun putUserAllergy(
-        @Path("id") id: Int,
-        @Body allergy: Allergy
+        @Path("id") id: Int, @Body allergy: Allergy
     ): Response<ResponseBody>
 
     @DELETE("allergy/{id}")
@@ -215,14 +208,12 @@ interface BackendAPI {
 
     @POST("ambulance/{licensePlate}/state/{state}")
     suspend fun changeAmbulanceState(
-        @Path("licensePlate") licensePlate: String,
-        @Path("state") state: String
+        @Path("licensePlate") licensePlate: String, @Path("state") state: String
     ): Response<ResponseBody>
 
     @POST("ambulance/{licensePlate}/location")
     suspend fun updateAmbulanceLocation(
-        @Path("licensePlate") licensePlate: String,
-        @Body location: Location
+        @Path("licensePlate") licensePlate: String, @Body location: Location
     ): Response<ResponseBody>
 
     @POST("ambulance/{licensePlate}/items/add/{itemId}")
@@ -235,7 +226,8 @@ interface BackendAPI {
     @DELETE("ambulance/{licensePlate}/items/remove/{itemId}")
     suspend fun removeAmbulanceItem(
         @Path("licensePlate") licensePlate: String,
-        @Path("itemId") itemId: Int, @Query("count") type: Int
+        @Path("itemId") itemId: Int,
+        @Query("count") type: Int
     ): Response<ResponseBody>
 
     @GET("ambulance/{licensePlate}/incident")
@@ -244,9 +236,23 @@ interface BackendAPI {
     ): Response<Incident>
 
     @POST("backup")
-    suspend fun callForBackup(@Header("Authorization") token: String,@Body backup: Backup): Response<ResponseBody>
+    suspend fun callForBackup(
+        @Header("Authorization") token: String, @Body backup: Backup
+    ): Response<ResponseBody>
 
     @GET("backup/{id}")
-    suspend fun getSentBackup(@Query("token") token: String,@Path("id") id: Int): Response<Backup>
+    suspend fun getSentBackup(@Query("token") token: String, @Path("id") id: Int): Response<Backup>
 
+    @POST("incident/{id}/casualties")
+    suspend fun postCasualties(
+        @Path("id") id: Int,
+        @Header("Authorization") token: String,
+        @Body casualties: Casualty
+    ): Response<ResponseBody>
+
+    @GET("incident/{id}/casualties")
+    suspend fun getCasualties(
+        @Path("id") id: Int,
+        @Header("Authorization") token: String
+    ): Response<List<Casualty>>
 }

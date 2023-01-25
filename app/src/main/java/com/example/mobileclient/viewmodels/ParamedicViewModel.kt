@@ -22,6 +22,8 @@ class ParamedicViewModel : ViewModel() {
     var sentBackupResponse: MutableLiveData<Response<Backup>> = MutableLiveData()
     var assignedIncidentResponse: MutableLiveData<Response<Incident>> = MutableLiveData()
     var victimMedicalInfoResponse: MutableLiveData<Response<MedicalInfo>> = MutableLiveData()
+    var postCasualtiesResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
+    var casualtiesResponse: MutableLiveData<Response<List<Casualty>>> = MutableLiveData()
     private var equipmentUpdateMap: HashMap<Int, Int> = HashMap()
 
     fun startEmployeeShift(token: String) {
@@ -71,7 +73,7 @@ class ParamedicViewModel : ViewModel() {
     fun getAmbulanceEquipment(licensePlate: String, token: String) {
         viewModelScope.launch {
             try {
-                val response = Repository.getAmbulanceEquipment(licensePlate, token)
+                val response = Repository.getAmbulanceEquipment(licensePlate, "Bearer $token")
                 ambulanceEquipmentResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -148,7 +150,7 @@ class ParamedicViewModel : ViewModel() {
     fun getSentBackup(id: Int, token: String) {
         viewModelScope.launch {
             try {
-                val response = Repository.getSentBackup(id, token)
+                val response = Repository.getSentBackup(id, "Bearer $token")
                 sentBackupResponse.value = response
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -190,4 +192,26 @@ class ParamedicViewModel : ViewModel() {
         clearEquipmentUpdateMap()
     }
 
+    fun postCasualties(id: Int, casualties: Casualty, token: String) {
+        viewModelScope.launch {
+            try {
+                val response = Repository.postCasualties(id, casualties, "Bearer $token")
+                postCasualtiesResponse.value = response
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun getCasualties(id: Int, token: String) {
+        viewModelScope.launch {
+            try {
+                val response = Repository.getCasualties(id, "Bearer $token")
+                casualtiesResponse.value = response
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+    }
 }

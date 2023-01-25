@@ -34,6 +34,7 @@ import org.osmdroid.views.overlay.Polyline
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 import retrofit2.Response
+import java.lang.RuntimeException
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -86,9 +87,13 @@ class ParamedicScreen : Fragment() {
                 if (response.body()?.schedule != null) {
                     val scheduleForToday = findNextShift(response.body()!!.schedule!!)
                     val endString = getString(R.string.end_shift)
-                    val textToDisplay =
-                        "Start - ${scheduleForToday[0]} $endString - ${scheduleForToday[1]}"
-                    binding.nearestShiftField.text = textToDisplay
+                    if (scheduleForToday.isNotEmpty()) {
+                        val textToDisplay =
+                            "Start - ${scheduleForToday[0]} $endString - ${scheduleForToday[1]}"
+                        binding.nearestShiftField.text = textToDisplay
+                    } else {
+                        binding.nearestShiftField.text = getString(R.string.no_shifts)
+                    }
                 } else {
                     binding.nearestShiftField.text = getString(R.string.no_shifts)
                 }
@@ -212,9 +217,7 @@ class ParamedicScreen : Fragment() {
                     ambulanceMarker.position = mLocationOverlay!!.myLocation
                     waypoints.add(ambulanceMarker.position)
                     waypoints.add(incidentMarker.position)
-                    Log.d("Waypoints", waypoints.toString())
-                    map.overlays.add(ambulanceMarker)
-                    map.overlays.add(incidentMarker)
+                    map.overlays.add(ambulanceMarker).also { map.overlays.add(incidentMarker) }
                     mLocationOverlay!!.myLocationProvider.startLocationProvider { location, _ ->
                         val currentLocation = com.example.mobileclient.model.Location(
                             location.latitude, location.longitude
@@ -244,6 +247,7 @@ class ParamedicScreen : Fragment() {
                         }
                         map.controller.animateTo(ambulanceMarker.position)
                     }
+
                 }
             } else {
                 binding.currentEmergencyLabel.text = getString(R.string.no_emergency)

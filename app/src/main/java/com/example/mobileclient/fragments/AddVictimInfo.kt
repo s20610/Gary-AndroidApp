@@ -15,7 +15,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.mobileclient.databinding.FragmentAddVictimInfoBinding
 import com.example.mobileclient.model.Casualty
-import com.example.mobileclient.model.Gender
 import com.example.mobileclient.util.Constants
 import com.example.mobileclient.util.setGenderTypeToApi
 import com.example.mobileclient.util.setVictimStatusTypeToApi
@@ -30,6 +29,7 @@ class AddVictimInfo : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddVictimInfoBinding.inflate(inflater, container, false)
+        val view = binding.root
         var incidentId = 0
         val genderTypes: Array<String> =
             requireContext().resources.getStringArray(com.example.mobileclient.R.array.genderTypes)
@@ -58,7 +58,8 @@ class AddVictimInfo : Fragment() {
                     binding.firstName?.text.toString(),
                     setGenderTypeToApi(binding.genderPickerText.text.toString(), genderTypes),
                     binding.lastName?.text.toString(),
-                    setVictimStatusTypeToApi(binding.autoCompleteTextView.text.toString(), victimStatusTypes)
+                    setVictimStatusTypeToApi(binding.autoCompleteTextView.text.toString(), victimStatusTypes),
+                    null
                 )
                 casualties.add(casualty)
                 if (token != null) {
@@ -75,9 +76,20 @@ class AddVictimInfo : Fragment() {
                 }
             }
         }
-
-        val view = binding.root
-
+        binding.listButton.setOnClickListener {
+            if (token != null) {
+                paramedicViewModel.getCasualties(incidentId, token)
+                paramedicViewModel.casualtiesResponse.observe(viewLifecycleOwner) { response ->
+                    if (response.code() == 200) {
+                        Log.d("AddVictimInfo", "Casualties received")
+                        Navigation.findNavController(view)
+                            .navigate(R1.id.action_addVictimInfo_to_victimList)
+                    }else{
+                        Log.d("AddVictimInfo", "Casualties not received")
+                    }
+                }
+            }
+        }
         binding.button2.setOnClickListener {
             Navigation.findNavController(view)
                 .navigate(R1.id.paramedicScreen)

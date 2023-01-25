@@ -240,4 +240,5 @@
     <string name="gender">Gender</string>
     <string name="status">Status</string>
     <string name="casualtiesList">Victims list</string>
+    <string name="victim_info_header">List of victims</string>
 </resources>

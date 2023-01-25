@@ -4,7 +4,8 @@ data class Casualty(
     val firstName: String,
     val gender: Gender,
     val lastName: String,
-    val status: VictimStatus
+    val status: VictimStatus,
+    val victimInfoId: Int?
 )
 
 enum class VictimStatus {

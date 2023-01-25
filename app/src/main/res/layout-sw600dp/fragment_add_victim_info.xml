@@ -13,8 +13,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:textAlignment="center"
         android:text="@string/add_victim_info"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
         android:textColor="@color/green_dark"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,15 +22,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         android:id="@+id/textView11"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:text="@string/first_name_hint"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -52,20 +52,21 @@
         app:layout_constraintTop_toBottomOf="@+id/textView11">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/first_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         android:id="@+id/textView12"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:text="@string/last_name_hint"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
@@ -87,12 +88,12 @@
         app:layout_constraintTop_toBottomOf="@+id/textView12">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/last_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         android:id="@+id/textView13"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -100,6 +101,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:text="@string/status"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
@@ -125,12 +127,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:inputType="none"
-            android:hint="@string/select" />
+            android:hint="@string/select"
+            android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         android:id="@+id/textView14"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -138,6 +139,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:text="@string/gender"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout6" />
@@ -163,8 +165,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:inputType="none"
-            android:hint="@string/select" />
+            android:hint="@string/select"
+            android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <RelativeLayout
@@ -172,8 +174,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -216,9 +218,6 @@
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </RelativeLayout>
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

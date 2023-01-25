@@ -44,7 +44,11 @@
         android:id="@+id/addVictimInfo"
         android:name="com.example.mobileclient.fragments.AddVictimInfo"
         android:label="fragment_add_victim_info"
-        tools:layout="@layout/fragment_add_victim_info" />
+        tools:layout="@layout/fragment_add_victim_info" >
+        <action
+            android:id="@+id/action_addVictimInfo_to_victimList"
+            app:destination="@id/victimList" />
+    </fragment>
     <fragment
         android:id="@+id/checkEquipment"
         android:name="com.example.mobileclient.fragments.CheckEquipment"
@@ -71,5 +75,14 @@
         <action
             android:id="@+id/action_userInfo2_to_paramedicScreen"
             app:destination="@id/paramedicScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/victimList"
+        android:name="com.example.mobileclient.VictimList"
+        android:label="fragment_victim_list"
+        tools:layout="@layout/fragment_victim_list" >
+        <action
+            android:id="@+id/action_victimList_to_addVictimInfo"
+            app:destination="@id/addVictimInfo" />
     </fragment>
 </navigation>

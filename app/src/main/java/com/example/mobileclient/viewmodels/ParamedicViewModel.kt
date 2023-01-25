@@ -24,6 +24,7 @@ class ParamedicViewModel : ViewModel() {
     var victimMedicalInfoResponse: MutableLiveData<Response<MedicalInfo>> = MutableLiveData()
     var postCasualtiesResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var casualtiesResponse: MutableLiveData<Response<List<Casualty>>> = MutableLiveData()
+    var pickedVictimInfo: Casualty? = null
     private var equipmentUpdateMap: HashMap<Int, Int> = HashMap()
 
     fun startEmployeeShift(token: String) {

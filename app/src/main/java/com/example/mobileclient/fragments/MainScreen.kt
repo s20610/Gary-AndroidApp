@@ -10,7 +10,7 @@ import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentSplashScreenBinding
 
 
-class SplashScreen : Fragment() {
+class MainScreen : Fragment() {
     private var _binding: FragmentSplashScreenBinding? = null
 
     // This property is only valid between onCreateView and

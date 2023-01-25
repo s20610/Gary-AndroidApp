@@ -233,6 +233,7 @@
         <item>Inna</item>
     </string-array>
     <string name="error_adding_info">Wystąpił problem z żądaniem</string>
+    <string name="victim_info_header">List of victims</string>
     <string-array name="victimStatusTypes">
         <item>Stabilny</item>
         <item>Niestabilny</item>

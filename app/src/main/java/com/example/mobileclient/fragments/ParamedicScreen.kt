@@ -2,6 +2,7 @@ package com.example.mobileclient.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -44,7 +45,9 @@ class ParamedicScreen : Fragment() {
     private lateinit var map: MapView
     private val binding get() = _binding!!
     private var ambulance: String = "AAA000"
-    val waypoints: ArrayList<GeoPoint> = ArrayList()
+    var waypoints: ArrayList<GeoPoint> = ArrayList()
+    var roadOverlay: Polyline = Polyline()
+    var firstRoadDraw: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -72,7 +75,7 @@ class ParamedicScreen : Fragment() {
                     paramedicViewModel.getAmbulanceEquipment(ambulance, token ?: "")
                     paramedicViewModel.getAssignedIncident(ambulance)
                 }
-            }else{
+            } else {
                 binding.currentEmergencyLabel.text = getString(R.string.no_ambulance)
             }
         }
@@ -86,7 +89,7 @@ class ParamedicScreen : Fragment() {
                     val textToDisplay =
                         "Start - ${scheduleForToday[0]} $endString - ${scheduleForToday[1]}"
                     binding.nearestShiftField.text = textToDisplay
-                }else{
+                } else {
                     binding.nearestShiftField.text = getString(R.string.no_shifts)
                 }
             }
@@ -117,6 +120,7 @@ class ParamedicScreen : Fragment() {
                     binding.shiftButton.visibility = View.VISIBLE
                     binding.cardView.visibility = View.GONE
                 }
+
                 else -> {
                     paramedicViewModel.endEmployeeShift(token ?: "")
                     //Add message box to confirm end of shift
@@ -159,14 +163,17 @@ class ParamedicScreen : Fragment() {
                     it.isChecked = true
                     navController.navigate(R.id.checkEquipment)
                 }
+
                 resources.getString(R.string.menu_victim) -> {
                     it.isChecked = true
                     navController.navigate(R.id.addVictimInfo)
                 }
+
                 resources.getString(R.string.menu_support) -> {
                     it.isChecked = true
                     navController.navigate(R.id.paramedicCallForSupport2)
                 }
+
                 else -> {
                     it.isChecked = true
                     navController.navigate(R.id.paramedicScreen)
@@ -174,8 +181,6 @@ class ParamedicScreen : Fragment() {
             }
             true
         }
-
-        setupMap()
         return view
     }
 
@@ -196,21 +201,26 @@ class ParamedicScreen : Fragment() {
                 waypoints.add(incidentMarker.position)
                 map.overlayManager.add(incidentMarker)
                 var road: Road
-                var roadOverlay: Polyline
                 lifecycleScope.launch {
                     withContext(Dispatchers.IO) {
                         val roadManager: RoadManager = OSRMRoadManager(requireContext(), "Garry")
-                        val color: Int = ContextCompat.getColor(requireContext(), R.color.green_light)
-                        road = roadManager.getRoad(waypoints)
-                        roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
-                        map.overlayManager.add(roadOverlay)
-                        map.invalidate()
+                        val color: Int =
+                            ContextCompat.getColor(requireContext(), R.color.green_light)
+                        if (waypoints.size > 1) {
+                            road = roadManager.getRoad(waypoints)
+                            roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
+                            map.overlayManager.add(roadOverlay)
+                            firstRoadDraw = false
+                            map.invalidate()
+                        }
                     }
                 }
-            }else{
+            } else {
                 binding.currentEmergencyLabel.text = getString(R.string.no_emergency)
             }
         }
+        setupMap()
+        binding.map.invalidate()
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -222,12 +232,10 @@ class ParamedicScreen : Fragment() {
         Log.d("AccidentReport", accidentReport.toString())
         binding.currentEmergencyTypeText.text =
             setIncidentTypeFromApi(accidentReport.emergencyType, incidentTypes)
-        Log.d("AccidentReport", "emergency text updated")
         val accidentTime = LocalDateTime.parse(accidentReport.date)
         val formattedTime = accidentTime.hour.toString() + ":" + accidentTime.minute.toString()
         binding.currentEmergencyTimeText.text = formattedTime
         binding.currentEmergencyTimeText.invalidate()
-        Log.d("AccidentReport", "emergency text updated")
         val accidentAddress = accidentReport.address
         val splitAddress = accidentAddress.split(", ")
         val formattedAddress = splitAddress[0] + ", " + splitAddress[1] + ", " + splitAddress[2]
@@ -235,15 +243,15 @@ class ParamedicScreen : Fragment() {
         binding.currentEmergencyVictimsText.text = accidentReport.victimCount.toString()
         var victimState = ""
         if (accidentReport.breathing) {
-            victimState+=(getString(R.string.breathingVictim))
+            victimState += (getString(R.string.breathingVictim))
         } else {
-            victimState+=(getString(R.string.notBreathingVictim))
-            victimState+=(", ")
+            victimState += (getString(R.string.notBreathingVictim))
+            victimState += (", ")
         }
         if (accidentReport.consciousness) {
-            victimState+=(getString(R.string.conciousVictim))
+            victimState += (getString(R.string.conciousVictim))
         } else {
-            victimState+=(getString(R.string.unconciousVictim))
+            victimState += (getString(R.string.unconciousVictim))
         }
         binding.currentEmergencyVictimsStateText.text = victimState
         if (accidentReport.description == "") {
@@ -265,6 +273,7 @@ class ParamedicScreen : Fragment() {
             //TODO("Show victim info from bandcode API")
             paramedicViewModel.getMedicalInfoWithBandCode(accidentReport.bandCode)
         }
+        Log.d("AccidentReport", "emergency text updated")
         binding.linearLayout9.invalidate()
     }
 
@@ -273,11 +282,10 @@ class ParamedicScreen : Fragment() {
         map.controller.setZoom(15)
         map.setMultiTouchControls(true)
         map.setBuiltInZoomControls(true)
-        val ambulanceMarker = Marker(map)
+        var ambulanceMarker = Marker(map)
         ambulanceMarker.title = "Ambulance"
         ambulanceMarker.icon =
             ContextCompat.getDrawable(requireContext(), R.drawable.ambulance_icon)
-//        val (marker: Marker, marker2: Marker, palacKultury: GeoPoint) = markerSetup()
         val gpsProvider = GpsMyLocationProvider(requireContext())
         gpsProvider.locationUpdateMinTime = 15000
         mLocationOverlay = MyLocationNewOverlay(gpsProvider, map)
@@ -286,49 +294,40 @@ class ParamedicScreen : Fragment() {
         map.overlayManager.add(mLocationOverlay)
         mLocationOverlay!!.runOnFirstFix {
             ambulanceMarker.position = mLocationOverlay!!.myLocation
-//            waypoints.add(palacKultury)
             waypoints.add(ambulanceMarker.position)
             map.overlayManager.add(ambulanceMarker)
             Log.d("waypoints", waypoints.toString())
-//            var road: Road
-//            var roadOverlay = Polyline()
-//            lifecycleScope.launch {
-//                withContext(Dispatchers.IO) {
-//                    road = roadManager.getRoad(waypoints)
-//                    roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
-//                    map.overlayManager.add(roadOverlay)
-//                    map.overlayManager.add(marker)
-//                    map.overlayManager.add(marker2)
-//                    map.invalidate()
-//                }
-//            }
-            mLocationOverlay!!.myLocationProvider.startLocationProvider { location, _ ->
-                lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        delay(5000)
-                        val currentLocation = com.example.mobileclient.model.Location(
-                            location.latitude, location.longitude
-                        )
-                        paramedicViewModel.updateAmbulanceLocation(ambulance, currentLocation)
-                        Log.d(
-                            "Location update",
-                            paramedicViewModel.updateAmbulanceInfoResponse.value.toString()
-                        )
-//                        waypoints.remove(marker2.position)
-//                        Log.d("waypoints after remove", waypoints.toString())
-//                        marker2.position = GeoPoint(location.latitude, location.longitude)
-//                        waypoints.add(marker2.position)
-//                        Log.d("waypoints after add", waypoints.toString())
+        }
+        mLocationOverlay!!.myLocationProvider.startLocationProvider { location, _ ->
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    delay(5000)
+                    val currentLocation = com.example.mobileclient.model.Location(
+                        location.latitude, location.longitude
+                    )
+                    paramedicViewModel.updateAmbulanceLocation(ambulance, currentLocation)
+                    Log.d(
+                        "Location update",
+                        paramedicViewModel.updateAmbulanceInfoResponse.value.toString()
+                    )
+                    val roadManager: RoadManager = OSRMRoadManager(requireContext(), "Garry")
+                    val color: Int = ContextCompat.getColor(requireContext(), R.color.green_light)
+                    waypoints.remove(ambulanceMarker.position)
+                    Log.d("waypoints after remove", waypoints.toString())
+                    map.overlayManager.remove(ambulanceMarker)
+                    ambulanceMarker.position = GeoPoint(location.latitude, location.longitude)
+                    waypoints.add(ambulanceMarker.position)
+                    Log.d("waypoints after add", waypoints.toString())
 //                        map.overlayManager.remove(roadOverlay)
-//                        road = roadManager.getRoad(waypoints)
-//                        roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
-//                        Log.d("Road creation", "Road created for $waypoints")
+                    var road = roadManager.getRoad(waypoints)
+                    roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
+                    map.overlayManager.add(ambulanceMarker)
+                    Log.d("Road creation", "Road created for $waypoints")
 //                        map.overlayManager.add(roadOverlay)
-//                        map.invalidate()
-                    }
+                    map.invalidate()
                 }
-                map.controller.animateTo(ambulanceMarker.position)
             }
+            map.controller.animateTo(ambulanceMarker.position)
         }
     }
 
@@ -346,14 +345,4 @@ class ParamedicScreen : Fragment() {
         super.onPause()
         map.onPause()
     }
-
-//    private fun markerSetup(): Triple<Marker, Marker, GeoPoint> {
-//        val marker = Marker(map)
-//        val marker2 = Marker(map)
-//        val palacKultury = GeoPoint(52.231888, 21.005967)
-//        marker.position = palacKultury
-//        marker.title = "Location of incident"
-//        marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_warning_24)
-//        return Triple(marker, marker2, palacKultury)
-//    }
 }

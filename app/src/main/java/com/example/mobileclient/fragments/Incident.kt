@@ -59,6 +59,9 @@ class Incident : Fragment() {
         binding.locationInput.setOnClickListener {
             incidentLocationPicker.show(childFragmentManager, "incident_location_picker")
         }
+        binding.locationInputText.setOnClickListener {
+            incidentLocationPicker.show(childFragmentManager, "incident_location_picker")
+        }
         binding.button.setOnClickListener {
             if (validateForm()) {
                 val userEmail: String =

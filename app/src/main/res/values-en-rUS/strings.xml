@@ -212,4 +212,5 @@
     <string name="shift">Shift</string>
     <string name="call_for_support_success">Backup has been already called</string>
     <string name="add_medical_info">Add medical info?</string>
+    <string name="incident">Incident</string>
 </resources>

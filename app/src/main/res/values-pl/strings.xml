@@ -213,6 +213,7 @@
     <string name="shift">Zmiana</string>
     <string name="call_for_support_success">Wsparcie zostało już wezwane</string>
     <string name="add_medical_info">Add medical info?</string>
+    <string name="incident">Incident</string>
 
     <string-array name="incidentTypes">
         <item>Wypadek samochodowy</item>

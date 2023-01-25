@@ -181,46 +181,79 @@ class ParamedicScreen : Fragment() {
             }
             true
         }
-        return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val color: Int = ContextCompat.getColor(requireContext(), R.color.green_light)
         paramedicViewModel.assignedIncidentResponse.observe(viewLifecycleOwner) { response ->
             Log.d("AssignedIncident", response.body().toString())
             if (response.code() == 200) {
                 setIncidentFields(response)
+                map.setTileSource(TileSourceFactory.MAPNIK)
+                map.controller.setZoom(15)
+                map.setMultiTouchControls(true)
+                map.setBuiltInZoomControls(true)
+                val gpsProvider = GpsMyLocationProvider(requireContext())
+                gpsProvider.locationUpdateMinTime = 10000
+                mLocationOverlay = MyLocationNewOverlay(gpsProvider, map)
+                mLocationOverlay!!.enableMyLocation()
+                mLocationOverlay!!.enableFollowLocation()
                 val incidentMarker = Marker(map)
                 incidentMarker.position = GeoPoint(
                     response.body()!!.accidentReport.location.latitude,
                     response.body()!!.accidentReport.location.longitude
                 )
-                incidentMarker.title = "Incident"
+                incidentMarker.title = getString(R.string.incident)
                 incidentMarker.icon = ContextCompat.getDrawable(
                     requireContext(), R.drawable.ic_baseline_warning_24
                 )
-                waypoints.add(incidentMarker.position)
-                map.overlayManager.add(incidentMarker)
-                var road: Road
-                lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        val roadManager: RoadManager = OSRMRoadManager(requireContext(), "Garry")
-                        val color: Int =
-                            ContextCompat.getColor(requireContext(), R.color.green_light)
-                        if (waypoints.size > 1) {
-                            road = roadManager.getRoad(waypoints)
-                            roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
-                            map.overlayManager.add(roadOverlay)
-                            firstRoadDraw = false
-                            map.invalidate()
+                var ambulanceMarker = Marker(map)
+                ambulanceMarker.title = "Ambulance"
+                ambulanceMarker.icon =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.ambulance_icon)
+                mLocationOverlay!!.runOnFirstFix {
+                    ambulanceMarker.position = mLocationOverlay!!.myLocation
+                    waypoints.add(ambulanceMarker.position)
+                    waypoints.add(incidentMarker.position)
+                    Log.d("Waypoints", waypoints.toString())
+                    map.overlays.add(ambulanceMarker)
+                    map.overlays.add(incidentMarker)
+                    mLocationOverlay!!.myLocationProvider.startLocationProvider { location, _ ->
+                        val currentLocation = com.example.mobileclient.model.Location(
+                            location.latitude, location.longitude
+                        )
+                        paramedicViewModel.updateAmbulanceLocation(ambulance, currentLocation)
+                        Log.d(
+                            "Location update",
+                            paramedicViewModel.updateAmbulanceInfoResponse.value.toString()
+                        )
+                        val roadManager: RoadManager = OSRMRoadManager(requireContext(), "Gary")
+                        waypoints.remove(ambulanceMarker.position)
+                        Log.d("waypoints after remove", waypoints.toString())
+                        map.overlayManager.remove(ambulanceMarker)
+                        ambulanceMarker.position = GeoPoint(location.latitude, location.longitude)
+                        waypoints.add(ambulanceMarker.position)
+                        Log.d("waypoints after add", waypoints.toString())
+                        map.overlayManager.add(ambulanceMarker)
+                        map.overlays.remove(roadOverlay)
+                        lifecycleScope.launch {
+                            withContext(Dispatchers.IO) {
+                                val road = roadManager.getRoad(waypoints)
+                                roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
+                                Log.d("Road creation", "Road created for $waypoints")
+                                map.overlays.add(roadOverlay)
+                                map.postInvalidate()
+                            }
                         }
+                        map.controller.animateTo(ambulanceMarker.position)
                     }
                 }
             } else {
                 binding.currentEmergencyLabel.text = getString(R.string.no_emergency)
             }
         }
-        setupMap()
-        binding.map.invalidate()
+        map.invalidate()
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -275,60 +308,6 @@ class ParamedicScreen : Fragment() {
         }
         Log.d("AccidentReport", "emergency text updated")
         binding.linearLayout9.invalidate()
-    }
-
-    private fun setupMap() {
-        map.setTileSource(TileSourceFactory.MAPNIK)
-        map.controller.setZoom(15)
-        map.setMultiTouchControls(true)
-        map.setBuiltInZoomControls(true)
-        var ambulanceMarker = Marker(map)
-        ambulanceMarker.title = "Ambulance"
-        ambulanceMarker.icon =
-            ContextCompat.getDrawable(requireContext(), R.drawable.ambulance_icon)
-        val gpsProvider = GpsMyLocationProvider(requireContext())
-        gpsProvider.locationUpdateMinTime = 15000
-        mLocationOverlay = MyLocationNewOverlay(gpsProvider, map)
-        mLocationOverlay!!.enableMyLocation()
-        mLocationOverlay!!.enableFollowLocation()
-        map.overlayManager.add(mLocationOverlay)
-        mLocationOverlay!!.runOnFirstFix {
-            ambulanceMarker.position = mLocationOverlay!!.myLocation
-            waypoints.add(ambulanceMarker.position)
-            map.overlayManager.add(ambulanceMarker)
-            Log.d("waypoints", waypoints.toString())
-        }
-        mLocationOverlay!!.myLocationProvider.startLocationProvider { location, _ ->
-            lifecycleScope.launch {
-                withContext(Dispatchers.IO) {
-                    delay(5000)
-                    val currentLocation = com.example.mobileclient.model.Location(
-                        location.latitude, location.longitude
-                    )
-                    paramedicViewModel.updateAmbulanceLocation(ambulance, currentLocation)
-                    Log.d(
-                        "Location update",
-                        paramedicViewModel.updateAmbulanceInfoResponse.value.toString()
-                    )
-                    val roadManager: RoadManager = OSRMRoadManager(requireContext(), "Garry")
-                    val color: Int = ContextCompat.getColor(requireContext(), R.color.green_light)
-                    waypoints.remove(ambulanceMarker.position)
-                    Log.d("waypoints after remove", waypoints.toString())
-                    map.overlayManager.remove(ambulanceMarker)
-                    ambulanceMarker.position = GeoPoint(location.latitude, location.longitude)
-                    waypoints.add(ambulanceMarker.position)
-                    Log.d("waypoints after add", waypoints.toString())
-//                        map.overlayManager.remove(roadOverlay)
-                    var road = roadManager.getRoad(waypoints)
-                    roadOverlay = RoadManager.buildRoadOverlay(road, color, 12f)
-                    map.overlayManager.add(ambulanceMarker)
-                    Log.d("Road creation", "Road created for $waypoints")
-//                        map.overlayManager.add(roadOverlay)
-                    map.invalidate()
-                }
-            }
-            map.controller.animateTo(ambulanceMarker.position)
-        }
     }
 
     override fun onDetach() {

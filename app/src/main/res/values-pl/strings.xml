@@ -150,7 +150,7 @@
     <string name="rhType">Rh</string>
     <string name="edit">Edytuj</string>
     <string name="delete">Usuń</string>
-    <string name="update">Zaktualizuj</string>
+    <string name="update">Aktualizuj</string>
     <string name="isVictimBreathing">Czy ofiara oddycha?</string>
     <string name="optional_band_code">Opcjonalny kod opaski ofiary</string>
     <string name="isVictimConscious">Czy ofiara jest przytomna?</string>

@@ -47,6 +47,7 @@ class Login : Fragment() {
     }
 
     private fun loginUser() {
+
         val email = binding.emailFieldText.text.toString().trim()
         val password = binding.passwordFieldText.text.toString().trim()
         if (email.isNotEmpty() && password.isNotEmpty()) {
@@ -84,6 +85,13 @@ class Login : Fragment() {
                 }
             }
         }
+
+/*
+        val paramedicActivity = Intent(context, ParamedicActivity::class.java)
+        startActivity(paramedicActivity)
+        requireActivity().finish()
+
+ */
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

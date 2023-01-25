@@ -3,8 +3,8 @@
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/refresh"
     android:layout_width="match_parent"
+    android:id="@+id/refresh"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/check_equipment"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             android:textColor="@color/mustard"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +42,7 @@
             android:id="@+id/equipment_recycler"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:foregroundGravity="center"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/cancelButton"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,6 +50,40 @@
             app:layout_constraintTop_toBottomOf="@+id/equipment_list"
             tools:itemCount="5"
             tools:listitem="@layout/equipment_item" />
+
+        <TextView
+            android:id="@+id/ambulance_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/ambulance"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/check_equipment_title" />
+
+        <TextView
+            android:id="@+id/ambulance_text_api"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AAAAAA"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/ambulance_text"
+            app:layout_constraintTop_toBottomOf="@+id/ambulance_text" />
+
+        <TextView
+            android:id="@+id/no_equipment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:text="@string/ambulance_equipment_empty"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/equipment_recycler" />
 
         <Button
             android:id="@+id/cancelButton"
@@ -73,30 +108,5 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cancelButton" />
-
-        <TextView
-            android:id="@+id/ambulance_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:text="@string/ambulance"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-            android:textSize="30sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/check_equipment_title" />
-
-        <TextView
-            android:id="@+id/ambulance_text_api"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:text="AAAAAA"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-            android:textSize="30sp"
-            app:layout_constraintStart_toEndOf="@+id/ambulance_text"
-            app:layout_constraintTop_toTopOf="@+id/ambulance_text" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

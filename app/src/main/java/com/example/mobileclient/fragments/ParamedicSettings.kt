@@ -37,7 +37,7 @@ class ParamedicSettings : Fragment() {
         )
         val selectedLanguage: String = sharedPref.getString("language", "")!!
         binding.languageSelection.setOnItemClickListener { adapterView, view, i, l ->
-            if (selectedLanguage != binding.languageSelection.text.toString()) {
+//            if (selectedLanguage != binding.languageSelection.text.toString()) {
                 if (binding.languageSelection.text.toString() == "en") {
                     editor.putString("language", "en")
                     setAppLocale("en-rUS")
@@ -50,7 +50,7 @@ class ParamedicSettings : Fragment() {
                 requireActivity().finish()
                 startActivity(requireActivity().intent)
                 requireActivity().overridePendingTransition(0, 0)
-            }
+//            }
         }
         binding.cancelButton.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.paramedicScreen)

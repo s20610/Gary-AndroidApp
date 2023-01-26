@@ -151,6 +151,16 @@
         <item>Suicide</item>
         <item>COVID</item>
     </string-array>
+    <string-array name="genderTypes">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="victimStatusTypes">
+        <item>Stable</item>
+        <item>Unstable</item>
+        <item>Deceased</item>
+    </string-array>
     <string name="log_in_to_see_tutorial">Log in to read tutorials</string>
     <string name="log_in_to_see_tutorial_message">Tutorials are available only for logged in users</string>
     <string name="about_us">About us</string>
@@ -159,6 +169,7 @@
     <string name="rhType">Rh</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="error_adding_info">There was a problem with your request</string>
     <string name="update">Update</string>
     <string name="isVictimBreathing">Is victim breathing?</string>
     <string name="optional_band_code">Optional victim band code</string>
@@ -225,4 +236,9 @@
     <string name="shift">Shift</string>
     <string name="call_for_support_success">Backup has been already called</string>
     <string name="add_medical_info">Add medical info?</string>
+    <string name="incident">Incident</string>
+    <string name="gender">Gender</string>
+    <string name="status">Status</string>
+    <string name="casualtiesList">Victims list</string>
+    <string name="victim_info_header">List of victims</string>
 </resources>

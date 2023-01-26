@@ -19,8 +19,7 @@ object Repository {
     }
 
     suspend fun changePassword(
-        token: String,
-        passwordChange: passwordChange
+        token: String, passwordChange: passwordChange
     ): Response<ResponseBody> {
         return RetrofitInstance.api.changePassword(token, passwordChange)
     }
@@ -38,9 +37,7 @@ object Repository {
     }
 
     suspend fun addTutorialRating(
-        tutorialId: Int,
-        email: String,
-        rating: Review
+        tutorialId: Int, email: String, rating: Review
     ): Response<ResponseBody> {
         return RetrofitInstance.api.addTutorialRating(tutorialId, email, rating)
     }
@@ -176,8 +173,7 @@ object Repository {
 
     //Ambulance
     suspend fun getAmbulanceEquipment(
-        licensePlate: String,
-        token: String
+        licensePlate: String, token: String
     ): Response<List<AmbulanceEquipment>> {
         return RetrofitInstance.api.getAmbulanceEquipment(licensePlate, token)
     }
@@ -187,24 +183,19 @@ object Repository {
     }
 
     suspend fun updateAmbulanceLocation(
-        licensePlate: String,
-        location: Location
+        licensePlate: String, location: Location
     ): Response<ResponseBody> {
         return RetrofitInstance.api.updateAmbulanceLocation(licensePlate, location)
     }
 
     suspend fun addAmbulanceItem(
-        licensePlate: String,
-        itemId: Int,
-        count: Int
+        licensePlate: String, itemId: Int, count: Int
     ): Response<ResponseBody> {
         return RetrofitInstance.api.addAmbulanceItem(licensePlate, itemId, count)
     }
 
     suspend fun removeAmbulanceItem(
-        licensePlate: String,
-        itemId: Int,
-        count: Int
+        licensePlate: String, itemId: Int, count: Int
     ): Response<ResponseBody> {
         return RetrofitInstance.api.removeAmbulanceItem(licensePlate, itemId, count)
     }
@@ -224,6 +215,16 @@ object Repository {
 
     suspend fun callForBackup(backup: Backup, token: String): Response<ResponseBody> {
         return RetrofitInstance.api.callForBackup(token, backup)
+    }
+
+    suspend fun postCasualties(
+        id: Int, casualties: Casualty, token: String
+    ): Response<ResponseBody> {
+        return RetrofitInstance.api.postCasualties(id, token, casualties)
+    }
+
+    suspend fun getCasualties(id: Int, token: String): Response<List<Casualty>> {
+        return RetrofitInstance.api.getCasualties(id, token)
     }
 
 }

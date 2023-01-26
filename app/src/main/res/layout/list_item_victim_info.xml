@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="victim"
+            type="com.example.mobileclient.model.Casualty" />
+    </data>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="*"
+        android:stretchColumns="*">
+
+        <TableRow
+            android:id="@+id/disease_row"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/disease_name"
+                android:layout_column="0"
+                android:text="@{victim.firstName + ' ' + victim.lastName}"
+                android:textSize="18sp" />
+        </TableRow>
+    </TableLayout>
+</layout>

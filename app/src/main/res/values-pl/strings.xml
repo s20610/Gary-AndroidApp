@@ -212,7 +212,11 @@
     <string name="end_shift">Koniec</string>
     <string name="shift">Zmiana</string>
     <string name="call_for_support_success">Wsparcie zostało już wezwane</string>
-    <string name="add_medical_info">Add medical info?</string>
+    <string name="add_medical_info">Dodawanie informacji</string>
+    <string name="incident">Zdarzenie</string>
+    <string name="gender">Płeć</string>
+    <string name="status">Status</string>
+    <string name="casualtiesList">Lista ofiar</string>
 
     <string-array name="incidentTypes">
         <item>Wypadek samochodowy</item>
@@ -222,5 +226,17 @@
         <item>Zawał serca</item>
         <item>Samobójstwo</item>
         <item>COVID</item>
+    </string-array>
+    <string-array name="genderTypes">
+        <item>Mężczyzna</item>
+        <item>Kobieta</item>
+        <item>Inna</item>
+    </string-array>
+    <string name="error_adding_info">Wystąpił problem z żądaniem</string>
+    <string name="victim_info_header">List of victims</string>
+    <string-array name="victimStatusTypes">
+        <item>Stabilny</item>
+        <item>Niestabilny</item>
+        <item>Zgon</item>
     </string-array>
 </resources>

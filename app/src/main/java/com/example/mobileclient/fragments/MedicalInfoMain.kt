@@ -51,13 +51,15 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
                 .getString("email", "")!!
         val token = requireActivity().getSharedPreferences(USER_INFO_PREFS, Context.MODE_PRIVATE)
             .getString(USER_TOKEN_TO_PREFS, "")
+        var bandcode = ""
         if (token != null) {
             userViewModel.getUserInfo(token)
             userViewModel.getUserInfoResponse.observe(viewLifecycleOwner) { response ->
                 if (response.isSuccessful) {
                     val fullName = response.body()?.name + " " + response.body()?.lastName
                     binding.userName.text = fullName
-                    binding.bandButton.text = response.body()?.bandCode
+                    //binding.bandButton.text = response.body()?.bandCode
+                    bandcode = response.body()?.bandCode.toString()
                 }
             }
         }
@@ -85,7 +87,11 @@ class MedicalInfoMain : Fragment(), AllergyAdapter.OnItemClickListener,
                 .navigate(R.id.action_medicalInfoMain_to_bloodTypeForm)
         }
         binding.bandButton.setOnClickListener {
-
+            MaterialAlertDialogBuilder(requireContext()).setTitle(getString(R.string.band))
+                .setMessage(bandcode)
+                .setPositiveButton("Ok") { dialog, _ ->
+                    dialog.cancel()
+                }.show()
         }
         binding.addButton.setOnClickListener {
             addMedicalInfo(view)

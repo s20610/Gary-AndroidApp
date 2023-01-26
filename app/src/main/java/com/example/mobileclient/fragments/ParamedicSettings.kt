@@ -13,6 +13,7 @@ import com.example.mobileclient.R
 import com.example.mobileclient.databinding.FragmentParamedicScreenBinding
 import com.example.mobileclient.databinding.FragmentParamedicSettingsBinding
 import com.example.mobileclient.databinding.FragmentUserSettingsBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
 
 
@@ -54,6 +55,17 @@ class ParamedicSettings : Fragment() {
         }
         binding.cancelButton.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.paramedicScreen)
+        }
+
+        binding.appInfoButton.setOnClickListener {
+            val dialog = MaterialAlertDialogBuilder(requireContext())
+                .setTitle(getString(R.string.about_us))
+                .setMessage(getString(R.string.about_us_message))
+                .setPositiveButton("OK"){dialog, which ->
+                    dialog.dismiss()
+                }
+                .create()
+            dialog.show()
         }
 
         return view

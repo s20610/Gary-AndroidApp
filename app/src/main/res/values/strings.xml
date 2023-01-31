@@ -241,4 +241,7 @@
     <string name="status">Status</string>
     <string name="casualtiesList">Victims list</string>
     <string name="victim_info_header">List of victims</string>
+    <string name="victim_info_name">Victim name</string>
+    <string name="victim_info_explain">Click on a row to see details</string>
+    <string name="victim_details">Victim Details</string>
 </resources>

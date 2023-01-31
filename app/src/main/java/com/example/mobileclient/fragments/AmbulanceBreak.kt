@@ -82,7 +82,7 @@ class AmbulanceBreak : Fragment() {
             }
         }
         binding.cancelButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.paramedicScreen)
+            Navigation.findNavController(view).navigate(R.id.action_ambulanceBreak_to_paramedicScreen)
         }
         return view
     }

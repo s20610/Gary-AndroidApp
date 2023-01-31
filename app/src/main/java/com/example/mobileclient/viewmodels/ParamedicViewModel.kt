@@ -24,6 +24,7 @@ class ParamedicViewModel : ViewModel() {
     var victimMedicalInfoResponse: MutableLiveData<Response<MedicalInfo>> = MutableLiveData()
     var postCasualtiesResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var casualtiesResponse: MutableLiveData<Response<List<Casualty>>> = MutableLiveData()
+    var putCasualtyResponse: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     var pickedVictimInfo: Casualty? = null
     private var equipmentUpdateMap: HashMap<Int, Int> = HashMap()
 
@@ -213,6 +214,16 @@ class ParamedicViewModel : ViewModel() {
                 e.printStackTrace()
             }
         }
+    }
 
+    fun putCasualty(id: Int,victimInfoId: Int, casualty: Casualty, token: String){
+        viewModelScope.launch {
+            try {
+                val response = Repository.putCasualty(id,victimInfoId,casualty, "Bearer $token")
+                putCasualtyResponse.value = response
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 }

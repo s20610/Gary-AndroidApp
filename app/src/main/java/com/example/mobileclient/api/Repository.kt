@@ -227,4 +227,8 @@ object Repository {
         return RetrofitInstance.api.getCasualties(id, token)
     }
 
+    suspend fun putCasualty(id: Int,victimInfoId: Int, casualty: Casualty, token: String): Response<ResponseBody> {
+        return RetrofitInstance.api.putCasualty(id,victimInfoId, token, casualty)
+    }
+
 }

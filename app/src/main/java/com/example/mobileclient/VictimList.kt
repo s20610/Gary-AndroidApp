@@ -26,11 +26,24 @@ class VictimList : Fragment(), VictimInfoAdapter.OnItemClickListener {
 
         _binding = FragmentVictimListBinding.inflate(inflater, container, false)
         val view = binding.root
+        var incidentId = 0
         val token = requireActivity().getSharedPreferences(
             Constants.USER_INFO_PREFS, Context.MODE_PRIVATE
         ).getString(Constants.USER_TOKEN_TO_PREFS, "")
+        paramedicViewModel.assignedIncidentResponse.observe(viewLifecycleOwner) {response ->
+            if (response.code() == 200) {
+                incidentId = response.body()?.incidentId!!
+            }
+        }
         binding.cancelButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_victimList_to_addVictimInfo)
+            Navigation.findNavController(view).navigate(R.id.addVictimInfo)
+        }
+        binding.swipeRefresh.setOnRefreshListener {
+            if (incidentId != 0) {
+                paramedicViewModel.getCasualties(incidentId, token!!)
+                binding.victimInfoRecyclerView.adapter?.notifyDataSetChanged()
+            }
+            binding.swipeRefresh.isRefreshing = false
         }
         paramedicViewModel.casualtiesResponse.value?.body()?.let {
             binding.victimInfoRecyclerView.adapter = VictimInfoAdapter(it, this)
@@ -41,6 +54,8 @@ class VictimList : Fragment(), VictimInfoAdapter.OnItemClickListener {
     override fun onItemClick(position: Int) {
         val adapter = binding.victimInfoRecyclerView.adapter as VictimInfoAdapter
         val casualty = adapter.getCasualties(position)
+        paramedicViewModel.pickedVictimInfo = casualty
+        Navigation.findNavController(binding.root).navigate(R.id.action_victimList_to_victimDetails)
         Log.d("Casualty", casualty.toString())
     }
 }

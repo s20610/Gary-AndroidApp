@@ -34,12 +34,20 @@
     <fragment
         android:id="@+id/ambulanceBreak"
         android:name="com.example.mobileclient.fragments.AmbulanceBreak"
-        android:label="fragment_ambulance_break" />
+        android:label="fragment_ambulance_break" >
+        <action
+            android:id="@+id/action_ambulanceBreak_to_paramedicScreen"
+            app:destination="@id/paramedicScreen" />
+    </fragment>
     <fragment
         android:id="@+id/paramedicCallForSupport2"
         android:name="com.example.mobileclient.fragments.ParamedicCallForSupport"
         android:label="fragment_paramedic_call_for_support"
-        tools:layout="@layout/fragment_paramedic_call_for_support" />
+        tools:layout="@layout/fragment_paramedic_call_for_support" >
+        <action
+            android:id="@+id/action_paramedicCallForSupport2_to_paramedicScreen"
+            app:destination="@id/paramedicScreen" />
+    </fragment>
     <fragment
         android:id="@+id/addVictimInfo"
         android:name="com.example.mobileclient.fragments.AddVictimInfo"
@@ -48,6 +56,9 @@
         <action
             android:id="@+id/action_addVictimInfo_to_victimList"
             app:destination="@id/victimList" />
+        <action
+            android:id="@+id/action_addVictimInfo_to_paramedicScreen"
+            app:destination="@id/paramedicScreen" />
     </fragment>
     <fragment
         android:id="@+id/checkEquipment"
@@ -57,17 +68,28 @@
         <action
             android:id="@+id/action_checkEquipment_self"
             app:destination="@id/checkEquipment" />
+        <action
+            android:id="@+id/action_checkEquipment_to_paramedicScreen"
+            app:destination="@id/paramedicScreen" />
     </fragment>
     <fragment
         android:id="@+id/paramedicSettings"
         android:name="com.example.mobileclient.fragments.ParamedicSettings"
         android:label="fragment_paramedic_settings"
-        tools:layout="@layout/fragment_paramedic_settings" />
+        tools:layout="@layout/fragment_paramedic_settings" >
+        <action
+            android:id="@+id/action_paramedicSettings_to_paramedicScreen"
+            app:destination="@id/paramedicScreen" />
+    </fragment>
     <fragment
         android:id="@+id/victimScanBandCode"
         android:name="com.example.mobileclient.VictimScanBandCode"
         android:label="fragment_victim_scan_band_code"
-        tools:layout="@layout/fragment_victim_scan_band_code" />
+        tools:layout="@layout/fragment_victim_scan_band_code" >
+        <action
+            android:id="@+id/action_victimScanBandCode_to_paramedicScreen"
+            app:destination="@id/paramedicScreen" />
+    </fragment>
     <fragment
         android:id="@+id/userInfo2"
         android:name="com.example.mobileclient.fragments.UserInfo"
@@ -84,5 +106,17 @@
         <action
             android:id="@+id/action_victimList_to_addVictimInfo"
             app:destination="@id/addVictimInfo" />
+        <action
+            android:id="@+id/action_victimList_to_victimDetails"
+            app:destination="@id/victimDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/victimDetails"
+        android:name="com.example.mobileclient.VictimDetails"
+        android:label="fragment_victim_details"
+        tools:layout="@layout/fragment_victim_details" >
+        <action
+            android:id="@+id/action_victimDetails_to_victimList"
+            app:destination="@id/victimList" />
     </fragment>
 </navigation>

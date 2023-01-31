@@ -255,4 +255,12 @@ interface BackendAPI {
         @Path("id") id: Int,
         @Header("Authorization") token: String
     ): Response<List<Casualty>>
+
+    @PUT("/incident/{id}/casualties/{victimInfoId}")
+    suspend fun putCasualty(
+        @Path("id") id: Int,
+        @Path("victimInfoId") victimInfoId: Int,
+        @Header("Authorization") token: String,
+        @Body casualty: Casualty
+    ): Response<ResponseBody>
 }

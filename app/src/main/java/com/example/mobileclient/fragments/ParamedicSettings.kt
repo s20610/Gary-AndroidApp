@@ -54,7 +54,7 @@ class ParamedicSettings : Fragment() {
 //            }
         }
         binding.cancelButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.paramedicScreen)
+            Navigation.findNavController(view).navigate(R.id.action_paramedicSettings_to_paramedicScreen)
         }
 
         binding.appInfoButton.setOnClickListener {

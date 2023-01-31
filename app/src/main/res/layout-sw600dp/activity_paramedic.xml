@@ -25,15 +25,14 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@android:color/transparent"
                 android:elevation="0dp"
-                app:navigationIcon="@drawable/ic_menu_24"
-                app:title="@string/Paramedic_screen" />
+                app:navigationIcon="@drawable/ic_menu_24" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".activities.ParamedicActivity"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context=".activities.ParamedicActivity">
 
 
             <androidx.fragment.app.FragmentContainerView
@@ -46,18 +45,19 @@
                 app:navGraph="@navigation/paramedic_nav"
                 tools:layout="@layout/fragment_paramedic_screen"
                 tools:layout_editor_absoluteY="1dp" />
+
             <LinearLayout
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
                 <com.google.android.material.bottomnavigation.BottomNavigationView
                     android:id="@+id/bottom_navigation"
+                    style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
                     app:menu="@menu/bottom_paramedic_navigation" />
 
             </LinearLayout>

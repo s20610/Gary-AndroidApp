@@ -33,7 +33,7 @@
     <string name="incident_localisation">Lokalizacja</string>
     <string name="incident_description">Opis</string>
     <string name="incident_add_button">Dodaj</string>
-    <string name="incident_cancel_button">Wyjdź</string>
+    <string name="incident_cancel_button">Anuluj</string>
     <string name="incident_type_hint">Wybierz typ</string>
     <string name="incident_address_hint">Adres</string>
     <string name="incident_details_text">Szczegóły</string>
@@ -133,7 +133,7 @@
     <string name="paramedic_day_label">Dzień:</string>
     <string name="new_password_confirm">Potwierdź nowe hasło</string>
     <string name="login_toast">email zalogowany</string>
-    <string name="cancel">Wyjdź</string>
+    <string name="cancel">Anuluj</string>
     <string name="create_incident_popup_alert">Nieuzasadnione wezwanie karetki może skutkować mandatem. Jesteś pewny?</string>
     <string name="create_incident_popup_title">Utworzyć zdarzenie?</string>
     <string name="barcode_scanning_successful">Zeskanowany kod opaski:</string>
@@ -205,7 +205,7 @@
     <string name="scan_victim_bandcode">Zeskanuj opaskę ofiary</string>
     <string name="scan_victim_bandcode_text">Po zeskanowaniu kodu z opaski aplikacja wyświetli historię medyczną ofiary</string>
     <string name="call_for_backup_successful">Wezwano wsparcie</string>
-    <string name="no_shifts">Informacje o grafiku nie są dostępne</string>
+    <string name="no_shifts">Brak informacji o grafiku</string>
     <string name="no_emergency">Nie jesteś przypisany do wypadku</string>
     <string name="no_ambulance">Nie jesteś przypisany do ambulansu</string>
     <string name="ambulance_equipment_empty">Lista wyposażenia jest pusta</string>
@@ -233,10 +233,13 @@
         <item>Inna</item>
     </string-array>
     <string name="error_adding_info">Wystąpił problem z żądaniem</string>
-    <string name="victim_info_header">List of victims</string>
+    <string name="victim_info_header">Lista poszkodowanych</string>
+    <string name="victim_info_name">Imię poszkodowanego</string>
+    <string name="victim_info_explain">Kliknij w wiersz, aby zobaczyć szczegóły</string>
     <string-array name="victimStatusTypes">
         <item>Stabilny</item>
         <item>Niestabilny</item>
         <item>Zgon</item>
     </string-array>
+    <string name="victim_details">Poszkodowany</string>
 </resources>

@@ -24,15 +24,14 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@android:color/transparent"
                 android:elevation="0dp"
-                app:navigationIcon="@drawable/ic_menu_24"
-                app:title="@string/Paramedic_screen" />
+                app:navigationIcon="@drawable/ic_menu_24" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".activities.ParamedicActivity"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context=".activities.ParamedicActivity">
 
 
             <androidx.fragment.app.FragmentContainerView

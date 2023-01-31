@@ -2,9 +2,9 @@ package com.example.mobileclient.model
 
 data class Casualty(
     val firstName: String,
-    val gender: Gender,
+    var gender: Gender,
     val lastName: String,
-    val status: VictimStatus,
+    var status: VictimStatus,
     val victimInfoId: Int?
 )
 

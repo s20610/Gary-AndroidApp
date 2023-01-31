@@ -24,15 +24,14 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@android:color/transparent"
                 android:elevation="0dp"
-                app:navigationIcon="@drawable/ic_menu_24"
-                app:title="@string/user_appbar_text" />
+                app:navigationIcon="@drawable/ic_menu_24" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".activities.UserActivity"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context=".activities.UserActivity">
 
 
             <androidx.fragment.app.FragmentContainerView
@@ -42,9 +41,9 @@
                 android:layout_height="match_parent"
                 app:defaultNavHost="true"
                 app:navGraph="@navigation/user_nav"
+                tools:layout="@layout/fragment_logged_in_screen"
                 tools:layout_editor_absoluteX="1dp"
-                tools:layout_editor_absoluteY="1dp"
-                tools:layout="@layout/fragment_logged_in_screen" />
+                tools:layout_editor_absoluteY="1dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -32,7 +32,7 @@ class CheckEquipment : Fragment(), EquipmentAdapter.OnItemClickListener {
             Constants.USER_INFO_PREFS, Context.MODE_PRIVATE
         ).getString(Constants.USER_TOKEN_TO_PREFS, "")
         binding.cancelButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.paramedicScreen)
+            Navigation.findNavController(view).navigate(R.id.action_checkEquipment_to_paramedicScreen)
         }
         paramedicViewModel.currentAmbulanceResponse.observe(viewLifecycleOwner) { response ->
             if (response.isSuccessful) {

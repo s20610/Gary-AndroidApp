@@ -92,7 +92,7 @@ class ParamedicCallForSupport : Fragment() {
         val view = binding.root
 
         binding.cancelButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.paramedicScreen)
+            Navigation.findNavController(view).navigate(R.id.action_paramedicCallForSupport2_to_paramedicScreen)
         }
 
         return view

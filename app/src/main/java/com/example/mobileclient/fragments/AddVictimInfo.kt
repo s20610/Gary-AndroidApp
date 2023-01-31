@@ -55,9 +55,9 @@ class AddVictimInfo : Fragment() {
             if (incidentId != 0 && incidentId != null){
                 val casualties: ArrayList<Casualty> = ArrayList()
                 val casualty = Casualty(
-                    binding.firstName?.text.toString(),
+                    binding.firstName.text.toString(),
                     setGenderTypeToApi(binding.genderPickerText.text.toString(), genderTypes),
-                    binding.lastName?.text.toString(),
+                    binding.lastName.text.toString(),
                     setVictimStatusTypeToApi(binding.autoCompleteTextView.text.toString(), victimStatusTypes),
                     null
                 )
@@ -92,7 +92,7 @@ class AddVictimInfo : Fragment() {
         }
         binding.button2.setOnClickListener {
             Navigation.findNavController(view)
-                .navigate(R1.id.paramedicScreen)
+                .navigate(R1.id.action_addVictimInfo_to_paramedicScreen)
         }
 
         return view

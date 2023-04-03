@@ -1,5 +1,5 @@
 # Gary-AndroidApp
-This is a repository with source code of my engineering thesis project. Gary is an app that helps people with calling for help in emergency situations.
+This is a repository with source code of my engineering thesis project. Gary is an app that helps people with calling for help in emergency situations. It's fully translated into two languages: Polish and English
 
 Functionalities for User:
 * Creating a new incident (picking location on map, type of incident, number of victims)
